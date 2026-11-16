@@ -1,4 +1,4 @@
-# linesigning
+# linedealing
 
 Line dealing: a one-move spend protocol for existing blockchain addresses.
 
