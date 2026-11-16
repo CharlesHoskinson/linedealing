@@ -1,0 +1,37 @@
+PASS T2a open ECDSA combined s verifies under X 
+PASS T1a pre-fix shared mask: observer recovers x from ciphertexts + one signature 
+PASS T1b fixed per-component label: same procedure does not recover x 
+PASS T2b implied constant terms: w(0)R=G and mu(0)R=X 
+PASS T2c every partial passes s_i R = m W_i + r M_i 
+PASS T2d t=6 partials interpolate to s 
+PASS T2e altered partial fails the check 
+PASS T2f t-1 partials do not give s 
+PASS T7a ECDSA: two digests on one slot recover x 
+PASS T3a sealed ECDSA: s R = hG + rX 
+PASS T3b sealed shares pass s_i R = Eval(F0,C,i) 
+PASS T3c interpolated sealed s verifies 
+PASS T3d wallet low-s output: recovered R is +-R, same r, s_low R_rec = F0 (wallet s was low)
+PASS T4 low-s + yParity = parity(y(R)) xor flipped recovers X; wrong parity does not parity/flip cases covered: [(0, False), (0, True), (1, False), (1, True)]
+PASS T6 dealer with R=G, X=(-h/r)G gives F0 = O (Step A must reject) 
+PASS T5a odd-y R: s G = R + cX holds (pre-fix check passes) 
+PASS T5b odd-y R: BIP340 verification of (x(R), s) fails 
+PASS T5c fixed check with F0 = lift_x(x(R)) + cX rejects that dealing 
+PASS T5d honest wallet (negated nonce): fixed check passes and BIP340 verifies 
+PASS T8 open BIP340: partial checks and final verify hold for even-y and odd-y R even:4 odd:4
+PASS T7b two-nonce Schnorr: three digests on one slot recover x (two leave one unknown) 
+PASS T7b2 two digests on a two-nonce slot do not determine x (a wrong x has a consistent (d, e')) 
+PASS T7c one-nonce Schnorr: two digests recover x 
+PASS T9a open rid is a function of (chain, board, X, owner_nonce) only 
+PASS T9b sealed rid is tied to hd: a replayed released signature under the same owner_nonce gets another rid 
+PASS T10 two 2f+1 quorums share >= f+1 nodes (n=16,64,256) 
+PASS T11 (f,f,1) OBS split: no block has f+1 posts, median rule gives a defined anchor anchor height 101
+PASS T11b f Byzantine extreme reports cannot move the anchor outside the honest range 
+PASS T11c one bogus hash at entry f+1 fails the attempt under a hash-carrying rule and cannot under the height-only rule 
+PASS T12 flat market: naive rebuild pays the same fee (rejected as replacement); rule with prior tx pays prior + increment naive 1410, fixed 1551
+PASS T12b EIP-1559 flat basefee: bumped maxFee and tip exceed prior by >= 10% maxFee 62->70, tip 2->3
+PASS T13 dust case: change 200 < dust, actual fee 762 > ceiling 700, Build returns bottom 
+PASS T14 reshare: new constant commitments equal G and X in base R; new partials combine to the same valid s 
+PASS T14b freeze counting: at t_old=f+1 a 2f+1 prevote set and an f+1 reshare set can share only Byzantine nodes 
+PASS T15a proof of knowledge of sealed s in base R verifies: z R = T + c F0 
+PASS T15b same proof with a wrong s fails 
+36 of 36 passed

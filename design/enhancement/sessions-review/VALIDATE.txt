@@ -1,0 +1,6 @@
+$ openspec validate add-seald-sessions --strict
+Change 'add-seald-sessions' is valid
+exit=0
+$ python3 -I ~/.claude/skills/ears/scripts/ears_lint.py --require-ids --strict openspec/changes/add-seald-sessions/specs/seald-sessions/spec.md
+exit=0
+119 requirements, 0 with defects (0 defects, 0 warnings)

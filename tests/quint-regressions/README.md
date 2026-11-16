@@ -1,0 +1,12 @@
+# Quint conformance regression traces
+
+Each `<short-name>.itf.json` here is an ITF trace of the Quint model that exposed one finding of the conformance work (`formal/quint/CONFORMANCE.md`). The replay driver in `impl/tests/quint_conformance.rs` maps every step of every trace in this directory to calls on the `impl/` code and checks the Rust state after each step; `cargo test --test quint_conformance` runs them all (test `quint_regressions_replay`), so adding a trace file adds a test case. Each finding also has a named Rust test.
+
+The expected result of a trace is in its `#meta.regression` object: the model instance (`n4`, `n7`, `broken_prevote`, `broken_rule4`), driver flags, and the expected outcome (`conformed`, with counts of honest posts the board must ignore, or `refused` with the signer error).
+
+| Trace | Finding | Model instance | Seed | Rust test | Quint-side check | Fixed in commit |
+|---|---|---|---|---|---|---|
+| `deal-after-handover.itf.json` | M1: the model let an old-committee node post RS_DEAL after HANDOVER, after it had erased the shares (model fix: `holdsShares` guard in `honestReshareDeal`). The Rust board already ignores the late deal; the test asserts it. | `n4` (`linedealing`, N = 4, F = 1); first seen in `mbt_n4`, `cInitArmedOpenReshare` / `cStepAdversarial` | 1022 (sampled run); this trace is the minimal scenario of `dealAfterHandoverTest` on the pre-fix model | `regression_m1_old_node_cannot_deal_after_handover` | `run dealAfterHandoverTest` in `formal/quint/linedealing.qnt` (fails on the pre-fix model, passes after) | 90cea7e |
+| `splitline/pt_window__windowVoteBroken.itf.json` | W3: an honest node voted for a header that names a committee slot index above `h + B` of the latest checkpoint (DESIGN §4.1). The prototype `SplitBoard` now refuses the vote with `Window`. | `pt_window` (`splitline_pools.qnt`, mutant); design twin `pt_design__windowVoteHolds.itf.json` | exported by `quint test splitline_pools_test.qnt --main pt_window --match windowVoteBroken` | `w3_window_vote_regression` in `impl/tests/quint_split_conformance.rs` | `windowVoteBroken` fails on the mutant, `windowVoteHolds` passes on the design | 7953331 |
+
+Findings without a trace here: G1 and G2 are open design (the model and the code differ where SCHEME does not decide; the replay records them as known gaps) and E1 is a doc fix that the model cannot produce as a trace. Their inputs are unit tests in `impl/src/board.rs`. Every finding's verdict is in `COUNTEREXAMPLES.md`.

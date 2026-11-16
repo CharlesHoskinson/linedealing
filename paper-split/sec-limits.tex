@@ -1,0 +1,62 @@
+\section{Limits and open problems}\label{sec:limits}
+
+\paragraph{An admitted set with $t$ nodes holds the key.} An admitted signing set that colludes with $t$ committee nodes, in non-TEE mode or with $t$ broken enclaves, holds $x$. In non-TEE mode without slot anchors fewer nodes suffice. A coalition of $f < |C| < t$ nodes that forks the board gets $t$ partials on each of three tickets of one Schnorr slot once $3(t - |C|) \le n - |C|$: six nodes at $n = 9$, ten at $n = 17$. The three committee halves give $\xf$ (\cref{sec:slots}). With an admitted set on ECDSA two histories suffice, $2(t - |C|) \le n - |C|$, five nodes at $n = 9$ and seven at $n = 17$: two signatures on one slot share the nonce and give $x$. Covenants, vetoes and holds of P1 and P2 are therefore guarantees of an honest threshold, or of the TEE, and not of cryptography. What survives every corruption of the committee is C3, C4 and C17: no signature without an admitted set.
+
+\paragraph{A silent actor.} A charter whose every admitted set needs one actor cannot spend while that actor is silent, and loses the coins if the actor disappears for good, unless the charter gives that actor an OR branch or a threshold group. Reissue uses such a branch; nothing else replaces it.
+
+\paragraph{Released signatures.} A signature released to a host chain cannot be recalled. A matured Bitcoin exit leaf pays any destination and ends every covenant and hold for that coin.
+
+\paragraph{ECDSA.} The birth session needs every session party online, at birth and at each refill, and rests on two functionalities whose instantiation at $t = n - f$ is open. It runs in the clear on the board, which links ECDSA spends to their accounts (\cref{sec:blindness}). A whole-committee restart without slot anchors burns the unused slots of every ECDSA address, which then refill. An account's ECDSA slot ids are public to the committee, so precedence on them starts only from an authorization in force, and the end of a request burns an ECDSA slot only if that request reserved it (\cref{sec:ecdsa-slots}). An envelope without an authorization in force therefore voids no ECDSA request and burns no ECDSA slot, and a P2 user cannot delay a seizure by naming the guardians' slots. The rule leaves one race: an authorized request takes a slot from an earlier namer without an authorization, which then ends void, and only the record's own sources can be that namer. The proof that the rule keeps one nonce use and liveness is open (O38).
+
+\paragraph{Proof coverage.} All claims are for static corruption. The algebra and the counting are proved in Lean, every cryptographic claim is sketched or open, and the secrecy theorems cover scalars only. No model checker explores the request state machine. The costs are measured on one benchmark core, not on node hardware, and the figures marked $^{\ast}$ in \cref{sec:eval} are estimates.
+
+\subsection{Open obligations}\label{sec:open}
+
+\Cref{tab:open} lists the obligations that the claims name.
+
+{\small
+\setlength{\LTpre}{6pt}\setlength{\LTpost}{6pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.8cm}>{\raggedright\arraybackslash}p{13.5cm}@{}}
+\caption{Open obligations.}\label{tab:open}\\
+\toprule
+Id & Obligation \\
+\midrule
+\endfirsthead
+\toprule
+Id & Obligation \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+O1 & $F_{\mathsf{presig}}$ at $t = n - f$: a protocol with a written proof that outputs $R_f$ and Shamir shares of $k_f^{-1}$ and $k_f^{-1}\xf$ with Feldman commitments in base $R_f$, secure with $f$ Byzantine nodes. \\
+O2 & $F_{\mathsf{mul}}$: a malicious-secure two-party multiplication between each session party and each node, and between session parties, with its cost per slot. \\
+O3 & The hold contract: revocation, the hold set and the key-private hold handle, with a test that a revoked authorization stops release in TEE mode. \\
+O4 & The ticket circuit for the three suites at $2^{18}$ rows or fewer, with its proving time. \\
+O5 & Resharing at $t = n - f$: secrecy of $\xf$, preservation of $\Xf$ and liveness of the handover under a stated network model; under partial synchrony a publicly verifiable reshare. \\
+O6 & Unforgeability of the Schnorr committee half: a reduction to the algebraic one-more discrete logarithm problem in the random oracle model for every actor and $t - 1$ nodes, with one signing query per committee slot on the ticket the anchor selects among up to $K$. \\
+O8 & A zero-knowledge birth proof, so non-TEE nodes never learn $X$ at birth. \\
+O10 & The recovery group's protocol: the verifiable backup of $\xf$ and of slot shares, the recovery contracts and the exit-only successor charter. \\
+O12 & Batched authorizations per ledger block, with the timing link measured. \\
+O17 & A cold-start drill that reboots every node with state intact, with state lost and with every disk rolled back, and shows no key loss, no coin movement and no slot bound for two tickets. \\
+O19 & The ECDSA session among many parties: malicious-secure multiplication with input consistency, identifiable abort and a proof at $t = n - f$. \\
+O20 & Unforgeability with pool actors (C17, C19): a reduction to the algebraic one-more discrete logarithm problem for an adversary with every node, the initiator and every actor outside an admitted set, opening concurrent requests on honest actors' pools, with $\Nh$ pairs per actor and request and several halves on one committee slot. \\
+O22 & The access structure in the authorization circuit: $\Gamma$ in the charter commitment, a proof of $S \in \Gamma$ and of the initiator's membership, with its row count for up to 16 leaves. \\
+O25 & Calling the hash gadgets from a ledger contract, or a fallback that proves the same relations in a STARK wrapped once for the ledger. \\
+O26 & Sealing by threshold PRF (C8, C9, C18): a written proof of \cref{stmt:prf} in one hybrid that replaces $y_{v,g}$ and $P_{v,g}$ together, with complaints answered and the confinement of a partial to one outer dealing. \\
+O27 & One nonce use with shared slots (C12): the counting with the anchor, up to $K$ candidates per slot, two generations, precedence by board order, and the witness and bound state under rollback, for $|C| \le f$. \\
+O28 & Liveness of the merged path (C13): a refinement of the state machine with separate acknowledgement, opening and admission votes, and the anchor rule for reports that count only on admission. \\
+O29 & Board-first authorization (C6, C11): node-verified proofs against a finalized root within the root-age bound, the nullifier ordered by the board, the batch under the board-first root with the duplicate checks of the nodes and the checkpoint signers, and no race with a direct call. \\
+O31 & Costs measured on node hardware, in non-TEE mode and with a real ECDSA slot session, and one multi-scalar check over the $t$ slot messages of a node, measured against the $t$ separate checks. \\
+O32 & The slot anchor: specification, construction and a proof that C12 and the oracle of O6 hold for $|C| < t$ in non-TEE mode, with the added latency measured. \\
+O33 & ECDSA leaf-set slots: a test that every member and escrow holder refuses a slot of another leaf set. \\
+O34 & Slot pool sizing: the pool, the window $B$ and the choice of indices keep collisions and lost indices below stated rates. \\
+O35 & ECDSA slot sessions and escrow dealings inside envelopes, so that operators and observers see neither $X$ nor $R_\ell$. \\
+O36 & Batched bind in TEE mode: the enclave binds every slot that one board height anchors with one batch of witness entries and one sealed version, refuses per slot, and the two bind rounds are measured at the measured request rate. \\
+O37 & Batched settlement in the authorization circuit: the path of a settlement leaf under a landed root and of each named pool key under a pool-key root, measured beside the ticket proof within $2^{21}$ rows, and the ledger's check of a carried VOID leaf. \\
+O38 & ECDSA precedence from the authorization (C12, C13): a proof that the precedence rule of \cref{sec:ecdsa-slots} keeps one nonce use on ECDSA slots and gives liveness against an adversary that names an account's slot ids in envelopes with no authorization in force, a P2 user who names the guardians' slots included. \\
+\end{longtable}
+}
+
+\section{Conclusion}\label{sec:conclusion}
+
+A signature line can be cut. The committee keeps one half, the same for every address, and never learns a shard; the actors keep the rest under an access structure the charter fixes, and a spend is one move by each named actor and one linear partial by each node. The cut keeps what made line dealing worth having, a limit on what a fully corrupt committee can sign, and extends it to every actor of the charter: the scalars of a coalition that the charter does not admit are consistent with every value of the dealt secret, which Lean proves for every well-formed nested formula. It adds what line dealing lacked: nobody holds the key, and the committee co-signs a ticket that names no address. The algebra, the leaf-set binding, the slot precedence and the cold-start burn are machine-checked; the reductions that turn them into unforgeability and sealing theorems are the work that remains, and each has its name.

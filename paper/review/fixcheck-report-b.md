@@ -1,0 +1,8 @@
+VERDICT: changes_requested
+
+- **b1 — RESOLVED.** [sec-construction.tex:91](paper/review/fixcheck/src/sec-construction.tex:91) requires the initial attempt to open inside `[nb, exp]` and supplies the retry and subsequent-generation guards.
+- **b2 — RESOLVED.** [sec-construction.tex:68](paper/review/fixcheck/src/sec-construction.tex:68) requires even-y `X`; check 6 requires even-y `lift_x(R)` and rejects invalid lifts. The dealing paragraph specifies the x-only nonce encoding.
+- **b3 — RESOLVED.** [sec-impossibility.tex:26](paper/review/fixcheck/src/sec-impossibility.tex:26) supplies the distinct-binding-factor condition, handles equal factors, and qualifies three-signature extraction by its determinant. The following paragraph preserves scalar-only scope; the security and formal summaries agree.
+- **b4 — NOT RESOLVED.** The key-exposure attribution is corrected, but [sec-limits.tex:17](paper/review/fixcheck/src/sec-limits.tex:17) still claims the theorem rules out a cryptographic one-spend limit when transactions are built from later state; [sec-abstract.tex:2](paper/review/fixcheck/src/sec-abstract.tex:2) repeats this inference. The theorem establishes **two signatures**, whereas R4 requires **at most one executed transaction**. Two signed transactions can conflict on the same pin, so the theorem does not establish that broader impossibility. **Fix:** restrict these conclusions to single-signature confinement under the theorem’s copyable-continuation hypotheses; attribute this construction’s honest-threshold spend guarantee to its reconstructible key.
+
+New blocking findings: none beyond the remaining b4 issue. Stale benchmark values were excluded.

@@ -1,0 +1,131 @@
+   Compiling line-dealing v0.1.0 (impl)
+    Finished `test` profile [optimized + debuginfo] target(s) in 3.68s
+     Running unittests src/lib.rs (target/debug/deps/line_dealing-2991c0fefe615180)
+
+running 38 tests
+test board::tests::board_cut_keeps_previous_anchor_despite_later_failure_and_retry ... ok
+test board::tests::first_distinct_reports_anchor_and_nack_retry_consume_no_slot ... ok
+test board::tests::own_digest_lock_before_partial_and_no_late_prevote ... ok
+test board::tests::restart_replays_votes_and_partials_even_if_post_rejected ... ok
+test builder::bitcoin_vectors::bip143_published_native_p2wpkh_sighash_all ... ok
+test board::tests::void_rotation_foreign_spend_and_failed_handover ... ok
+test builder::tests::d12_flat_account_market_uses_scheme_125_percent_bump ... ok
+test board::tests::nine_nodes_need_seven_votes ... ok
+test board::tests::three_signed_generations_execute_at_most_once ... ok
+test board::tests::only_terminal_events_tombstone_and_every_generation_conflicts_on_pin ... ok
+test board::tests::repeated_rotation_preserves_each_in_flight_epoch_threshold ... ok
+test builder::tests::d12_flat_bitcoin_market_still_bumps ... ok
+test builder::tests::bitcoin_encoding_and_sighashes_bind_inputs_outputs_and_locktime ... ok
+test builder::bitcoin_vectors::bip341_published_keypath_sighash_default ... ok
+test builder::tests::account_all_reserves_maximum_fee_and_rejects_ceiling ... ok
+test board::tests::first_valid_binding_ack_quorum_and_validated_complaint ... ok
+test board::tests::freeze_keeps_only_certificates_and_handover_moves_the_rest ... ok
+test builder::tests::account_type2_encoding_has_empty_data_and_access_list ... ok
+test board::tests::sealed_release_is_in_flight_and_variants_increase ... ok
+test builder::tests::median_averages_middle_values_without_floating_point ... ok
+test builder::tests::d13_dust_is_charged_to_the_real_fee ... ok
+test builder::tests::generation_and_nonce_gates ... ok
+test builder::tests::legacy_and_taproot_profiles_have_distinct_sighash_rules ... ok
+test builder::tests::all_takes_every_eligible_input_and_no_change ... ok
+test builder::tests::pin_is_required_even_when_another_coin_covers_payment ... ok
+test builder::tests::replacement_with_more_inputs_exceeds_all_prior_fee_rates ... ok
+test builder::tests::single_sealed_variant_does_not_require_a_fee_grid_increase ... ok
+test builder::tests::malformed_state_and_overflow_fail_closed ... ok
+test builder::tests::largest_first_and_serialization_order_ignore_snapshot_order ... ok
+test builder::tests::sealed_account_is_one_frozen_ceiling_variant ... ok
+test builder::tests::sealed_grid_rejects_dust_and_too_small_replacement_steps ... ok
+test builder::tests::high_rate_replacement_accounts_for_shorter_previous_der_signature ... ok
+test builder::tests::sealed_grid_uses_frozen_allowed_inputs_and_selects_least_sufficient_fee ... ok
+test board::tests::randomized_schedules_replay_identically_and_preserve_lifecycle_invariants ... ok
+test board::tests::randomized_equivocation_rollback_and_divergent_builders_cannot_double_certify ... ok
+test board::tests::orphan_temporary_ledger_recovers_after_crash ... ok
+test board::tests::storage_error_poisoning_requires_restart_before_any_signature ... ok
+test board::tests::file_ledger_is_durable_before_outgoing_vote ... ok
+
+test result: ok. 38 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/bin/committee-sim.rs (target/debug/deps/committee_sim-2ec9724103d8732c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/bench9.rs (target/debug/deps/bench9-be5e0478e421a010)
+
+running 1 test
+test bench_committee_of_9 ... ignored
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/committee_profile.rs (target/debug/deps/committee_profile-b6b10d8976027208)
+
+running 2 tests
+test nine_node_profile_preserves_threshold_choices ... ok
+test nine_node_t1_profile_can_transfer_its_shares ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/ed25519.rs (target/debug/deps/ed25519-4103ab634de171f6)
+
+running 11 tests
+test seed_expansion_and_protocol_scalar_encoding ... ok
+test strict_verifier_rejects_scalar_malleability_and_small_order_nonce ... ok
+test canonical_wire_rejects_trailing_truncated_scalars_and_points ... ok
+test duplicate_nonces_and_component_pad_reuse_are_rejected ... ok
+test auth_address_registry_and_replay_are_checked ... ok
+test identities_bind_dealing_only_in_sealed_mode ... ok
+test authenticated_bad_delivery_fails_private_share_check ... ok
+test sealed_wallet_import_roundtrip_and_release ... ok
+test open_multigeneration_all_partials_and_strict_ed25519 ... ok
+test step_a_rejects_torsion_and_identity_at_every_point_position ... ok
+test t2_multiple_inputs_use_distinct_labels_and_slots ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/integration.rs (target/debug/deps/integration-be121b7b0e2fc397)
+
+running 26 tests
+test protocol::all_payment_can_retain_change_destination_in_header ... ok
+test algebra::feldman_arbitrary_base_and_threshold ... ok
+test algebra::strict_points_and_scalars ... ok
+test algebra::spec_hash_is_sha512_outer_and_labels_are_injective ... ok
+test algebra::wide_hash_reduction_matches_k256_independently ... ok
+test protocol::malformed_deal_threshold_is_an_error ... ok
+test protocol::header_state_checks_and_ecdsa_overflow_nonce ... ok
+test resharing::reshare_domain_and_component_bind_each_pad ... ok
+test protocol::wire_rejects_noncanonical_ciphertext_and_identity_commitment ... ok
+test protocol::identity_rules_and_lock_digest_binding ... ok
+test protocol::step_a_rejects_zero_constant_odd_bip340_and_repeated_nonces ... ok
+test protocol::canonical_wire_header_context_and_address_checks ... ok
+test protocol::changed_header_breaks_proof_and_decryption ... ok
+test protocol::sealed_ecdsa_wallet_import_and_recovery_of_nonce ... ok
+test protocol::low_s_ethereum_recovery_covers_all_four_parity_flip_cases ... ok
+test protocol::sealed_ecdsa_accepts_high_s_wallet_signature ... ok
+test protocol::two_signatures_on_one_open_ecdsa_slot_recover_key ... ok
+test resharing::zero_old_share_can_be_reshared_with_identity_implied_constant ... ok
+test resharing::malformed_transfer_threshold_is_an_error ... ok
+test protocol::shared_pad_attack_recovers_key_but_component_labels_stop_it ... ok
+test resharing::encrypted_reshare_open_slot_still_signs_and_verifies ... ok
+test protocol::multiple_generations_inputs_and_t2_profile ... ok
+test protocol::sealed_bip340_wallet_import_both_raw_nonce_parities ... ok
+test resharing::bip340_resharing_preserves_original_binding_with_multiple_inputs ... ok
+test protocol::open_bip340_two_nonces_both_parities ... ok
+test protocol::open_ecdsa_all_8008_threshold_subsets_and_tampered_partial ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.05s
+
+     Running tests/simulation.rs (target/debug/deps/simulation-309703f753ca0b09)
+
+running 3 tests
+test invalid_simulation_options_are_rejected ... ok
+test link_latency_applies_in_both_directions_and_t2_completes ... ok
+test actual_signatures_complete_for_every_suite_mode_and_batching ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.77s
+
+   Doc-tests line_dealing
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

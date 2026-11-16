@@ -1,0 +1,51 @@
+\section{Setting}\label{sec:setting}
+
+\paragraph{Parties.} One \emph{owner} holds the key $x$ of an existing address, with public key $X = xG$. A \emph{committee} of $n$ nodes serves each epoch, and at most $f$ of its nodes are Byzantine. Anyone can combine partial signatures and broadcast the result.
+
+\paragraph{Suites.} The suite group $\GG$ has prime order $q$ and generator $G$ and is written additively. We write $x(R)$ for the x-coordinate of a point $R$. \Cref{tab:suites} lists the three suites. Every transaction that one owner message can authorize spends one object that the target chain lets be spent once, which we call the \emph{pin}: one named outpoint, the exact account nonce, or the current value of a durable nonce account. A chain without such a conflict object is not supported.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}ll>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.6cm}@{}}
+\toprule
+Suite & Signature scheme & Addresses covered & Pin \\
+\midrule
+1 & ECDSA on secp256k1 & Bitcoin P2PKH and P2WPKH; Ethereum-style account, type-2 transactions & one outpoint; exact account nonce \\
+2 & BIP340 Schnorr & Bitcoin P2TR, key path & one outpoint \\
+3 & Ed25519 & Solana account with a durable nonce account & the durable nonce value \\
+\bottomrule
+\end{tabularx}
+\caption{Suites. The Solana adapter is an outline; the prototype exercises the Ed25519 signature protocol without it (\cref{sec:eval}).}
+\label{tab:suites}
+\end{table}
+
+\paragraph{Committee size and quorum.} The Byzantine bound $f$ is registered with the committee, and every $n \ge 3f+1$ is a legal size. The \emph{quorum} is
+\[
+  \qr \;=\; \left\lceil \frac{n+f+1}{2} \right\rceil .
+\]
+Every quorum count in this paper is $\qr$. We use three properties of $\qr$, and each holds for every $n \ge 3f+1$.
+
+\begin{lemma}[Quorum]\label{lem:quorum}
+Let $n \ge 3f+1$. \textup{(i)}~Two sets of $\qr$ nodes share at least $2\qr - n \ge f+1$ nodes, hence a node that is not Byzantine, and $\qr$ is the least size with this property. \textup{(ii)}~$\qr \le n-f$, so the honest nodes alone form a quorum. \textup{(iii)}~$\qr \ge 2f+1$.
+\end{lemma}
+
+\begin{proof}
+The definition gives $n+f+1 \le 2\qr \le n+f+2$. The left inequality is (i), and a size $k$ with $2k - n \ge f+1$ satisfies $k \ge \qr$. For (ii), $2\qr \le n+f+2 \le 2(n-f)+1$ when $n \ge 3f+1$, and $2\qr$ is even. For (iii), $2\qr \ge n+f+1 \ge 4f+2$.
+\end{proof}
+
+For $n = 3f+1$ the quorum is $2f+1$. For $n = 9$ and $f = 2$ it is $6$. A fixed quorum of $2f+1$ is unsafe for $n \ge 3f+2$, because two such sets can share only $f$ nodes. The counts of $f+1$ that appear below do not depend on $n$: each needs one honest node among its senders.
+
+\paragraph{Thresholds.} The reconstruction threshold $t$ is a field of the owner's message with two legal values. In profile~T1, $t = f+1$: every guarantee holds against any coalition below $t$, and all three rotation policies of \cref{sec:rotation} are allowed. In profile~T2, $t = n-f$: early release of a sealed point needs $n-f$ corrupt nodes, and open mode tolerates share leakage from up to $n-f-1$ nodes in total, of which only $f$ may be Byzantine. Profile~T2 does not allow resharing. Both values are legal for every $n \ge 3f+1$, since $f < f+1 \le n-f$. Profile~T1 is the default for open mode and T2 for sealed mode.
+
+\paragraph{Corruption.} Corruption is static. A fixed adversarial set must respect the bound in every committee that serves a request. A node that is restored to an old state stays honest if it follows the restart rule of \cref{sec:rules}, and counts as Byzantine if it does not. On an inconsistent board a restored node that lost the record of its earlier board position counts as Byzantine. In open T2 the passive nodes leak the epoch decryption key and the dealt shares only: the key with which a node signs its board posts lives in a separate keystore, and a node whose post key leaks counts as Byzantine. We claim nothing for adaptive corruption.
+
+\paragraph{Network, board and target chain.} The network is partially synchronous, and safety never depends on timing. The \emph{board} is a total-order broadcast that tolerates $f < n/3$ faults: a Byzantine fault tolerant log run by the committee, or a host chain. It orders posts and does not interpret them, and every protocol state below is a pure function of the ordered log. The target chain has a finality rule. On Bitcoin this is a confirmation depth, which is then an assumption.
+
+\paragraph{Setup.} There is no trusted setup. In each epoch, node $i$ registers an encryption key $PK_i = sk_i G$ with a proof of possession, and a post key for signing board posts. The proof of possession is a Schnorr proof $(T, z)$ with $zG = T + c\,PK_i$ and $c = \Hh{pop}(\textsf{epoch}, i, PK_i, T)$; the challenge names the epoch, the node and the key, so a proof serves one registration only. A registration is accepted only if $PK_i$ is a canonical encoding of a point of $\GG$ other than the identity; for suite~3 this includes the check $[q]PK_i = O$. Node $i$ erases $sk_i$ when the epoch and its grace period end. The public parameters are the suites, the labeled hash functions, a transaction builder specification named by its hash, and the pair $(n,f)$.
+
+\paragraph{Notation.} The dealing $\Share_t(v)$ picks a random polynomial $p$ of degree $t-1$ over $\Zq$ with $p(0) = v$; share $i$ is $p(i)$. For a base point $B$, $\Com_B(p)$ is the list of points $a_u B$ for the coefficients $a_1,\dots,a_{t-1}$ of $p$. The commitment to the constant term is never sent, and verifiers compute it. We write $\Eval(C_0, C, i) = C_0 + \sum_{u=1}^{t-1} i^u C_u$. A labeled hash maps to 32 bytes, into $\Zq$ or into $\GG$. Every input is an injective encoding of its fields, so distinct tags give independent functions. A hash to 32 bytes is
+\[
+  \Hh{tag}(m) = \text{SHA-256}\bigl(\text{SHA-256}(\mathit{tag}) \,\|\, \text{SHA-256}(\mathit{tag}) \,\|\, m\bigr);
+\]
+the hashes $\Hh{rid}$, $\Hh{hd}$, $\Hh{mid}$, $\Hh{ct}$ and $\Hh{dg}$ are of this kind. A hash into $\Zq$ is the same construction with SHA-512 as the outer hash, read as an integer and reduced modulo $q$; the hashes $\Hh{enc}$, $\Hh{ephpok}$, $\Hh{auth}$, $\Hh{bind}$, $\Hh{dleq}$ and $\Hh{pop}$ are of this kind. The 512-bit output keeps the reduced value within a statistical distance of $q/2^{512}$ of uniform. The hash $\Hh{eph}$ is a hash to the curve with its tag as the domain separation tag. Its value is a point of $\GG$, for suite~3 a point of the prime-order subgroup, whose discrete logarithm to the base $G$ nobody knows. \Cref{thm:enc} models $\Hh{eph}$ as a random oracle into $\GG$, and a scalar hash times $G$ cannot take its place: the second base of the ephemeral-key proof would then be a known multiple of the first. None of these hashes is a suite challenge hash or a sighash.

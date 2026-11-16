@@ -1,0 +1,42 @@
+coverage_rule: >-
+  A decision lists only the check items that examine one of its claims. An item that a decision
+  does not list has no claim of that decision to test.
+open_handoffs:
+  - id: Q-001
+    constraint: The app reserves sequential-pool indices in increasing order and applies the window when it votes a header.
+    decisions: [D-002, D-011]
+    reason: The committee application has no EARS spec. No authoritative requirement carries this constraint.
+  - id: Q-008
+    constraint: The committee posts a checkpoint after each RestoreDone before the next planned reboot, and B covers the reservations of one checkpoint interval.
+    decisions: [D-030]
+    reason: The committee application has no EARS spec.
+  - id: Q-009
+    constraint: "Without slot_anchor the recovery group reissues no ECDSA slot. With slot_anchor it reissues only a slot that no covered binding entry binds, and a seat log it cannot read in full counts as binding every slot of that seat."
+    decisions: [D-027, D-033]
+    reason: Split-line DESIGN 7.11 is outside seald. DECISIONS 51 choice 8 (r3).
+  - id: Q-010
+    constraint: "The checkpoint signers build each batch root from the board, sign no batch with a second put of one digest or a second binding of one nullifier, and set pending_min and pending_root from the pending set."
+    decisions: [D-032, D-034]
+    reason: The committee application has no EARS spec. The contract checks only the chain and pending_min.
+proposed_quint_extensions:
+  - qi: QI-07
+    change: >-
+      The late-boot trace (a node that boots after cp2, and also after cp3) is now a property that must hold
+      under SS-120 to SS-125, not a known gap. Add the once property (a second open after the restart
+      checkpoint burns no reprovisioned slot) and two restarts with no checkpoint between them (SS-124).
+    source: D-024
+    state: proposed, for item 22
+  - qi: QI-15 to QI-20
+    change: >-
+      New items from the prototype questions of item 28: the replacement series with owner rollback (QI-15),
+      replicas after a series (QI-16), put records across a coordinated rollback (QI-17), the end of a restart
+      generation (QI-18), the union bound (QI-19) and concurrent loss accounting (QI-20).
+    source: D-025 to D-031
+    state: proposed, for item 22
+  - qi: QI-21 to QI-25
+    change: >-
+      Seat logs under per-checkpoint roots (item 29): board withholding and lost covered batches (QI-21),
+      root lag between a put and its covering checkpoint (QI-22), rollback of every disk across a checkpoint
+      boundary with the board tail lost (QI-23), the pending fields after a restart (QI-24) and the batch bind (QI-25).
+    source: D-027, D-032 to D-035
+    state: proposed, for item 22

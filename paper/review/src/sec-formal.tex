@@ -1,0 +1,54 @@
+\section{Formal verification}\label{sec:formal}
+
+Three artifacts check three different layers. Lean checks the algebra and the counting. Natural Lean restates the same theorems in controlled English. Quint explores the state machine of the board. None of them checks the cryptographic reductions of \cref{sec:security}.
+
+\subsection{Lean}
+
+The Lean~4 development (version 4.35.0 with Mathlib) has 103 theorems in twelve modules. It contains no \texttt{sorry}, no axiom declaration and no \texttt{native\_decide}, and no theorem depends on an axiom other than \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
+
+The model is abstract. The scalar field is $\mathbb{Z}/q$ for a prime $q$, and the group is any module over it; no elliptic curve is modelled. A commitment is an arbitrary family of points. The central lemma is Lagrange interpolation in the exponent: for any family of points $C$ and any set of at least $t$ node indices, the Lagrange combination of the values $\Eval(C, i)$ is $C_0$. It needs no discrete-logarithm relation between the points, which is why the soundness theorems make no assumption about the dealer. The development proves the following.
+
+\begin{itemize}[leftmargin=1.5em,itemsep=1pt]
+\item \emph{Binding and soundness.} The constant terms of an open ECDSA dealing force $w(0) = k^{-1}$ and $\mu(0) = xk^{-1}$. Partials that pass the public check at $t$ or more nodes interpolate to a scalar $s$ with $sR = hG + rX$, for arbitrary commitments with constant terms $G$ and $X$. The same holds for sealed releases in both bases, for the open Schnorr check, and for the BIP340 sign rule.
+\item \emph{Nonce reuse.} \Cref{prop:twopoints}, including that no function of two two-nonce Schnorr signature scalars returns the key.
+\item \emph{Pad reuse.} With one pad for both ECDSA polynomials of a slot, an explicit computation over public values returns $x$. With independent pads, every ciphertext vector arises from exactly one pad vector.
+\item \emph{Resharing.} The combined constant-term commitment after a transfer equals the old one for arbitrary point families, and partials checked against the reshared commitments still interpolate to a valid signature.
+\item \emph{Quorums and anchors.} \Cref{lem:quorum} for every $n \ge 3f+1$, with examples that show that a quorum of $2f+1$ fails for $n \ge 3f+2$ and that a quorum of $\qr - 1$ fails. \Cref{lem:anchor}, with an example that shows that $f+1$ Byzantine reports defeat it.
+\item \emph{Votes.} A step relation for one slot with a durable ledger, PREVOTE and PARTIAL posts, restores that empty the ledger, and Byzantine posts. With rule~4 on and at most $f$ Byzantine nodes, no two digests are locked and all honest partials carry one digest, for every number of nodes. With rule~4 off, a four-node trace reaches two locked digests with an honest partial on each.
+\item \emph{Impossibility.} \Cref{thm:imposs} in the abstract form stated above, and the recovery of $x$ from the two outputs for an open ECDSA slot.
+\end{itemize}
+
+The development does not model point encodings, hashing, the random oracle, any unforgeability game, liveness, attempts, generations or the freeze rule. The counting theorems about pads are statements about scalars; they do not say that the full public view hides $x$. Suite~3 has a cofactor, and the prime-order model does not cover it.
+
+\subsection{Natural Lean}
+
+Natural Lean\footnote{\url{https://github.com/medovina/natural_lean}} accepts theorem statements and proofs in controlled English and elaborates them to Lean. All 103 theorems are restated in a second project that imports the first, so every restatement is checked against the live native theorem and the build fails if any theorem uses a further axiom. Of the 103, 14 have a natural statement and a natural proof, 64 have a natural statement and a proof with native tactic steps, and 25 remain native because the grammar cannot express their statements; the vote model, which needs structures and an inductive relation, is among these. Each natural statement carries a check that it is the native statement up to the grouping of hypotheses, and eight are restatements with a hand-written equivalence.
+
+\subsection{Quint}
+
+The Quint model covers Step~A, the anchor rule with attempts and NACKs, sealed release on a two-variant grid, the open lock and partial steps with the slot ledger and rules 1 to 5, a disk-rollback action, two generations with the fee bump, the committee change with all three policies including the freeze rule and the handover, the three tombstones, and a target chain on which every transaction spends the pin. Digests are abstract integers, and two honest nodes can run divergent builders. The model does not cover the algebra, the encryption, multi-input transactions, chain reorganizations, split views of the board or adaptive corruption. Its bounds are two generations, two attempts, two variants, two epochs, a chain of four blocks and at most eight Byzantine posts.
+
+Five invariants are checked: no two honest partials on different digests in one slot; at most one executed transaction per request; no open partial without a lock certificate; no tombstone from a transient condition; and no generation both in flight and reshared.
+
+The checking is randomized simulation. \Cref{tab:quint} states its reach: every run checks all five invariants, and no run found a violation. Each run records how many traces reached the precondition of each invariant, and some preconditions are rare. A handover with an old-committee partial on the board occurred in at most 15 traces of any run at $n = 4$ and in at most 3 at $n = 7$. The invariant on executed transactions holds by the construction of the model's chain and tests the model, not the protocol.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}lll>{\raggedright\arraybackslash}X@{}}
+\toprule
+Committee & Runs & Traces per run, steps & Step choices and depth reached \\
+\midrule
+$n = 4$, $f = 1$ & 8 & 2000 or 3000, 40 steps & honest progress (1 run), progress with faults (1), adversarial (3), progress mixed with the full action set (1), uniform choice over the full action set (2) \\
+$n = 7$, $f = 2$ & 6 & 400 to 1000, 60 or 80 steps & honest progress (1), adversarial (2), progress mixed with the full action set (1), uniform choice over the full action set (2) \\
+$n = 9$, $f = 2$, $\qr = 6$ & 1 & 300, 80 steps & honest progress; a lock certificate of six votes in 111 traces, an executed spend in 203 \\
+ & 1 & 300, 80 steps & adversarial; a lock in 25 traces, a rollback after a partial in 23 \\
+\bottomrule
+\end{tabularx}
+\caption{Randomized simulation of the Quint model. No run violated any of the five invariants.}
+\label{tab:quint}
+\end{table}
+
+Two mutants calibrate the search. With rule~1 or rule~4 switched off at $n = 4$, the adversarial and the mixed step choices find a violation of the first invariant within 3000 traces, and the rule-4 mutant is still found under the quorum $\qr$. No mutant was run at $n = 7$ or $n = 9$. A uniform choice among all enabled actions finds neither mutant from the initial state in 10{,}000 traces, because it rarely reaches a lock; the runs with that step choice carry little weight.
+
+Bounded model checking did not complete. The Apalache model checker ran out of memory on the $n = 4$ instance at a depth of three steps, with a 4\,GB heap and again with a 20\,GB heap, and returned no result. The safety of the board rules therefore rests on the counting proofs of \cref{sec:security}, the Lean vote model for one slot, and simulation.

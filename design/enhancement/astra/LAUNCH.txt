@@ -1,0 +1,1 @@
+Read design/enhancement/BRIEF.md and do the task it gives. Write your deliverable to design/enhancement/astra/PROPOSAL.md (create it with a file write; also return the full document as your final message). Use web search for prior art. Do not edit any other file. Do not run git.

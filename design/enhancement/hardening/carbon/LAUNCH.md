@@ -1,0 +1,1 @@
+Read design/enhancement/BRIEF-VERITEE.md and do the task it gives. Write your deliverable to design/enhancement/hardening/carbon/HARDENING.md. Use web search and URL fetching. Do not edit any other file. Do not run git.

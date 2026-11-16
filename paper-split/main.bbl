@@ -1,0 +1,127 @@
+\begin{thebibliography}{19}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Canetti et~al.(2021)Canetti, Gennaro, Goldfeder, Makriyannis, and
+  Peled]{CGGMP21}
+Ran Canetti, Rosario Gennaro, Steven Goldfeder, Nikolaos Makriyannis, and Udi
+  Peled.
+\newblock {UC} non-interactive, proactive, threshold {ECDSA} with identifiable
+  aborts.
+\newblock Cryptology ePrint Archive, Paper 2021/060, 2021.
+
+\bibitem[Chen et~al.(2026)Chen, Zhang, and Cheng]{CZC26}
+Huaifeng Chen, Yuchang Zhang, and Yu~Cheng.
+\newblock Budgeted threshold signatures: Protocol-native spending limits with
+  zero on-chain footprint.
+\newblock Cryptology ePrint Archive, Paper 2026/2176, 2026.
+
+\bibitem[Connolly et~al.(2024)Connolly, Komlo, Goldberg, and Wood]{RFC9591}
+Deirdre Connolly, Chelsea Komlo, Ian Goldberg, and Christopher~A. Wood.
+\newblock The flexible round-optimized {Schnorr} threshold ({FROST}) protocol
+  for two-round {Schnorr} signatures.
+\newblock RFC 9591, 2024.
+
+\bibitem[Crites et~al.(2023)Crites, Komlo, and Maller]{Sparkle}
+Elizabeth Crites, Chelsea Komlo, and Mary Maller.
+\newblock Fully adaptive {Schnorr} threshold signatures.
+\newblock Cryptology ePrint Archive, Paper 2023/445, 2023.
+
+\bibitem[DFINITY ckBTC()]{ckBTC}
+DFINITY ckBTC.
+\newblock Internet computer documentation: {Bitcoin} integration and the
+  {ckBTC} minter.
+\newblock
+  \url{https://internetcomputer.org/docs/current/concepts/chain-fusion/bitcoin-architecture},
+  2026.
+\newblock Accessed November 2026.
+
+\bibitem[Friedman et~al.(2024)Friedman, Marmor, Mutzari, Sadika, Scaly,
+  Spiizer, and Yanai]{TwoPCMPC}
+Offir Friedman, Avichai Marmor, Dolev Mutzari, Omer Sadika, Yehonatan~C. Scaly,
+  Yuval Spiizer, and Avishay Yanai.
+\newblock {2PC-MPC}: Emulating two party {ECDSA} in large-scale {MPC}.
+\newblock Cryptology ePrint Archive, Paper 2024/253, 2024.
+
+\bibitem[Friedman et~al.(2025)Friedman, Marmor, Mutzari, Scaly, and
+  Spiizer]{FMMSS25}
+Offir Friedman, Avichai Marmor, Dolev Mutzari, Yehonatan~C. Scaly, and Yuval
+  Spiizer.
+\newblock Practical zero-trust threshold signatures in large-scale asynchronous
+  networks.
+\newblock Cryptology ePrint Archive, Paper 2025/297, 2025.
+
+\bibitem[Gennaro and Goldfeder(2020)]{GG20}
+Rosario Gennaro and Steven Goldfeder.
+\newblock One round threshold {ECDSA} with identifiable abort.
+\newblock Cryptology ePrint Archive, Paper 2020/540, 2020.
+
+\bibitem[Groth(2021)]{Groth21}
+Jens Groth.
+\newblock Non-interactive distributed key generation and key resharing.
+\newblock Cryptology ePrint Archive, Paper 2021/339, 2021.
+
+\bibitem[Groth and Shoup(2021)]{GS21}
+Jens Groth and Victor Shoup.
+\newblock On the security of {ECDSA} with additive key derivation and
+  presignatures.
+\newblock Cryptology ePrint Archive, Paper 2021/1330, 2021.
+\newblock Version of 27 April 2022.
+
+\bibitem[Groth and Shoup(2022)]{GS22}
+Jens Groth and Victor Shoup.
+\newblock Design and analysis of a distributed {ECDSA} signing service.
+\newblock Cryptology ePrint Archive, Paper 2022/506, 2022.
+\newblock Version of 16 February 2023.
+
+\bibitem[Hoskinson(2026)]{LD}
+Charles Hoskinson.
+\newblock Line dealing: One-move spend from existing addresses, 2026.
+\newblock Companion paper.
+
+\bibitem[Ika()]{IkaDocs}
+Ika.
+\newblock Ika documentation: Imported-key {dWallets} and future signing.
+\newblock \url{https://docs.ika.xyz/}, 2026.
+\newblock Accessed November 2026.
+
+\bibitem[Kate et~al.(2024)Kate, Mangipudi, Mukherjee, Saleem, and
+  Thyagarajan]{cgVSS}
+Aniket Kate, Easwar~Vivek Mangipudi, Pratyay Mukherjee, Hamza Saleem, and Sri
+  Aravinda~Krishnan Thyagarajan.
+\newblock Non-interactive {VSS} using class groups and application to {DKG}.
+\newblock ACM CCS 2024. Cryptology ePrint Archive, Paper 2023/451, 2024.
+
+\bibitem[Komlo and Goldberg(2020)]{FROST}
+Chelsea Komlo and Ian Goldberg.
+\newblock {FROST}: Flexible round-optimized {Schnorr} threshold signatures.
+\newblock SAC 2020. Cryptology ePrint Archive, Paper 2020/852, 2020.
+
+\bibitem[Langford(1995)]{Lan95}
+Susan~K. Langford.
+\newblock Threshold {DSS} signatures without a trusted party.
+\newblock In \emph{CRYPTO '95}, volume 963 of \emph{LNCS}, pages 397--409.
+  Springer, 1995.
+
+\bibitem[THORChain()]{THORChain}
+THORChain.
+\newblock {THORChain} documentation: Bifrost, chain clients and vault
+  behaviors.
+\newblock \url{https://docs.thorchain.org/}, 2026.
+\newblock Accessed November 2026.
+
+\bibitem[Threshold tBTC()]{tBTC}
+Threshold tBTC.
+\newblock {tBTC} v2 bridge documentation: Redemption.
+\newblock Threshold Network, \url{https://docs.threshold.network/}, 2026.
+\newblock Accessed November 2026.
+
+\bibitem[Volnov et~al.(2025)Volnov, Kuksa, and Zhevlakov]{HOT}
+Peter Volnov, Georgii Kuksa, and Andrey Zhevlakov.
+\newblock {HOT} protocol.
+\newblock arXiv:2512.02287, 2025.
+
+\end{thebibliography}

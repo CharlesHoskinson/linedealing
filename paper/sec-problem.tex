@@ -1,0 +1,50 @@
+\section{The One-Move Spend problem}\label{sec:problem}
+
+\subsection{Requirements}
+
+A protocol solves the One-Move Spend problem for an address with key $X$ if it meets these requirements.
+
+\begin{enumerate}[leftmargin=1.7em,label=\textup{(R\arabic*)}]
+\item \emph{One move.} The owner sends one message and takes no later action. The message depends on no state of the committee other than its public epoch keys.
+\item \emph{Existing address.} The coins stay at the address of $X$ until the spend. No deposit to a new key takes place, and the final signature verifies as an ordinary signature under $X$.
+\item \emph{Committee-side construction.} The committee builds the transaction from finalized chain state at a time after the owner's move, inside limits that the owner fixed.
+\item \emph{One spend.} The target chain executes at most one transaction per owner message.
+\item \emph{Below the threshold.} A coalition smaller than the threshold obtains no signature that the honest nodes did not release, and so cannot recover the key.
+\item \emph{No replay.} A copy, a re-encoding or a migrated copy of the owner's message creates no second authorization.
+\item \emph{Liveness.} If the state of the chain stays eligible, the spend completes.
+\end{enumerate}
+
+The two published forms of \cref{sec:intro} fail on different lines. We call them Form~A and Form~B. In Form~A the committee holds the key and the owner posts an authenticated request~\cite{GS22,TroutPP}; it needs a separate dealing of the key first, a presignature protocol among the nodes, and it meets (R4) by policy only, because a threshold coalition holds the key for all time. In Form~B the owner keeps a share and posts one partial signature that the network completes~\cite{FMMSS25,IkaDocs}; it meets (R4) cryptographically for one message, but the owner's message takes a network presignature as input, which fails (R1), and the owner builds the transaction, which fails (R3).
+
+\subsection{The ideal functionality}
+
+\Cref{fig:foms} defines $\FOMS$. Its parameters are a suite, the functions $\Variant$, $\Select$ and $\Build$ of \cref{sec:tx}, the committee profile $(n,t,f)$, a ledger $L$ for the target chain, and a clock. In the figure, $C$ is the static corrupt set and $b$ is the number of Byzantine nodes in it.
+
+\begin{figure}[t]
+\centering
+\fbox{\begin{minipage}{0.95\linewidth}
+\small
+\textbf{Functionality $\FOMS$}
+\begin{description}[leftmargin=1em,itemsep=2pt,topsep=4pt]
+\item[Post.] On $(\textsf{post}, \hdr)$ from the owner of $X$: if $\rid$ is unused, store $(\rid, \hdr, \textsf{live}, g = 0)$ and leak $(\rid, \hdr)$. The owner takes no further action. Sealed mode: store $\sigma_j = \mathsf{Sign}(x, \Variant(\textsf{intent}, j))$ for every variant $j$.
+\item[Anchor.] On $(\textsf{anchor}, \rid, S)$ from the adversary, where $S$ is a finalized state of $L$, the clock is inside the window, the status is \textsf{live} and $\Eligible(\textsf{intent}, S, g+1, \textsf{prev})$ holds: set $g \leftarrow g+1$. Sealed mode: output $(\rid, tx_j, \sigma_j)$ for $j = \Select(\cdot)$. Open mode: if $g \le \Gen$, output $(\rid, tx, \mathsf{Sign}(x, tx))$ for $tx = \Build(\cdot)$. The adversary delays outputs, but not beyond a bound after stabilization while eligibility persists.
+\item[Close.] When the request is final, void or expired: no further anchors.
+\item[Corruption.]\mbox{}
+  \begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=1pt]
+  \item If $|C| < t$ and $b \le f$, the adversary gets nothing beyond the outputs.
+  \item Sealed, $|C| \ge t$: the adversary gets every $\sigma_j$ of every request of that epoch, at any time, including after close. It never gets $x$.
+  \item Sealed, $|C| < t$ and $b > f$: the adversary chooses anchors among real finalized eligible states and can block. It never gets $x$.
+  \item Open, $|C| \ge t$ or $b > f$: the adversary gets $x$.
+  \end{itemize}
+\item[Never.] Outside the two cases in which the adversary gets $x$, $\FOMS$ signs nothing outside $\{\Variant(\textsf{intent}, j)\}_j$ or the image of $\Build$ on anchored states, signs at most $\Gen$ transactions per open request, and signs nothing for an unknown $\rid$.
+\end{description}
+\end{minipage}}
+\caption{The One-Move Spend functionality.}
+\label{fig:foms}
+\end{figure}
+
+The functionality separates four things that a protocol must supply. The authorization is the owner's \textsf{post}. The binding of the committee to the owner's intent is $\Variant$ and $\Build$. Freshness is the window, the pin, the anchor and the generation counter. The owner is offline after one input. The corruption cases state the two answers to the trust question as leakage: a qualified sealed coalition gets the owner's signatures and never the key, and a qualified open coalition gets the key.
+
+\begin{remark}\label{rem:foms}
+The functionality $\FOMS$ is a definition. The theorems of \cref{sec:security} are game-based statements about unforgeability, secrecy of sealed points and authorization. A proof that line dealing realizes $\FOMS$ in a composable model is open.
+\end{remark}

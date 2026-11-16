@@ -1,0 +1,3 @@
+cand-3c91 = Fable 5.2 (Anthropic)
+cand-a7e2 = Gemini 4 Carbon (Google)
+cand-5d08 = GPT-6 Astra (OpenAI)

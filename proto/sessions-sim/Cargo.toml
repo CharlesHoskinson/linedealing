@@ -1,0 +1,14 @@
+[package]
+name = "sessions-sim"
+version = "0.0.1"
+edition = "2021"
+publish = false
+description = "Throwaway discovery prototype: deterministic simulation of Veritee seald Sessions"
+
+[dependencies]
+sha2 = "=0.10.9"
+
+[profile.release]
+debug = false
+
+[workspace]

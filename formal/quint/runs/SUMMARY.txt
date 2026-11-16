@@ -1,0 +1,36 @@
+=== NoNonceReuse: quint run --main=linedealing --max-steps=30 --max-samples=10000 --invariant=NoNonceReuse linedealing.qnt
+exit 0
+[ok] No violation found (19414ms at 515 traces/second).
+You may increase --max-samples and --max-steps.
+=== AtMostOneExecution: quint run --main=linedealing --max-steps=30 --max-samples=10000 --invariant=AtMostOneExecution linedealing.qnt
+exit 0
+[ok] No violation found (19855ms at 504 traces/second).
+You may increase --max-samples and --max-steps.
+=== LockBeforeShare: quint run --main=linedealing --max-steps=30 --max-samples=10000 --invariant=LockBeforeShare linedealing.qnt
+exit 0
+[ok] No violation found (20923ms at 478 traces/second).
+You may increase --max-samples and --max-steps.
+=== NoTransientTombstone: quint run --main=linedealing --max-steps=30 --max-samples=10000 --invariant=NoTransientTombstone linedealing.qnt
+exit 0
+[ok] No violation found (20989ms at 476 traces/second).
+You may increase --max-samples and --max-steps.
+=== FreezeSafety: quint run --main=linedealing --max-steps=30 --max-samples=10000 --invariant=FreezeSafety linedealing.qnt
+exit 0
+[ok] No violation found (21410ms at 467 traces/second).
+You may increase --max-samples and --max-steps.
+=== witness: quint run --main=linedealing --max-steps=30 --max-samples=10000 --invariant=NoSpendExecuted linedealing.qnt
+exit 0
+[ok] No violation found (19727ms at 507 traces/second).
+You may increase --max-samples and --max-steps.
+=== n7: quint run --main=linedealing_n7_f2 --max-steps=30 --max-samples=3000 --invariant=AllSafetyInvariants linedealing.qnt
+exit 0
+[ok] No violation found (11229ms at 267 traces/second).
+You may increase --max-samples and --max-steps.
+=== broken_prevote: quint run --main=linedealing_broken_prevote --max-steps=30 --max-samples=10000 --invariant=NoNonceReuse linedealing.qnt
+exit 0
+[ok] No violation found (23564ms at 424 traces/second).
+You may increase --max-samples and --max-steps.
+=== broken_rule4: quint run --main=linedealing_broken_rule4 --max-steps=30 --max-samples=10000 --invariant=NoNonceReuse linedealing.qnt
+exit 0
+[ok] No violation found (27771ms at 360 traces/second).
+You may increase --max-samples and --max-steps.

@@ -1,0 +1,626 @@
+    Finished `bench` profile [optimized] target(s) in 0.03s
+     Running benches/protocol.rs (target/release/deps/protocol-7e18a20dd8138098)
+Testing ecdsa/open/n9/t3/owner_deal_encrypt
+Success
+Testing ecdsa/open/n9/t3/step_a
+Success
+Testing ecdsa/open/n9/t3/decrypt
+Success
+Testing ecdsa/open/n9/t3/partial
+Success
+Testing ecdsa/open/n9/t3/verify_partial
+Success
+Testing ecdsa/open/n9/t3/combine
+Success
+
+Testing ecdsa/sealed-k8/n9/t3/owner_deal_encrypt
+Success
+Testing ecdsa/sealed-k8/n9/t3/step_a
+Success
+Testing ecdsa/sealed-k8/n9/t3/decrypt
+Success
+Testing ecdsa/sealed-k8/n9/t3/partial
+Success
+Testing ecdsa/sealed-k8/n9/t3/verify_partial
+Success
+Testing ecdsa/sealed-k8/n9/t3/combine
+Success
+
+Testing bip340/open/n9/t3/owner_deal_encrypt
+Success
+Testing bip340/open/n9/t3/step_a
+Success
+Testing bip340/open/n9/t3/decrypt
+Success
+Testing bip340/open/n9/t3/partial
+Success
+Testing bip340/open/n9/t3/verify_partial
+Success
+Testing bip340/open/n9/t3/combine
+Success
+
+Testing bip340/sealed-k8/n9/t3/owner_deal_encrypt
+Success
+Testing bip340/sealed-k8/n9/t3/step_a
+Success
+Testing bip340/sealed-k8/n9/t3/decrypt
+Success
+Testing bip340/sealed-k8/n9/t3/partial
+Success
+Testing bip340/sealed-k8/n9/t3/verify_partial
+Success
+Testing bip340/sealed-k8/n9/t3/combine
+Success
+
+Testing ecdsa/open/n9/t7/owner_deal_encrypt
+Success
+Testing ecdsa/open/n9/t7/step_a
+Success
+Testing ecdsa/open/n9/t7/decrypt
+Success
+Testing ecdsa/open/n9/t7/partial
+Success
+Testing ecdsa/open/n9/t7/verify_partial
+Success
+Testing ecdsa/open/n9/t7/combine
+Success
+
+Testing ecdsa/sealed-k8/n9/t7/owner_deal_encrypt
+Success
+Testing ecdsa/sealed-k8/n9/t7/step_a
+Success
+Testing ecdsa/sealed-k8/n9/t7/decrypt
+Success
+Testing ecdsa/sealed-k8/n9/t7/partial
+Success
+Testing ecdsa/sealed-k8/n9/t7/verify_partial
+Success
+Testing ecdsa/sealed-k8/n9/t7/combine
+Success
+
+Testing bip340/open/n9/t7/owner_deal_encrypt
+Success
+Testing bip340/open/n9/t7/step_a
+Success
+Testing bip340/open/n9/t7/decrypt
+Success
+Testing bip340/open/n9/t7/partial
+Success
+Testing bip340/open/n9/t7/verify_partial
+Success
+Testing bip340/open/n9/t7/combine
+Success
+
+Testing bip340/sealed-k8/n9/t7/owner_deal_encrypt
+Success
+Testing bip340/sealed-k8/n9/t7/step_a
+Success
+Testing bip340/sealed-k8/n9/t7/decrypt
+Success
+Testing bip340/sealed-k8/n9/t7/partial
+Success
+Testing bip340/sealed-k8/n9/t7/verify_partial
+Success
+Testing bip340/sealed-k8/n9/t7/combine
+Success
+
+Testing ecdsa/open/n16/t6/owner_deal_encrypt
+Success
+Testing ecdsa/open/n16/t6/step_a
+Success
+Testing ecdsa/open/n16/t6/decrypt
+Success
+Testing ecdsa/open/n16/t6/partial
+Success
+Testing ecdsa/open/n16/t6/verify_partial
+Success
+Testing ecdsa/open/n16/t6/combine
+Success
+
+Testing ecdsa/sealed-k8/n16/t6/owner_deal_encrypt
+Success
+Testing ecdsa/sealed-k8/n16/t6/step_a
+Success
+Testing ecdsa/sealed-k8/n16/t6/decrypt
+Success
+Testing ecdsa/sealed-k8/n16/t6/partial
+Success
+Testing ecdsa/sealed-k8/n16/t6/verify_partial
+Success
+Testing ecdsa/sealed-k8/n16/t6/combine
+Success
+
+Testing bip340/open/n16/t6/owner_deal_encrypt
+Success
+Testing bip340/open/n16/t6/step_a
+Success
+Testing bip340/open/n16/t6/decrypt
+Success
+Testing bip340/open/n16/t6/partial
+Success
+Testing bip340/open/n16/t6/verify_partial
+Success
+Testing bip340/open/n16/t6/combine
+Success
+
+Testing bip340/sealed-k8/n16/t6/owner_deal_encrypt
+Success
+Testing bip340/sealed-k8/n16/t6/step_a
+Success
+Testing bip340/sealed-k8/n16/t6/decrypt
+Success
+Testing bip340/sealed-k8/n16/t6/partial
+Success
+Testing bip340/sealed-k8/n16/t6/verify_partial
+Success
+Testing bip340/sealed-k8/n16/t6/combine
+Success
+
+Testing ecdsa/open/n16/t11/owner_deal_encrypt
+Success
+Testing ecdsa/open/n16/t11/step_a
+Success
+Testing ecdsa/open/n16/t11/decrypt
+Success
+Testing ecdsa/open/n16/t11/partial
+Success
+Testing ecdsa/open/n16/t11/verify_partial
+Success
+Testing ecdsa/open/n16/t11/combine
+Success
+
+Testing ecdsa/sealed-k8/n16/t11/owner_deal_encrypt
+Success
+Testing ecdsa/sealed-k8/n16/t11/step_a
+Success
+Testing ecdsa/sealed-k8/n16/t11/decrypt
+Success
+Testing ecdsa/sealed-k8/n16/t11/partial
+Success
+Testing ecdsa/sealed-k8/n16/t11/verify_partial
+Success
+Testing ecdsa/sealed-k8/n16/t11/combine
+Success
+
+Testing bip340/open/n16/t11/owner_deal_encrypt
+Success
+Testing bip340/open/n16/t11/step_a
+Success
+Testing bip340/open/n16/t11/decrypt
+Success
+Testing bip340/open/n16/t11/partial
+Success
+Testing bip340/open/n16/t11/verify_partial
+Success
+Testing bip340/open/n16/t11/combine
+Success
+
+Testing bip340/sealed-k8/n16/t11/owner_deal_encrypt
+Success
+Testing bip340/sealed-k8/n16/t11/step_a
+Success
+Testing bip340/sealed-k8/n16/t11/decrypt
+Success
+Testing bip340/sealed-k8/n16/t11/partial
+Success
+Testing bip340/sealed-k8/n16/t11/verify_partial
+Success
+Testing bip340/sealed-k8/n16/t11/combine
+Success
+
+Testing ecdsa/open/n64/t22/owner_deal_encrypt
+Success
+Testing ecdsa/open/n64/t22/step_a
+Success
+Testing ecdsa/open/n64/t22/decrypt
+Success
+Testing ecdsa/open/n64/t22/partial
+Success
+Testing ecdsa/open/n64/t22/verify_partial
+Success
+Testing ecdsa/open/n64/t22/combine
+Success
+
+Testing ecdsa/sealed-k8/n64/t22/owner_deal_encrypt
+Success
+Testing ecdsa/sealed-k8/n64/t22/step_a
+Success
+Testing ecdsa/sealed-k8/n64/t22/decrypt
+Success
+Testing ecdsa/sealed-k8/n64/t22/partial
+Success
+Testing ecdsa/sealed-k8/n64/t22/verify_partial
+Success
+Testing ecdsa/sealed-k8/n64/t22/combine
+Success
+
+Testing bip340/open/n64/t22/owner_deal_encrypt
+Success
+Testing bip340/open/n64/t22/step_a
+Success
+Testing bip340/open/n64/t22/decrypt
+Success
+Testing bip340/open/n64/t22/partial
+Success
+Testing bip340/open/n64/t22/verify_partial
+Success
+Testing bip340/open/n64/t22/combine
+Success
+
+Testing bip340/sealed-k8/n64/t22/owner_deal_encrypt
+Success
+Testing bip340/sealed-k8/n64/t22/step_a
+Success
+Testing bip340/sealed-k8/n64/t22/decrypt
+Success
+Testing bip340/sealed-k8/n64/t22/partial
+Success
+Testing bip340/sealed-k8/n64/t22/verify_partial
+Success
+Testing bip340/sealed-k8/n64/t22/combine
+Success
+
+Testing ecdsa/open/n64/t43/owner_deal_encrypt
+Success
+Testing ecdsa/open/n64/t43/step_a
+Success
+Testing ecdsa/open/n64/t43/decrypt
+Success
+Testing ecdsa/open/n64/t43/partial
+Success
+Testing ecdsa/open/n64/t43/verify_partial
+Success
+Testing ecdsa/open/n64/t43/combine
+Success
+
+Testing ecdsa/sealed-k8/n64/t43/owner_deal_encrypt
+Success
+Testing ecdsa/sealed-k8/n64/t43/step_a
+Success
+Testing ecdsa/sealed-k8/n64/t43/decrypt
+Success
+Testing ecdsa/sealed-k8/n64/t43/partial
+Success
+Testing ecdsa/sealed-k8/n64/t43/verify_partial
+Success
+Testing ecdsa/sealed-k8/n64/t43/combine
+Success
+
+Testing bip340/open/n64/t43/owner_deal_encrypt
+Success
+Testing bip340/open/n64/t43/step_a
+Success
+Testing bip340/open/n64/t43/decrypt
+Success
+Testing bip340/open/n64/t43/partial
+Success
+Testing bip340/open/n64/t43/verify_partial
+Success
+Testing bip340/open/n64/t43/combine
+Success
+
+Testing bip340/sealed-k8/n64/t43/owner_deal_encrypt
+Success
+Testing bip340/sealed-k8/n64/t43/step_a
+Success
+Testing bip340/sealed-k8/n64/t43/decrypt
+Success
+Testing bip340/sealed-k8/n64/t43/partial
+Success
+Testing bip340/sealed-k8/n64/t43/verify_partial
+Success
+Testing bip340/sealed-k8/n64/t43/combine
+Success
+
+Testing ecdsa/open/n256/t86/owner_deal_encrypt
+Success
+Testing ecdsa/open/n256/t86/step_a
+Success
+Testing ecdsa/open/n256/t86/decrypt
+Success
+Testing ecdsa/open/n256/t86/partial
+Success
+Testing ecdsa/open/n256/t86/verify_partial
+Success
+Testing ecdsa/open/n256/t86/combine
+Success
+
+Testing ecdsa/sealed-k8/n256/t86/owner_deal_encrypt
+Success
+Testing ecdsa/sealed-k8/n256/t86/step_a
+Success
+Testing ecdsa/sealed-k8/n256/t86/decrypt
+Success
+Testing ecdsa/sealed-k8/n256/t86/partial
+Success
+Testing ecdsa/sealed-k8/n256/t86/verify_partial
+Success
+Testing ecdsa/sealed-k8/n256/t86/combine
+Success
+
+Testing bip340/open/n256/t86/owner_deal_encrypt
+Success
+Testing bip340/open/n256/t86/step_a
+Success
+Testing bip340/open/n256/t86/decrypt
+Success
+Testing bip340/open/n256/t86/partial
+Success
+Testing bip340/open/n256/t86/verify_partial
+Success
+Testing bip340/open/n256/t86/combine
+Success
+
+Testing bip340/sealed-k8/n256/t86/owner_deal_encrypt
+Success
+Testing bip340/sealed-k8/n256/t86/step_a
+Success
+Testing bip340/sealed-k8/n256/t86/decrypt
+Success
+Testing bip340/sealed-k8/n256/t86/partial
+Success
+Testing bip340/sealed-k8/n256/t86/verify_partial
+Success
+Testing bip340/sealed-k8/n256/t86/combine
+Success
+
+Testing ecdsa/open/n256/t171/owner_deal_encrypt
+Success
+Testing ecdsa/open/n256/t171/step_a
+Success
+Testing ecdsa/open/n256/t171/decrypt
+Success
+Testing ecdsa/open/n256/t171/partial
+Success
+Testing ecdsa/open/n256/t171/verify_partial
+Success
+Testing ecdsa/open/n256/t171/combine
+Success
+
+Testing ecdsa/sealed-k8/n256/t171/owner_deal_encrypt
+Success
+Testing ecdsa/sealed-k8/n256/t171/step_a
+Success
+Testing ecdsa/sealed-k8/n256/t171/decrypt
+Success
+Testing ecdsa/sealed-k8/n256/t171/partial
+Success
+Testing ecdsa/sealed-k8/n256/t171/verify_partial
+Success
+Testing ecdsa/sealed-k8/n256/t171/combine
+Success
+
+Testing bip340/open/n256/t171/owner_deal_encrypt
+Success
+Testing bip340/open/n256/t171/step_a
+Success
+Testing bip340/open/n256/t171/decrypt
+Success
+Testing bip340/open/n256/t171/partial
+Success
+Testing bip340/open/n256/t171/verify_partial
+Success
+Testing bip340/open/n256/t171/combine
+Success
+
+Testing bip340/sealed-k8/n256/t171/owner_deal_encrypt
+Success
+Testing bip340/sealed-k8/n256/t171/step_a
+Success
+Testing bip340/sealed-k8/n256/t171/decrypt
+Success
+Testing bip340/sealed-k8/n256/t171/partial
+Success
+Testing bip340/sealed-k8/n256/t171/verify_partial
+Success
+Testing bip340/sealed-k8/n256/t171/combine
+Success
+
+Testing ed25519/open/n9/t3/owner_deal_encrypt
+Success
+Testing ed25519/open/n9/t3/step_a
+Success
+Testing ed25519/open/n9/t3/decrypt
+Success
+Testing ed25519/open/n9/t3/partial
+Success
+Testing ed25519/open/n9/t3/verify_partial
+Success
+Testing ed25519/open/n9/t3/combine
+Success
+
+Testing ed25519/sealed-k8/n9/t3/owner_deal_encrypt
+Success
+Testing ed25519/sealed-k8/n9/t3/step_a
+Success
+Testing ed25519/sealed-k8/n9/t3/decrypt
+Success
+Testing ed25519/sealed-k8/n9/t3/partial
+Success
+Testing ed25519/sealed-k8/n9/t3/verify_partial
+Success
+Testing ed25519/sealed-k8/n9/t3/combine
+Success
+
+Testing ed25519/open/n9/t7/owner_deal_encrypt
+Success
+Testing ed25519/open/n9/t7/step_a
+Success
+Testing ed25519/open/n9/t7/decrypt
+Success
+Testing ed25519/open/n9/t7/partial
+Success
+Testing ed25519/open/n9/t7/verify_partial
+Success
+Testing ed25519/open/n9/t7/combine
+Success
+
+Testing ed25519/sealed-k8/n9/t7/owner_deal_encrypt
+Success
+Testing ed25519/sealed-k8/n9/t7/step_a
+Success
+Testing ed25519/sealed-k8/n9/t7/decrypt
+Success
+Testing ed25519/sealed-k8/n9/t7/partial
+Success
+Testing ed25519/sealed-k8/n9/t7/verify_partial
+Success
+Testing ed25519/sealed-k8/n9/t7/combine
+Success
+
+Testing ed25519/open/n16/t6/owner_deal_encrypt
+Success
+Testing ed25519/open/n16/t6/step_a
+Success
+Testing ed25519/open/n16/t6/decrypt
+Success
+Testing ed25519/open/n16/t6/partial
+Success
+Testing ed25519/open/n16/t6/verify_partial
+Success
+Testing ed25519/open/n16/t6/combine
+Success
+
+Testing ed25519/sealed-k8/n16/t6/owner_deal_encrypt
+Success
+Testing ed25519/sealed-k8/n16/t6/step_a
+Success
+Testing ed25519/sealed-k8/n16/t6/decrypt
+Success
+Testing ed25519/sealed-k8/n16/t6/partial
+Success
+Testing ed25519/sealed-k8/n16/t6/verify_partial
+Success
+Testing ed25519/sealed-k8/n16/t6/combine
+Success
+
+Testing ed25519/open/n16/t11/owner_deal_encrypt
+Success
+Testing ed25519/open/n16/t11/step_a
+Success
+Testing ed25519/open/n16/t11/decrypt
+Success
+Testing ed25519/open/n16/t11/partial
+Success
+Testing ed25519/open/n16/t11/verify_partial
+Success
+Testing ed25519/open/n16/t11/combine
+Success
+
+Testing ed25519/sealed-k8/n16/t11/owner_deal_encrypt
+Success
+Testing ed25519/sealed-k8/n16/t11/step_a
+Success
+Testing ed25519/sealed-k8/n16/t11/decrypt
+Success
+Testing ed25519/sealed-k8/n16/t11/partial
+Success
+Testing ed25519/sealed-k8/n16/t11/verify_partial
+Success
+Testing ed25519/sealed-k8/n16/t11/combine
+Success
+
+Testing ed25519/open/n64/t22/owner_deal_encrypt
+Success
+Testing ed25519/open/n64/t22/step_a
+Success
+Testing ed25519/open/n64/t22/decrypt
+Success
+Testing ed25519/open/n64/t22/partial
+Success
+Testing ed25519/open/n64/t22/verify_partial
+Success
+Testing ed25519/open/n64/t22/combine
+Success
+
+Testing ed25519/sealed-k8/n64/t22/owner_deal_encrypt
+Success
+Testing ed25519/sealed-k8/n64/t22/step_a
+Success
+Testing ed25519/sealed-k8/n64/t22/decrypt
+Success
+Testing ed25519/sealed-k8/n64/t22/partial
+Success
+Testing ed25519/sealed-k8/n64/t22/verify_partial
+Success
+Testing ed25519/sealed-k8/n64/t22/combine
+Success
+
+Testing ed25519/open/n64/t43/owner_deal_encrypt
+Success
+Testing ed25519/open/n64/t43/step_a
+Success
+Testing ed25519/open/n64/t43/decrypt
+Success
+Testing ed25519/open/n64/t43/partial
+Success
+Testing ed25519/open/n64/t43/verify_partial
+Success
+Testing ed25519/open/n64/t43/combine
+Success
+
+Testing ed25519/sealed-k8/n64/t43/owner_deal_encrypt
+Success
+Testing ed25519/sealed-k8/n64/t43/step_a
+Success
+Testing ed25519/sealed-k8/n64/t43/decrypt
+Success
+Testing ed25519/sealed-k8/n64/t43/partial
+Success
+Testing ed25519/sealed-k8/n64/t43/verify_partial
+Success
+Testing ed25519/sealed-k8/n64/t43/combine
+Success
+
+Testing ed25519/open/n256/t86/owner_deal_encrypt
+Success
+Testing ed25519/open/n256/t86/step_a
+Success
+Testing ed25519/open/n256/t86/decrypt
+Success
+Testing ed25519/open/n256/t86/partial
+Success
+Testing ed25519/open/n256/t86/verify_partial
+Success
+Testing ed25519/open/n256/t86/combine
+Success
+
+Testing ed25519/sealed-k8/n256/t86/owner_deal_encrypt
+Success
+Testing ed25519/sealed-k8/n256/t86/step_a
+Success
+Testing ed25519/sealed-k8/n256/t86/decrypt
+Success
+Testing ed25519/sealed-k8/n256/t86/partial
+Success
+Testing ed25519/sealed-k8/n256/t86/verify_partial
+Success
+Testing ed25519/sealed-k8/n256/t86/combine
+Success
+
+Testing ed25519/open/n256/t171/owner_deal_encrypt
+Success
+Testing ed25519/open/n256/t171/step_a
+Success
+Testing ed25519/open/n256/t171/decrypt
+Success
+Testing ed25519/open/n256/t171/partial
+Success
+Testing ed25519/open/n256/t171/verify_partial
+Success
+Testing ed25519/open/n256/t171/combine
+Success
+
+Testing ed25519/sealed-k8/n256/t171/owner_deal_encrypt
+Success
+Testing ed25519/sealed-k8/n256/t171/step_a
+Success
+Testing ed25519/sealed-k8/n256/t171/decrypt
+Success
+Testing ed25519/sealed-k8/n256/t171/partial
+Success
+Testing ed25519/sealed-k8/n256/t171/verify_partial
+Success
+Testing ed25519/sealed-k8/n256/t171/combine
+Success
+

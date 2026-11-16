@@ -1,0 +1,32 @@
+typecheck exit 0
+test exit 0
+design exit 0
+witness W_restartWithPending exit 1
+witness W_bindAfterLoss exit 1
+witness W_reissueEarly exit 1
+witness W_spendAfterFinal exit 1
+witness W_dupDropped exit 1
+boardLoss C11_bfNoDupInForce exit 1
+boardLoss C11_bfOneHostSpend exit 0
+mutant mut1_windowOnly exit 1 violation] Found an issue
+mutant mut2_highestPending exit 1 violation] Found an issue
+mutant mut3_noCarryCheck exit 1 violation] Found an issue
+mutant mut4_doubleSign exit 1 violation] Found an issue
+mutant mut5_spentNf exit 1 violation] Found an issue
+mutant mut6_partialRoot exit 1 violation] Found an issue
+mutant mut7_replayVoid exit 1 violation] Found an issue
+mutant mut8_boardDupNf exit 1 violation] Found an issue
+mutant mut9_noLandedCheck exit 1 violation] Found an issue
+mutant mut10_noSignerCheck exit 1 violation] Found an issue
+mutant mut11_proofBelowPendingMin exit 1 violation] Found an issue
+target mut1_windowOnly C12_C16_oneTicketPerSlot: Found an issue
+target mut2_highestPending C12_C16_oneTicketPerSlot: Found an issue
+target mut3_noCarryCheck C11_oneOutcomePerAuth: Found an issue
+target mut4_doubleSign C11_oneOutcomePerAuth: Found an issue
+target mut5_spentNf C11_oneAuthorizePerState: Found an issue
+target mut6_partialRoot C11_settledByCheckpoint: Found an issue
+target mut7_replayVoid C11_noLostSuccessor: Found an issue
+target mut8_boardDupNf C11_bfNoDupInForce: Found an issue
+target mut9_noLandedCheck C11_bfNoDupInForce: Found an issue
+target mut10_noSignerCheck C11_bfLandedDisjoint: Found an issue
+target mut11_proofBelowPendingMin C12_C16_oneTicketPerSlot: Found an issue

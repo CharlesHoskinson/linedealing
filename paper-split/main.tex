@@ -1,0 +1,86 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,array,longtable}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
+
+% The byline. The blinded review build sets \splitauthor to empty.
+\providecommand{\splitauthor}{Charles Hoskinson}
+\hypersetup{pdfauthor={\splitauthor},pdftitle={Split-Line Dealing}}
+
+\input{results-split}
+
+% ---------- theorem environments (one counter)
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{statement}[theorem]{Open statement}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\crefname{proposition}{Proposition}{Propositions}
+\crefname{statement}{Open statement}{Open statements}
+
+% ---------- notation
+\newcommand{\Zq}{\mathbb{Z}_q}
+\newcommand{\GG}{\mathbb{G}}
+\newcommand{\Com}{\mathsf{Com}}
+\newcommand{\Eval}{\mathsf{Eval}}
+\newcommand{\Share}{\mathsf{Share}}
+\newcommand{\KDF}{\mathsf{KDF}}
+\newcommand{\Hc}{H_{c}}
+\newcommand{\Hq}[1]{H_{\mathsf{#1}}}
+\newcommand{\hd}{\mathsf{hd}}
+\newcommand{\dd}{\mathsf{dd}}
+\newcommand{\eid}{\mathsf{eid}}
+\newcommand{\tk}{\mathsf{tk}}
+\newcommand{\tkc}{\mathsf{tkc}}
+\newcommand{\ic}{\mathsf{ic}}
+\newcommand{\nf}{\mathsf{nf}}
+\newcommand{\rh}{\mathsf{rh}}
+\newcommand{\pmh}{\mathsf{pm}}
+\newcommand{\CL}{\mathsf{CL}}
+\newcommand{\auth}{\mathsf{auth}}
+\newcommand{\msg}[1]{\textsf{#1}}
+\newcommand{\xf}{x_{f}}
+\newcommand{\Xf}{X_{f}}
+\newcommand{\tw}{\mathit{tw}}
+\newcommand{\ctil}{\tilde{c}}
+\newcommand{\Gmax}{G_{\max}}
+\newcommand{\Nh}{N_{h}}
+\newcommand{\lean}[1]{\texttt{\detokenize{#1}}}
+% A right-aligned reference that moves to its own line when it does not fit.
+\newcommand{\by}[1]{{\par\nopagebreak\raggedleft\footnotesize\upshape Lean: #1\par}}
+\newcommand{\us}{\,\textmu s}
+
+\title{Split-Line Dealing: Co-Custody and Operator Blindness for One-Move Spends}
+\author{\splitauthor}
+\date{}
+
+\begin{document}
+\maketitle
+
+\input{sec-abstract}
+\input{sec-intro}
+\input{sec-setting}
+\input{sec-construction}
+\input{sec-security}
+\input{sec-blindness}
+\input{sec-formal}
+\input{sec-eval}
+\input{sec-related}
+\input{sec-limits}
+
+\bibliographystyle{plainnat}
+\bibliography{refs-split}
+\end{document}

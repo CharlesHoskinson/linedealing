@@ -1,0 +1,75 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,array}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
+
+\input{results}
+
+% ---------- theorem environments (one counter)
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ---------- notation
+\newcommand{\FOMS}{\mathcal{F}_{\mathsf{OMS}}}
+\newcommand{\qr}{\hat{q}}                      % quorum
+\newcommand{\Zq}{\mathbb{Z}_q}
+\newcommand{\GG}{\mathbb{G}}
+\newcommand{\Adv}{\mathsf{Adv}}
+\newcommand{\rid}{\mathsf{rid}}
+\newcommand{\hd}{\mathsf{hd}}
+\newcommand{\midh}{\mathsf{mid}}
+\newcommand{\ct}{\mathsf{ct}}
+\newcommand{\hdr}{\mathsf{hdr}}
+\newcommand{\deal}{\mathsf{deal}}
+\newcommand{\dg}{\mathsf{dg}}
+\newcommand{\Eval}{\mathsf{Eval}}
+\newcommand{\Share}{\mathsf{Share}}
+\newcommand{\Com}{\mathsf{Com}}
+\newcommand{\Build}{\mathsf{Build}}
+\newcommand{\Variant}{\mathsf{Variant}}
+\newcommand{\Select}{\mathsf{Select}}
+\newcommand{\Eligible}{\mathsf{Eligible}}
+\newcommand{\Auth}{\mathsf{Auth}}
+\newcommand{\msg}[1]{\textsf{#1}}
+\newcommand{\Hh}[1]{H_{\mathsf{#1}}}
+\newcommand{\Qc}[1]{Q_{\mathsf{#1}}}
+\newcommand{\us}{\,\textmu s}
+\newcommand{\Gen}{\Gamma}                      % number of open generations
+
+\title{Line Dealing: One-Move Spend from Existing Addresses}
+\author{Charles Hoskinson}
+\date{}
+
+\begin{document}
+\maketitle
+
+\input{sec-abstract}
+\input{sec-intro}
+\input{sec-setting}
+\input{sec-problem}
+\input{sec-construction}
+\input{sec-security}
+\input{sec-impossibility}
+\input{sec-formal}
+\input{sec-eval}
+\input{sec-related}
+\input{sec-limits}
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\end{document}

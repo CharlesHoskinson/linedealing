@@ -1,0 +1,29 @@
+\section{The impossibility}\label{sec:impossibility}
+
+Sealed mode limits a fully corrupt committee by cryptography, and open mode limits only a committee with an honest threshold. One would like a protocol with the flexibility of open mode and the limit of sealed mode: the committee builds the transaction from later chain state, and even a coalition that could finish the protocol alone obtains one signature only. No one-move protocol does this, because the state of a coalition is data, and data can be copied.
+
+Fix a one-move protocol. After the owner's message a coalition holds a joint state $st$ in some set $\Sigma$, which includes its randomness. We call the coalition \emph{qualified} if its joint state finishes the honest protocol: there is a function
+\[
+  \mathsf{step} : \Sigma \times \mathsf{Chain} \to \Sigma \times \mathsf{Sig}
+\]
+that maps the state and a later chain state to the state kept after the step and a signature. The owner sends nothing further, so $\mathsf{step}$ has no other input. We say that the protocol \emph{signs both} from $st$ if $\mathsf{step}(st, S_0)$ outputs a valid signature on $m_0$ and $\mathsf{step}(st, S_1)$ outputs a valid signature on $m_1$, for chain states $S_0, S_1$ and messages $m_0 \neq m_1$.
+
+\begin{theorem}[No confinement of a qualified coalition; proved]\label{thm:imposs}
+There is one strategy for a qualified coalition, the same for every state and every pair of messages, that outputs valid signatures on both $m_0$ and $m_1$ from every state from which the protocol signs both. This holds also when the honest step erases its whole state.
+\end{theorem}
+
+\begin{proof}
+The strategy copies $st$ and evaluates $\mathsf{step}(st, S_0)$ and $\mathsf{step}(st, S_1)$, each on its own copy. Each evaluation is the honest computation, so each output is valid by hypothesis. The strategy reads only the state before the step, so what the honest step keeps or erases afterwards does not enter.
+\end{proof}
+
+The argument uses only that the continuation is a function of state that the coalition holds. Goldwasser, Kalai and Rothblum make the single-holder remark in their work on one-time programs, where it motivates one-time hardware~\cite{GKR08}. \Cref{thm:imposs} lifts it to the joint state of a coalition in a committee protocol and draws two consequences for the One-Move Spend problem.
+
+First, the strongest limit that any one-move protocol can enforce against a qualified coalition is ``only messages that the owner's move already determines''. If the set of signable messages depends on later chain state, the coalition obtains every message in that set that some chain state selects. Second, two signatures on owner-determined messages are harmless only if the chain rejects one of them. Sealed mode reaches this bound. Its signable set is the fee grid, which the owner's message fixes, and all its members spend the pin. The chain plays the role that one-time hardware plays in~\cite{GKR08}.
+
+Open mode is on the other side of the bound, and there the damage is larger than a second spend.
+
+\begin{proposition}[Two points determine the line; proved]\label{prop:twopoints}
+Let $s_0, s_1$ be ECDSA signature scalars under one nonce point $R$, with $r \neq 0$, on sighashes $h_0 \neq h_1$. Then $s_0 \neq s_1$, $k = (h_0 - h_1)/(s_0 - s_1)$ and $x = (s_0 k - h_0)/r$. For the two-nonce Schnorr line of \cref{fig:open}, two signatures on one slot do not determine $x$, and three signatures with a nonzero coefficient determinant do.
+\end{proposition}
+
+For an open line the line is the key. This is why the open one-spend limit rests on the lock certificate, the slot ledger and the bound of $f$ Byzantine nodes, and why line dealing offers both modes and does not present open mode as a cheaper form of sealed mode. An owner who can enumerate the transactions in advance should seal them. An owner who needs the committee to build the transaction accepts an honest-threshold limit, and no protocol of this shape offers a better one.

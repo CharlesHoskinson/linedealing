@@ -1,0 +1,33 @@
+\section{Blindness}\label{sec:blindness}
+
+An \emph{operator} is the person who runs a node. In TEE mode the operator and the enclave are different parties; in non-TEE mode the node process is the operator. \Cref{tab:views} gives what each party sees at each step. In TEE mode the operator sees, after the post, ciphertext, sizes and timing, and the public board fields that every observer sees in \cref{tab:views}: vote kinds, the selected variant index, the checkpoint pool fields and the ECDSA slot sessions. The enclave's confidentiality carries the guarantee (C10, assumed).
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Step & Board observer and host chain & Node in non-TEE mode \\
+\midrule
+Birth & a frame of the common shape; for an OR gate, the escrow dealing and the members' acknowledgements, which mark a P2 address & every shard point, $\tw$, $X$, $H(\Gamma)$, chain, profile, time \\
+Actor pools & pool posts under pseudonym keys & the same \\
+ECDSA slot session & $X$, every $R_\ell$, every party's commitments & the same \\
+Post and order & a 16\,KiB frame, its epoch, expiry and authorization reference; for a board-first charter also the authorization call & the same \\
+Open & nothing new & request type, tickets, fee rates, the selection rule, slot ids, the number of other actors and the collection deadline; on ECDSA the slot ids name the account \\
+Collect & frames of the common shape & which frames attach to which request \\
+Anchor and select & the selected variant index per generation & the same \\
+Release and combine & nothing & combiners: every contribution to the released variant, its capsule, the transaction, $R$, the weighted leaf points and pool ids of the signing set \\
+Broadcast & the transaction & the transaction and the combiner's network address \\
+\bottomrule
+\end{tabularx}
+\caption{Views. The bodies of the variants that are never selected stay sealed for everyone.}
+\label{tab:views}
+\end{table}
+
+\paragraph{The ticket.} In non-TEE mode a node signs a ticket and nothing else before release. The ticket carries no $X$, $Q$, $m$, $t_{\mathsf{tap}}$, actor point or pool point. $R_A$ contains a fresh uniform point, $\pmh$ is a salted hash, and $x(R)$ is a function of $R_A$, the slot points and $\rho$ that the node computes in any case. The challenge $\ctil$ is not salted: a node that can list the candidate pairs $(x(Q), m)$ of a request, such as a known input paid to one of two known destinations, computes the challenge for each and finds the one that matches. The ticket therefore hides the address and the message from a node that cannot enumerate them. Non-TEE blindness is \emph{blindness until release}: on the Schnorr suites, a node that cannot enumerate the candidate pairs cannot select, delay or refuse a request by its address, amount or destination before it releases its share. The opened header shows the suite, so a node can refuse a whole suite. On ECDSA the slot ids name the account when the header opens (\cref{tab:views}), so a node can refuse by account before release; the amount and the destination stay hidden on the same enumeration condition. After broadcast any node can match $R$ against the host chain.
+
+\paragraph{Actors.} Blindness is a property toward operators and outside observers. A named actor reads the header and every capsule of the request it co-signs, and an actor that colludes with an operator lets that operator read them before ordering. An actor that is not named sees an actor capsule it cannot open, which looks like padding. In non-TEE mode a node learns of the actors only their number, the frame attachments and, on ECDSA, each contribution's session party index, until the combiners see the leaf points at release (C21). Pool keys are fresh per pool, so two requests that draw on one pool link only through its pseudonym, and only after release.
+
+\paragraph{Censorship.} A node decides to order an envelope before it can read anything inside it, so a coalition that refuses to order must refuse blindly, and with at most $f$ such nodes the board still orders the envelope. After ordering, censorship needs $f + 1$ nodes that refuse to release, because $t = n - f$ honest nodes suffice.
+
+\paragraph{Limits.} The protocol does not hide the host-chain transaction graph. The ECDSA slot session runs on the board in the clear, so every observer sees $X$ and every $R_\ell$, and an ECDSA signature shows $r = x(R_\ell)$, which links a spend to its account; running the session inside envelopes is open (O35). In non-TEE mode nodes see $X$ at birth and link it to the spend by $R$, and the birth check of a shard created for an offline holder shows the holder's receive key $U$, which links that holder's addresses; a zero-knowledge birth proof is open (O8). The authorization reaches the ledger when the envelope reaches the board, so an observer of both can match them by timing within a block window (O12). Board votes are public, and the kinds a request collects show its class. Each checkpoint shows the four pool fields of each committee pool, so anyone learns per suite how many slots were reserved per interval and how many live requests hold slots. A reissue's authorization carries the VOID leaf of its stalled request, so a ledger observer links the two authorizations of one record. With $t$ or more corrupt non-TEE nodes or broken enclaves, every envelope is readable before ordering, because they decrypt $t$ shares of $\kappa_0$.

@@ -1,0 +1,59 @@
+# INSTANCE MAIN INIT STEP MAX_STEPS SAMPLES N_TRACES SEED [INVARIANT]
+# n = 4, f = 1: sampled traces under each init and step of REPORT.md (safety invariants checked)
+n4 mbt_n4 cInitArmedOpen cStepAdversarial 40 20 20 1001
+n4 mbt_n4 cInitArmedOpen cStepAdversarial 40 20 20 1002
+n4 mbt_n4 cInitArmed cStepAdversarial 40 20 20 1011
+n4 mbt_n4 cInitArmed cStepAdversarial 40 20 20 1012
+n4 mbt_n4 cInitArmedOpenReshare cStepAdversarial 40 20 20 1021
+n4 mbt_n4 cInitArmedOpenReshare cStepAdversarial 40 20 20 1022
+n4 mbt_n4 cInitArmed cStepHonestProgress 40 20 20 1031
+n4 mbt_n4 cInitArmed cStepHonestProgress 40 20 20 1032
+n4 mbt_n4 cInitArmedOpen cStepProgressFaults 40 20 20 1041
+n4 mbt_n4 cInitArmedOpen cStepProgressFaults 40 20 20 1042
+n4 mbt_n4 cInit cStepWeighted 40 20 20 1051
+n4 mbt_n4 cInit cStepWeighted 40 20 20 1052
+n4 mbt_n4 cInit cStep 30 20 20 1061
+n4 mbt_n4 cInitArmed cStep 30 20 20 1062
+# n = 4: directed traces to rare states (witness negations, see REPORT.md section 4)
+n4 mbt_n4 cInitArmed cStepHonestProgress 40 3000 1 3001 cNoGen2Spend
+n4 mbt_n4 cInitArmed cStepHonestProgress 40 2000 1 3002 cNoEpoch2Partial
+n4 mbt_n4 cInitArmed cStepHonestProgress 40 3000 1 3003 cNoHandoverWithOldPartial
+n4 mbt_n4 cInitArmedOpen cStepProgressFaults 40 2000 1 3004 cNoRollbackAfterPartial
+n4 mbt_n4 cInitArmedOpen cStepProgressFaults 40 2000 1 3005 cNoRollbackAfterPrevote
+n4 mbt_n4 cInitArmed cStepHonestProgress 40 2000 1 3006 cNoFinal
+n4 mbt_n4 cInitArmed cStepAdversarial 40 2000 1 3007 cNoVoid
+n4 mbt_n4 cInitArmed cStepAdversarial 40 2000 1 3008 cNoExpired
+n4 mbt_n4 cInitArmed cStepHonestProgress 40 2000 1 3009 cNoGen2
+n4 mbt_n4 cInitArmedOpenReshare cStepAdversarial 40 2000 1 3010 cNoReshareDone
+n4 mbt_n4 cInitArmedOpen cStepProgressFaults 40 3000 1 3011 cNoFailedAttempt
+n4 mbt_n4 cInitArmed cStepAdversarial 40 3000 1 3012 cNoFailedAttempt
+n4 mbt_n4 cInitArmed cStepProgressFaults 40 3000 1 3013 cNoFailedAttempt
+n4 mbt_n4 cInitArmedOpen cStepProgressFaults 40 3000 1 3014 cNoAttempt2Anchor
+n4 mbt_n4 cInitArmed cStepAdversarial 40 3000 1 3015 cNoAttempt2Anchor
+n4 mbt_n4 cInitArmed cStepProgressFaults 40 3000 1 3016 cNoAttempt2Anchor
+n4 mbt_n4 cInitArmed cStepHonestProgress 40 3000 1 3017 cNoGen2Spend
+n4 mbt_n4 cInitArmedOpenReshare cStepAdversarial 40 3000 1 3018 cNoHandoverWithOldPartial
+# n = 7, f = 2
+n7 mbt_n7 cInitArmed cStepHonestProgress 60 15 15 2001
+n7 mbt_n7 cInitArmed cStepHonestProgress 60 15 15 2002
+n7 mbt_n7 cInitArmedOpen cStepAdversarial 60 15 15 2011
+n7 mbt_n7 cInitArmedOpen cStepAdversarial 60 15 15 2012
+n7 mbt_n7 cInitArmedOpenReshare cStepAdversarial 60 15 15 2021
+n7 mbt_n7 cInit cStepWeighted 60 15 15 2031
+n7 mbt_n7 cInitArmedOpen cStepProgressFaults 60 15 15 2041
+n7 mbt_n7 cInitArmed cStepHonestProgress 80 1000 1 2051 cNoSpendExecuted
+n7 mbt_n7 cInitArmed cStepHonestProgress 80 1000 1 2052 cNoReshareDone
+n7 mbt_n7 cInitArmedOpen cStepProgressFaults 60 1000 1 2053 cNoFailedAttempt
+n7 mbt_n7 cInitArmedOpen cStepProgressFaults 60 1000 1 2054 cNoRollbackAfterPartial
+n7 mbt_n7 cInitArmed cStepHonestProgress 80 1000 1 2055 cNoEpoch2Partial
+# mutants: counterexamples of NoNonceReuse (seeds and configurations of REPORT.md section 5)
+broken_prevote mbt_broken_prevote cInitArmedOpen cStepAdversarial 40 3000 1 201 cNoNonceReuse
+broken_prevote mbt_broken_prevote cInitArmedOpen cStepWeighted 40 3000 1 203 cNoNonceReuse
+broken_prevote mbt_broken_prevote cInitArmedOpen cStepAdversarial 40 3000 1 211 cNoNonceReuse
+broken_prevote mbt_broken_prevote cInitArmedOpen cStepAdversarial 40 3000 1 212 cNoNonceReuse
+broken_rule4 mbt_broken_rule4 cInitArmedOpen cStepAdversarial 40 3000 1 202 cNoNonceReuse
+broken_rule4 mbt_broken_rule4 cInitArmedOpen cStepWeighted 40 3000 1 204 cNoNonceReuse
+broken_rule4 mbt_broken_rule4 cInit cStepWeighted 40 3000 1 207 cNoNonceReuse
+broken_rule4 mbt_broken_rule4 cInitArmedOpen cStep 40 3000 1 209 cNoNonceReuse
+broken_rule4 mbt_broken_rule4 cInitArmedOpen cStepAdversarial 40 3000 1 213 cNoNonceReuse
+broken_rule4 mbt_broken_rule4 cInitArmedOpen cStepAdversarial 40 3000 1 214 cNoNonceReuse

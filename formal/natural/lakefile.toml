@@ -1,0 +1,23 @@
+name = "line-dealing-natural"
+defaultTargets = ["LineDealingNatural"]
+
+[leanOptions]
+autoImplicit = false
+
+[[require]]
+name = "mathlib"
+path = "~/Projects/Moriarty-wt/mca-lean/formal/mca-lean/.lake/packages/mathlib"
+
+[[require]]
+name = "natural"
+git = "https://github.com/medovina/natural_lean.git"
+rev = "c9768172f244b36665563397d4acd170a8084816"
+
+[[lean_lib]]
+name = "LineDealingNatural"
+
+# The native development (source of truth), compiled here from ../lean so that every natural
+# theorem can be checked against its native counterpart. No extra dependency, no manifest change.
+[[lean_lib]]
+name = "LineDealing"
+srcDir = "../lean"

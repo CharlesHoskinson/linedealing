@@ -1,0 +1,364 @@
+# Architecture and Technical Decisions baseline for seald Sessions.
+# The normative requirements are the SS statements in spec.md. Entries under
+# `requirements` reference them by ID and never restate them.
+protocol: spec-refinement/v1
+project_id: veritee-seald-sessions
+artifact_id: BASE-001
+revision: 3
+revision_note: Revision 1 is the baseline of veritee commit 782b1be. Revision 2 adds the item 28 resolutions. Revision 3 moves every per-event Midnight write to the seat logs on the board under per-checkpoint roots (SRC-011).
+sources:
+  - id: SRC-001
+    locator: openspec/changes/add-seald-sessions/design.md
+    authority: Design of record for the change. Its "Decisions" 1 to 4 are owner-confirmed.
+    revision: branch committee-sessions, base ae7c18c, with the item 27 and item 28 commits
+  - id: SRC-002
+    locator: openspec/changes/add-seald-sessions/specs/seald-sessions/spec.md
+    authority: The only normative requirement list (SS-001 to SS-135).
+    revision: branch committee-sessions, base ae7c18c, with the item 27 and item 28 commits
+  - id: SRC-003
+    locator: openspec/changes/add-seald-sessions/proposal.md
+    authority: Scope and impact of the change.
+    revision: branch committee-sessions, base ae7c18c, with the item 27 and item 28 commits
+  - id: SRC-004
+    locator: ~/Projects/mpcexperiments/design/enhancement/sessions-review/TRIAGE.md
+    authority: Lead triage of the blinded review, with the table "Decisions for MADR (item 27)".
+    revision: mpcexperiments 67b76b9, sha256 421266510e22c49cad4bcd2fa43eb07ce8d9ea45ff26f9035bde4865d4902b5a
+  - id: SRC-005
+    locator: ~/Projects/mpcexperiments/design/enhancement/sessions-review/QUINT-ITEMS.md
+    authority: Quint properties QI-01 to QI-20 for item 22.
+    revision: mpcexperiments item 28 commit, sha256 7a6f94b380179ca338ccc509e895ffb06c9c38dad6b4a80bfd359d0eea50074c
+  - id: SRC-006
+    locator: ~/Projects/mpcexperiments/design/enhancement/sessions-review/reviewer-a.md
+    authority: Review findings A-F1 to A-F23 (evidence, not a decision).
+    revision: sha256 3fce3dba6894fe6f2839227728268a31f9ea57da9a9af044b8dffc4179b1b7d8
+  - id: SRC-007
+    locator: ~/Projects/mpcexperiments/design/enhancement/sessions-review/reviewer-b.md
+    authority: Review findings B-F1 to B-F17 (evidence, not a decision).
+    revision: sha256 990d51394b45a2881951a5ee0e425c9910d1be0236f9c43902792d6795514a19
+  - id: SRC-008
+    locator: ~/Projects/mpcexperiments/LOOP.md, Log entries of 2026-11-14 (owner confirmation of the four picks, item 18 open-question decisions, item 19 triage)
+    authority: Owner confirmation of design.md decisions 1 to 4. Lead decisions under owner AFK delegation.
+    revision: sha256 919cd744a300ee7eaaf586bc7d00ec109d8dc0931cfd02fabd72ae2af390cec6
+  - id: SRC-009
+    locator: ~/Projects/mpcexperiments/design/enhancement/DESIGN.md, sections 4.1, 7.4, 7.7, 7.11 and 7.13
+    authority: Split-line dealing design of record (base protocol of the nonce slots and the cold start).
+    revision: mpcexperiments 67b76b9, sha256 9a5b1c09bb6e2f56b5c09143fa7f9ad828c751aa51fb6538f1c371f8c28b5017
+  - id: SRC-010
+    locator: ~/Projects/mpcexperiments/proto/sessions-sim/QUESTIONS.md and REPORT.md
+    authority: Prototype findings Q-01 to Q-11 (evidence, not a decision) and the fixed-rule runs of item 28.
+    revision: mpcexperiments item 28 commit, QUESTIONS.md sha256 3ca80bfa7d29cb9587b507334354555b335a496f33883d136e3e08ed12cbf53e
+  - id: SRC-011
+    locator: owner ruling of 2026-11-14 in the working session (mpcexperiments LOOP.md item 29)
+    authority: "Owner ruling, verbatim: 'use the batched design you are insane to make that many commits to midnight save space, tokens, and transactions'. Standing rule: no design writes to Midnight per event; it commits per checkpoint and keeps item data on the board or at peers, checked against the root."
+    revision: 2026-11-14
+  - id: SRC-012
+    locator: ~/Projects/mpcexperiments/design/enhancement/DESIGN.md, sections 7.4 (seat log), 7.7, 7.11, 7.13, 11.6 and open item O32; DECISIONS 51
+    authority: Split-line dealing design of record after item 25.
+    revision: mpcexperiments 2e1e26f, sha256 99602062aaee95f60b51ae7dddbe5d03d7254f9ad1f49ba341b197e8e15f4b57
+outcomes_note: The owner asked that sessions survive any failure, persist nonce material under the witness fence and form a generic seald primitive (SRC-008). G1 to G5 derive the observable goals from that request. The owner has not confirmed their wording.
+outcomes:
+  - {id: G1, state: provisional, basis: derived, version: 1, source_refs: [SRC-001, SRC-008], statement_ref: design.md G1, success: Every session opens again after a VM reboot, a replacement VM in the same seat and a whole-committee restart.}
+  - {id: G2, state: provisional, basis: derived, version: 1, source_refs: [SRC-001, SRC-008], statement_ref: design.md G2, success: No nonce slot releases partials for two tickets while c <= n - 1 - 2f.}
+  - {id: G3, state: provisional, basis: derived, version: 1, source_refs: [SRC-001, SRC-008], statement_ref: design.md G3, success: No nonce slot is used twice after a whole-committee restart, also from rolled-back disks. The loss is bounded as D-002 states.}
+  - {id: G4, state: provisional, basis: derived, version: 1, source_refs: [SRC-001, SRC-008], statement_ref: design.md G4, success: A destroyed entry or a consumed slot share does not open again from an old ciphertext within the bound of G2.}
+  - {id: G5, state: provisional, basis: derived, version: 1, source_refs: [SRC-001, SRC-008], statement_ref: design.md G5, success: Each session key needs partials from t distinct share holders that serve only the latest boot and an approved app image.}
+actors:
+  - {id: ACT-001, name: committee application, role: Calls seald.sock, votes on request headers, writes checkpoints and ends requests that hold burned slots.}
+  - {id: ACT-002, name: operator, role: Runs the VM of one seat. Can roll back the disk of its seat and boot an own app disk.}
+  - {id: ACT-003, name: recovery group E, role: Reprovisions committee shares and unused ECDSA slots (split-line DESIGN 7.11).}
+  - {id: ACT-004, name: owner of a request, role: Posts a voided request again.}
+scope:
+  included:
+    - The seald session store, its records, keys, restore and app API.
+    - The peer witness for session versions, nonce slots and replicas.
+    - The checkpoint fields, the seat logs on the board, the RestoreDone statement and the contract rules that seald depends on.
+  excluded:
+    - The recovery group transport (split-line DESIGN 7.11). The design depends on it for account-pool supply.
+    - Confidentiality against t colluding broken enclaves (design non-goal).
+    - Liveness with fewer than t live nodes (design non-goal).
+glossary:
+  - {id: GLO-001, term: seat, context: CTX-001, meaning: One committee position, node_index in the code and node_id in split-line DESIGN.}
+  - {id: GLO-002, term: nonce slot, context: CTX-001, meaning: "One committee nonce slot of split-line DESIGN 4.1, named by (purpose, index). States: absent, free, bound(share, d), burned."}
+  - {id: GLO-003, term: sequential pool, context: CTX-001, meaning: A pool that reserves indices in increasing order, listed in sequential_pools.}
+  - {id: GLO-004, term: account pool, context: CTX-001, meaning: Any other session that holds nonce slots, such as the per-address ECDSA slots.}
+  - {id: GLO-005, term: version, context: CTX-001, meaning: "In the session store: v, the highest version with w acks, and v_max, the highest version sealed or learned."}
+  - {id: GLO-006, term: version, context: CTX-002, meaning: "In the peer witness: pv, the highest version that this peer witnessed for (node_index, sid), with pe, pd and the signed statement."}
+  - {id: GLO-007, term: checkpoint, context: CTX-004, meaning: "The Midnight Checkpoint record: seq, h and pending per sequential pool, boot_counters per seat and restart_seq."}
+  - {id: GLO-008, term: checkpoint, context: CTX-001, meaning: "A seal of work as version v_max + 1 with its witness round (SS-020). Not the Midnight record."}
+  - {id: GLO-009, term: continuous seat, context: CTX-001, meaning: A seat whose latest boot counter equals the counter in the latest Midnight checkpoint.}
+  - {id: GLO-010, term: restart marker, context: CTX-004, meaning: "cp.restart_seq: the seq of the latest checkpoint that recorded a whole-committee restart (SS-121, SS-122)."}
+  - {id: GLO-011, term: restart mark, context: CTX-001, meaning: "work.restart_mark: the restart marker that the account-pool slots of one session were last burned against."}
+  - {id: GLO-012, term: record, context: CTX-001, meaning: The sealed form of one session version (SS-008).}
+  - {id: GLO-013, term: replica, context: CTX-002, meaning: A peer's copy of the latest record of another seat's session, on its /mnt/persist.}
+  - {id: GLO-014, term: put entry, context: CTX-001, meaning: "(put digest, put_tag) in the seat log of a seat, one for each account-pool share put (SS-128)."}
+  - {id: GLO-016, term: seat log, context: CTX-004, meaning: "The append-only log of one seat on the board: put entries, binding entries and RestoreDone statements. Each checkpoint chains one root per seat over it (SS-136, SS-137)."}
+  - {id: GLO-017, term: covered entry, context: CTX-004, meaning: "A seat-log entry in a board block at or below the board height of a landed Midnight checkpoint. Entries above it are the tail."}
+  - {id: GLO-018, term: slot nullifier, context: CTX-001, meaning: "nf = HMAC-SHA256(k_nf, VT1/slot-nf, committee, purpose, index): the name of a nonce slot in a binding entry, with no purpose and no index in the clear (SS-070)."}
+  - {id: GLO-015, term: restart generation, context: CTX-001, meaning: "The time from a whole-committee restart until a checkpoint with a higher restart_seq and w + 1 continuous seats (SS-133)."}
+contexts:
+  - id: CTX-001
+    version: 1
+    state: provisional
+    basis: proposed
+    source_refs: [SRC-001, SRC-002]
+    name: seald session store
+    purpose: Keep the durable state of one seat sealed, versioned and restorable, and keep each nonce slot on its one-way path.
+    model_owner: seald (server/seald, session module)
+    module_refs: [MOD-001]
+    glossary_refs: [GLO-001, GLO-002, GLO-003, GLO-004, GLO-005, GLO-008, GLO-009, GLO-011, GLO-012]
+    relationships: [CON-001, CON-002, CON-003, CON-004, CON-005, CON-006]
+    boundary: proposed
+  - id: CTX-002
+    version: 1
+    state: provisional
+    basis: proposed
+    source_refs: [SRC-001, SRC-002, SRC-009]
+    name: peer witness
+    purpose: Hold, for every other seat, the fence of that seat (highest signed version, slot bindings) and the replicas, and serve PRF partials only under the fence.
+    model_owner: seald (server/seald, witness.rs and peer.rs)
+    module_refs: [MOD-002]
+    glossary_refs: [GLO-006, GLO-013]
+    relationships: [CON-002]
+    boundary: existing, extended with session and slot entries
+  - id: CTX-003
+    version: 1
+    state: provisional
+    basis: proposed
+    source_refs: [SRC-001, SRC-009]
+    name: committee application
+    purpose: Run the requests of split-line dealing. Reserve slots, vote headers, write checkpoints and void requests whose slots burned.
+    model_owner: the committee application (outside seald)
+    module_refs: [MOD-003]
+    glossary_refs: []
+    relationships: [CON-001, CON-003, CON-005]
+    boundary: existing
+  - id: CTX-004
+    version: 2
+    state: provisional
+    basis: proposed
+    source_refs: [SRC-001, SRC-002, SRC-009]
+    name: Midnight committee contract
+    purpose: Accept or refuse checkpoints and the restore statements that they carry, and chain the seat-log roots, against the rules that seald cannot enforce.
+    model_owner: the committee contract on Midnight and the follower in veritee_verify
+    module_refs: [MOD-004]
+    glossary_refs: [GLO-007, GLO-010, GLO-016, GLO-017]
+    relationships: [CON-003, CON-004, CON-005, CON-007]
+    boundary: existing, extended with new checkpoint fields and rules
+aggregates:
+  - id: AGG-001
+    version: 1
+    state: provisional
+    basis: proposed
+    source_refs: [SRC-002]
+    name: session
+    context: CTX-001
+    module: MOD-001
+    root_identity: "sid = SHA-256(VT1/session-id, committee, node_index, purpose)"
+    holds: "v, v_max, epoch, open, work (entries, slots, restart_mark), unsealed, dirty, and the records of the session on /mnt/persist"
+    invariant_refs: [INV-007, INV-008, INV-010]
+    atomic_scope: One operation of one session runs to its result before the next (SS-107). A version becomes current only with w peer acks (SS-023), so the commit of the aggregate spans the peer witness of other seats.
+    consistency_assumptions: [ASM-001]
+    decision_refs: [D-001, D-003, D-007, D-015, D-016, D-020]
+  - id: AGG-002
+    version: 2
+    state: provisional
+    basis: proposed
+    source_refs: [SRC-002, SRC-009]
+    name: nonce slot pool
+    context: CTX-001
+    module: MOD-001
+    root_identity: The session of the pool, sid of (node_index, purpose). Each slot is (purpose, index) inside work.slots.
+    holds: The slot states of one pool for one seat, the put tags and restart mark of an account pool, and the slot witness entries at the peers.
+    invariant_refs: [INV-001, INV-002, INV-009]
+    atomic_scope: A slot state changes only inside a session version of AGG-001. A bind first takes w acks for the slot witness entry and then seals the version (SS-050, SS-051), so one bind changes two consistency boundaries in a fixed order.
+    consistency_assumptions: [ASM-001, ASM-002]
+    decision_refs: [D-002, D-006, D-011, D-018, D-022, D-024, D-027]
+requirements_note: Each entry below references one SS requirement of spec.md. The statement and its scenarios stay in spec.md. Acceptance is the set of scenarios of that requirement.
+modules:
+  - id: MOD-001
+    version: 1
+    state: provisional
+    basis: proposed
+    source_refs: [SRC-001, SRC-003]
+    name: session store
+    context: CTX-001
+    purpose: Sessions, records, keys, restore, nonce slot states, the window and the restart burns.
+    responsibilities: [the app operations on seald.sock, checkpoint and restore of a session, the restart decision and every burn]
+    exclusions: [peer-side fence state of other seats, checkpoint validity]
+    owned_concepts: [session, record, working copy, nonce slot state, restart mark]
+    inputs: [app requests (CON-001), peer answers (CON-002), checkpoint view (CON-003), committee.json (CON-006)]
+    outputs: [records, witness requests, seat-log entries: RestoreDone statements (CON-004), binding entries (CON-005), put entries (CON-007)]
+    dependency_refs: [MOD-002, MOD-004]
+    code: [server/seald/src/session.rs, api.rs, group.rs, store.rs, recovery.rs]
+  - id: MOD-002
+    version: 1
+    state: provisional
+    basis: proposed
+    source_refs: [SRC-001, SRC-003]
+    name: peer witness
+    context: CTX-002
+    purpose: Fence entries, replicas and PRF partials for the other seats.
+    responsibilities: [session_witness, session_partial, session_fetch, the witness sync, the blank-tier-0 fetch, pruning of covered slot entries]
+    exclusions: [the sessions of its own seat]
+    owned_concepts: [pv, pe, pd, signed statement, slot entry, replica]
+    inputs: [peer requests (CON-002)]
+    outputs: [acks, refusals, partials, replicas]
+    dependency_refs: [MOD-004]
+    code: [server/seald/src/witness.rs, peer.rs]
+  - id: MOD-003
+    version: 1
+    state: provisional
+    basis: proposed
+    source_refs: [SRC-001, SRC-009]
+    name: committee application
+    context: CTX-003
+    purpose: The app side of Sessions. It holds no SS requirement as accountable owner.
+    responsibilities: [calls the session API, applies the window when it votes a header, reserves sequential indices in increasing order, voids requests on burned slots, writes checkpoints]
+    exclusions: [session keys and slot shares]
+    owned_concepts: [request, header vote]
+    inputs: [session results (CON-001)]
+    outputs: [checkpoints with the batch roots and the carried RestoreDone statements (CON-003)]
+    dependency_refs: [MOD-001, MOD-004]
+  - id: MOD-004
+    version: 2
+    state: provisional
+    basis: proposed
+    source_refs: [SRC-001, SRC-002]
+    name: committee contract
+    context: CTX-004
+    purpose: The checkpoint, statement and seat-log root rules on Midnight.
+    responsibilities: [SS-103, SS-104, SS-117, SS-121, SS-122, SS-136]
+    exclusions: [any slot id or account id on Midnight]
+    owned_concepts: [checkpoint, restart marker, seat-log root]
+    inputs: [checkpoints with batch roots and RestoreDone statements]
+    outputs: [the ledger view that seald reads]
+    dependency_refs: []
+contracts:
+  - id: CON-001
+    version: 1
+    state: provisional
+    basis: explicit
+    source_refs: [SRC-002]
+    name: app session API (seald.sock)
+    producer: MOD-001
+    consumers: [MOD-003]
+    contexts: [CTX-001, CTX-003]
+    meaning: Twelve app operations, slot_bind_batch included, one JSON line each, with the error codes and order of SS-090.
+    requirement_refs: [SS-040, SS-041, SS-042, SS-043, SS-044, SS-045, SS-046, SS-047, SS-048, SS-049, SS-050, SS-051, SS-055, SS-057, SS-090]
+    translation: The app maps a `burned` list to VOID requests. seald has no notion of a request.
+    unresolved: [Q-001]
+  - id: CON-002
+    version: 2
+    state: provisional
+    basis: explicit
+    source_refs: [SRC-002]
+    name: peer session protocol
+    producer: MOD-002
+    consumers: [MOD-001]
+    contexts: [CTX-001, CTX-002]
+    meaning: session_witness, session_partial, session_fetch, the witness sync and the blank-tier-0 fetch, with signed statements and the reason codes of SS-091.
+    requirement_refs: [SS-012, SS-022, SS-025, SS-026, SS-027, SS-030, SS-038, SS-091, SS-102, SS-109, SS-111, SS-126, SS-127]
+    translation: The session store's v and v_max map to the peer's pv through the signed statement (GLO-005, GLO-006).
+    unresolved: [Q-006]
+  - id: CON-003
+    version: 1
+    state: provisional
+    basis: explicit
+    source_refs: [SRC-001, SRC-002]
+    name: Midnight checkpoint
+    producer: MOD-003
+    consumers: [MOD-001, MOD-002, MOD-004]
+    contexts: [CTX-003, CTX-004, CTX-001]
+    meaning: "seq, h, pending_min, pending_root and pending_count per sequential pool, boot_counters and seat_root per seat, restart_seq, the carried RestoreDone statements. Fixed-size fields only. No account-pool data."
+    requirement_refs: [SS-005, SS-066, SS-103, SS-104, SS-117, SS-121, SS-122, SS-136]
+    translation: The contract (MOD-004) checks each checkpoint before seald reads it.
+    unresolved: [Q-005]
+  - id: CON-004
+    version: 1
+    state: provisional
+    basis: explicit
+    source_refs: [SRC-002]
+    name: RestoreDone statement
+    producer: MOD-001
+    consumers: [MOD-004]
+    contexts: [CTX-001, CTX-004]
+    meaning: "RestoreDone(committee, node_index, boot_counter, cp_boot.seq, whole_restart), signed by the boot key, in the seat log and carried by the next checkpoint."
+    requirement_refs: [SS-112, SS-117, SS-120, SS-121]
+    translation: none
+    unresolved: [Q-005]
+  - id: CON-005
+    version: 1
+    state: provisional
+    basis: explicit
+    source_refs: [SRC-002]
+    name: binding entry
+    producer: MOD-001
+    consumers: [MOD-001, MOD-003]
+    contexts: [CTX-001, CTX-004]
+    meaning: "(nf, e) in the seat log, under slot_anchor: the slot nullifier and the encrypted bound digest. The first covered entry for a nullifier wins."
+    requirement_refs: [SS-070, SS-071, SS-072, SS-073, SS-092, SS-119, SS-139]
+    translation: none
+    unresolved: []
+  - id: CON-006
+    version: 1
+    state: provisional
+    basis: explicit
+    source_refs: [SRC-002]
+    name: committee parameters
+    producer: measured setup
+    consumers: [MOD-001]
+    contexts: [CTX-001]
+    meaning: n, t, f, w, session_window, session_max_bytes, sequential_pools, slot_anchor in committee.json.
+    requirement_refs: [SS-004]
+    translation: none
+    unresolved: [Q-002]
+  - id: CON-007
+    version: 1
+    state: provisional
+    basis: explicit
+    source_refs: [SRC-002]
+    name: put entry
+    producer: MOD-001
+    consumers: [MOD-001, MOD-003]
+    contexts: [CTX-001, CTX-004]
+    meaning: "(SHA-256(VT1/slot-put, share), put_tag) in the seat log, one per account-pool put. No purpose and no index. The first covered entry for a put digest wins."
+    requirement_refs: [SS-128, SS-129, SS-130, SS-131, SS-137, SS-138]
+    translation: The checkpoint signers sign no batch with a second put of one digest; the contract chains the batch roots (SS-136).
+    unresolved: []
+invariants:
+  - {id: INV-001, version: 1, state: provisional, basis: derived, source_refs: [SRC-001], rule: One nonce slot never releases partials for two digests (G2), scope: system-wide, owner: AGG-002, participants: [MOD-002], requirement_refs: [SS-050, SS-053, SS-054, SS-055, SS-056, SS-116], verification: QI-01}
+  - {id: INV-002, version: 1, state: provisional, basis: explicit, source_refs: [SRC-002], rule: Nonce slot states only move forward, scope: aggregate-local, owner: AGG-002, participants: [], requirement_refs: [SS-059], verification: tasks.md 2.7}
+  - {id: INV-003, version: 1, state: provisional, basis: explicit, source_refs: [SRC-002], rule: A peer serves no partial below its highest witnessed version, scope: context-wide (CTX-002), owner: MOD-002, participants: [], requirement_refs: [SS-016, SS-102], verification: "tasks.md 2.7, QI-02"}
+  - {id: INV-004, version: 1, state: provisional, basis: explicit, source_refs: [SRC-002], rule: A peer holds one record per version, scope: context-wide (CTX-002), owner: MOD-002, participants: [], requirement_refs: [SS-095], verification: tasks.md 2.7}
+  - {id: INV-005, version: 1, state: provisional, basis: explicit, source_refs: [SRC-002], rule: The checkpoint floor of a sequential pool only rises, scope: context-wide (CTX-004), owner: MOD-004, participants: [MOD-003], requirement_refs: [SS-103], verification: QI-06}
+  - {id: INV-006, version: 1, state: provisional, basis: explicit, source_refs: [SRC-002], rule: The restart marker only rises and rises at the first checkpoint after a new flagged RestoreDone, scope: context-wide (CTX-004), owner: MOD-004, participants: [MOD-001, MOD-003], requirement_refs: [SS-121, SS-122], verification: QI-07}
+  - {id: INV-007, version: 1, state: provisional, basis: explicit, source_refs: [SRC-002], rule: A version is current only with w acks, scope: aggregate-local with peer participation, owner: AGG-001, participants: [MOD-002], requirement_refs: [SS-023, SS-024], verification: QI-11}
+  - {id: INV-008, version: 1, state: provisional, basis: explicit, source_refs: [SRC-002], rule: One operation of a session at a time, scope: aggregate-local, owner: AGG-001, participants: [], requirement_refs: [SS-107], verification: QI-08}
+  - {id: INV-009, version: 1, state: provisional, basis: derived, source_refs: [SRC-001, SRC-002], rule: After a whole-committee restart no slot of a burn set binds on any node (G3), scope: system-wide, owner: AGG-002, participants: [MOD-003, MOD-004], requirement_refs: [SS-064, SS-068, SS-104, SS-113, SS-114, SS-123, SS-124], verification: "QI-06, QI-07, QI-13"}
+  - {id: INV-010, version: 1, state: provisional, basis: explicit, source_refs: [SRC-002], rule: A refusal changes nothing, scope: aggregate-local, owner: AGG-001, participants: [MOD-002], requirement_refs: [SS-089], verification: tasks.md 2.8}
+  - {id: INV-012, version: 1, state: provisional, basis: explicit, source_refs: [SRC-002], rule: An account-pool share goes into a nonce slot at most once on its seat, also after a rollback of every disk, scope: system-wide, owner: AGG-002, participants: [MOD-004], requirement_refs: [SS-128, SS-129, SS-130, SS-131, SS-136, SS-137, SS-138], verification: "QI-17, QI-21, QI-22, QI-23"}
+  - {id: INV-011, version: 1, state: provisional, basis: explicit, source_refs: [SRC-002], rule: No PRF share is erased while a session of any seat needs its epoch, scope: system-wide, owner: MOD-001, participants: [MOD-002], requirement_refs: [SS-078, SS-079, SS-080], verification: QI-10}
+journeys:
+  - {id: JNY-001, version: 1, state: provisional, basis: explicit, source_refs: [SRC-001], actor: ACT-002, trigger: A VM reboot of one seat, handoffs: [MOD-001, MOD-002, MOD-004], success: The seat restores the latest committed version and pending requests continue, failure: Fewer than t partials or w acks keep the session closed, requirement_refs: [SS-030, SS-031, SS-036, SS-069, SS-112]}
+  - {id: JNY-002, version: 2, state: provisional, basis: explicit, source_refs: [SRC-001], actor: ACT-002, trigger: A replacement VM with a blank disk in one seat, handoffs: [MOD-001, MOD-002], success: The seat fetches its records and its fence entries and replicas for the other seats and reopens its sessions, failure: A peer without a replica answers not_found, requirement_refs: [SS-033, SS-038, SS-039, SS-102, SS-126, SS-127]}
+  - {id: JNY-003, version: 2, state: provisional, basis: explicit, source_refs: [SRC-001], actor: ACT-002, trigger: A whole-committee restart, also from rolled-back disks, handoffs: [MOD-001, MOD-002, MOD-003, MOD-004], success: Nodes that read one checkpoint burn the same sequential sets and each account pool once, the contract records the jump and the marker, and nodes that boot later burn their account pools, failure: A ledger read failure keeps the node not_ready, requirement_refs: [SS-067, SS-068, SS-104, SS-106, SS-112, SS-113, SS-114, SS-120, SS-121, SS-123, SS-124, SS-125, SS-133]}
+  - {id: JNY-004, version: 1, state: provisional, basis: explicit, source_refs: [SRC-001], actor: ACT-001, trigger: A request reserves a nonce slot, handoffs: [MOD-003, MOD-001, MOD-002], success: The slot binds to one digest and releases only for it, failure: conflict, window_exceeded, slot_stale or no_checkpoint, requirement_refs: [SS-050, SS-051, SS-055, SS-063, SS-064, SS-065, SS-057]}
+  - {id: JNY-005, version: 1, state: provisional, basis: explicit, source_refs: [SRC-001], actor: ACT-001, trigger: An epoch change, handoffs: [MOD-001, MOD-002], success: Every session moves to the new epoch before the old share is erased, failure: epoch_in_use, requirement_refs: [SS-078, SS-079, SS-080]}
+assumptions:
+  - {id: ASM-001, version: 2, state: provisional, basis: explicit, source_refs: [SRC-001, SRC-009], statement: "c <= n - 1 - 2f, where c counts, for one session, colluding operators and each seat whose tier 0 was lost or rolled back after the current version committed, the restoring seat included. A lost seat stops counting when its SS-102 fetch completes (D-026)", rationale: The fence of split-line DESIGN 7.7 holds only in this bound, affected: [G2, G4, INV-001], validation: QI-01 to QI-04, if_false: A whole-committee restart rule applies instead (D-002)}
+  - {id: ASM-002, version: 1, state: provisional, basis: explicit, source_refs: [SRC-009], statement: The committee posts a checkpoint about every 60 seconds (split-line DESIGN 7.13), rationale: B and the account-pool bind gate of SS-124 then do not limit throughput, affected: [D-009, D-024], validation: item 20 measurement, if_false: The window and the gate delay binds}
+  - {id: ASM-003, version: 1, state: provisional, basis: explicit, source_refs: [SRC-001], statement: The TLS evidence moves out of PCR15, so that PCR15 has one value per approved image (guide recommendation 5), rationale: SS-110 needs it, affected: [D-003, D-019, SS-110], validation: item 24, if_false: An operator with an own app disk reads the secrets of its seat}
+  - {id: ASM-004, version: 1, state: provisional, basis: proposed, source_refs: [SRC-002], statement: A running node reads each new checkpoint, rationale: SS-113 then sees a whole-committee restart before the restart checkpoint shows continuous seats, affected: [D-021, D-024], validation: QI-06, if_false: The node does not burn in this boot and burns its account pools at its next boot}
+  - {id: ASM-005, version: 1, state: provisional, basis: proposed, source_refs: [SRC-002], statement: "The ledger snapshot that a node reads for its restart decision holds the boot tickets of the peers that answered its witness sync", rationale: "SS-067 and the restart marker of D-024 count continuous seats from that snapshot. A stale snapshot can show a whole-committee restart as continuous seats", affected: [D-005, D-024, SS-067], validation: "QI-05, QI-06 and QI-14 with a stale follower snapshot", if_false: A node can classify no restart and skip the burn while the fence does not hold}
+  - {id: ASM-006, version: 1, state: provisional, basis: derived, source_refs: [SRC-011, SRC-012], statement: "Some reader can fetch every covered batch of each seat log: the board, a peer, the enclave copy on /mnt/persist or an operator archive outside the VM disks", rationale: "A root proves membership. The duplicate-put refusal and the recovery group's non-membership check need the full log (SS-138). The board keeps entries while it is safe: |C| <= f corrupt nodes in non-TEE mode (split-line DESIGN 4.1), and while the TEEs hold in TEE mode", affected: [D-027, D-032, D-033, SS-137, SS-138, SS-139], validation: "item 20 (withheld and lost-log tests), item 22 (QI-21)", if_false: "The account pools of that seat stop for good (log_unavailable). No share binds twice and nothing releases on an unverified log. Without slot_anchor the recovery group reissues no ECDSA slot, and the address refills."}
+questions:
+  - {id: Q-001, blocks_readiness: false, decision_owner: owner of the committee application, question: "The app must reserve sequential indices in increasing order and apply the window when it votes a header (design.md, SS-063 note). The committee application has no EARS spec, so these obligations have no authoritative requirement.", alternatives: [EARS requirements in a committee application capability, a constraint in split-line DESIGN 4.1 (item 25)], affected: [D-011, CON-001, MOD-003], reason: Safety does not depend on it (seald refuses with SS-063 and SS-064). The loss of D-002 does.}
+  - {id: Q-002, blocks_readiness: false, decision_owner: lead, question: Values of session_window (B) and session_max_bytes (S_max), alternatives: [item 20 measurement], affected: [D-009, D-029, D-030, CON-006], reason: "The spec bounds both values. D-029 and D-030 give the measured sizes and the rule for B. The deployment picks the numbers."}
+  - {id: Q-003, blocks_readiness: false, decision_owner: lead (item 25), question: "Mapping of split-line DESIGN 2.2, 4.1, 4.5, 7.4, 7.7, 7.8, 7.11 and C16 onto Sessions, with c counting a seat with lost tier 0 (B-F3)", alternatives: [], affected: [D-004, D-011], reason: Design documents only.}
+  - {id: Q-004, blocks_readiness: false, decision_owner: lead (item 22), question: Do the threshold w + 1, the fork tie at n = 3f + 1 and the late-node contract rule hold in the model, alternatives: [], affected: [D-005, D-013, D-016], reason: Confirmation of provisional decisions.}
+  - {id: Q-005, blocks_readiness: false, decision_owner: lead (item 24), question: "Work outside seald: Checkpoint fields (h, pending_min, pending_root, boot_counters, restart_seq, seat roots, carried RestoreDone), the board seat log and the contract rules in veritee_verify and the contract, ReadWritePaths for /mnt/persist", alternatives: [], affected: [CON-003, CON-004, MOD-004], reason: Implementation.}
+  - {id: Q-006, blocks_readiness: false, decision_owner: lead (items 23 and 24), question: "Wire encodings, HKDF salt, HPKE context and signature labels (B-F17.1)", alternatives: [], affected: [CON-002, D-010], reason: Golden vectors fix them.}
+  - {id: Q-007, blocks_readiness: false, decision_owner: lead (item 22), question: "A second whole-committee restart in one uptime of a running node: SS-113 fires only while whole_restart = false, and SS-114 burns once per boot", alternatives: [re-arm SS-113 at each new restart marker, accept the gap], affected: [D-021, D-024, D-028], reason: "Resolved by D-028 (SS-133). QI-18 confirms it."}
+  - {id: Q-008, blocks_readiness: false, decision_owner: owner of the committee application, question: "The committee posts a checkpoint after each RestoreDone and before the next planned reboot, and sets B at least to its reservations per checkpoint interval (D-030). The committee application has no EARS spec.", alternatives: [EARS requirements in a committee application capability], affected: [D-030, MOD-003], reason: Loss and throughput depend on it. Safety does not.}
+  - {id: Q-009, blocks_readiness: false, decision_owner: lead (item 25), question: "A reshare of a used ECDSA slot gives new share bytes with the same nonce, so the put entry does not stop it. Which ECDSA slots may the recovery group reissue after a rollback of every disk?", alternatives: [r1 reshare slots unclaimed on a board record with valid QCs, r2 burn above a floor and reshare under new indices, r3 reshare only a slot that no covered binding entry binds under slot_anchor and otherwise none], affected: [D-027, D-033], reason: "Resolved by r3 (DECISIONS 51 choice 8). Without slot_anchor the recovery group reissues no ECDSA slot and each address refills by a new slot session. A seat log that the recovery group cannot read in full counts as binding every slot of that seat."}
+  - {id: Q-010, blocks_readiness: false, decision_owner: owner of the committee application, question: "The checkpoint signers must build each seat-log batch root from the board, sign no batch with a second put of one digest or a second binding of one nullifier, and set pending_min and pending_root from the pending set. The committee application has no EARS spec.", alternatives: [EARS requirements in a committee application capability, contract checks with proofs], affected: [D-032, D-034, CON-003], reason: The contract checks the root chain (SS-136) and pending_min (SS-104). seald checks the first entry (SS-129 to SS-131, SS-119) and accepts no pending proof below pending_min (SS-064).}

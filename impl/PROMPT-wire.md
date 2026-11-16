@@ -1,0 +1,13 @@
+# Rust lane: bring the prototype up to the revised scheme
+
+Worktree: . (branch loop/rust-prototype, up to date with main). Work only in impl/ and experiments/line-dealing/checks.py. Never commit, push or run git write commands. Build only with `--offline` (all crates are in the local cargo cache; do not add new dependencies). Run heavy builds as `heavy-run --mem 16G --name ld-rust -- cargo ...`.
+
+Spec: design/SCHEME.md and design/FINDINGS-LEDGER.md (sections "Corrections from PROOFS.md section 9" and "Corrections from the cross-family review of PROOFS.md"). Implement:
+1. C2-C5, C9: the authorship proof π becomes (E', T_1, T_2, z_e, T_a, z_a), 196 bytes; E' = e·HG_eph(hd ‖ H_ct(ct) ‖ E) with a DLEQ proof (LD1/eph, LD1/ephpok), the LD1/auth challenge input as SCHEME §3.1 now specifies; Step A check 9 and the private check as in §3.4; the §5 Transfer/reshare dealer proof the same way. Use the hash-to-curve the SCHEME names; if an RFC 9380 suite is not available in k256 0.13.4 / curve25519-dalek 4.1.3 from the cache, implement the try-and-increment or the crate's own hash_to_curve if present, and record in README which one and why.
+2. C19: labelled hash H_ct (LD1/ct, LD1/rs-ct) replaces raw SHA-256(ct) everywhere.
+3. C20: suite 3 (Ed25519): registered PK_i, complaint points K_i, E' and resharing dealings must be canonical, non-identity and in the prime-order subgroup ([ℓ]P = O); reject otherwise, with tests.
+4. C22: rule 4 restart: a restored node replays to its earlier board position before it posts and re-erases what it had erased; test that a rolled-back node posts nothing until replay completes.
+5. Committee sizes (lead decision, LOOP item 4b): n >= 3f+1; every quorum (ACK arm, height reports, PREVOTE/lock, READY) is q = ceil((n+f+1)/2) instead of n-f; anchor = entry f+1 of the q sorted height reports. Update Header::validate, board.rs, simulation.rs, tests (n=9, f=2 gives q=6), and tests/bench9.rs (posts = 3q + t).
+6. experiments/line-dealing/checks.py T15: match the new LD1/auth input; all checks must pass.
+
+Done when: cargo test --offline --release all pass (report counts), cargo clippy --offline --all-targets -- -D warnings clean, cargo fmt --check clean, message sizes in a test match SCHEME §7 (+66 bytes vs before), checks.py all pass. Then run the n=9 bench: `CARGO_TARGET_DIR=target heavy-slot --exclusive --mem 8G --name mpc-bench9 -- cargo test --offline --release --test bench9 -- --ignored --nocapture > bench9-output.txt` and the simulation matrix script, and update impl/BENCHMARKS.md tables you regenerated (say which rows are new). Final report to impl/final-wire.md: what changed per item, test counts, any deviation from SCHEME with reason.

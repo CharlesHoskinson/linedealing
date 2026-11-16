@@ -1,0 +1,72 @@
+\section{Costs}\label{sec:eval}
+
+The figures of this section are measurements of a prototype of split-line dealing, except those marked $^{\ast}$. Each CPU figure is the criterion median of 50 samples on one Cortex-X925 core at 4.0\,GHz, and repeated runs of the same benchmarks differ by about 10 to 15\%, so each figure carries that spread. Each size is a byte count of a serialized prototype object. Committee nodes run on other hardware, so ratios carry over and absolutes do not. The prototype runs the ECDSA slot session over ideal multiplication and takes board ordering, authorization finality and host observations as verified inputs. The figures marked $^{\ast}$ are therefore estimates: an operation count or a byte count times a unit cost or field size on the same core. Measurement on node hardware, in non-TEE mode and with a real ECDSA slot session is open (O31). The running example is a Bitcoin P2TR spend with $K = 8$ variants of $L = 2$ inputs and $\Gmax = 2$: 30 halves, 15 variant bodies and 4 committee slots.
+
+\paragraph{Sizes.} The fixed fields follow from the encoding: a Schnorr ticket is 149 bytes, an ECDSA ticket 36, the layout block 64, a variant body $32L + 48 = 112$, a sealed contribution per actor and body $49 + 32L = 113$ and an actor capsule 385 for every $K$. The outer dealing is $33t + 32n + 229$ bytes, 748 at $n = 9$ and 1{,}169 at $n = 17$, and the dealings of one committee slot by its $t$ dealers are $2t(33t + 32n)$ bytes. \Cref{tab:sizes} gives the rest. The board bytes per request add the measured frame and slot bytes to an estimate of the votes, under 1\,KB at $n = 9$ and under 2\,KB at $n = 17$. An actor capsule carries eight capsule keys whether or not $K$ uses them, so the padding costs most at small $K$: at $K = L = 1$ a frame holds 29 to 33 signers.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X ll@{}}
+\toprule
+Item & $n = 9$ & $n = 17$ \\
+\midrule
+Request in the 16\,KiB frame & \estFrameUsedNine & \estFrameUsedSeventeen \\
+Envelope growth per other actor, non-TEE / TEE & \estActorBytes{} / \estActorBytesTEE & same \\
+Contribution frame, bytes used & \estContribFrameNine & \estContribFrameSeventeen \\
+Embedded contribution, in place of an actor capsule & \estEmbedded & same \\
+Actor pool post, 64 pairs & \estPoolPost & same \\
+Board bytes per request (frame, 4 slots, votes) & \estBoardNine & \estBoardSeventeen \\
+\addlinespace
+\multicolumn{3}{@{}l}{\emph{Largest signing set $|S|$ per frame, non-TEE / TEE}} \\
+P2TR, $K = 8$, $L = 2$ & \estSetsEightTwoNine & \estSetsEightTwoSeventeen \\
+P2TR, $K = 8$, $L = 1$ & \estSetsEightOneNine & \estSetsEightOneSeventeen \\
+P2TR, $K = 5$, $L = 2$ & \estSetsFiveTwoNine & \estSetsFiveTwoSeventeen \\
+P2WPKH, $K = 3$, $L = 2$ & \estSetsThreeTwoNine & \estSetsThreeTwoSeventeen \\
+Ethereum or Solana, $K = L = 1$ & \multicolumn{2}{l}{\estSetsOneOne, both modes and both sizes} \\
+\bottomrule
+\end{tabularx}
+\caption{Envelope and board sizes ($^{\ast}$ estimate). The growth per other actor excludes 495 bytes paid once for the keys $P_{v,g}$. Slot bytes are paid when the pool is dealt, not on the request path.}
+\label{tab:sizes}
+\end{table}
+
+\paragraph{Node CPU.} \Cref{tab:cpu} gives the work of one node on one request, secp256k1, TEE mode. The request path is short operations on one core, so a node needs no GPU. The selected-body step derives the variant key, opens the body and its capsule, rebuilds the halves, and combines and verifies the signature. Deriving the variant key alone, the node's own partial with $t$ partials combined, takes \estCpuVariantKey{} at $n = 9$ and \estCpuVariantKeySeventeen{} at $n = 17$. In non-TEE mode only the combiners run the selected-body step, so every other node saves \estNonTeeSaveNine{} at $n = 9$ and \estNonTeeSaveSeventeen{} at $n = 17$. A node that verifies a board-first authorization adds one proof check, \estBoardFirstCheck.
+
+Slot dealing and checking, not the request path, dominate a node's work: about three quarters of it at $n = 9$ and five sixths at $n = 17$. One dealer message holds the 4 slots of one request, and each batch has $t$ qualified dealers. A node deals with probability $t/n$ and checks every other message of the batch, so per request it spends $(t/n)$ times one deal plus $t - t/n$ checks. Dealing one message takes \estSlotDealNine{} at $n = 9$ and \estSlotDealSeventeen{} at $n = 17$: $8t$ fixed-base multiplications for the commitments of 8 polynomials and the encryption to $n$ nodes. Decrypting and checking one message with the random linear combination of \cref{sec:slots} takes \estSlotCheckNine{} and \estSlotCheckSeventeen, and grows with $t$ through the evaluation of each commitment at the node's index. One multi-scalar check over the $t$ messages of a node would replace the $t$ separate checks; it is open (O31).
+
+The committee's work does not depend on $|S|$ except through the contribution frames it opens (\estFrameOpen{} each at $n = 9$) and one Diffie-Hellman per actor at release, \estActorRelease{} per actor at the combiner ($0.25$\,ms at $n = 17$). The wallet builds the whole envelope of a single-user request, with the outer dealing, $\pi$, the PRF keys, 30 halves with their nonces, the bodies, the capsules and the padding, in \estWalletNine{} at $n = 9$ and \estWalletSeventeen{} at $n = 17$. An actor of a signing set with two actors besides the initiator opens its capsule, recomputes every half and computes and seals its contributions in \estActorWork{} at $n = 9$.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X ll@{}}
+\toprule
+Step & $n = 9$ & $n = 17$ \\
+\midrule
+Check of $\pi$ before ordering & \estCpuPi & \estCpuPiSeventeen \\
+Outer share: Diffie-Hellman and check & \estCpuOuterShare & \estCpuOuterShareSeventeen \\
+Header key: own partial, $t$ partials combined, layout and header opened & \estCpuHeaderKey & \estCpuHeaderKeySeventeen \\
+Tickets of the selected variant: $\rho$, $R$, $\sigma$, $x(R)$ & \estCpuTickets & \estCpuTicketsSeventeen \\
+Own signature partials & \estCpuPartials & \estCpuPartialsSeventeen \\
+Variant key, own partial & \estCpuVariantPartial & \estCpuVariantPartialSeventeen \\
+Selected body: variant key, body, capsule, halves, combine and verify & \estCombinerNine & \estCombinerSeventeen \\
+\quad of which signature combine and verify & \estCpuCombine & \estCpuCombineSeventeen \\
+Vote signatures of one block, $q = 6$ and $q = 12$, shared by its requests & \estCpuVotes & \estCpuVotesSeventeen \\
+Checks after a failed combination & \estCpuFailure & \estCpuFailureSeventeen \\
+\midrule
+Request path, TEE mode & \estCpuPathNine & \estCpuPathSeventeen \\
+Slot replenishment, 4 slots & \estCpuSlotsNine & \estCpuSlotsSeventeen \\
+Total & \estCpuTotalNine & \estCpuTotalSeventeen \\
+Requests per second and core & \estRateNine & \estRateSeventeen \\
+Combiner, per request & \estCombinerNine & \estCombinerSeventeen \\
+\bottomrule
+\end{tabularx}
+\caption{Node CPU per request, one core, criterion medians. The low end of the request path leaves out the vote signatures, and the high end gives one block's vote checks to one request. The checks after a failed combination are not on the normal path.}
+\label{tab:cpu}
+\end{table}
+
+\paragraph{Latency.} Let $C$ be one board commit, $h$ one peer hop and $F_M$ the ledger's finality time, which the ledger does not publish and which stays a symbol. A request with no collection posts its authorization and its envelope together; the board orders and opens the envelope during $F_M$. In TEE mode post to broadcast takes $\max(F_M, C + h) + C + 4h$: one commit to order and open, one commit for admission, and five peer rounds for the header-partial exchange, the release witness, the two batched rounds that bind the slots to their tickets, and the release. With $h = 50$\,ms and $F_M \ge C + h$ this is \estLatMidOne{} at $C = 1$\,s and \estLatMidHalf{} at $C = 0.5$\,s. A board-first charter waits for no finality and takes $2C + 5h$, \estLatBfOne{} and \estLatBfHalf. Non-TEE mode has no witness and no bind rounds and saves $3h$. The bind rounds assume a batched bind in the enclave's session interface, which is open (O36). A P2 request waits $\Delta_{\mathsf{hold}}$ ledger blocks after its authorization is final before generation~$1$. A collecting request adds the commit of its opening votes, the actors' response time and one frame cycle; a second generation adds one commit; anchoring a release before it leaves adds one checkpoint interval and $F_M$ per generation.
+
+\paragraph{Ticket proof.} For a BIP341 spend with two inputs and two outputs, the shared prefixes and midstates bring the SHA-256 work of 30 halves to 100 compressions when $\Hq{pm}$ is a Poseidon2 hash. At the gadget's cost per compression this is about \estCircuitRows{} rows of the $2^{18}$ of the circuit. Proving time is open (O4).
+
+\paragraph{Ledger writes.} The transaction counts of \cref{tab:writes} follow from the protocol and are not estimates; the checkpoint sizes are byte counts of its fields. A ledger-first spend costs one ledger transaction, the wallet's authorization, and a board-first spend costs none, whatever the grid, the number of actors and the number of slots. The committee writes one checkpoint per 60\,s at any request rate, 1{,}440 transactions a day, and each checkpoint covers every settlement leaf of its interval under one root of fixed size.

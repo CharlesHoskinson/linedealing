@@ -1,0 +1,74 @@
+\section{Setting}\label{sec:setting}
+
+\subsection{Parties}\label{sec:parties}
+
+A \emph{committee} of $n$ nodes, of which at most $f$ are Byzantine, runs a BFT total-order log, the \emph{board}, and holds the committee half of every address. Its board quorum is $q = \lceil (n+f+1)/2 \rceil$, its key threshold is $t = n - f$, and the launch parameters are $n = 9$, $f = 2$, $q = 6$, $t = 7$, later $n = 17$, $f = 5$, $q = 12$, $t = 12$. Six board votes never reconstruct a seven-share secret, and a board certificate authorizes no use of a key share by itself.
+
+The \emph{actors} of an address hold its shards. In the single-user form the only actor is the holder's wallet. In general a charter names a user, issuers, custodians, approvers, a guardian group or any other party. For one request, the \emph{initiator} is the actor that builds and posts it, and the \emph{signing set} $S$ is the set of actors it names. A \emph{recovery group} $E$ of five members holds a $3$-of-$5$ backup of $\xf$ and reprovisions a successor committee when the committee stops (\cref{sec:exit}). An \emph{authorization ledger} holds the address records, checks each spend's authorization in zero knowledge, and receives one checkpoint of the board per interval. In our deployment it is Midnight, whose contracts carry zero-knowledge proofs; we assume it sound, live and final.
+
+\subsection{Keys}\label{sec:keys}
+
+Let $\GG$ be the group of the signature suite with generator $G$ and prime order $q_s$: secp256k1 for ECDSA (suite~1) and BIP340 (suite~2), the prime-order subgroup of edwards25519 for Ed25519 (suite~3). The committee runs one distributed key generation per suite at genesis and holds $\xf$ in Shamir form at threshold $t$, with Feldman commitments $\Xf = \xf G$ and $X_{f,i}$ public. No key generation runs per address, and no node stores anything per address on the Schnorr suites.
+
+An address of actors $A$ has shard points $X_a = x_a G$ and the key
+\begin{equation}\label{eq:key}
+  X = \Xf + \tw\,G + \sum_{a \in A} X_a, \qquad x = \xf + \tw + \sum_{a \in A} x_a .
+\end{equation}
+Every shard is fresh for each address, change addresses included. The tweak
+\[
+  \tw = \Hq{tw}(\Xf \,\|\, X_{a_1} \,\|\, \dots \,\|\, X_{a_r} \,\|\, \mathsf{charter\_id} \,\|\, \mathsf{seed})
+\]
+is a scalar that every actor knows. In TEE mode only the enclaves see it; in non-TEE mode the nodes see it at birth (\cref{sec:blindness}). It makes $X$ unlinkable to every $X_a$ and to $\Xf$ for a party without the seed. We write $x_A = \tw + \sum_a x_a$ for the actors' whole part and $Y_A = X - \Xf = x_A G$.
+
+\subsection{Access structures}\label{sec:access}
+
+The charter fixes at birth a monotone access structure $\Gamma$ over the actors, written as a formula of three gates.
+\begin{itemize}[leftmargin=1.5em]
+\item An \emph{AND} gate signs when every child signs. Its secret is the sum of the children's secrets. The top gate of every charter is ``committee AND $\Gamma$'', and \eqref{eq:key} is its sum.
+\item A \emph{threshold} gate $\gamma$ with $m_\gamma$ members signs when any $k_\gamma$ of them sign. The members hold Shamir shares $x_{\gamma,i}$ of the group's secret $x_\gamma$ at degree $k_\gamma - 1$, from a key generation among the members.
+\item An \emph{OR} gate signs when either child signs. Each child holds the whole gate secret: the primary holder deals its shard to the other child at birth.
+\end{itemize}
+Gates nest, and a \emph{leaf} is one actor's secret: a shard, a member share or an escrow share. For a signing set $S$, every threshold gate on the path from the root to a leaf names the $k_\gamma$ children that sign, and every OR gate names one child. The \emph{weight} $\lambda_a$ of the leaf is the product of the Lagrange coefficients at zero of those children sets along its path; AND and OR children have weight one. Then
+\begin{equation}\label{eq:weighted}
+  x = \xf + \tw + \sum_{a \in S} \lambda_a x_a \qquad\text{for every } S \in \Gamma ,
+\end{equation}
+where $x_a$ is the leaf's secret (\cref{prop:access}). A charter must satisfy two conditions: member ids are nonzero and distinct within each group, and no leaf appears twice in $\Gamma$. The scalar secrecy of \cref{prop:secrecy} needs both. The weights follow from $S$ alone, so every actor and every enclave computes them from the request.
+
+\Cref{tab:charters} shows the forms the design is built for.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Charter & $\Gamma$ (always ANDed with the committee) & Signing sets \\
+\midrule
+Single user & $\mathsf{user}$ & $\{\mathsf{user}\}$ \\
+Two-party co-custody & $\mathsf{user} \wedge \mathsf{issuer}$ & $\{\mathsf{user}, \mathsf{issuer}\}$ \\
+Corporate treasury & $2$-of-$3$ officers & any two officers \\
+Regulated custody & $\mathsf{user} \wedge (\mathsf{custodian} \vee \mathcal{G})$, $\mathcal{G}$ a $3$-of-$5$ group & $\{\mathsf{user}, \mathsf{custodian}\}$, or the user with any three guardians \\
+Guardian seizure & $\mathsf{user} \vee \mathcal{G}$, $\mathcal{G}$ a $3$-of-$5$ group & $\{\mathsf{user}\}$, or any three guardians \\
+\bottomrule
+\end{tabularx}
+\caption{Charter forms.}
+\label{tab:charters}
+\end{table}
+
+\subsection{Profiles}\label{sec:profiles}
+
+Every address carries one of three custody profiles in its charter. The protocol, the envelope and the committee's state machine are the same for all three; a profile adds authorization sources and checks, and nothing else.
+
+\begin{description}[leftmargin=1.5em,itemsep=1pt]
+\item[P0, existing key.] The owner's existing key, dealt by line dealing~\cite{LD} inside the envelope of \cref{sec:envelope}. It gains blind ordering and no co-custody.
+\item[P1, co-custody.] The key of \eqref{eq:key} under any access structure, with the covenant predicates and approver vetoes the owner chose. The recovery group gives an exit without policy checks (\cref{sec:exit}).
+\item[P2, regulated.] As P1, with an OR branch $\mathsf{user} \vee \mathcal{G}$ that escrows the user's shard at a guardian group $\mathcal{G}$, plus a charter's seizure, freeze, blacklist and hold entries.
+\end{description}
+No P2 component is needed to run P0 or P1. P1 and P2 sign by one combination rule that never reads the profile (\cref{prop:profiles}); P0 shares the envelope and the ordering path and then signs by line dealing.
+
+\subsection{Modes}\label{sec:modes}
+
+\emph{TEE mode} runs each node inside a hardened confidential VM. Every node key is born and held in the enclave, so the operator sees ciphertext, sizes and timing, and the enclave recomputes each sighash from the request and enforces authorizations and holds. \emph{Non-TEE mode} runs the same messages with no hardware trust. Its nodes sign address-free tickets, and the authorization ledger proves in zero knowledge that each ticket is the challenge of an admitted transaction. The TEE is an extra condition on the same messages, so each guarantee states which mode it needs.
+
+\subsection{Adversary}\label{sec:adversary}
+
+The adversary corrupts nodes statically per epoch and controls the network subject to partial synchrony. We write $C$ for the corrupt nodes. It may corrupt any set of actors, the initiator included, and it chooses every request it posts. Hash functions are random oracles where a claim says so. In TEE mode a corrupt operator controls its host, its disk and its network, and may roll back or clone its VM, and the enclave's confidentiality and integrity are \emph{assumed}; \cref{sec:tee} bounds the number of operators that roll back.

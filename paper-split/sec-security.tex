@@ -1,0 +1,156 @@
+\section{Security}\label{sec:security}
+
+Each result of this section carries one of four status words, and each word has one meaning.
+\begin{description}[leftmargin=1.5em,itemsep=1pt]
+\item[Proved in Lean.] A theorem of the Lean~4 development of \cref{sec:formal} states the result; we name the theorem. These results are algebra and counting.
+\item[Sketched.] The reduction is named and its steps are given, and no complete written proof exists.
+\item[Open.] No proof exists. Each open result names its obligation, listed in \cref{sec:open}.
+\item[Assumed.] The result is a property of the trusted execution environment.
+\end{description}
+A cryptographic claim never inherits the status of the algebra it uses. A claim built on a proposition proved in Lean is sketched or open until its reduction is written.
+
+\subsection{Propositions proved in Lean}\label{sec:lean-props}
+
+The Lean model is abstract. The scalars are $\mathbb{Z}/q$ for a prime $q$, the group is any module over it with a nonzero generator $g$, and hashes, challenges and the binding factors are free scalars. In this model a public point $x g$ determines its scalar $x$. Every secrecy statement below is therefore a statement about the scalars a coalition holds: it does not say that the public points hide the secret, which needs the discrete-logarithm assumption, and that assumption is not formalized.
+
+\begin{proposition}[Key algebra]\label[proposition]{prop:keysplit}
+Let $X_a = x_a g$ for the actors $a \in A$ and $\Xf = \xf g$.
+\begin{enumerate}[label=(\alph*),leftmargin=1.8em,itemsep=1pt]
+\item $\Xf + \tw\,g + \sum_{a \in A} X_a = (\xf + \tw + \sum_{a \in A} x_a)\,g$, and $X - \Xf = (\tw + \sum_a x_a)\,g$. \by{\lean{D21_address_point}, \lean{D21_actor_part}}
+\item Let $\Eval_t(C, i) = \sum_{j < t} i^j C_j$ for a family of points $C$. For any such family and any set $Q \subseteq \mathbb{Z}/q$ of at least $t > 0$ distinct node indices,
+\[
+  \textstyle\sum_{i \in Q} \lambda_{Q,i} \Eval_t(C, i) + \tw\,g + \sum_a X_a = C_0 + \tw\,g + \sum_a X_a ;
+\]
+no honest dealer is assumed. \by{\lean{D21_reconstruct_point}}
+\item If $x g = x' g$ then $x = x'$. \by{\lean{C1_address_key_unique}}
+\item Without proofs of possession, for any scalars $\tw$ and $z$, the actor $r$ that publishes last can choose $X_r = z g - \Xf - \tw\,g - \sum_{a \ne r} X_a$, and then $\Xf + \tw\,g + \sum_a X_a = z g$. \by{\lean{C2_rogue_key_without_pop}}
+\item If the honest actors $H$ and the corrupt actors $B$ are disjoint and $(\xf + \tw + \sum_{a \in H \cup B} x_a)\,g = z g$, then $\xf + \sum_{a \in H} x_a = z - \tw - \sum_{a \in B} x_a$. \by{\lean{C2_extraction}}
+\item For any weights $\lambda_a$, nonces $k_a$, $k_f$ and challenge $c$, the committee half $k_f + c\,\xf$, the tweak term $c\,\tw$ once and the contributions $k_a + c\,\lambda_a x_a$ sum to a scalar $s$ with $s g = (k_f + \sum_a k_a)\,g + c\,(\xf + \tw + \sum_a \lambda_a x_a)\,g$. \by{\lean{C4_schnorr_combine}}
+\item If $c \ne 0$ and $\tw \ne 0$, the same sum with the tweak term twice fails that equation. \by{\lean{C4_tweak_twice_fails}}
+\item If $k \ne 0$, $R = k g$, $X = x g$, $w_f + \sum_p w_p = k^{-1}$ and $\mu_f + \sum_p \mu_p = k^{-1} x$, then $\bigl(\sum_p (h w_p + r \mu_p) + h w_f + r \mu_f\bigr)\,R = h g + r X$. \by{\lean{D24_ecdsa_split_sign}}
+\end{enumerate}
+\end{proposition}
+
+Part~(e) is the algebra of the rogue-key argument of \cref{sec:birth}: once the corrupt shards are extracted, a coalition that knows the whole key knows $\xf$ plus the honest shards. The extraction itself, from the proofs of possession, is not modeled.
+
+The access formulas of \cref{sec:access} are an inductive type with a leaf, binary AND and OR gates, and a threshold gate over a finite set of member ids in $\mathbb{Z}/q$. A family of leaf secrets \emph{deals} a secret $s$ through a formula when an AND gate splits additively, an OR gate gives both children the same secret, and a threshold gate is a polynomial of degree below $k$ with $s$ at zero and the children's secrets at the member ids. A set of leaves \emph{covers} the formula when it satisfies it. A formula is \emph{well formed} when the children of every gate have disjoint leaves and no member id is zero.
+
+\begin{proposition}[Access structures]\label[proposition]{prop:access}
+Let a formula $\Gamma$ deal $s$ from leaf secrets $x$.
+\begin{enumerate}[label=(\alph*),leftmargin=1.8em,itemsep=1pt]
+\item A signing set reaches the root with weights $\lambda$ exactly when it covers $\Gamma$, up to the choice of a covering subset. \by{\lean{D22_reach_covers}, \lean{D22_covers_reach}}
+\item For every signing set that reaches the root with weights $\lambda$, $\sum_a \lambda_a x_a = s$, and $\sum_a \lambda_a (x_a g) = s g$. With the committee half and the tweak this is \eqref{eq:weighted}. \by{\lean{D22_access_weighted_sum}, \lean{D22_access_weighted_point}, \lean{D22_address_key}}
+\item The formula $\mathsf{user} \vee \mathcal{G}$ with $\mathcal{G}$ a $k$-of-$m$ group gives $s$ to the user and to every $k$ guardians by their Lagrange combination. \by{\lean{D22_user_or_G}}
+\end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Secrecy of the scalars]\label[proposition]{prop:secrecy}
+Let $\Gamma$ be well formed, let $C$ be a set of leaves that does not cover $\Gamma$, and let $x$ deal $s$ through $\Gamma$. For every $s'$ there are leaf secrets $x'$ that agree with $x$ on $C$ and deal $s'$ through $\Gamma$. For one threshold gate with $0 \notin T$ and $|T| < k$, the completions of the shares at $T$ to a polynomial of degree below $k$ with constant term $s$ are in bijection with those with constant term $s'$. A coalition without the user and with fewer than $k$ guardians does not cover $\mathsf{user} \vee \mathcal{G}$.
+\by{\lean{C17_access_secrecy}, \lean{C17_threshold_secrecy}, \lean{C17_threshold_completions_equiv}, \lean{C17_user_or_G_coalition}}
+\end{proposition}
+
+The proof uses both conditions of well-formedness. A member at id zero would hold its group's secret outright, and the disjointness of the children's leaves lets the proof change the secrets of one branch without touching another. The proposition is an existence statement for the general formula, and the bijection, which gives equal counts, is proved for one threshold gate. Both are statements about scalars only.
+
+\begin{proposition}[Two leaf sets on one ECDSA slot]\label[proposition]{prop:leafsets}
+\begin{enumerate}[label=(\alph*),leftmargin=1.8em,itemsep=1pt]
+\item Let $w, \mu$ be polynomials of degree below $k$, let $T, T'$ be sets of $k$ member ids, let $h \ne h'$, and let $u = \sum_{i \in T} \lambda_{T,i}(h\,w(i) + r\,\mu(i))$ and $u' = \sum_{i \in T'} \lambda_{T',i}(h'\,w(i) + r\,\mu(i))$. Then $w(0) = (u - u')/(h - h')$, and if $r \ne 0$ then $\mu(0) = (u - h\,w(0))/r$. \by{\lean{D43_two_subsets_reveal_line}}
+\item If $k \ne 0$, $w_\gamma + w_o = k^{-1}$ and $\mu_\gamma + \mu_o = k^{-1} x$, then $x = (\mu_\gamma + \mu_o)/(w_\gamma + w_o)$. \by{\lean{D43_line_gives_key}}
+\item Suppose every honest member contributes on the slot only to a request whose leaf set is the slot's leaf set, and only once. A request with another leaf set and a contribution from every member of it has only corrupt contributors. If every leaf set has $k$ members and fewer than $k$ members are corrupt, at most one request on the slot has a contribution from every member of its leaf set. \by{\lean{D43_bound_slot_refuses}, \lean{D43_one_full_request}}
+\item Without the leaf-set check, with honest members that answer once, three members of which one is corrupt complete two requests with leaf sets of size two on one slot. \by{\lean{D43_without_binding_two_full}}
+\end{enumerate}
+\end{proposition}
+
+Parts (a) and (b) give the exact leak. Two leaf sets on one slot give the group's half line $(w_\gamma, \mu_\gamma)$ of that slot, the second coefficient when $r \ne 0$. They give $x$ only together with $(w_o, \mu_o)$, the sum of the halves of every other session party and of the committee on the slot. In $\mathsf{user} \wedge \mathcal{G}$ an honest user's halves are part of $(w_o, \mu_o)$, so a fully corrupt committee and a coalition of guardians obtain the group's half line and not $x$.
+
+The precedence model is a board of requests in board order, nodes that vote to reserve a slot for a request, at most $f$ Byzantine nodes, and the quorum $\lceil (n+f+1)/2 \rceil$. A request ends at any step, and a slot is burned once a request that named it and was ordered has ended.
+
+\begin{proposition}[Slot precedence]\label[proposition]{prop:precedence}
+In every reachable state of the precedence model:
+\begin{enumerate}[label=(\alph*),leftmargin=1.8em,itemsep=1pt]
+\item a request with precedence is the first request in board order that names the slot, and every honest vote is for that request; \by{\lean{D44_prec_first_namer}, \lean{D44_honest_vote_first_namer}}
+\item with at most $f$ Byzantine nodes, two requests that each hold a quorum of votes are the same request; \by{\lean{D44_one_request_per_slot}}
+\item with at most $f$ Byzantine nodes, a request ordered after a request that names the slot never holds a quorum; \by{\lean{D44_later_never_reserves}}
+\item a burned slot stays burned. \by{\lean{D44_burn_persists}}
+\end{enumerate}
+Under the rule ``vote for any ordered, live request that names the slot and whose authorization is in force'', with four nodes and one Byzantine node, the second request ordered reserves the slot while the first is live. \by{\lean{D44_in_force_rule_takes_later}}
+\end{proposition}
+
+The proposition is about committee slots. An ECDSA slot takes precedence only from a request whose authorization is in force (\cref{sec:ecdsa-slots}), so there the in-force rule is the design, and only the record's own sources can hold such an authorization. The proposition does not cover that rule; its proof is open (O38).
+
+The one-slot vote model of line dealing carries over: with at most $f$ Byzantine nodes, all honest partials on one slot carry one digest (\lean{C12_one_digest_per_slot}).
+
+\begin{proposition}[Old slots after a cold start]\label[proposition]{prop:coldstart}
+Let each slot have the board height of its claim, if any, and let an outage occur at height $o$. Keep the slots that a verified board record up to height at least $o$ shows unclaimed, and keep none without such a record. Every kept slot was claimed by no request at or below $o$. The rule that keeps instead every slot unclaimed at an earlier checkpoint fails: in some history it keeps a slot claimed between the checkpoint and the outage.
+\by{\lean{C16_cold_start_no_reuse}, \lean{C16_without_burn_reuse}}
+\end{proposition}
+
+\begin{proposition}[Profiles]\label[proposition]{prop:profiles}
+Model P0 and P1 by the single-user charter $\mathsf{user}$ and P2 by $\mathsf{user} \vee \mathcal{G}$ for a $k$-of-$m$ group $\mathcal{G}$. For each of the three charters, every signing set that reaches the formula with weights $\lambda$ gives, by one combination rule that takes no profile, a scalar $s$ with $s g = (k_f + \sum_a k_a)\,g + c\,(\xf + \tw + s_\Gamma)\,g$, where $s_\Gamma$ is the dealt secret. The user alone signs each of them. P2 adds the guardian branch and changes nothing else: every P1 signing set is a P2 signing set, every P2 dealing is a P1 dealing, and a P2 signing set is a P1 signing set or a set of guardians. No set without the user covers the single-user charter, and $k$ guardians cover the P2 charter.
+\by{\lean{D19_signing_profile_free}, \lean{D19_user_signs}, \lean{D19_P2_extends_P1}, \lean{D19_P2_signing_sets}, \lean{D19_P1_no_seizure}, \lean{D19_P2_guardians_seize}}
+\end{proposition}
+
+The proposition covers the modeled charters only. For any other charter, such as $\mathsf{user} \wedge \mathsf{issuer}$ or a $2$-of-$3$ group of officers, the profile-free combination follows from \cref{prop:access} and \cref{prop:keysplit}(f), because the combination reads only the formula and the weights; which sets sign then depends on the charter, and the user need not be among them. In the model P0 is the single-user split charter, while a deployed P0 address signs with the owner's existing key by line dealing, which the model does not cover.
+
+\subsection{Claims}\label{sec:claims}
+
+\Cref{tab:claims} states the claims, the adversary of each and its status. A claim holds in both modes unless a mode is named. ``All $n$'' means that every node is corrupt.
+
+{\small
+\setlength{\LTpre}{6pt}\setlength{\LTpost}{6pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.6cm}>{\raggedright\arraybackslash}p{6.3cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{3.6cm}@{}}
+\caption{Security claims, adversaries and status.}\label{tab:claims}\\
+\toprule
+Id & Claim & Adversary & Status \\
+\midrule
+\endfirsthead
+\toprule
+Id & Claim & Adversary & Status \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+C1 & \emph{Address binding.} A certified address has the key \eqref{eq:key} for shard points whose discrete logarithms their holders know. & any coalition of actors, $|C| < q$ & sketched; algebra in \cref{prop:keysplit}(a)--(c) \\
+C2 & \emph{No rogue key.} No coalition of actors obtains a birth certificate for an address whose whole key it knows, in any order of publication. & any coalition of actors, $|C| < q$ & sketched; algebra in \cref{prop:keysplit}(d), (e) \\
+C3 & \emph{Sealed user half.} In the single-user form, the nodes cannot sign a message outside the dealt variants. & all $n$, and the host chain & Schnorr: sketched (DL, ROM). ECDSA: sketched, conditional on O1, O2 \\
+C4 & \emph{No spend without an admitted set.} Every valid spend uses the contributions of a signing set $S \in \Gamma$. & all $n$ & follows from C3 and C17, and inherits C17's open part (O20) \\
+C5 & \emph{No spend without the committee.} All actors together with $t - 1$ nodes cannot sign. & all actors and $t-1$ nodes; non-TEE: slot rules need $|C| \le f$ or a slot anchor; TEE: at most $n-1-2f$ rollbacks & Schnorr: open (O6). ECDSA: sketched, conditional on O1, O2, O19, O32 \\
+C6 & \emph{Authorization enforcement.} No honest node releases for an envelope without an unrevoked authorization in force that matches $\hd$ and $\tkc$, on slots the request reserved, so no release completes without one, because a release needs $t$ nodes. & TEE: all operators, at most $n-1-2f$ rollbacks. Non-TEE: $|C| < t$ & ledger-first: TEE assumed; non-TEE sketched, conditional on O4, O22, O25. Board-first: open (O29) \\
+C7 & \emph{Hold enforcement} (P2). A revoked authorization releases no new generation. & as C6 & as C6, ledger-first only, conditional on O3 \\
+C8 & \emph{Sealed until order.} Fewer than $t$ nodes learn nothing of the header, a body or a capsule before the certificate that orders the envelope. & $|C| < t$, and actors not named & sketched (DDH, ROM); written proof O26 \\
+C9 & \emph{Unselected variants stay sealed.} No body of a variant the rule never selects is opened, and its contributions stay unread. & $|C| < t$, and actors other than the initiator; non-TEE: $|C| \le f$ & sketched (DDH, ROM); written proof O26 \\
+C10 & \emph{Blindness.} The views of \cref{sec:blindness}. In non-TEE mode the ticket hides the address and the message only from a node that cannot enumerate the candidate pairs $(x(Q), m)$, and on ECDSA the slot ids name the account before release. & TEE: all operators. Non-TEE: $|C| < t$ & TEE: assumed. Non-TEE: sketched \\
+C11 & \emph{One spend per record state.} Two final settlements cannot follow one record state. & any & ledger-first: sketched. Board-first: sketched, with obligation O29 \\
+C12 & \emph{One nonce use.} No committee slot and no ECDSA slot signs two messages. & TEE: within the rollback bound. Non-TEE: $|C| \le f$, or $|C| < t$ with a slot anchor (O32). ECDSA slots against actors: all $n$ and a coalition outside $\Gamma$ & sketched; the counting with the anchor is O27 and ECDSA precedence O38; algebra and counting in \cref{prop:leafsets,prop:precedence} \\
+C13 & \emph{Liveness.} A valid authorized envelope reaches \msg{FINAL}, \msg{EXPIRED}, or \msg{VOID} because an earlier request named one of its slots (for an ECDSA slot, an earlier request whose authorization was in force) or a slot lies below the floor. & $|C| \le f$, partial synchrony & sketched; the merged path is O28, the ECDSA precedence rule O38 \\
+C14 & \emph{Rotation.} Resharing at $t = n - f$ preserves $\Xf$ and secrecy. & $|C_{\mathsf{old}}| \le f$, $|C_{\mathsf{new}}| \le f'$ & open (O5) \\
+C15 & \emph{Recovery.} After $\Delta_{\mathsf{rec}}$ without a checkpoint, an admitted set of the owner exits (P1 without policy checks, P2 unless held). On ECDSA without anchored slots the exit first runs a refill session, which needs every session party online. & fewer than three corrupt recovery members; ledger live & sketched, conditional on O5, O10 \\
+C16 & \emph{Cold start.} A whole-committee restart loses no key, moves no coin and uses no slot twice, also when every disk was rolled back. & TEE: $|C| \le f$, any number of rolled-back disks. Non-TEE: $|C| \le f$ & sketched, conditional on O5, O10, O17 and the ledger's restart checks; counting in \cref{prop:coldstart} \\
+C17 & \emph{Unadmitted coalitions cannot sign.} Any set of nodes, up to all $n$, with any coalition $C_A$ of actors that does not cover $\Gamma$, cannot sign a message $m^*$ unless the honest actors of some $S \in \Gamma$ dealt contributions for $m^*$. & all $n$ and $C_A \notin \Gamma$, with every dealt contribution & Schnorr: sketched for an honest initiator, open for honest pool actors (O20). ECDSA: sketched, conditional on O1, O2, O19. Scalar secrecy: \cref{prop:secrecy} \\
+C18 & \emph{Confinement per actor.} An honest actor's contribution completes only the half it was computed for, and with an honest initiator it stays unread until its variant is released. & confinement: all $n$ and every other actor. Secrecy: $|C| < t$ (non-TEE: $|C| \le f$) & confinement: as C17. Secrecy: sketched (DDH, ROM), part of O26 \\
+C19 & \emph{No concurrent-session forgery against an actor.} Requests that name one honest actor's pairs give no signature outside those requests. & the initiator, other actors and all $n$ & open (O20) \\
+C20 & \emph{Reissue safety.} A stalled request releases nothing, and a reissue reuses no committee slot and no actor pair. & $|C| < t$ for release; $|C| \le f$ (non-TEE) for slot reuse & sketched \\
+C21 & \emph{Actor identity hiding.} Before release a non-TEE node learns of the actors only their number, the frame attachments and, on ECDSA, each contribution's session party index. A TEE operator learns only the frame count, timing and the vote kinds. & non-TEE: $|C| < t$. TEE: all operators & non-TEE: sketched. TEE: assumed \\
+\end{longtable}
+}
+
+\subsection{Arguments}\label{sec:arguments}
+
+\paragraph{The sealed half (C3).} On the Schnorr suites the adversary holds $\xf$ and every dealt contribution of the single user. A signature on a new message $m^*$ needs the user's contribution at a fresh challenge. The simulator deals the user's halves by programming the challenge hash: it picks $s_u$ and $c$, sets $R_u = \sigma(s_u G - c(g Y_A + g_Q t_{\mathsf{tap}} G))$, derives $R$ through $\rho$, programs the challenge at $(x(R), x(Q), m)$, and retries when the parity of $R$ differs from $\sigma$. Every half has its own user nonce, so the simulation programs one challenge per half. A forgery on $m^*$ yields $x_A$ by forking, hence the discrete logarithm of $Y_A$. On ECDSA each slot is used for one message, which is the setting of the presignature theorem of Groth and Shoup~\cite[Theorem~3]{GS21}, given the two functionalities of the session.
+
+\paragraph{Unadmitted coalitions (C17).} Let $C_A$ not cover $\Gamma$. For every admitted set $S$, the honest residual $x_A - \sum_{a \in C_A} \lambda_a x_a$ is unknown to the coalition. \Cref{prop:secrecy} gives the scalar part of this step: with nonzero member ids and no repeated leaf, the coalition's leaf secrets are consistent with every value of the dealt secret. Hiding the residual against the public points, and the reduction from a forgery to its discrete logarithm, are the sketched part. An honest initiator's contributions are simulated by programming the challenge, as in C3. Pool actors publish their pairs before the message, so their contributions need a reduction to the algebraic one-more discrete logarithm problem in the style of the FROST proofs, with $\Nh$ pairs of an actor per request and several halves bound to one committee slot; that reduction is open (O20). The adversary already holds every dealt contribution, so sealing contributions to $P_{v,g}$ changes nothing in this claim. On ECDSA, each slot signs one message, and the leaf-set binding keeps a fully corrupt committee from two group evaluations on a slot (\cref{prop:leafsets}).
+
+\paragraph{One nonce use (C12).} A Schnorr slot $\ell(g, j)$ is reserved by one request, and up to $K$ of its tickets name it. An honest node computes a partial on the slot for one ticket, the one the anchor of generation $g$ selects, and the anchor is a function of the committed board. A second ticket needs $t$ partials and gets at most $t - 1$, from corrupt nodes. One request per slot is \cref{prop:precedence}(b), and the burn is part~(d). Agreement on one anchor and one request per slot is board safety, which holds for $|C| \le f$; between $f$ and $t - 1$ corrupt nodes a forked board breaks it (\cref{sec:slots}), and only the slot anchor restores it (O32). The counting argument with shared slots, two generations and the witness under rollback is O27.
+
+\paragraph{Sealing by threshold PRF (C8, C9, C18).} The outer dealing, its encryption and $\pi$ are those of line dealing, so its share-encryption theorem applies: the corrupt nodes learn nothing of honest shares beyond the commitments~\cite{LD}. What remains is that a key whose label has no honest partial is pseudorandom.
+
+\begin{statement}[Open, O26]\label[statement]{stmt:prf}
+Let $|C| \le t - 1$, let an honest party deal $\kappa_0$ in an envelope with outer digest $\dd$, and let $\mathsf{lab}$ be a label on which no honest node has released a partial. Then $Z_{\mathsf{lab}} = \kappa_0 \Hc(\dd \,\|\, \mathsf{lab})$ is indistinguishable from a uniform point and $\KDF(Z_{\mathsf{lab}})$ from a uniform key, under DDH with $\Hc$, $\KDF$ and $\Hq{q}$ as random oracles, given the commitments, the corrupt shares, every partial released on other labels with its Chaum-Pedersen proof, and the answers to complaints. For a variant label, a contribution sealed to $P_{v,g} = \Hq{q}(Z_{\mathsf{lab}} \,\|\, \texttt{ctb})\,G$ hides its scalars as hashed ElGamal does. The scalar $y_{v,g}$ is not claimed indistinguishable from uniform given $P_{v,g}$, because $y_{v,g} G = P_{v,g}$ tests it.
+\end{statement}
+
+C8 adds that honest nodes send the header partial only after the ordering certificate. C9 adds that honest nodes release a variant partial only for the selected body, which in non-TEE mode needs $|C| \le f$, because a forked board shows honest nodes different anchors. C18 adds that an actor's secrecy needs an honest initiator: an actor cannot check $P_{v,g}$, and an initiator that substitutes a key of its own reads the scalars of the request it built. It gains no signature from them, because they complete only the halves the actors accepted, and the request ends void at release.
+
+\paragraph{The committee half (C5).} The Schnorr claim needs a reduction to the algebraic one-more discrete logarithm problem for an adversary that holds every actor and $t - 1$ nodes, with the signing oracle ``one query per committee slot, on the ticket that the board anchor selects among the up to $K$ tickets dealt on that slot'', in which the unanswered candidates give no advantage. It is open (O6).
+
+\subsection{When enclaves break}\label{sec:tee-break}
+
+C3, C4, C11 and C17 to C19 do not use the TEE. C1 and C2 hold while fewer than $q$ enclaves are broken, because $q$ broken enclaves sign a birth certificate without the checks. C8, C9 and the secrecy part of C18 hold against fewer than $t$ broken enclaves: $t$ broken enclaves decrypt $t$ shares of $\kappa_0$ from any outer dealing and read every envelope before ordering. With $t$ or more broken enclaves, authorization and hold enforcement are lost against their operators, who can release already dealt variants despite a hold or ignore a veto, and so are confidentiality and the witness that carries C12 for committee slots. Even then no broken enclave yields a signature on a message that no admitted signing set sealed, because no shard is in an enclave.

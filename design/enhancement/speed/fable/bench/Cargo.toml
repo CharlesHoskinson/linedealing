@@ -1,0 +1,10 @@
+[package]
+name = "speedbench"
+version = "0.1.0"
+edition = "2021"
+[dependencies]
+k256 = { version = "=0.13.4", features = ["arithmetic", "ecdsa", "schnorr", "sha256", "hash2curve"] }
+curve25519-dalek = "=4.1.3"
+ed25519-dalek = "=2.2.0"
+[profile.release]
+opt-level = 3

@@ -1,0 +1,266 @@
+\section{Security}\label{sec:security}
+
+We state each claim with its theorem, its assumptions and its status. Four status words are used, and each has one meaning.
+
+\begin{description}[leftmargin=1.5em,itemsep=1pt]
+\item[Proved.] A complete proof exists. Where it is longer than a page, this paper gives the statement, the bound and the idea, and the full game sequence is in the proof document \texttt{design/PROOFS.md} of the accompanying repository.
+\item[Reduced.] The claim is proved from a named published theorem by a reduction whose steps are proved.
+\item[Sketched.] An argument is given, and no complete proof is written.
+\item[Open.] No proof exists.
+\end{description}
+
+\subsection{Model}\label{sec:model}
+
+\paragraph{Execution.} There are honest owners with keys $X_1, \dots, X_{\Qc{o}}$ and one committee of $n \ge 3f+1$ nodes per epoch. The adversary $\mathcal{A}$ is static. Before the epoch keys exist it names the corrupt set $C$ with $|C| \le t-1$, of which at most $f$ nodes are Byzantine; the others leak their decryption key and their shares only. Corrupt nodes register any encryption key that passes the registration check, and no proof of possession is assumed for corrupt keys. Each honest node acts on its own view of the board, a prefix of its log that only grows; rule~4 of \cref{sec:rules} extends this to restored nodes. The adversary chooses every honest owner's header fields, schedules the board subject to its total order, controls the contents of the target chain subject to its finality rule, and asks any owner's wallet for ordinary signatures on messages of its choice.
+
+\paragraph{Scope.} The theorems cover requests with the rotation policies \emph{finish} and \emph{void}: one committee serves the request.
+
+\paragraph{Copies and authorized messages.} For a signature suite, a \emph{message} is the byte string that the suite hashes. An owner message $M'$ is a \emph{copy} of $M$ if it has the $(\hdr, \deal, \ct)$ of $M$; its proof $\pi$ may differ. A copy has the header, the commitments and the ciphertexts of the original, hence the same $\rid$ and the same shares at every honest node, and every later step reads only these. A message is \emph{owner-dealt for $X$} if it is a copy of a message written by the owner of $X$. The set $\Auth(X)$ holds the messages $m$ such that the wallet of $X$ signed $m$, or some honest node posted a PARTIAL for a slot or sealed point with message $m$ that was dealt in a message owner-dealt for $X$.
+
+\paragraph{Forgery.} The adversary wins the unforgeability experiment if it outputs $(X_v, m^*, sig^*)$ with $X_v$ an honest owner key, $sig^*$ valid for $m^*$ under the verification rule of the suite, and $m^* \notin \Auth(X_v)$.
+
+The cryptographic theorems do not state that the messages in $\Auth(X)$ are the right ones. That is the state-machine property ``an honest node signs only the digest it built from an eligible anchor, at most $\Gen$ times per request'', which \cref{sec:formal} explores in the Quint model.
+
+\subsection{Assumptions}\label{sec:assumptions}
+
+We write $\mathrm{dh}(aG, bG) = abG$.
+
+\begin{definition}[AOMDL]
+In the \emph{algebraic one-more discrete logarithm} problem with parameter $\ell$, the adversary gets uniform points $Y_0, \dots, Y_\ell \in \GG$. It may call an oracle $\mathrm{DL}(\alpha_0, \dots, \alpha_\ell, \beta)$ at most $\ell$ times; the answer is $\beta + \sum_i \alpha_i \log_G Y_i$. It wins if it outputs $\log_G Y_i$ for all $i = 0, \dots, \ell$.
+\end{definition}
+
+\begin{definition}[ICDH]
+In the \emph{interactive CDH} problem~\cite[p.~29]{GS22}, the adversary gets uniform $U^*, V^* \in \GG$ and must compute $\mathrm{dh}(U^*, V^*)$, with an oracle that decides whether $(A, V^*, W)$ is a Diffie-Hellman triple for points $A, W$ of its choice.
+\end{definition}
+
+The further assumptions are these. The labeled hashes are independent random oracles, and for suites 2 and 3 so is the suite challenge hash. For suite~1 we work in the elliptic-curve generic group model of Groth and Shoup~\cite[Section~2]{GS21}, and the sighash function of the chain is collision resistant, random-preimage resistant, zero-preimage resistant and ratio resistant~\cite[Definitions 3, 4, 5, 7]{GS21}. Sealed mode assumes the standard unforgeability (EUF-CMA) of the suite scheme. The signature scheme of the post keys is unforgeable. Wallet nonces are fresh and uniform, or a deterministic function of the message that is modeled as a uniform function. For suite~3 the hash of the secret seed is a random oracle, so the clamped key is uniform on a set $S_{\mathrm{clamp}}$ of $2^{251}$ scalars; we write $\kappa_3 = (q-1)/2^{251}$, which is about $2$, and $\kappa_2 = 1$. For suite~1 we write $\theta_q = \Pr[x(R) \ge q]$ for a uniform point $R \neq O$; $\theta_q < 2^{-125}$. The owner's device is honest when it writes the message, knows the current epoch keys, and never reuses a nonce across messages.
+
+For an oracle $\mathsf{x}$, the count $\Qc{x}$ covers every evaluation of that oracle in the experiment, by the adversary, by honest parties and by the final verification.
+
+\subsection{Address binding}
+
+\begin{proposition}[Address binding; proved]\label{prop:binding}
+A message that passes Step~A commits to sharings of the stated objects for $X$. For a sealed point of suites 2 and 3 the committed polynomial $p$ satisfies $p(0)\,G = R + cX$, so $(R, p(0))$ verifies. For a sealed point of suite~1, $p(0)\,R = hG + rX \neq O$ with $r \neq 0$, which is the ECDSA equation with $s = p(0) \neq 0$. For an open ECDSA slot, $w(0)\,R = G$ and $\mu(0)\,R = X$, so $m\,w(0) + r\,\mu(0)$ is the signature scalar for every sighash $m$. For open Schnorr the constant terms are $X$, $D_1$ and $D_2$.
+\end{proposition}
+
+The proof is a direct calculation from the fact that commitments in a base $B \neq O$ fix a polynomial, and the Lean development checks it together with the soundness of the public partial checks: shares that pass their checks at $t$ or more nodes interpolate to a scalar that satisfies the signature equation, with no assumption about the dealer (\cref{sec:formal}).
+
+\subsection{One digest per slot}
+
+\begin{lemma}[One digest per slot; proved]\label{lem:digest}
+For a request served by one committee, all PARTIAL posts of honest nodes for $(\rid, g)$ use one digest, under either hypothesis: \textup{(a)} the board is a consistent total order; or \textup{(b)} at most $f$ nodes are Byzantine and post signatures are unforgeable, with no assumption on board consistency. In case \textup{(b)} the statement fails with probability at most $n \cdot \Adv^{\mathrm{euf}}_{\mathrm{post}}$.
+\end{lemma}
+
+\begin{proof}
+(a) The lock certificate is by definition the first $\qr$ matching PREVOTE posts from distinct nodes. It is unique, and an honest node signs only the digest of that certificate. (b) Two certificates for $(\rid, g)$ with different digests have at least $2\qr - n \ge f+1$ voters in common by \cref{lem:quorum}, so the post key of one honest node signed two PREVOTEs for $(\rid, g)$. Rule~1 with the durable ledger and rules 3 and 4 exclude that for an honest node, so one of the two posts is a forgery.
+\end{proof}
+
+We write $\varepsilon_{\mathrm{lock}} = 0$ on a consistent board and $\varepsilon_{\mathrm{lock}} = n \cdot \Adv^{\mathrm{euf}}_{\mathrm{post}}$ otherwise. Across a freeze for resharing the statement needs board consistency. The Lean development proves the counting core as a theorem about a step relation with restores, and shows by a reachable counterexample that the statement fails without rule~4.
+
+\subsection{Share encryption}
+
+The share encryption is hashed ElGamal with the ephemeral-key proof and a public complaint that reveals one Diffie-Hellman value. Theorem~2 of Groth and Shoup~\cite[pp.~29--32]{GS22} proves such a scheme secure under ICDH, for a game that forbids a decryption query on the associated data of an encryption query. Line dealing cannot use that theorem as a black box. The natural associated data is $\hd$, which does not cover the ciphertexts, and an adversary that copies an honest header, dealing and proof and changes one ciphertext scalar would make an honest node publish $K_i$ in a complaint, which opens the honest ciphertext. The construction of \cref{sec:msg} therefore puts the ciphertext digest into the hash that defines the second base $g'$.
+
+\begin{theorem}[Honest pads are random; proved]\label{thm:enc}
+Let $\mathsf{Exp}$ be any experiment of \cref{sec:model}. Let $\mathsf{Exp}'$ be the same experiment with two changes. \textup{(i)}~For every honest dealer's message $M$ and every honest node $i$, each ciphertext scalar is uniform and independent of everything else, and node $i$ uses its dealt share directly when it processes $M$ or a copy of $M$. \textup{(ii)}~The experiment aborts at the event $\mathsf{Reuse}$: a message that is not a copy of an honest dealer's message, but carries an honest dealer's $E$, passes the ephemeral-key check. Then for every adversary $\mathcal{A}$ there is an ICDH adversary $\mathcal{B}_C$, with the running time of $\mathcal{A}$ plus one oracle call per $\Hh{enc}$ query, such that
+\begin{align*}
+  \bigl|\Pr[\mathsf{Exp} \Rightarrow 1] - \Pr[\mathsf{Exp}' \Rightarrow 1]\bigr| &\le \Adv^{\mathrm{icdh}}(\mathcal{B}_C) + \delta_C , \\
+  \Pr[\mathsf{Reuse} \text{ occurs in } \mathsf{Exp}] &\le \Adv^{\mathrm{icdh}}(\mathcal{B}_C) + \delta_C ,
+\end{align*}
+\begin{align*}
+  \delta_C ={}& \frac{\Qc{eph}\Qc{msg} + 2\Qc{ephpok} + \Qc{dleq}\Qc{cmp} + \Qc{pop}\,n + \Qc{ephpok}\Qc{msg} + \Qc{msg}^2 + \Qc{H}\Qc{msg} + n + 2\Qc{msg}}{q} \\
+  &+ \frac{\Qc{H}^2 + \Qc{enc}\Qc{msg}}{2^{256}} ,
+\end{align*}
+where $\Qc{msg}$ is the number of honest dealer messages, $\Qc{cmp}$ the number of honest complaints, and $\Qc{H}$ the number of evaluations of $\Hh{hd}$ and $\Hh{ct}$.
+\end{theorem}
+
+\emph{Idea of the proof.} The proof repeats the game sequence of~\cite[Theorem~2]{GS22} with two hash inputs in place of one associated-data string. Honest node keys and adversarial values of $\Hh{eph}$ are programmed as shifts of the challenge point $U^*$, and honest ephemeral keys as shifts of $V^*$, so that the reduction computes $K_i$ for every adversarial message from $E'$ without knowing a secret key, and answers every complaint. A query to $\Hh{enc}$ at the Diffie-Hellman value of an honest key and an honest $E$ solves ICDH. The step that the cited proof does not need is $\mathsf{Reuse}$, which arises after the honest proofs have been replaced by simulated ones. It is handled directly in the random oracle model: every input of $\Hh{ephpok}$ begins with $(\hd, \Hh{ct}(\ct))$, the simulator programs only inputs with the prefix of an honest message, and the $\mathsf{Reuse}$ message has another prefix, so its challenge is a fresh uniform value and plain soundness applies. The theorem holds for static corruption and a group of prime order, which for suite~3 rests on the membership checks at registration, on $E'$ and on complaint points. The cited proof is a sketch without a concrete bound; $\delta_C$ is derived in the proof document.
+
+\subsection{Sealed mode}
+
+\begin{theorem}[Sealed points stay sealed below $t$; proved]\label{thm:sealed}
+Consider any suite in sealed mode, with $|C| \le t-1$ and any number of Byzantine nodes among $C$. Let $\Qc{pt}$ be the number of sealed points dealt by honest owners and $S_{\mathrm{msg}}$ the number of honest owner messages. Then
+\[
+  \Adv^{\mathrm{sealed}}(\mathcal{A}) \le \Adv^{\mathrm{icdh}}(\mathcal{B}_C) + \delta_C + \frac{\Qc{auth} S_{\mathrm{msg}}}{q} + \Qc{o}\,\Qc{pt}\,\Adv^{\mathrm{euf\text{-}cma}}_{\mathrm{suite}}(\mathcal{B}_3).
+\]
+\end{theorem}
+
+Here the adversary wins with a valid signature on a message outside $\Auth(X_v)$: a message for which no honest node released a partial of any sealed point of an owner-dealt message and which the wallet did not sign. \emph{Idea of the proof.} After \cref{thm:enc} the honest ciphertexts are random. The reduction guesses the owner and the sealed point whose message the forgery will carry. It obtains every other sealed signature from its signing oracle and deals it honestly. For the target it picks the nonce point itself and builds the commitments from the public point $F_0$ and $t-1$ random shares by interpolation in the exponent, and it simulates the authorship proof. It never queries the target message, so a forgery on it wins the unforgeability game. For ECDSA the assumption is proved in the generic group model~\cite[Theorem~1]{GS21}.
+
+The theorem is stated for messages and in the form ``no honest partial was released''. This is the form that $\FOMS$ needs: an honest node releases a variant only when $\Select$ names it at the node's own eligible anchor, so one honest partial already means that the release was authorized. The stronger form, in which the honest nodes released fewer than $t - |C|$ partials, is open; a simulation would have to guess the releasing subset.
+
+\begin{corollary}[Fully corrupt committee; proved]\label{cor:corrupt}
+In sealed mode, with every node corrupt, a valid signature under $X$ on a message outside the variant messages and the wallet's messages breaks the unforgeability of the suite scheme.
+\end{corollary}
+
+The reduction asks its signing oracle for every variant, deals honestly and proves $\pi$ honestly. A fully corrupt committee can release any variant at any time. All variants spend the pin, so the chain executes at most one, and each pays the owner's outputs and at most the fee ceiling. The key is never dealt.
+
+\subsection{Open ECDSA}\label{sec:sec-ecdsa}
+
+The target is the game of ECDSA with presignatures~\cite[Figure~4]{GS21}. The challenger holds $x$ and gives $G, X$. A presignature request returns $R_k = k_k G$. A signing request names an unused index $k$ and a message, the challenger hashes the message itself and returns the signature for the nonce $k_k$, and each index is used at most once. Let $U$ be the largest number of unused presignatures at one time and $N$ the number of presignature, signing and group queries. Theorem~3 of~\cite{GS21} bounds the forging advantage by
+\[
+  \Phi_3(N, U) = \mathrm{CRadv} + (4 + o(1))\,N\,\mathrm{RPRadv} + (4 + o(1))\,N\,\mathrm{RRadv} + U N\,\mathrm{RPRadv} + \mathrm{ZPRadv} + O(N^2/q),
+\]
+with hash adversaries that run in the time of the adversary plus $O(UN)$.
+
+A slot of an honest message is \emph{live} from its dealing until the first honest node must post a PARTIAL for it, or until every honest node has seen a tombstone of the request, an expiry of the slot's generation without a lock, or a binding of the $\rid$ to another dealing. In this theorem $U$ is the largest number of slots of one key that are live at one time, $S$ is the number of open ECDSA slots dealt by honest owners, $\Qc{w}$ the number of wallet signatures, $N_{\mathcal{A}}$ the number of group-oracle queries of $\mathcal{A}$, and $N_{\mathrm{sim}}$ the number of group operations of the honest parties and of the simulation.
+
+\begin{theorem}[Open ECDSA; reduced to {\cite[Theorem~3]{GS21}}]\label{thm:ecdsa}
+Consider suite~1 in open mode, with $|C| \le t-1$ and at most $f$ Byzantine nodes, and suppose that no key related to $x$ by a known additive offset signs anything. Then
+\[
+  \Adv^{\mathrm{open\text{-}ecdsa}}(\mathcal{A}) \le \varepsilon_{\mathrm{lock}} + \Adv^{\mathrm{icdh}}(\mathcal{B}_C) + \delta_C + \delta_A + \Qc{o}\,\Phi_3\bigl(N_{\mathcal{A}} + N_{\mathrm{sim}} + 4S + 2\Qc{w},\; U + 1\bigr),
+\]
+\[
+  \delta_A = \frac{\Qc{auth} S_{\mathrm{msg}}}{q} + S\Bigl(\theta_q + \frac{2S + 4}{q - 1}\Bigr)^{2} + \frac{8\,\Qc{w}}{q-1} + \frac{2S}{2^{256}} .
+\]
+\end{theorem}
+
+\emph{Idea of the proof.} By \cref{lem:digest} each slot is signed by honest nodes on one message, and by \cref{thm:enc} honest ciphertexts are random. The reduction requests one presignature per slot and gets $R$. It picks the $t-1$ exposed shares of $w$ and $\mu$ at random and computes every coefficient commitment by interpolation in the exponent, in base $R$, from the points $G$, $X$ and $R$ alone. The commitments in base $R$ therefore give the adversary nothing that it could not compute inside the game. When the lock fixes the message of a slot, the reduction asks for the signature $s$ and interpolates each honest partial from $s$ and the exposed shares. An unused slot leaves the game by a signing request on a random message that the adversary never sees, at the moment every honest node is done with the slot. The reduction is black-box and does not rewind.
+
+The theorem carries the conditions of the cited one. It holds in the generic group model only. It needs the four hash properties on the real sighash; nothing in the protocol stops the ratio attack, and ratio resistance is assumed~\cite[p.~26]{GS21}. Every node must hash its own preimage, because the game accepts a message and never a hash. The term $U N$ is schedule-dependent: one honest node whose view lags keeps a slot live, so $U$ can reach the number of slots ever dealt under the key, and the theorem holds with $U = S$. The ICDH advantage on secp256k1 against generic adversaries is an assumption here. The combination of a generic group with random oracles for the labeled hashes, next to a concrete sighash, is a modeling assumption that neither cited paper analyses.
+
+\begin{corollary}[Keys with BIP32 siblings; reduced to {\cite[Theorem~4]{GS21}}]\label{cor:bip32}
+Assume that HMAC-SHA512 is a random oracle. Let $\mathcal{P}$ be a prefix-closed set of non-hardened derivation paths, fixed before the keys are generated, that contains the path of $X$ and the path of every key that signs, and let $E_{\mathcal{P}}$ be the set of their tweaks. Then \cref{thm:ecdsa} holds without its hypothesis on related keys, with $\Phi_3$ replaced by
+\[
+  \mathbb{E}\bigl[\Phi_4(E_{\mathcal{P}})\bigr] + \frac{|\mathcal{P}|^2}{2^{256}} + |\mathcal{P}|\Bigl(\frac{2^{256} - q}{2^{256}} + \frac{1}{q}\Bigr),
+\]
+where $\Phi_4(E)$ is the bound of~\cite[Theorem~4]{GS21} for the tweak set $E$, with $N_{\mathrm{psig}}$ the number of presignature requests:
+\begin{align*}
+  \Phi_4(E) ={}& \mathrm{CRadv} + (4 + o(1))\,N_{\mathrm{psig}}\,\mathrm{4sum1adv}[E] + (4 + o(1))\,N\,|E|\,\mathrm{RPRadv} \\
+  &+ (4 + o(1))\,N\,\mathrm{4sum2adv}[E] + U N\,|E|\,\mathrm{RPRadv} + \mathrm{ZPRadv} + O(N^2/q) .
+\end{align*}
+\end{corollary}
+
+The cited theorem needs the tweak set to exist before the key. BIP32 tweaks are a function of the key, so the proof draws the tweaks of $\mathcal{P}$ first and programs the derivation oracle after it receives the key. A tight bound for presignatures under one fixed tweak, and paths chosen adaptively by the adversary, are open.
+
+\subsection{Open Schnorr}\label{sec:sec-schnorr}
+
+With one pre-published nonce per slot, the nonce point of a signature is known before the message, and an adversary that holds many open slots can search across them for a forgery; Komlo and Goldberg and Crites, Komlo and Maller describe this attack for threshold Schnorr with preprocessed nonces~\cite{FROST,Sparkle}. Line dealing deals two nonces per slot and binds their combination to the lock digest. We state the resulting single-signer game and prove it hard.
+
+\begin{definition}[Game TNS]\label{def:tns}
+The game has random oracles $\Hh{dg}$, $\Hh{b}$, $\Hh{auth}$ and the suite challenge oracle $\Hh{sig}$, the sign rule $\sigma(R) \in \{1, -1\}$ of the suite, and a fixed function $\mathsf{msg}(\ell, M)$ that reads message number $\ell$ out of a digest preimage $M$.
+\begin{enumerate}[leftmargin=1.7em,itemsep=1pt]
+\item \emph{Key.} $x$ is uniform in $\Zq^*$ and $X = xG$; in suite~2, $x$ is negated if needed so that $X$ has even $y$. The adversary gets $X$.
+\item The oracle $\mathsf{NewSlot}(\ell)$ creates slot $j$ with index $\ell_j = \ell$ and uniform $d_{1,j}, d_{2,j} \in \Zq^*$, and returns $(D_{1,j}, D_{2,j})$. At most $U$ calls.
+\item The oracle $\Hh{b}(j, \dg)$ returns $\bot$ if slot $j$ does not exist yet.
+\item The oracle $\mathsf{Sign}(j, M)$, at most once per $j$: let $\dg = \Hh{dg}(M)$, $\rho = \Hh{b}(j, \dg)$, $m = \mathsf{msg}(\ell_j, M)$ and $R = D_{1,j} + \rho D_{2,j}$. If $m = \bot$ or $R = O$, return $\bot$. Otherwise let $c = \Hh{sig}(\sigma(R) R, X, m)$ and return $s = \sigma(R)(d_{1,j} + \rho\, d_{2,j}) + c\,x$.
+\item The oracle $\mathsf{PlainSign}(m)$ returns an ordinary suite signature on $m$ with a fresh uniform nonce.
+\item The oracle $\mathsf{Prove}(ctx)$ returns $(T, a + c\,x)$ for uniform $a$, $T = aG$ and $c = \Hh{auth}(ctx, T)$.
+\item The adversary wins with a \emph{signature forgery}, a valid signature on a message that was the message of no $\mathsf{Sign}$ or $\mathsf{PlainSign}$ query, or with a \emph{proof forgery} $(ctx^*, T^*, z^*)$ such that $z^* G = T^* + \Hh{auth}(ctx^*, T^*) X$ and $(ctx^*, T^*)$ comes from no $\mathsf{Prove}$ answer.
+\end{enumerate}
+\end{definition}
+
+In the protocol, a slot is $(\hd, g, \ell)$, the oracle $\Hh{b}(j, \dg)$ is $\Hh{bind}(\hd, g, \ell, \dg)$, $\mathsf{Sign}$ returns the value at zero of the partial-signature polynomial of \cref{fig:open}, and $\mathsf{Prove}$ is the authorship proof. The oracle $\mathsf{Sign}$ accepts any $M$, so the game gives the adversary more than the protocol does.
+
+\begin{theorem}[TNS under AOMDL; proved]\label{thm:tns}
+Let $\mathcal{A}$ make at most $U$ calls to $\mathsf{NewSlot}$, at most $\Qc{dg}, \Qc{b}, \Qc{sig}, \Qc{auth}$ direct queries to those oracles, $\Qc{ps}$ queries to $\mathsf{PlainSign}$ and $\Qc{pr}$ to $\mathsf{Prove}$. Let $Q_{\Sigma} = \Qc{sig} + \Qc{auth} + \Qc{b} + U + 1$. There is an adversary $\mathcal{B}$ against AOMDL with parameter $2U$, running $\mathcal{A}$ twice, such that
+\[
+  \Adv^{\mathrm{tns}}(\mathcal{A}) \le \delta_B + \frac{Q_{\Sigma}}{q} + \sqrt{Q_{\Sigma}\Bigl(\Adv^{\mathrm{aomdl}}_{2U}(\mathcal{B}) + \frac{2(\Qc{b} + U)^2}{q}\Bigr)} ,
+\]
+\begin{align*}
+  \delta_B ={}& \frac{(\Qc{dg} + U)^2 + (\Qc{dg} + U)\Qc{b}}{2^{256}} \\
+  &+ \frac{2(\Qc{b} + U)(\Qc{sig} + \Qc{b} + U + \Qc{ps}) + 2\Qc{ps}(\Qc{sig} + \Qc{b} + U + \Qc{ps})}{q} \\
+  &+ \frac{\Qc{ps} + \Qc{pr}(\Qc{auth} + \Qc{pr}) + 2U + 1}{q} .
+\end{align*}
+\end{theorem}
+
+\emph{Idea of the proof.} The reduction embeds the challenge points as the key and the $2U$ nonce points. The step that defeats the search across slots is in the oracle $\Hh{b}$: when the adversary asks for the binding factor of a slot and a digest, the reduction draws $\rho$ and fixes the challenge $c$ of that slot and digest in the same step, before the adversary sees $\rho$. The pair $(R, c)$ for that slot and digest never changes afterwards. A $\mathsf{Sign}$ query costs one call to the $\mathrm{DL}$ oracle on a declared combination of the challenge points. The reduction forks once at the challenge of the forgery and extracts $x$ from two forgeries at one oracle input. An accounting over the slots shows that at most two oracle calls per slot, together with $x$, give both nonces of every slot: a slot signed in both runs under different binding factors gives two independent equations, and a slot signed at most once is completed by direct calls. The reduction outputs $2U + 1$ logarithms after $2U$ calls. It loses a square root, and $U$ here is the total number of open Schnorr slots ever dealt under the key. The proof is from first principles and is not compared with the published proofs of FROST and MuSig2.
+
+\begin{theorem}[Open Schnorr; proved]\label{thm:schnorr}
+Consider suites 2 and 3 in open mode, with $|C| \le t-1$ and at most $f$ Byzantine nodes. Let $S$ be the number of open Schnorr slots dealt by honest owners under the target key. Then
+\[
+  \Adv^{\mathrm{open\text{-}schnorr}}(\mathcal{A}) \le \varepsilon_{\mathrm{lock}} + \Adv^{\mathrm{icdh}}(\mathcal{B}_C) + \delta_C + \frac{\Qc{bind} S_{\mathrm{msg}}}{2^{256}} + \frac{4S^2}{q} + \kappa\,\Qc{o}\,\Adv^{\mathrm{tns}}(\mathcal{A}'),
+\]
+with $\kappa = 1$ for suite~2 and $\kappa = \kappa_3$ for suite~3, where $\mathcal{A}'$ makes $S$ $\mathsf{NewSlot}$ calls, at most one $\mathsf{Sign}$ query per slot, $\Qc{w}$ $\mathsf{PlainSign}$ queries and one $\mathsf{Prove}$ query per honest message.
+\end{theorem}
+
+The proof is a reduction to \cref{thm:tns}. It has the shape of the proof of \cref{thm:ecdsa}, with the commitments in base $G$ simulated from $X$, $D_1$ and $D_2$.
+
+\paragraph{Profile T2.} In profile~T1 the two open theorems cover every coalition below $t$. In profile~T2 they cover at most $f$ Byzantine nodes plus share leakage from up to $t-1$ nodes whose post keys are intact. A coalition of $2\qr - n$ Byzantine nodes, which is $f+1$ or $f+2$, can certify several digests under one nonce. For ECDSA two digests give $x$. For two-nonce Schnorr two digests do not determine $x$, and three do (\cref{sec:formal}).
+
+\subsection{Authorization and replay}
+
+\begin{theorem}[Authorization; proved]\label{thm:auth}
+Let $M$ range over messages written by honest owners.
+\begin{enumerate}[leftmargin=1.9em,itemsep=2pt,label=\textup{(\alph*)}]
+\item \emph{Open mode, suites 2 and 3, byte identity.} The probability that a message with header key $X_v$ passes check~9 of Step~A and is not byte-identical to a message written by the owner of $X_v$ is at most the bound of \cref{thm:schnorr}.
+\item \emph{Open mode, suite 1, byte identity.} The same event has probability at most
+$\varepsilon_{\mathrm{lock}} + \Adv^{\mathrm{icdh}}(\mathcal{B}_C) + \delta_C + \delta_A + \Qc{o}\bigl(\Qc{auth}(U+2)/(q-1) + O((N + \Qc{auth})^2/q)\bigr)$
+in the generic group model, with $N = N_{\mathcal{A}} + N_{\mathrm{sim}} + 4S + 2\Qc{w}$.
+\item \emph{Sealed mode, any key, dealing identity.} The probability that a message passes check~9, has the $\rid$ of an honest sealed message $M$ and is not a copy of $M$ is at most $\Adv^{\mathrm{icdh}}(\mathcal{B}_C) + \delta_C + \Qc{rid}^2/2^{256}$.
+\item \emph{No void by a third party.} The probability that some complaint against an owner-dealt message is accepted is at most $\Qc{dleq}/q$.
+\end{enumerate}
+\end{theorem}
+
+Part (a) holds because the authorship proof is inside game TNS as the oracle $\mathsf{Prove}$. Part (b) is proved as an extension of the symbolic simulation of~\cite{GS21} by a challenge oracle; it is not a black-box corollary of the cited Theorem~3, because a rewinding extractor would ask for two signatures on one presignature. Part (c) follows from the event $\mathsf{Reuse}$ of \cref{thm:enc} and uses no assumption on the signature scheme. Part (d) is the soundness of the complaint proof in a group of prime order.
+
+In open mode, therefore, only the owner binds a $\rid$: a bound message is the owner's, byte for byte. In sealed mode, only the owner's dealing binds the $\rid$ of the owner's request. Byte identity of a pending sealed message is not claimed. A party that knows the first sealed signature, because a deterministic wallet signed that sighash on request or because the owner disclosed it, can replace the two authorship values in a copy of the message. The copy has another $\midh$ and the same $\rid$, intent and shares; it delays nothing and authorizes nothing new. Byte identity does hold for a key that is used in sealed mode only, a wallet that draws a fresh uniform nonce for every signature, and a strongly unforgeable suite scheme, with a forking loss; this part is proved. In both modes a repost, a re-encoding or a migrated copy has the same $\rid$ and is ignored, tombstones survive rotation, and every authorized transaction spends the pin, so the chain executes at most one per message.
+
+\subsection{Liveness}
+
+\begin{proposition}[Liveness; sketched]\label{prop:live}
+Suppose the owner is honest, at most $f$ nodes are Byzantine, the board is live, the target chain has finality, and the state stays eligible from some finalized height until the partials are posted before $exp$. Then the spend completes one ACK round plus two (sealed) or three (open) board rounds after stabilization.
+\end{proposition}
+
+The honest nodes number at least $n - f \ge \qr$. They alone fill the ACK quorum, the OBS set and the lock certificate, they hold valid shares, report eligible tips, agree on the anchor, compute the same digest and release $n - f \ge t$ valid partials in either profile. Bad partials are publicly identified. If eligibility flickers, Byzantine nodes can steer the anchor to an ineligible height and delay; they cannot consume a generation that way. A malicious owner harms only the owner's own request.
+
+\subsection{Status of every claim}\label{sec:status}
+
+\Cref{tab:status} collects the results, and \cref{tab:req} sets the two modes against the requirements of \cref{sec:problem}. The following are open.
+
+\begin{enumerate}[leftmargin=1.7em,itemsep=1pt]
+\item \emph{Resharing.} No theorem covers a request that moves to a new committee. The algebra of the transfer is machine-checked and the freeze rule is explored by simulation (\cref{sec:formal}); the simulation of the sub-share dealings is not done.
+\item \emph{Adaptive corruption, a composable statement and the realization of $\FOMS$.}
+\item \emph{Sealed secrecy with partial releases}, the form of \cref{thm:sealed} in which fewer than $t - |C|$ honest partials were released.
+\item \emph{BIP32 keys}: a tight bound under one fixed tweak, and adaptively chosen paths.
+\item \emph{Byte identity of a pending sealed message} for a key used in both modes.
+\item \emph{A bound for ICDH in the generic group model} of \cref{thm:ecdsa}.
+\item \emph{A bound in the number of slots live on the board} in place of the schedule-dependent $U$.
+\item \emph{A comparison of \cref{thm:tns} with the published proofs of FROST and MuSig2.}
+\item \emph{The restore mechanism of rule~4}, which is a hypothesis of \cref{thm:ecdsa} and is not itself proved.
+\end{enumerate}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Claim & Status & Assumptions \\
+\midrule
+Address binding (\cref{prop:binding}) & proved; machine-checked & none \\
+One digest per slot (\cref{lem:digest}) & proved; counting core machine-checked & consistent board, or at most $f$ Byzantine nodes and unforgeable post keys \\
+Share encryption (\cref{thm:enc}) & proved, after \cite[Theorem~2]{GS22} & ICDH, random oracles, prime-order group, static corruption \\
+Sealed, below $t$ (\cref{thm:sealed}) & proved in the form ``no honest partial'' & EUF-CMA of the suite, \cref{thm:enc} \\
+Sealed, fully corrupt (\cref{cor:corrupt}) & proved & EUF-CMA of the suite \\
+Open ECDSA (\cref{thm:ecdsa}) & reduced to \cite[Theorem~3]{GS21} & generic group model, four sighash properties, \cref{lem:digest}, \cref{thm:enc} \\
+Open ECDSA, BIP32 siblings (\cref{cor:bip32}) & reduced to \cite[Theorem~4]{GS21}, fixed path set & as above, 4sum assumptions, HMAC-SHA512 as a random oracle \\
+Open Schnorr (\cref{thm:tns,thm:schnorr}) & proved & AOMDL with parameter $2U$, random oracles, \cref{lem:digest}, \cref{thm:enc}; suite~3: seed-hash assumption, factor $\kappa_3$ \\
+Authorization (\cref{thm:auth}) & proved; sealed mode as dealing identity & as the theorem of the mode; part (c): \cref{thm:enc} only \\
+Impossibility (\cref{thm:imposs}) & proved; machine-checked & none \\
+Liveness (\cref{prop:live}) & sketched & partial synchrony, eligibility \\
+Resharing; adaptive corruption; realization of $\FOMS$ & open & \\
+\bottomrule
+\end{tabularx}
+\caption{Status of the claims. All cryptographic results are for static corruption and for the rotation policies \emph{finish} and \emph{void}.}
+\label{tab:status}
+\end{table}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Requirement & Sealed & Open, T1 & Open, T2 \\
+\midrule
+(R1) one move & met & met & met \\
+(R2) existing address & met; the key never leaves the wallet & met; the owner deals the key & as T1 \\
+(R3) committee-side construction & the owner builds the variants and the committee selects one & met & met \\
+(R4) one spend & cryptographic, with every node corrupt & policy of an honest threshold & policy of an honest threshold \\
+(R5) below the threshold & met for unreleased variants; the key is never dealt & met & met for share leakage; unmet for more than $f$ and fewer than $t$ Byzantine nodes \\
+(R6) no replay & met, as dealing identity & met & met \\
+(R7) liveness & sketched, conditional on eligibility & as sealed & as sealed \\
+\bottomrule
+\end{tabularx}
+\caption{The requirements of \cref{sec:problem} by mode, for static corruption. In every mode the commitments are public and the delivery of the shares is shown by the ACK quorum, not by the owner's message alone.}
+\label{tab:req}
+\end{table}

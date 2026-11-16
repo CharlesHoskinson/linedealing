@@ -1,0 +1,4 @@
+impl/target/
+formal/lean/.lake/
+formal/natural/.lake/
+design/enhancement/**/lane.log

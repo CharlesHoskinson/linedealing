@@ -1,0 +1,182 @@
+\section{Line dealing}\label{sec:construction}
+
+We first say what is dealt, then give the owner's message, the acceptance step, the choice of a chain state, the two signing steps, the local rules of a node, the construction of the transaction, and the change of a committee. A \emph{slot} is the nonce material for one signature: one input of one transaction of one generation.
+
+\subsection{What is dealt}\label{sec:dealt}
+
+\paragraph{Sealed points.} The familiar object is a signed transaction that the owner hands to a custodian. A sealed point is that signature, split so that no node holds it and bound so that every node can check what it is a share of. For each variant $j = 1,\dots,K$ the owner computes the transaction $tx_j = \Variant(\textsf{intent}, j)$ and the sighash $m$ of each of its inputs, signs $m$ in the ordinary way with a fresh nonce to get $(R, s)$, and deals $\Share_t(s)$.
+
+\begin{itemize}[leftmargin=1.5em]
+\item Suites 2 and 3. The commitments are in base $G$. The implied constant term is $F_0 = R + cX$, where $c$ is the suite challenge of $(R, X, m)$.
+\item Suite 1. The commitments are in base $R$. The implied constant term is $F_0 = hG + rX$, where $h$ is the sighash and $r = x(R) \bmod q$. This point equals $sR$. An ordinary wallet signature $(r,s)$ suffices, because the owner recovers $R = s^{-1}(hG + rX)$.
+\end{itemize}
+
+A sealed point differs from the signed transaction in the custodian's drawer at one place: the commitment says which transaction the hidden signature signs, and no node has to trust the owner for it.
+
+\paragraph{Open lines, ECDSA.} For each slot the owner picks $k$, sets $R = kG$, $w = k^{-1}$ and $\mu = k^{-1}x$, and deals $\Share_t(w)$ and $\Share_t(\mu)$, both in base $R$. The implied constant terms are $G$ and $X$. They hold exactly when $w(0) = k^{-1}$ and $\mu(0) = x k^{-1}$, and then $h\,w(0) + r\,\mu(0)$ is the ECDSA signature scalar for every sighash $h$.
+
+\paragraph{Open lines, Schnorr.} The owner deals $\Share_t(x)$ once, with implied constant term $X$, and for each slot two nonces $d_1, d_2$ with public points $D_1 = d_1 G$ and $D_2 = d_2 G$. \Cref{sec:open} shows how the two nonces are combined, and \cref{sec:sec-schnorr} why one nonce is not enough.
+
+\paragraph{Key formats.} The owner normalizes the key before dealing. In suite~2 the dealt scalar is the one whose public key is the even-$y$ output key. In suite~3 it is the clamped scalar derived from the seed, reduced modulo $q$, and the nonces are random scalars.
+
+\subsection{The owner's message}\label{sec:msg}
+
+The message is $M = \hdr \,\|\, \deal \,\|\, \ct \,\|\, \pi$ in a canonical encoding with no trailing bytes.
+
+\paragraph{Header.} The header $\hdr$ names the suite, the mode and the address type; the chain, the board and a fresh random owner nonce; the hash of the epoch key list and the hash of the builder specification; the address key $X$ and the address; a fresh ephemeral encryption key $E = eG$; the epoch and a window $[nb, exp]$ in board heights; the profile $(n,t,f)$; the number $K$ of sealed variants, the number $L$ of slots per transaction and the number $\Gen$ of open generations; the rotation policy; a trigger; and the \emph{intent}. The intent fixes one or two outputs, a change script, the pin, up to seven further allowed outpoints, a fee ceiling, a fee rule, a bump delay $\Delta$, a grid ratio $\gamma$ and the confirmations required of inputs. A trigger is a predicate on finalized chain state, such as ``always'', ``the target height is at least $H$'' or ``the address holds at least $v$''. This version carries payments only.
+
+\paragraph{Dealing.} The block $\deal$ holds, for each sealed point, the point $R$ and $\Com(p_s)$; for each open ECDSA slot, $R$, $\Com_R(p_w)$ and $\Com_R(p_\mu)$; and for open Schnorr, $\Com_G(p_x)$ once and for each slot $D_1$, $D_2$, $\Com_G(p_{d_1})$ and $\Com_G(p_{d_2})$.
+
+\paragraph{Ciphertexts.} For node $i$ and each dealt polynomial $p$, the block $\ct$ holds the scalar
+\[
+  p(i) + \Hh{enc}(\hd, i, PK_i, K_i, \mathsf{slot}(p)) \bmod q, \qquad K_i = e\,PK_i ,
+\]
+where $\hd = \Hh{hd}(\hdr, \deal)$ is the dealing digest. Every dealt polynomial has its own slot label, so no two ciphertexts of one node share a pad. With one pad for the two ECDSA polynomials of a slot, an observer of $t$ nodes' ciphertexts and one signature recovers $x$ (\cref{sec:formal}).
+
+\paragraph{The proof $\pi$.} The proof is $\pi = (E', T_1, T_2, z_e, T_a, z_a)$, 196 bytes. It holds an ephemeral-key proof and an authorship proof.
+
+The \emph{ephemeral-key proof} follows Groth and Shoup~\cite[Section~4.1]{GS22}. Let
+\[
+  g' = \Hh{eph}(\hd, \Hh{ct}(\ct), E) \in \GG \qquad\text{and}\qquad E' = e\,g' .
+\]
+The values $T_1, T_2, z_e$ satisfy
+\[
+  z_e G = T_1 + c_e E, \qquad z_e g' = T_2 + c_e E', \qquad c_e = \Hh{ephpok}(\hd, \Hh{ct}(\ct), E, E', T_1, T_2).
+\]
+It shows that $E$ and $E'$ have the same discrete logarithm in the bases $G$ and $g'$. The second base depends on the ciphertexts, which is the one change from the cited construction and the reason \cref{thm:enc} has its own proof.
+
+The \emph{authorship proof} is a Schnorr proof under the challenge
+\[
+  c_a = \Hh{auth}(\hd, \Hh{ct}(\ct), E', T_1, T_2, z_e, T_a).
+\]
+In open mode it proves knowledge of $x$: $z_a G = T_a + c_a X$. In sealed mode it proves knowledge of the first sealed signature $s_{1,1}$: $z_a B = T_a + c_a F_0^{(1,1)}$, with $B = G$ for suites 2 and 3 and $B = R_{1,1}$ for suite~1. Only a party that knows the signatures can deal them, and a hardware wallet that never exports $x$ can still produce this proof. The challenge $c_a$ covers every byte of the message except $z_a$.
+
+\paragraph{Identities.} The message identity is $\midh = \Hh{mid}(M)$. The \emph{request identity} is
+\[
+  \rid = \Hh{rid}(\textsf{chain}, \textsf{board}, X, \textsf{owner\_nonce}, \mathsf{tie}),
+\]
+with $\mathsf{tie} = 0$ in open mode and $\mathsf{tie} = \hd$ in sealed mode. In open mode $\rid$ excludes the epoch, the dealing, the ciphertexts and the proof, so no re-encoding, re-randomization or migration yields a second identity. In sealed mode a released signature is public, and from then on anyone can prove knowledge of it. Tying $\rid$ to the dealing stops a third party from wrapping a released signature in a new message that claims the owner nonce of another pending request.
+
+\subsection{Step A: accept}\label{sec:stepa}
+
+Every node runs these public checks on a posted message.
+
+\begin{enumerate}[leftmargin=1.7em,itemsep=1pt]
+\item The encoding is canonical, with a known version and suite.
+\item Every point is a canonical encoding of a point of $\GG$ and is not the identity. In suite~3 this includes $[q]P = O$.
+\item The address is the address of $X$ under the stated address type: the hash of the encoded key for P2PKH, P2WPKH and Ethereum-style accounts, the x-only key for P2TR, the key itself for Solana.
+\item The chain, the board, the epoch and the key-list hash are current; $(n,f)$ is the registered profile; $t \in \{f+1, n-f\}$; the rotation policy is legal for $t$; the board height is at most $exp$.
+\item The $\rid$ is not bound and has no tombstone.
+\item Each sealed point has $F_0 \neq O$, and for suite~1 also $x(R) < q$ and $r \neq 0$. Each open ECDSA slot has $x(R) < q$ and $r \neq 0$.
+\item The x-coordinates of all nonce points in the message are pairwise distinct.
+\item Sealed mode: every variant, recomputed from the intent, spends the pin, pays the intent outputs and has a fee of at most the ceiling, and consecutive fees differ by at least the replacement minimum of the chain.
+\item The point $E'$ passes check~2, and both parts of $\pi$ verify.
+\end{enumerate}
+
+The first message in board order that passes checks 1 to 9 \emph{binds} $\rid$ to its $\midh$. A message that fails binds nothing and blocks nothing, and a later message with a bound $\rid$ is ignored.
+
+Node $i$ then runs a private check. It computes $K_i = sk_i E$, decrypts every share and tests it in the right base: $s_i B = \Eval(F_0, C, i)$ for a sealed point, $w_i R = \Eval(G, C_w, i)$ and $\mu_i R = \Eval(X, C_\mu, i)$ for an open ECDSA slot, and the three analogous equations in base $G$ for open Schnorr. A node computes $K_i$ only for a message that passed check~9. It posts $\msg{ACK}(\rid, \midh)$, or a complaint that reveals $K_i$ with a proof that $(G, PK_i, E, K_i)$ is a Diffie-Hellman tuple. Anyone verifies a complaint: $K_i$ passes check~2, the proof verifies, and share $i$ decrypted with $K_i$ fails its test. A valid complaint voids $\rid$. An honest owner never causes one.
+
+The request is \emph{armed} when $\qr$ ACKs from distinct nodes are on the board. At least $\qr - f \ge f+1$ of them come from honest nodes. The commitments alone do not prove delivery of the shares; the ACK quorum and the absence of a valid complaint do.
+
+\subsection{Step B: one finalized chain state}\label{sec:anchor}
+
+The committee must act on one state of the target chain, and Byzantine nodes must not choose it. Let $\Eligible(\textsf{intent}, S, g, \textsf{prev})$ hold for the state $S$ at a finalized block when the trigger holds in $S$, the pin is unspent and belongs to the address, the inputs have the required confirmations, generation $g > 1$ is at least $\Delta$ blocks above the anchor of generation $g-1$, and the transaction function of \cref{sec:tx} returns a transaction.
+
+\begin{enumerate}[leftmargin=1.7em,itemsep=1pt]
+\item A node whose own finalized tip, at height $h$, is eligible posts $\msg{OBS}(\rid, g, a, h)$, once per attempt $a$. The post carries a height and no block hash.
+\item The \emph{OBS set} is the first $\qr$ such posts from distinct nodes in board order. Sort the heights, highest first. The \emph{anchor height} $h^*$ is entry number $f+1$.
+\item Each node waits until its own finalized chain reaches $h^*$. The \emph{anchor} $B^*$ is its own finalized block at that height. If $\Eligible$ fails at $B^*$, the node posts $\msg{NACK}(\rid, g, a)$, and $f+1$ NACKs make the attempt \textsf{FAILED}.
+\end{enumerate}
+
+\begin{lemma}[Anchor]\label{lem:anchor}
+Let $n \ge 3f+1$ and let at most $f$ nodes of an OBS set be Byzantine. Then entry $f+1$ exists, some honest node of the set reported a height at or above $h^*$, and some honest node of the set reported a height at or below $h^*$.
+\end{lemma}
+
+\begin{proof}
+Entries $1$ to $f+1$ are $f+1$ reports at or above $h^*$, and at most $f$ are Byzantine. Entries $f+1$ to $\qr$ are $\qr - f \ge f+1$ reports at or below $h^*$ by \cref{lem:quorum}(iii), and at most $f$ are Byzantine.
+\end{proof}
+
+A block at $h^*$ is therefore final at an honest node, and $h^*$ is not older than an honest tip. Byzantine reports cannot move the anchor outside the range of honest reports, and they have no hash to falsify. Every entry number from $f+1$ to $\qr - f$ has this property; the rule takes the highest of them, hence the newest state. For $n = 3f+1$ this is the median of $2f+1$ reports. By finality all honest nodes hold the same block at $h^*$, and its hash enters the protocol only through the lock digest of \cref{sec:open}.
+
+A \textsf{FAILED} attempt consumes nothing: honest nodes that judge the anchor ineligible neither vote nor release, so the next attempt selects a newer anchor inside the same generation with the same nonce material. A NACK always means that an honest node found the state ineligible. Everything that an attempt reads from earlier generations is taken at the board position where its OBS set completes, so all honest nodes evaluate $\Eligible$, $\Select$ and $\Build$ on the same inputs.
+
+A request ends in one of three tombstones: \textsf{FINAL} when an authorized transaction is final on the target chain, \textsf{VOID} after a valid complaint, a foreign spend of the pin or a rotation with the void policy, and \textsf{EXPIRED} when the board height passes $exp$ with no generation locked or released. Early inclusion, a false trigger, missing confirmations, a fee above the ceiling and missing funds change no state: the request stays armed and waits.
+
+\subsection{Step C, sealed: release}\label{sec:sealed}
+
+Each node that finds $B^*$ eligible computes
+\[
+  j_g = \Select(\textsf{intent}, \mathsf{state}(B^*), j_{g-1})
+\]
+and posts $\msg{PARTIAL}(\rid, g, j_g, \{s_{j,\ell,i}\}_\ell)$, its shares of the signatures of variant $j_g$. Anyone checks each share against $\Eval(F_0, C, i)$ and interpolates $s$ from $t$ of them. The output per input is $(R,s)$ for suites 2 and 3, and the low-$s$ form $(r, \min(s, q-s))$ for suite~1.
+
+\subsection{Step C, open: lock, then sign}\label{sec:open}
+
+In open mode the shares are shares of the key, and a share used on two messages under one nonce reveals it. The rule is therefore that no share leaves a node before a certificate fixes the one message of the slot. \Cref{fig:open} gives the step.
+
+\begin{figure}[t]
+\centering
+\fbox{\begin{minipage}{0.95\linewidth}
+\small
+\begin{tabbing}
+\hspace{1.5em}\=\hspace{4.6em}\=\kill
+$tx \leftarrow \Build(\textsf{intent}, \mathsf{state}(B^*), g, \textsf{prev})$; \quad $m_1,\dots,m_{L'}$ the sighash inputs of $tx$\\
+$\dg \leftarrow \Hh{dg}(\rid, \textsf{epoch}, g, a, B^*, tx, m_1,\dots,m_{L'})$\\
+write $(\rid, g) \mapsto \dg$ to the slot ledger (durable), then post $\msg{PREVOTE}(\rid, g, a, B^*, \dg)$\\[3pt]
+$\msg{LOCK}(\rid, g)$: the first $\qr$ PREVOTE posts for $(\rid, g)$ from distinct nodes with identical $(a, B^*, \dg)$\\[3pt]
+On $\msg{LOCK}(\rid, g)$ with $\dg$ equal to the digest this node built itself, for each input $\ell$:\\
+\>ECDSA: \> $r = x(R_\ell) \bmod q$, \quad $s_i = m_\ell\, w_i + r\, \mu_i$\\
+\>\> public check: $s_i R_\ell = m_\ell W_i + r M_i$\\
+\>Schnorr: \> $\rho = \Hh{bind}(\hd, g, \ell, \dg)$, \quad $R = D_{1,\ell} + \rho D_{2,\ell}$\\
+\>\> $\sigma = -1$ if suite~2 and $R$ has odd $y$, else $\sigma = 1$; \quad $c$ the suite challenge of $(\sigma R, X, m_\ell)$\\
+\>\> $s_i = \sigma (d_{1,i} + \rho\, d_{2,i}) + c\, x_i$\\
+\>\> public check: $s_i G = \sigma (D_{1,i} + \rho D_{2,i}) + c X_i$\\
+post $\msg{PARTIAL}(\rid, g, \{s_i\}_\ell)$; erase the nonce shares of generation $g$
+\end{tabbing}
+\end{minipage}}
+\caption{Open mode, node $i$. In the ECDSA line $m_\ell$ stands for the sighash of input $\ell$. The points $W_i, M_i, D_{1,i}, D_{2,i}, X_i$ are $\Eval$ of the commitments at $i$. A node that has not voted writes its ledger entry when it sees the lock; a node whose ledger holds another digest for $(\rid, g)$ abstains.}
+\label{fig:open}
+\end{figure}
+
+The combiner interpolates $t$ partials, checks the final signature first, and checks single partials only if that fails. The ECDSA output is normalized to low $s$; a result $s = 0$, and for Schnorr a nonce point $R = O$, kills the generation. The locked transaction of a generation never changes. A partial is a deterministic function of the slot and the digest, so a resend is byte-identical. Every node computes the sighash from the transaction it built itself; no node signs a hash that another party supplies.
+
+\subsection{Local rules}\label{sec:rules}
+
+\begin{enumerate}[leftmargin=1.7em,itemsep=1pt]
+\item A node posts one PREVOTE per $(\rid, g)$, and writes it to durable storage before it posts it.
+\item A node signs only the digest it built itself, and only after the lock certificate.
+\item One digest per slot, ever. The slot ledger is durable and is consulted before every PARTIAL.
+\item After a restart a node replays the board for its own posts. It abstains on every $(\rid, g)$ for which the board shows its PREVOTE or PARTIAL and its ledger has no entry. A node restored to an old state posts nothing until the replay has reached the board position it had processed before, and during the replay it erases again every share that the protocol had made it erase. A node that lost the record of that position recovers one, on a consistent board, from the answers of $\qr$ nodes or from the finalized tip of the host chain.
+\item A node posts no PREVOTE after board height $exp$.
+\end{enumerate}
+
+When $f+1$ nodes post $\msg{FINAL}(\rid, txid)$ or $\msg{VOID}(\rid)$ the tombstone is set, and nodes erase every share of $\rid$. At $exp$ nodes erase the shares of every generation that has no lock or release.
+
+\subsection{Transaction construction}\label{sec:tx}
+
+\paragraph{Sealed: construction is selection.} The function $\Variant(\textsf{intent}, j)$ is pure. All variants spend the pin and the same further inputs and pay the same outputs. The fees form a grid: $fee_K$ is the fee ceiling and $fee_j = \lfloor fee_{j+1}/\gamma \rfloor$, and on a UTXO chain the change output absorbs the difference. The value $\Select(\textsf{intent}, S, j_{\mathrm{prev}})$ is the least $j > j_{\mathrm{prev}}$ whose fee rate meets the fee rule at $S$, or $\bot$. On a chain with a base-fee market one variant at the ceiling is enough.
+
+\paragraph{Open: construction from chain state.} The function $\Build(\textsf{intent}, S, g, \textsf{prev})$ is a pure function of the intent, the state $S$ at the anchor and the transactions $\textsf{prev} = (tx_1, \dots, tx_{g-1})$ of earlier generations. Every node recomputes $\textsf{prev}$ from the anchors on the board, so no node takes transaction bytes from another node. It returns $\bot$ if the pin is spent in $S$.
+
+On a UTXO chain the inputs are the pin, then the allowed outpoints, then, if the owner permits late inputs, every sufficiently confirmed output of the address at $S$. The function takes the pin plus further inputs largest first until the outputs and the fee are covered, at most $L$ inputs, in a fixed order. The fee is the fee rule at $S$ times the size. A change output below dust is dropped and the fee recomputed, and the function returns $\bot$ if the real fee, inputs minus outputs, exceeds the ceiling. On an account chain with type-2 transactions the transaction nonce is the pinned nonce, the gas limit comes from a fixed table, the priority fee is the fee rule at $S$, the maximum fee per gas is twice the base fee at $S$ plus the priority fee, and the function returns $\bot$ if the gas limit times the maximum fee exceeds the ceiling.
+
+\paragraph{Generations.} A fee bump is a new generation with its own lines. Generation $g > 1$ can be anchored only at a block $\Delta$ or more above the anchor of generation $g-1$ in which the pin is still unspent. Its transaction spends the pin and pays the same outputs, and its fee exceeds every earlier fee by at least the replacement increment of the chain, so a flat or falling market still yields a valid replacement. All variants and all generations conflict on the target chain, because each spends the pin.
+
+\paragraph{Agreement.} The board orders the OBS posts, so the anchor is unique, and $\Build$ is deterministic, so honest nodes compute the same bytes. The lock quorum is the safety net for the case that they do not: by \cref{lem:digest} at most one digest per $(\rid, g)$ gathers $\qr$ PREVOTEs. A divergence between builders stalls the generation and never produces two signatures under one nonce.
+
+\subsection{Committee change}\label{sec:rotation}
+
+The rotation policy in the header decides the fate of a request when the board commits the change from epoch $e$ to epoch $e+1$.
+
+\begin{itemize}[leftmargin=1.5em]
+\item \emph{Finish.} The nodes of epoch $e$ serve the request until it is final or $exp$ passes, and then erase. Step~A accepts this policy only if $exp$ lies inside the grace period of the epoch.
+\item \emph{Void.} The request becomes \textsf{VOID} and all shares are erased.
+\item \emph{Reshare}, for $t = f+1$ only. The rotation post, at board position $p_F$, freezes the request.
+\end{itemize}
+
+\paragraph{Freeze rule.} A generation is \emph{in flight} if its lock certificate, or in sealed mode its first PARTIAL after an anchor, lies before $p_F$ in board order. The old committee finishes in-flight generations and never reshares them. For every other generation the old committee's posts after $p_F$ are void, and an old node releases a partial only when the lock certificate it acts on precedes $p_F$ in its own view of the log.
+
+\paragraph{Transfer.} For each dealt polynomial of each generation that is not in flight, old node $i$ deals $\Share_{t'}(v_i)$ of its own share $v_i$ to the new epoch keys, in the same base, with its own ephemeral key and the ephemeral-key proof of \cref{sec:msg} under separate labels. The constant-term commitment is implied: it must be $\Eval(\cdot, i)$ of the previous commitments. New nodes check their sub-shares and post an ACK or a complaint for each dealer. The candidate set $\mathcal{Q}$ is the first $t$ dealers in board order with no valid complaint. A new node that holds valid sub-shares from all of $\mathcal{Q}$ posts \msg{READY}, and the handover is the first $\mathcal{Q}$ with $\qr'$ READY posts, where $\qr'$ is the quorum of the new committee. The new shares are $v'_j = \sum_{i \in \mathcal{Q}} \lambda_i\, g_i(j)$ with the Lagrange coefficients $\lambda_i$ of $\mathcal{Q}$ at zero and the sub-sharing polynomials $g_i$, and the new commitments are the same combination. The new constant terms equal the old ones. The board carries the tombstones, anchors, lock certificates and generation counters across the change, so key material and request state move together.
+
+Whether a generation stays or moves is decided by board order. With $t = f+1$, a lock quorum and a resharing set need not share an honest node, so this rule rests on the consistency of the board. No theorem of \cref{sec:security} covers a request that moves to a new committee.

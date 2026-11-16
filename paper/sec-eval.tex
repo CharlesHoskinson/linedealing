@@ -1,0 +1,148 @@
+\section{Implementation and evaluation}\label{sec:eval}
+
+\subsection{Prototype}
+
+The prototype is a Rust crate of about 9{,}000 lines. It implements the three suites in both modes: the owner's dealing and encryption, Step~A, decryption with share checks, partial signatures and their public checks, and combination with an independent verification of the final signature by a standard library for the suite. It implements the deterministic $\Build$ for UTXO and type-2 account transactions and the sealed $\Variant$ and $\Select$, and a board state machine with binding and arming, height reports and the anchor rule, NACKs and anchor replacement, the single PREVOTE, the lock certificate, partials after the lock, a durable slot ledger with restart replay, fee-bump generations, the rotation freeze with resharing, and tombstones. The board state machine reduces an ordered, authenticated log. It takes the results of the signature, complaint and share checks from the cryptographic layer, and the tests and the simulation supply them.
+
+The wire format is that of \cref{sec:msg}: the owner's message carries the 196-byte proof $\pi$, and Step~A verifies both of its parts. The hash to the curve for secp256k1 is the simplified SWU map of the \texttt{k256} library. For edwards25519 the prototype hashes the input with a counter until the digest decodes to a point and then multiplies by the cofactor; the result lies in the prime-order subgroup, and the map is not a standard one. Complaints carry the proof of \cref{sec:stepa} and are verified, and resharing is implemented for all three suites. A sub-dealing of the prototype also carries a proof of knowledge of the dealt share, 65 bytes that \cref{sec:rotation} does not ask for. The proof of possession at key registration is not implemented, and the committee keys of the tests are fixtures.
+
+The tests are unit and scenario tests of the algebra, the wire format, the builders and the board rules, with randomized schedules for the board; \implTestsPassed{} tests pass. Bitcoin fixtures use real sighashes. The Ed25519 suite is exercised without a Solana transaction adapter. No signed transaction was submitted to a Bitcoin, Ethereum or Solana node.
+
+\subsection{Message sizes and operation counts}
+
+A point is counted at 33 bytes and a scalar at 32. The count is exact for suite~1; the nonce point of a sealed point of suites 2 and 3 is sent in 32 bytes, so such a message is one byte shorter for each sealed point. One dealt polynomial costs $P = 33(t-1) + 32n$ bytes, and the fixed part of a message is 720 bytes: a header of 524 bytes with one output, and $\pi$. A sealed point costs $33 + P$ bytes, an open ECDSA slot $33 + 2P$, and an open Schnorr slot $2(33 + P)$ plus $P$ once for the key. \Cref{tab:sizes} gives the derived sizes and counts for the four committee sizes. For $n = 16, 64, 256$ the committee has $n = 3f+1$, and for $n = 9$ it has $f = 2$ and $\qr = 6$. The resharing row counts, for each of the $t$ dealers of one polynomial, the commitments and ciphertexts of the sub-dealing, the dealer's ephemeral key and the ephemeral-key proof, which is $P + 33 + 131$ bytes. It leaves out the frame of the board post, which names the request, the two epochs, the dealer and the slot and carries the post signature.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l rrrr @{\quad} rrrr@{}}
+\toprule
+ & \multicolumn{4}{c}{T1: $t = f+1$} & \multicolumn{4}{c}{T2: $t = n-f$} \\
+$n$ & 9 & 16 & 64 & 256 & 9 & 16 & 64 & 256 \\
+\midrule
+$f$ & 2 & 5 & 21 & 85 & 2 & 5 & 21 & 85 \\
+$\qr$ & 6 & 11 & 43 & 171 & 6 & 11 & 43 & 171 \\
+$t$ & 3 & 6 & 22 & 86 & 7 & 11 & 43 & 171 \\
+$P$ (bytes) & 354 & 677 & 2{,}741 & 10{,}997 & 486 & 842 & 3{,}434 & 13{,}802 \\
+\addlinespace
+\multicolumn{9}{@{}l}{\emph{Owner message, bytes}} \\
+Sealed, $K = 8$, one input & 3{,}816 & 6{,}400 & 22{,}912 & 88{,}960 & 4{,}872 & 7{,}720 & 28{,}456 & 111{,}400 \\
+Sealed, $K = 1$ & 1{,}107 & 1{,}430 & 3{,}494 & 11{,}750 & 1{,}239 & 1{,}595 & 4{,}187 & 14{,}555 \\
+Open ECDSA, $\Gen = 1$ & 1{,}461 & 2{,}107 & 6{,}235 & 22{,}747 & 1{,}725 & 2{,}437 & 7{,}621 & 28{,}357 \\
+Open Schnorr, $\Gen = 1$ & 1{,}848 & 2{,}817 & 9{,}009 & 33{,}777 & 2{,}244 & 3{,}312 & 11{,}088 & 42{,}192 \\
+\addlinespace
+\multicolumn{9}{@{}l}{\emph{Owner, scalar multiplications}} \\
+Open ECDSA, $\Gen = 1$ & 19 & 32 & 112 & 432 & 27 & 42 & 154 & 602 \\
+Sealed, $K = 8$ & 38 & 69 & 245 & 949 & 70 & 109 & 413 & 1{,}629 \\
+Open Schnorr, $\Gen = 1$ & 22 & 38 & 134 & 518 & 34 & 53 & 197 & 773 \\
+\addlinespace
+\multicolumn{9}{@{}l}{\emph{Node, Step A, scalar multiplications}} \\
+Open ECDSA, $\Gen = 1$ & 13 & 19 & 51 & 179 & 21 & 29 & 93 & 349 \\
+Sealed, $K = 8$ & 47 & 71 & 199 & 711 & 79 & 111 & 367 & 1{,}391 \\
+Open Schnorr, $\Gen = 1$ & 16 & 25 & 73 & 265 & 28 & 40 & 136 & 520 \\
+\addlinespace
+\multicolumn{9}{@{}l}{\emph{Node, board}} \\
+Post checks, open & 21--36 & 39--64 & 151--256 & 599--1{,}024 & 25--36 & 44--64 & 172--256 & 684--1{,}024 \\
+Download, open ECDSA (bytes) & 6{,}645 & 11{,}323 & 43{,}099 & 170{,}203 & 6{,}909 & 11{,}653 & 44{,}485 & 175{,}813 \\
+Download, sealed $K = 8$ (bytes) & 7{,}497 & 12{,}944 & 49{,}088 & 193{,}664 & 8{,}553 & 14{,}264 & 54{,}632 & 216{,}104 \\
+Resharing, per polynomial (bytes) & 1{,}554 & 5{,}046 & 63{,}910 & 959{,}846 & \multicolumn{4}{c}{not allowed} \\
+\bottomrule
+\end{tabular}
+\caption{Derived message sizes and operation counts. A node checks between $3\qr + t$ and $4n$ post signatures per open request. The owner's formulas are $\Gen L(2t-1) + n + 5$ multiplications for open ECDSA, $KLt + n + 5$ for sealed mode and $(t-1) + 2\Gen L t + n + 5$ for open Schnorr, plus one hash to the curve. A node posts 576 bytes per open request and downloads the message plus the posts of all nodes.}
+\label{tab:sizes}
+\end{table}
+
+The owner's work is one message of a few kilobytes at small committees and tens of kilobytes at $n = 256$. Every further input multiplies the slot count, and sealed mode multiplies it again by the number of variants. A node signs with two field multiplications per slot. The combiner computes $t$ Lagrange coefficients and checks one signature; only when that check fails does it check the partials one by one. There are no offline rounds among the nodes. A request takes one board round before the trigger, for the ACKs, and two (sealed) or three (open) board rounds after it.
+
+\subsection{Measurements}
+
+All timings are from one thread on an aarch64 machine with Cortex-X925 and Cortex-A725 cores, built with rustc~1.99.1. \Cref{tab:bench} gives the measured time of each step for the lower threshold at four committee sizes, and \cref{tab:benchhigh} the open ECDSA steps at the higher threshold.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}l rrrrrr@{}}
+\toprule
+ & Owner & Step A & Decrypt & Partial & Verify partial & Combine \\
+\midrule
+\multicolumn{7}{@{}l}{$n = 9$, $t = 3$}\\
+\quad ECDSA, open & \bmEcdsaOpenNineLowOwner & \bmEcdsaOpenNineLowStepA & \bmEcdsaOpenNineLowDecrypt & \bmEcdsaOpenNineLowPartial & \bmEcdsaOpenNineLowVerify & \bmEcdsaOpenNineLowCombine \\
+\quad ECDSA, sealed & \bmEcdsaSealedNineLowOwner & \bmEcdsaSealedNineLowStepA & \bmEcdsaSealedNineLowDecrypt & \bmEcdsaSealedNineLowPartial & \bmEcdsaSealedNineLowVerify & \bmEcdsaSealedNineLowCombine \\
+\quad BIP340, open & \bmBipOpenNineLowOwner & \bmBipOpenNineLowStepA & \bmBipOpenNineLowDecrypt & \bmBipOpenNineLowPartial & \bmBipOpenNineLowVerify & \bmBipOpenNineLowCombine \\
+\quad BIP340, sealed & \bmBipSealedNineLowOwner & \bmBipSealedNineLowStepA & \bmBipSealedNineLowDecrypt & \bmBipSealedNineLowPartial & \bmBipSealedNineLowVerify & \bmBipSealedNineLowCombine \\
+\quad Ed25519, open & \bmEdOpenNineLowOwner & \bmEdOpenNineLowStepA & \bmEdOpenNineLowDecrypt & \bmEdOpenNineLowPartial & \bmEdOpenNineLowVerify & \bmEdOpenNineLowCombine \\
+\quad Ed25519, sealed & \bmEdSealedNineLowOwner & \bmEdSealedNineLowStepA & \bmEdSealedNineLowDecrypt & \bmEdSealedNineLowPartial & \bmEdSealedNineLowVerify & \bmEdSealedNineLowCombine \\
+\addlinespace
+\multicolumn{7}{@{}l}{$n = 16$, $t = 6$}\\
+\quad ECDSA, open & \bmEcdsaOpenSixteenLowOwner & \bmEcdsaOpenSixteenLowStepA & \bmEcdsaOpenSixteenLowDecrypt & \bmEcdsaOpenSixteenLowPartial & \bmEcdsaOpenSixteenLowVerify & \bmEcdsaOpenSixteenLowCombine \\
+\quad ECDSA, sealed & \bmEcdsaSealedSixteenLowOwner & \bmEcdsaSealedSixteenLowStepA & \bmEcdsaSealedSixteenLowDecrypt & \bmEcdsaSealedSixteenLowPartial & \bmEcdsaSealedSixteenLowVerify & \bmEcdsaSealedSixteenLowCombine \\
+\quad BIP340, open & \bmBipOpenSixteenLowOwner & \bmBipOpenSixteenLowStepA & \bmBipOpenSixteenLowDecrypt & \bmBipOpenSixteenLowPartial & \bmBipOpenSixteenLowVerify & \bmBipOpenSixteenLowCombine \\
+\quad BIP340, sealed & \bmBipSealedSixteenLowOwner & \bmBipSealedSixteenLowStepA & \bmBipSealedSixteenLowDecrypt & \bmBipSealedSixteenLowPartial & \bmBipSealedSixteenLowVerify & \bmBipSealedSixteenLowCombine \\
+\quad Ed25519, open & \bmEdOpenSixteenLowOwner & \bmEdOpenSixteenLowStepA & \bmEdOpenSixteenLowDecrypt & \bmEdOpenSixteenLowPartial & \bmEdOpenSixteenLowVerify & \bmEdOpenSixteenLowCombine \\
+\quad Ed25519, sealed & \bmEdSealedSixteenLowOwner & \bmEdSealedSixteenLowStepA & \bmEdSealedSixteenLowDecrypt & \bmEdSealedSixteenLowPartial & \bmEdSealedSixteenLowVerify & \bmEdSealedSixteenLowCombine \\
+\addlinespace
+\multicolumn{7}{@{}l}{$n = 64$, $t = 22$}\\
+\quad ECDSA, open & \bmEcdsaOpenSixtyFourLowOwner & \bmEcdsaOpenSixtyFourLowStepA & \bmEcdsaOpenSixtyFourLowDecrypt & \bmEcdsaOpenSixtyFourLowPartial & \bmEcdsaOpenSixtyFourLowVerify & \bmEcdsaOpenSixtyFourLowCombine \\
+\quad ECDSA, sealed & \bmEcdsaSealedSixtyFourLowOwner & \bmEcdsaSealedSixtyFourLowStepA & \bmEcdsaSealedSixtyFourLowDecrypt & \bmEcdsaSealedSixtyFourLowPartial & \bmEcdsaSealedSixtyFourLowVerify & \bmEcdsaSealedSixtyFourLowCombine \\
+\quad BIP340, open & \bmBipOpenSixtyFourLowOwner & \bmBipOpenSixtyFourLowStepA & \bmBipOpenSixtyFourLowDecrypt & \bmBipOpenSixtyFourLowPartial & \bmBipOpenSixtyFourLowVerify & \bmBipOpenSixtyFourLowCombine \\
+\quad BIP340, sealed & \bmBipSealedSixtyFourLowOwner & \bmBipSealedSixtyFourLowStepA & \bmBipSealedSixtyFourLowDecrypt & \bmBipSealedSixtyFourLowPartial & \bmBipSealedSixtyFourLowVerify & \bmBipSealedSixtyFourLowCombine \\
+\quad Ed25519, open & \bmEdOpenSixtyFourLowOwner & \bmEdOpenSixtyFourLowStepA & \bmEdOpenSixtyFourLowDecrypt & \bmEdOpenSixtyFourLowPartial & \bmEdOpenSixtyFourLowVerify & \bmEdOpenSixtyFourLowCombine \\
+\quad Ed25519, sealed & \bmEdSealedSixtyFourLowOwner & \bmEdSealedSixtyFourLowStepA & \bmEdSealedSixtyFourLowDecrypt & \bmEdSealedSixtyFourLowPartial & \bmEdSealedSixtyFourLowVerify & \bmEdSealedSixtyFourLowCombine \\
+\addlinespace
+\multicolumn{7}{@{}l}{$n = 256$, $t = 86$}\\
+\quad ECDSA, open & \bmEcdsaOpenTwoFiveSixLowOwner & \bmEcdsaOpenTwoFiveSixLowStepA & \bmEcdsaOpenTwoFiveSixLowDecrypt & \bmEcdsaOpenTwoFiveSixLowPartial & \bmEcdsaOpenTwoFiveSixLowVerify & \bmEcdsaOpenTwoFiveSixLowCombine \\
+\quad ECDSA, sealed & \bmEcdsaSealedTwoFiveSixLowOwner & \bmEcdsaSealedTwoFiveSixLowStepA & \bmEcdsaSealedTwoFiveSixLowDecrypt & \bmEcdsaSealedTwoFiveSixLowPartial & \bmEcdsaSealedTwoFiveSixLowVerify & \bmEcdsaSealedTwoFiveSixLowCombine \\
+\quad BIP340, open & \bmBipOpenTwoFiveSixLowOwner & \bmBipOpenTwoFiveSixLowStepA & \bmBipOpenTwoFiveSixLowDecrypt & \bmBipOpenTwoFiveSixLowPartial & \bmBipOpenTwoFiveSixLowVerify & \bmBipOpenTwoFiveSixLowCombine \\
+\quad BIP340, sealed & \bmBipSealedTwoFiveSixLowOwner & \bmBipSealedTwoFiveSixLowStepA & \bmBipSealedTwoFiveSixLowDecrypt & \bmBipSealedTwoFiveSixLowPartial & \bmBipSealedTwoFiveSixLowVerify & \bmBipSealedTwoFiveSixLowCombine \\
+\quad Ed25519, open & \bmEdOpenTwoFiveSixLowOwner & \bmEdOpenTwoFiveSixLowStepA & \bmEdOpenTwoFiveSixLowDecrypt & \bmEdOpenTwoFiveSixLowPartial & \bmEdOpenTwoFiveSixLowVerify & \bmEdOpenTwoFiveSixLowCombine \\
+\quad Ed25519, sealed & \bmEdSealedTwoFiveSixLowOwner & \bmEdSealedTwoFiveSixLowStepA & \bmEdSealedTwoFiveSixLowDecrypt & \bmEdSealedTwoFiveSixLowPartial & \bmEdSealedTwoFiveSixLowVerify & \bmEdSealedTwoFiveSixLowCombine \\
+\bottomrule
+\end{tabular}
+\caption{Measured time per step in milliseconds, one thread, $t = f+1$. Sealed rows are for $K = 8$ variants. The owner column covers dealing and encryption and excludes the wallet signatures of sealed mode. All rows include the 196-byte proof $\pi$ and its hash to the curve. Step~A is the public validation, decryption includes the share checks, and combination includes the verification of the final signature.}
+\label{tab:bench}
+\end{table}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}l rrrrrr@{}}
+\toprule
+ & Owner & Step A & Decrypt & Partial & Verify partial & Combine \\
+\midrule
+$n = 9$, $t = 7$ & \bmEcdsaOpenNineHighOwner & \bmEcdsaOpenNineHighStepA & \bmEcdsaOpenNineHighDecrypt & \bmEcdsaOpenNineHighPartial & \bmEcdsaOpenNineHighVerify & \bmEcdsaOpenNineHighCombine \\
+$n = 16$, $t = 11$ & \bmEcdsaOpenSixteenHighOwner & \bmEcdsaOpenSixteenHighStepA & \bmEcdsaOpenSixteenHighDecrypt & \bmEcdsaOpenSixteenHighPartial & \bmEcdsaOpenSixteenHighVerify & \bmEcdsaOpenSixteenHighCombine \\
+$n = 64$, $t = 43$ & \bmEcdsaOpenSixtyFourHighOwner & \bmEcdsaOpenSixtyFourHighStepA & \bmEcdsaOpenSixtyFourHighDecrypt & \bmEcdsaOpenSixtyFourHighPartial & \bmEcdsaOpenSixtyFourHighVerify & \bmEcdsaOpenSixtyFourHighCombine \\
+$n = 256$, $t = 171$ & \bmEcdsaOpenTwoFiveSixHighOwner & \bmEcdsaOpenTwoFiveSixHighStepA & \bmEcdsaOpenTwoFiveSixHighDecrypt & \bmEcdsaOpenTwoFiveSixHighPartial & \bmEcdsaOpenTwoFiveSixHighVerify & \bmEcdsaOpenTwoFiveSixHighCombine \\
+\bottomrule
+\end{tabular}
+\caption{Measured time per step in milliseconds for open ECDSA at $t = n-f$. The proof format of each row is that of the same committee size in \cref{tab:bench}.}
+\label{tab:benchhigh}
+\end{table}
+
+The owner's cost for an open ECDSA request grows from \bmEcdsaOpenNineLowOwner{}\,ms at $n = 9$ to \bmEcdsaOpenTwoFiveSixLowOwner{}\,ms at $n = 256$, and a sealed grid of eight variants costs \bmEcdsaSealedTwoFiveSixLowOwner{}\,ms there. Step~A and decryption grow linearly in $n$ and $t$, as the counts of \cref{tab:sizes} predict. The partial and its check also grow linearly in $t$ in the prototype, although a partial needs constant work once the commitment evaluations are cached after Step~A; this is the main optimization that the prototype leaves undone.
+
+\subsection{A committee of nine}
+
+For $n = 9$ and $f = 2$ we time one open ECDSA request with one slot from the point of view of one node. The per-node cost is Step~A, decryption, the lock digest, the partial, and one signature check for each board post that the node must verify: three quorums of posts and $t$ partials. The quorum is $\qr = \nineQuorumMeasured{}$, hence $3\qr + t = \ninePostChecksLow{}$ post checks at $t = 3$ and \ninePostChecksHigh{} at $t = 7$, and the owner's message carries the 196-byte proof.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}l rrrr@{}}
+\toprule
+ & Post checks & Per-node CPU (\textmu s) & Combiner (\textmu s) & Requests/s per core \\
+\midrule
+$t = 3$ & \ninePostChecksLow & \nineNodeMicrosLow & \nineCombinerMicrosLow & \nineReqPerCoreLow \\
+$t = 7$ & \ninePostChecksHigh & \nineNodeMicrosHigh & \nineCombinerMicrosHigh & \nineReqPerCoreHigh \\
+\bottomrule
+\end{tabular}
+\caption{Per-request CPU cost at $n = 9$, $f = 2$, $\qr = \nineQuorumMeasured{}$, open ECDSA, one slot, one thread.}
+\label{tab:nine}
+\end{table}
+
+One core serves \nineReqPerCoreLow{} requests per second at $t = 3$ and \nineReqPerCoreHigh{} at $t = 7$ (\cref{tab:nine}). The figure is a rate of reconstructed signatures per unit of CPU, not a transaction rate of any chain.
+
+\paragraph{Where the time goes.} About \ninePostSharePct{}\% of the per-node time at $t = 3$ is the verification of post signatures: \ninePostChecksLow{} checks of about \ninePostCheckMicros{}\us{} each. The line-dealing algebra itself is the smaller part. A board that certifies posts in batches, or hands the nodes one aggregate certificate per quorum, removes most of that cost, and by this arithmetic the rate approaches \nineBatchedRate{} requests per second per core. The partial and its check take \ninePartialMinMicros{} to \ninePartialMaxMicros{}\us{} because they recompute commitment evaluations. Requests are independent, so the work spreads across cores: by multiplication, a \nineNodeCores{}-core node at \nineNodeUsePct{}\% use serves about \nineNodeRateLow{} requests per second at $t = 3$ and about \nineNodeRateHigh{} at $t = 7$. These two figures are projections from the per-core measurement and were not measured.
+
+\paragraph{The board and the target chain bound throughput.} The committee's CPU is not the limit in practice. Every request needs three board commits after its trigger, and an honest open request puts $4n = 36$ posts on the board, so the request rate follows the ordering rate and the block size of the board, and the latency after the trigger is about three commit times: \latencySeconds{}\,s at an assumed \commitSeconds{}\,s per commit. An in-process simulation of the nine nodes shows the same. It runs \simRequests{} concurrent requests through worker threads with a sequencer in place of consensus, quorums of \simQuorum{} nodes, a board interval of \simBoardIntervalMs{}\,ms and injected link delay. With one post per board batch, open ECDSA at $t = 3$ completes at \simLinkLowZeroOneRate{} requests per second with a median latency of \simLinkLowZeroOnePFifty{}\,ms. With batches of 16 posts it completes at \simLinkLowZeroSixteenRate{} requests per second with a median of \simLinkLowZeroSixteenPFifty{}\,ms, and a one-way link delay of 50\,ms brings this to \simLinkLowFiftySixteenRate{} requests per second and \simLinkLowFiftySixteenPFifty{}\,ms. Each figure is one finite run of \simRequests{} requests and not a sustained capacity. All of them lie well below the CPU rate of \cref{tab:nine}: the board interval and the batch size set them. Finally, each completed request is one transaction that the target chain must include, so no committee can sustain a request rate above the transaction rate of the chain it spends on.

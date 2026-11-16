@@ -1,0 +1,30 @@
+== n = 7, f = 2, t = 3
+owner message size                                 1333 bytes
+=> per-node CPU per request                      2173.4 us  (18 post checks)
+=> combiner extra per request                     105.0 us
+=> one core, CPU bound                              439 req/s
+== n = 7, f = 2, t = 5
+owner message size                                 1465 bytes
+=> per-node CPU per request                      2624.7 us  (20 post checks)
+=> combiner extra per request                     127.3 us
+=> one core, CPU bound                              363 req/s
+== n = 9, f = 2, t = 3
+owner message size                                 1461 bytes
+=> per-node CPU per request                      2330.8 us  (21 post checks)
+=> combiner extra per request                     105.7 us
+=> one core, CPU bound                              410 req/s
+== n = 9, f = 2, t = 7
+owner message size                                 1725 bytes
+=> per-node CPU per request                      3320.0 us  (25 post checks)
+=> combiner extra per request                     151.0 us
+=> one core, CPU bound                              288 req/s
+== n = 10, f = 3, t = 4
+owner message size                                 1591 bytes
+=> per-node CPU per request                      2734.0 us  (25 post checks)
+=> combiner extra per request                     116.6 us
+=> one core, CPU bound                              351 req/s
+== n = 10, f = 3, t = 7
+owner message size                                 1789 bytes
+=> per-node CPU per request                      3424.2 us  (28 post checks)
+=> combiner extra per request                     147.8 us
+=> one core, CPU bound                              280 req/s
