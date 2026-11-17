@@ -1,0 +1,13 @@
+# SL-004, SL-016: the lowest board position takes the slot; a later header is not VOID at its
+# open while its authorization is not in force, and is VOID SLOT_TAKEN when it comes into
+# force (DECISIONS 68).
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealC = { suite = "Bip340", epoch = 3, kcount = 2 } },
+  { OpenC = { eid = 1, pos = 10, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 1 } }] } },
+  { OpenC = { eid = 2, pos = 20, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 1 } }, { Ck = { suite = "Bip340", epoch = 3, idx = 2 } }] } },
+  { OpenC = { eid = 3, pos = 30, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 2 } }] } },
+  { InForce = { eid = 2, root = "Own" } },
+  { InForce = { eid = 3, root = "Own" } },
+]

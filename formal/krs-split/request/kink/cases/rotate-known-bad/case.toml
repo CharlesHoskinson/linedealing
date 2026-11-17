@@ -1,0 +1,7 @@
+# RQ-001, ledger 5: a ROTATE of a registered epoch with a committee outside the domain.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Rotate = { e = 0, n = 6, f = 2 } },
+]

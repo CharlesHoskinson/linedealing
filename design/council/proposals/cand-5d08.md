@@ -784,18 +784,18 @@ An encoding that exceeds the specified bounds falsifies the cost profile. Poor m
 ## 12. References
 
 **[R] State-of-the-art report — read in full (local path).**  
-[research/REPORT.md](research/REPORT.md). Defines Form A, Form B, and the gap list used here. Detailed lane findings informed the selection and lifecycle questions.
+[research/REPORT.md](/home/hoskinson/Projects/mpcexperiments/research/REPORT.md). Defines Form A, Form B, and the gap list used here. Detailed lane findings informed the selection and lifecycle questions.
 
 **[CG] Aniket Kate, Easwar Vivek Mangipudi, Pratyay Mukherjee, Hamza Saleem, and Sri AravindaKrishnan Thyagarajan. _Non-interactive VSS using Class Groups and Application to DKG_ — read in full (local path).**  
-[research/sources/eprint/2023-451.pdf](research/sources/eprint/2023-451.pdf). The 23-page local version, including appendices. Figures 1 and 4 specify the dealing and proof. Table 1 separates class-group and curve costs. This is the newer local paper, rather than the anonymous draft used in the report.
+[research/sources/eprint/2023-451.pdf](/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2023-451.pdf). The 23-page local version, including appendices. Figures 1 and 4 specify the dealing and proof. Table 1 separates class-group and curve costs. This is the newer local paper, rather than the anonymous draft used in the report.
 
 **[F] RFC 9591. _The Flexible Round-Optimized Schnorr Threshold Protocol for Two-Round Schnorr Signatures_ — read in full (local path).**  
-[research/sources/lifecycle/rfc9591.txt](research/sources/lifecycle/rfc9591.txt). Includes the complete specification, security considerations, dealer construction, and test vectors.
+[research/sources/lifecycle/rfc9591.txt](/home/hoskinson/Projects/mpcexperiments/research/sources/lifecycle/rfc9591.txt). Includes the complete specification, security considerations, dealer construction, and test vectors.
 
 **[I1] Ika documentation, _Future Signing_ — read in full (local path).**  
-[future-signing.mdx](research/sources/owner-share/docs/move-integration__protocols__future-signing.mdx).
+[future-signing.mdx](/home/hoskinson/Projects/mpcexperiments/research/sources/owner-share/docs/move-integration__protocols__future-signing.mdx).
 
 **[I2] Ika documentation, _Key Importing_ — read in full (local path).**  
-[key-importing.mdx](research/sources/owner-share/docs/move-integration__protocols__key-importing.mdx).
+[key-importing.mdx](/home/hoskinson/Projects/mpcexperiments/research/sources/owner-share/docs/move-integration__protocols__key-importing.mdx).
 
 The BIP340, BIP341, and RFC8032 specification clauses linked inline were checked on their official online sources. They are not represented as full local reads. No research-paper claim in this document relies on an abstract-only citation.

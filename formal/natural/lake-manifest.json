@@ -17,7 +17,7 @@
    "manifestFile": "lake-manifest.json",
    "inherited": false,
    "dir":
-   "~/Projects/Moriarty-wt/mca-lean/formal/mca-lean/.lake/packages/mathlib",
+   "/home/hoskinson/Projects/Moriarty-wt/mca-lean/formal/mca-lean/.lake/packages/mathlib",
    "copy": false,
    "configFile": "lakefile.lean"},
   {"url": "https://github.com/leanprover-community/batteries",

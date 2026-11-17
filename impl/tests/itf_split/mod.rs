@@ -1,4 +1,7 @@
 //! Small ITF reader and public-event fixtures for the split-line projection.
+#![allow(dead_code)]
+pub mod pools;
+pub mod proto;
 use line_dealing::board::Committee;
 use line_dealing::split::profile::{Charter, OwnerChecks, Profile, Source, SourceEvidence};
 use line_dealing::split::state::*;

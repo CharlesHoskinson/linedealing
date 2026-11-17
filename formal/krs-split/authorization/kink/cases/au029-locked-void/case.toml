@@ -1,0 +1,19 @@
+# AU-029 (DECISIONS 60, ledger 11; Lean pin_au029_locked_void): a RELEASED settlement locks record 1 to pin 5; the pinned re-post 13 settles VOID and the record stays LOCKED to pin 5 under N(nsk, 13, VOID); a later call with pin 9 is refused pin_mismatch and one with pin 5 is accepted.
+[inputs]
+params = { Params = { mode = "NonTee", q = 3 } }
+ops = [
+  { CharterOp = { cid = 1, profile = "P1", board_first = false, stateful = false } },
+  { CharterOp = { cid = 2, profile = "P2", board_first = false, stateful = false } },
+  { CharterOp = { cid = 3, profile = "P0", board_first = false, stateful = false } },
+  { CharterOp = { cid = 4, profile = "P1", board_first = true, stateful = false } },
+  { RecordOp = { rid = 1, cid = 1, cm_addr = 101, nf = { Fresh = { n = 1 } }, hold_tag = 0, slr_own = [11], slr_g = [] } },
+  { RecordOp = { rid = 2, cid = 2, cm_addr = 102, nf = { Fresh = { n = 2 } }, hold_tag = 7, slr_own = [21], slr_g = [22] } },
+  { RecordOp = { rid = 3, cid = 3, cm_addr = 103, nf = { Fresh = { n = 3 } }, hold_tag = 0, slr_own = [], slr_g = [] } },
+  { RecordOp = { rid = 4, cid = 4, cm_addr = 104, nf = { Fresh = { n = 4 } }, hold_tag = 0, slr_own = [], slr_g = [] } },
+  { AuthorizeOp = { c = { Cl = { rid = 1, nf = { Fresh = { n = 1 } }, auth = 10, rh = 0, source = "Owner", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 5, to_exit = false, carry = [] } } } },
+  { SettleRootOp = { leaves = [{ Lf = [10, "SetReleased"] }] } },
+  { AuthorizeOp = { c = { Cl = { rid = 1, nf = { OfSettle = { auth = 10, o = "SetReleased" } }, auth = 13, rh = 0, source = "Owner", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 5, to_exit = false, carry = [] } } } },
+  { SettleRootOp = { leaves = [{ Lf = [13, "SetVoid"] }] } },
+  { AuthorizeOp = { c = { Cl = { rid = 1, nf = { OfSettle = { auth = 13, o = "SetVoid" } }, auth = 14, rh = 0, source = "Owner", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 9, to_exit = false, carry = [] } } } },
+  { AuthorizeOp = { c = { Cl = { rid = 1, nf = { OfSettle = { auth = 13, o = "SetVoid" } }, auth = 15, rh = 0, source = "Owner", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 5, to_exit = false, carry = [] } } } },
+]

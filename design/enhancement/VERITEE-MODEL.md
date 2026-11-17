@@ -1,6 +1,6 @@
 # Veritee as a TEE for a threshold-signing committee: what the code provides
 
-Source: local checkout `~/Projects/veritee/veritee-vm` (branch `main`, read 2026-11-14).
+Source: local checkout `/home/hoskinson/Projects/veritee/veritee-vm` (branch `main`, read 2026-11-14).
 All citations are `path:line` relative to that checkout. The related repositories (veritee-warden,
 veritee-spec, veritee-smart-contracts, veritee-attestation-verifier-ts) were not available. Where a
 property depends on them, the text says **[spec needed]**. Statements marked **[inference]** follow

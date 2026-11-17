@@ -1,0 +1,22 @@
+# The oracle's case 'run P2 hold and recovery' (lean-split/authorization/cases.json)
+[inputs]
+params = { Params = { mode = "Tee", q = 3 } }
+ops = [
+  { CharterOp = { cid = 1, profile = "P1", board_first = false, stateful = false } },
+  { CharterOp = { cid = 2, profile = "P2", board_first = false, stateful = false } },
+  { CharterOp = { cid = 3, profile = "P0", board_first = true, stateful = false } },
+  { RecordOp = { rid = 10, cid = 1, cm_addr = 100, nf = { Fresh = { n = 10 } }, hold_tag = 7, slr_own = [1], slr_g = [] } },
+  { RecordOp = { rid = 20, cid = 2, cm_addr = 200, nf = { Fresh = { n = 20 } }, hold_tag = 8, slr_own = [2], slr_g = [3] } },
+  { RecordOp = { rid = 30, cid = 3, cm_addr = 300, nf = { Fresh = { n = 30 } }, hold_tag = 9, slr_own = [], slr_g = [] } },
+  { AuthorizeOp = { c = { Cl = { rid = 20, nf = { Fresh = { n = 20 } }, auth = 502, rh = 601, source = "Owner", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 0, to_exit = false, carry = [] } } } },
+  { RevokeOp = { a = 502, tag = 8 } },
+  { AuthorizeOp = { c = { Cl = { rid = 20, nf = { Fresh = { n = 20 } }, auth = 503, rh = 601, source = "Owner", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 0, to_exit = false, carry = [] } } } },
+  { AuthorizeOp = { c = { Cl = { rid = 20, nf = { Fresh = { n = 21 } }, auth = 505, rh = 601, source = "Seizure", slot = [{ Sr = [20, "RootG"] }], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 5, to_exit = false, carry = [] } } } },
+  { SeizureOp = { a = 502, all_to_dreg = true } },
+  { AuthorizeOp = { c = { Cl = { rid = 10, nf = { Fresh = { n = 10 } }, auth = 501, rh = 601, source = "Recovery", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 5, to_exit = true, carry = [] } } } },
+  { RecoverOp = {} },
+  { AuthorizeOp = { c = { Cl = { rid = 10, nf = { Fresh = { n = 10 } }, auth = 501, rh = 601, source = "Recovery", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 5, to_exit = true, carry = [] } } } },
+  { SettleRootOp = { leaves = [{ Lf = [501, "SetVoid"] }] } },
+  { AuthorizeOp = { c = { Cl = { rid = 10, nf = { OfSettle = { auth = 501, o = "SetVoid" } }, auth = 506, rh = 601, source = "Owner", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 5, to_exit = false, carry = [{ Cy = { auth_0 = 501, outcome = "SetFinal", sigs = 3 } }] } } } },
+  { AuthorizeOp = { c = { Cl = { rid = 10, nf = { OfSettle = { auth = 501, o = "SetVoid" } }, auth = 506, rh = 601, source = "Owner", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 5, to_exit = false, carry = [] } } } },
+]

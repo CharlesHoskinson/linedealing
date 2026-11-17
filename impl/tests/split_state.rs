@@ -2236,3 +2236,399 @@ fn reservation_window_pools_are_per_suite() {
     // Indices 1 and 11 are above the Ed25519 floor 0, so they are free.
     assert_eq!(try_admit_vote(&mut b, 1), Ok(()));
 }
+
+// DECISIONS 54 (item 26 findings G5, QA-2, QA-3) and DECISIONS 53 / QA-8.
+fn ecdsa_header(id: u8, source: Source) -> Header {
+    let mut h = header(
+        id,
+        vec![
+            SlotId::Ecdsa { record: d(210) },
+            SlotId::Ecdsa { record: d(211) },
+        ],
+    );
+    h.suite = Suite::Ecdsa;
+    h.charter = p2();
+    h.source = source;
+    h.outputs = vec![match source {
+        Source::Seizure => d(91),
+        Source::Recovery => d(90),
+        Source::Owner => d(99),
+    }];
+    h.tickets = (1..=2)
+        .map(|v| Ticket {
+            variant: v,
+            generation: 0,
+            input: 1,
+            slot: h.slots[usize::from(v - 1)],
+            digest: d(200 + v as u8),
+            in_source_root: true,
+        })
+        .collect();
+    h
+}
+fn ecdsa_slots() -> [SlotId; 2] {
+    [
+        SlotId::Ecdsa { record: d(210) },
+        SlotId::Ecdsa { record: d(211) },
+    ]
+}
+fn try_vote(b: &mut SplitBoard, id: u8, node: u16) -> Result<(), SplitError> {
+    let height = b.height.max(1);
+    apply(
+        b,
+        height,
+        Event::VoteAdmit {
+            eid: d(id),
+            node,
+            header_hash: d(id + 80),
+            obs: Observation {
+                host_height: 101,
+                midnight_height: 10,
+            },
+        },
+    )
+}
+// G5 regression (former prototype counterexample, asserts inverted): an earlier
+// envelope with no authorization in force takes no precedence on ECDSA slots.
+#[test]
+fn g5_unauthorized_namer_does_not_void_the_seizure() {
+    let mut b = board();
+    opened(&mut b, 2, ecdsa_header(2, Source::Owner));
+    for slot in ecdsa_slots() {
+        assert_eq!(b.slot(&slot), SlotState::Free);
+    }
+    opened(&mut b, 1, ecdsa_header(1, Source::Seizure));
+    auth(&mut b, 1);
+    for slot in ecdsa_slots() {
+        assert_eq!(b.slot(&slot), SlotState::Named(d(1)));
+    }
+    for node in 1..=3 {
+        try_vote(&mut b, 1, node).unwrap();
+    }
+    assert!(b.request(&d(1)).unwrap().admitted);
+    // The earlier namer ends SLOT_TAKEN once its own authorization is in force.
+    auth(&mut b, 2);
+    assert_eq!(try_vote(&mut b, 2, 1), Err(SplitError::SlotTaken));
+}
+// G5 regression: the lapse of an envelope without an authorization burns no ECDSA slot.
+#[test]
+fn g5_unauthorized_lapse_burns_no_ecdsa_slot() {
+    let mut b = board();
+    opened(&mut b, 2, ecdsa_header(2, Source::Owner));
+    apply(&mut b, 11, Event::Lapse { eid: d(2) }).unwrap();
+    for slot in ecdsa_slots() {
+        assert_eq!(b.slot(&slot), SlotState::Free);
+    }
+}
+// QA-3: precedence on an ECDSA slot holds only while the authorization is in force.
+#[test]
+fn ecdsa_precedence_ends_with_hold_or_revocation() {
+    let mut b = board();
+    opened(&mut b, 1, ecdsa_header(1, Source::Owner));
+    auth(&mut b, 1);
+    let hold = |held| Event::SetHold {
+        record: d(101),
+        midnight_height: 11,
+        held,
+        verified: true,
+    };
+    apply(&mut b, 1, hold(true)).unwrap();
+    for slot in ecdsa_slots() {
+        assert_eq!(b.slot(&slot), SlotState::Free);
+    }
+    apply(&mut b, 1, hold(false)).unwrap();
+    for slot in ecdsa_slots() {
+        assert_eq!(b.slot(&slot), SlotState::Named(d(1)));
+    }
+    apply(
+        &mut b,
+        1,
+        Event::Revoke {
+            eid: d(1),
+            midnight_height: 12,
+            verified: true,
+        },
+    )
+    .unwrap();
+    for slot in ecdsa_slots() {
+        assert_eq!(b.slot(&slot), SlotState::Free);
+    }
+    void(&mut b, 1, VoidReason::Revoked, 2);
+    for slot in ecdsa_slots() {
+        assert_eq!(b.slot(&slot), SlotState::Free);
+    }
+}
+// QA-2 and the one burn rule: an ECDSA slot that a request only had precedence on
+// returns to free at its end and serves the reissue; reserved ECDSA slots and every
+// committee slot of the request with precedence burn.
+#[test]
+fn one_burn_rule_for_committee_and_ecdsa_slots() {
+    let mut b = board();
+    opened(&mut b, 1, ecdsa_header(1, Source::Owner));
+    auth(&mut b, 1);
+    void(&mut b, 1, VoidReason::AuthorizationRefused, 2);
+    for slot in ecdsa_slots() {
+        assert_eq!(b.slot(&slot), SlotState::Free);
+    }
+    opened(&mut b, 3, ecdsa_header(3, Source::Owner));
+    auth(&mut b, 3);
+    for node in 1..=3 {
+        try_vote(&mut b, 3, node).unwrap();
+    }
+    for slot in ecdsa_slots() {
+        assert_eq!(b.slot(&slot), SlotState::Claimed(d(3)));
+    }
+    void(&mut b, 3, VoidReason::FailedContribution, 2);
+    for slot in ecdsa_slots() {
+        assert_eq!(b.slot(&slot), SlotState::Burned);
+    }
+    // Committee slots: the request with precedence burns every named slot.
+    opened(&mut b, 4, header(4, slots(4)));
+    auth(&mut b, 4);
+    void(&mut b, 4, VoidReason::AuthorizationRefused, 2);
+    for slot in slots(4) {
+        assert_eq!(b.slot(&slot), SlotState::Burned);
+    }
+}
+// QA-8, C11_SpentNeverRelocked: FINAL on a RELEASED record clears the lock.
+#[test]
+fn qa8_spent_record_is_never_locked() {
+    let mut b = board();
+    opened(&mut b, 1, header(1, slots(1)));
+    auth(&mut b, 1);
+    admit(&mut b, 1, 2);
+    release(&mut b, 1, 1, 2);
+    void(&mut b, 1, VoidReason::FailedContribution, 3);
+    assert_eq!(b.record_lock(&d(101)), Some(d(141)));
+    let mut repost = header(3, slots(3));
+    repost.record = d(101);
+    repost.pin = d(141);
+    opened(&mut b, 3, repost);
+    auth(&mut b, 3);
+    admit(&mut b, 3, 3);
+    release(&mut b, 3, 1, 3);
+    for node in 1..=3 {
+        apply(
+            &mut b,
+            3,
+            Event::Final {
+                eid: d(3),
+                epoch: 1,
+                node,
+                ciphertext: d(240),
+            },
+        )
+        .unwrap();
+    }
+    assert_eq!(b.record_lock(&d(101)), None);
+}
+// QA-8a, DECISIONS 53: a whole-committee restart that loses the board tail settles
+// FINAL when the host chain shows the request's transaction.
+#[test]
+fn qa8_restart_settles_final_when_host_shows_the_transaction() {
+    let mut b = board();
+    opened(&mut b, 1, header(1, slots(1)));
+    auth(&mut b, 1);
+    admit(&mut b, 1, 2);
+    for node in 1..=3 {
+        release(&mut b, 1, node, 2);
+    }
+    apply(
+        &mut b,
+        4,
+        Event::WholeCommitteeRestart {
+            host_final: std::collections::BTreeMap::from([(d(1), d(240))]),
+        },
+    )
+    .unwrap();
+    let r = b.request(&d(1)).unwrap();
+    assert_eq!(r.state, State::Final(d(240)));
+    assert_eq!(r.settlement, Some(Settlement::Successor(d(240))));
+    assert_eq!(b.record_lock(&d(101)), None);
+    for slot in slots(1) {
+        assert_eq!(b.slot(&slot), SlotState::Burned);
+    }
+}
+// S4 and QA-8b, DECISIONS 53: without the host transaction the restart settles
+// RELEASED, never VOID with a fresh nullifier, also when the board shows no
+// release; the owner's re-post spends the pinned input.
+#[test]
+fn qa8_restart_settles_released_and_the_repost_spends_the_pin() {
+    let mut b = board();
+    opened(&mut b, 1, header(1, slots(1)));
+    auth(&mut b, 1);
+    admit(&mut b, 1, 2);
+    opened(&mut b, 5, header(5, slots(5)));
+    apply(
+        &mut b,
+        4,
+        Event::WholeCommitteeRestart {
+            host_final: std::collections::BTreeMap::new(),
+        },
+    )
+    .unwrap();
+    let r = b.request(&d(1)).unwrap();
+    assert_eq!(r.state, State::Void(VoidReason::Restart));
+    assert_eq!(r.settlement, Some(Settlement::Released { pin: d(141) }));
+    assert_eq!(b.record_lock(&d(101)), Some(d(141)));
+    for slot in slots(1).into_iter().chain(slots(5)) {
+        assert_eq!(b.slot(&slot), SlotState::Burned);
+    }
+    // An unauthorized request consumed no record state and locks nothing.
+    assert!(b.request(&d(5)).unwrap().state.terminal());
+    assert_eq!(b.record_lock(&d(105)), None);
+    let mut wrong = header(2, slots(2));
+    wrong.record = d(101);
+    opened(&mut b, 2, wrong);
+    assert_eq!(
+        apply(
+            &mut b,
+            4,
+            Event::Authorize {
+                eid: d(2),
+                verified: true
+            }
+        ),
+        Err(SplitError::Pin)
+    );
+    let mut repost = header(3, slots(3));
+    repost.record = d(101);
+    repost.pin = d(141);
+    opened(&mut b, 3, repost);
+    auth(&mut b, 3);
+    assert!(b.request(&d(3)).unwrap().in_force());
+}
+// DECISIONS 53: the restart locks the record to the pin of the authorization in
+// force, not to an earlier included authorization that never came into force.
+#[test]
+fn qa8_restart_locks_the_pin_of_the_authorization_in_force() {
+    let mut b = board();
+    opened(&mut b, 1, header(1, slots(1)));
+    let mut second = header(2, slots(2));
+    second.record = d(101);
+    opened(&mut b, 2, second);
+    for id in [1, 2] {
+        apply(
+            &mut b,
+            1,
+            Event::Authorize {
+                eid: d(id),
+                verified: true,
+            },
+        )
+        .unwrap();
+    }
+    auth(&mut b, 2);
+    apply(
+        &mut b,
+        4,
+        Event::WholeCommitteeRestart {
+            host_final: std::collections::BTreeMap::new(),
+        },
+    )
+    .unwrap();
+    assert_eq!(b.record_lock(&d(101)), Some(d(142)));
+    assert_eq!(
+        b.request(&d(2)).unwrap().settlement,
+        Some(Settlement::Released { pin: d(142) })
+    );
+}
+// DESIGN §7.11 item 1 (findings W1, W4, QA-5; item 11 replay of the item 26 pools
+// traces). A whole-committee restart burns every index in [pending_min, h + B]
+// of the latest checkpoint, also an index that no header named, and the next
+// checkpoint must raise h to h + B.
+fn restart() -> Event {
+    Event::WholeCommitteeRestart {
+        host_final: std::collections::BTreeMap::new(),
+    }
+}
+fn schnorr_checkpoint(h: u64) -> Event {
+    Event::Checkpoint {
+        pools: std::collections::BTreeMap::from([(
+            PoolId {
+                suite: Suite::Bip340,
+                epoch: 1,
+            },
+            PoolCheckpoint {
+                h,
+                pending_min: h + 1,
+                pending_root: d(0),
+                pending_count: 0,
+                pending: std::collections::BTreeMap::new(),
+                pending_verified: true,
+            },
+        )]),
+    }
+}
+fn bip340(index: u64) -> SlotId {
+    SlotId::Schnorr {
+        suite: Suite::Bip340,
+        epoch: 1,
+        index,
+    }
+}
+#[test]
+fn w1_restart_burns_the_checkpoint_window_regression() {
+    let mut b = board();
+    apply(&mut b, 1, restart()).unwrap();
+    for index in [1, 11, 256] {
+        assert_eq!(b.slot(&bip340(index)), SlotState::Burned);
+    }
+    assert_eq!(b.slot(&bip340(257)), SlotState::Free);
+    opened(&mut b, 1, header(1, slots(1)));
+    auth(&mut b, 1);
+    assert_eq!(try_vote(&mut b, 1, 1), Err(SplitError::SlotTaken));
+    // The next checkpoint raises h to h + B = 256 and pending_min above it.
+    assert_eq!(
+        apply(&mut b, 1, schnorr_checkpoint(0)),
+        Err(SplitError::Evidence)
+    );
+    assert_eq!(
+        apply(&mut b, 1, schnorr_checkpoint(255)),
+        Err(SplitError::Evidence)
+    );
+    apply(&mut b, 1, schnorr_checkpoint(256)).unwrap();
+}
+// DESIGN §7.11 restart marker (finding W4, pools trace accountMarkerHolds): no
+// account-pool slot is reserved between a whole-committee restart and the next
+// checkpoint. Slots 210 and 211 were never named before the restart, so they
+// stand for the slots of a refilled session.
+#[test]
+fn w4_restart_blocks_account_reservations_until_the_next_checkpoint_regression() {
+    let mut b = board();
+    apply(&mut b, 1, restart()).unwrap();
+    opened(&mut b, 1, ecdsa_header(1, Source::Owner));
+    auth(&mut b, 1);
+    assert_eq!(try_vote(&mut b, 1, 1), Err(SplitError::Window));
+    apply(&mut b, 1, schnorr_checkpoint(256)).unwrap();
+    for node in 1..=3 {
+        try_vote(&mut b, 1, node).unwrap();
+    }
+    assert!(b.request(&d(1)).unwrap().admitted);
+}
+// A posted envelope that the board has not ordered holds no slot; a restart
+// leaves it posted (splitline.qnt doColdStartE, splitline_pools.qnt
+// doWholeRestart; sampled pools traces pl_design_restart_0, 3 and 4).
+#[test]
+fn restart_keeps_unordered_envelopes_posted_regression() {
+    let mut b = board();
+    apply(
+        &mut b,
+        1,
+        Event::Post {
+            envelope: envelope(1),
+        },
+    )
+    .unwrap();
+    apply(&mut b, 1, restart()).unwrap();
+    assert_eq!(b.request(&d(1)).unwrap().state, State::Posted);
+    apply(
+        &mut b,
+        1,
+        Event::Order {
+            eid: d(1),
+            qc_verified: true,
+        },
+    )
+    .unwrap();
+}

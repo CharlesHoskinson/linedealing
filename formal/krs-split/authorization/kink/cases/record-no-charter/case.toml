@@ -1,0 +1,8 @@
+# ledger 5: a record whose charter is not registered is no-rule
+[inputs]
+params = { Params = { mode = "Tee", q = 3 } }
+ops = [
+  { CharterOp = { cid = 1, profile = "P1", board_first = false, stateful = false } },
+  { RecordOp = { rid = 1, cid = 9, cm_addr = 101, nf = { Fresh = { n = 1 } }, hold_tag = 0, slr_own = [], slr_g = [] } },
+  { RecordOp = { rid = 2, cid = 1, cm_addr = 102, nf = { Fresh = { n = 2 } }, hold_tag = 0, slr_own = [], slr_g = [] } },
+]

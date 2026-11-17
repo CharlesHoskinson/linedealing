@@ -1,0 +1,26 @@
+{
+  "prefix": "AU",
+  "namespace": "SplitAuthorization",
+  "spec": "openspec/changes/add-split-line-dealing/specs/split-authorization/spec.md",
+  "count": 29,
+  "proved": {
+    "AU-008": ["C11_nf_once", "apply_used_nodup"],
+    "AU-010": ["C6_no_force_without_finalize"],
+    "AU-015": ["C11_bf_first_only"],
+    "AU-016": ["C11_bf_first_only"],
+    "AU-024": ["C11_one_final", "apply_inv"],
+    "AU-025": ["C11_released_never_fresh", "C11_pinned_never_unspent"],
+    "AU-029": ["C11_pinned_never_unspent"]
+  },
+  "exceptions": {
+    "AU-003": "the wallet's hash `auth = H(ic ‖ hd ‖ tkc ‖ nf ‖ rh)` and what the wallet publishes are outside the contract state; `auth` and `rh` are input numbers",
+    "AU-017": "the ElGamal encryption of the hold tag is cryptography outside the state; `rh` is an input number"
+  },
+  "ledger": {
+    "AU-001": "5", "AU-002": "10",
+    "AU-005": "2", "AU-006": "2", "AU-007": "2",
+    "AU-008": "1", "AU-009": "1", "AU-010": "10", "AU-011": "5", "AU-012": "1",
+    "AU-013": "2", "AU-018": "9", "AU-019": "9", "AU-020": "5, 7", "AU-021": "6",
+    "AU-022": "1", "AU-023": "3, 4, 11", "AU-024": "13", "AU-025": "11", "AU-029": "11", "AU-026": "5, 8", "AU-027": "1, 12"
+  }
+}

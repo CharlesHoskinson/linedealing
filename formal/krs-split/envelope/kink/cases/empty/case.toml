@@ -1,0 +1,6 @@
+# runOps: no operation; the state is init.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = []

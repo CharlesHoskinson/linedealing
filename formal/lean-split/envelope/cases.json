@@ -1,0 +1,1021 @@
+[
+ {
+  "name": "run with refusals",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "mode": "TEE",
+     "delta_c": 50
+    },
+    "height": 800,
+    "epochs": [
+     [
+      3,
+      33
+     ]
+    ],
+    "ops": [
+     {
+      "op": "submit",
+      "envelope": {
+       "size": 16384,
+       "pub": {
+        "version": 1,
+        "epoch": 3,
+        "keylist_hash": 33,
+        "exp": 900,
+        "size_class": 0,
+        "auth_ref": 7,
+        "reserved": 0
+       },
+       "hd": 100,
+       "dd": 500,
+       "proof_ctx": [
+        100,
+        7
+       ],
+       "proof_valid": true,
+       "type": "SPEND"
+      }
+     },
+     {
+      "op": "submit",
+      "envelope": {
+       "size": 16384,
+       "pub": {
+        "version": 1,
+        "epoch": 3,
+        "keylist_hash": 33,
+        "exp": 900,
+        "size_class": 0,
+        "auth_ref": 7,
+        "reserved": 0
+       },
+       "hd": 101,
+       "dd": 500,
+       "proof_ctx": [
+        101,
+        7
+       ],
+       "proof_valid": true,
+       "type": "SPEND"
+      }
+     },
+     {
+      "op": "tick",
+      "height": 799
+     }
+    ]
+   }
+  },
+  "expect": {
+   "end": "final",
+   "cells": {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 50
+     },
+     "height": 800,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [
+      [
+       3,
+       500
+      ]
+     ],
+     "accepted": [
+      [
+       100,
+       7
+      ]
+     ]
+    },
+    "obs": [
+     {
+      "accepted": [
+       100,
+       7
+      ]
+     },
+     {
+      "refused": [
+       "dd_reused"
+      ]
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     }
+    ]
+   }
+  }
+ },
+ {
+  "name": "two codes sorted",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "mode": "TEE",
+     "delta_c": 50
+    },
+    "height": 800,
+    "epochs": [
+     [
+      3,
+      33
+     ]
+    ],
+    "ops": [
+     {
+      "op": "submit",
+      "envelope": {
+       "size": 1,
+       "pub": {
+        "version": 1,
+        "epoch": 3,
+        "keylist_hash": 33,
+        "exp": 1,
+        "size_class": 0,
+        "auth_ref": 7,
+        "reserved": 0
+       },
+       "hd": 100,
+       "dd": 500,
+       "proof_ctx": [
+        100,
+        7
+       ],
+       "proof_valid": true,
+       "type": "SPEND"
+      }
+     }
+    ]
+   }
+  },
+  "expect": {
+   "end": "final",
+   "cells": {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 50
+     },
+     "height": 800,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [],
+     "accepted": []
+    },
+    "obs": [
+     {
+      "refused": [
+       "bad_shape",
+       "exp_c_not_below_exp",
+       "expired"
+      ]
+     }
+    ]
+   }
+  }
+ },
+ {
+  "name": "exponent",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"delta_c\": 50}, \"height\": 8e2, \"epochs\": [[3, 33]], \"ops\": [{\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 100, \"dd\": 500, \"proof_ctx\": [100, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 101, \"dd\": 500, \"proof_ctx\": [101, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"tick\", \"height\": 799}]}}",
+  "rc": 2
+ },
+ {
+  "name": "fraction",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"delta_c\": 50}, \"height\": 800.0, \"epochs\": [[3, 33]], \"ops\": [{\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 100, \"dd\": 500, \"proof_ctx\": [100, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 101, \"dd\": 500, \"proof_ctx\": [101, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"tick\", \"height\": 799}]}}",
+  "rc": 2
+ },
+ {
+  "name": "leading zero",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"delta_c\": 50}, \"height\": \"0800\", \"epochs\": [[3, 33]], \"ops\": [{\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 100, \"dd\": 500, \"proof_ctx\": [100, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 101, \"dd\": 500, \"proof_ctx\": [101, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"tick\", \"height\": 799}]}}",
+  "rc": 2
+ },
+ {
+  "name": "underscore",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"delta_c\": 50}, \"height\": \"8_00\", \"epochs\": [[3, 33]], \"ops\": [{\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 100, \"dd\": 500, \"proof_ctx\": [100, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 101, \"dd\": 500, \"proof_ctx\": [101, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"tick\", \"height\": 799}]}}",
+  "rc": 2
+ },
+ {
+  "name": "extra key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"delta_c\": 50}, \"height\": 800, \"extra\": 1, \"epochs\": [[3, 33]], \"ops\": [{\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 100, \"dd\": 500, \"proof_ctx\": [100, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 101, \"dd\": 500, \"proof_ctx\": [101, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"tick\", \"height\": 799}]}}",
+  "rc": 2
+ },
+ {
+  "name": "missing key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"delta_c\": 50}, \"epochs\": [[3, 33]], \"ops\": [{\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 100, \"dd\": 500, \"proof_ctx\": [100, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 101, \"dd\": 500, \"proof_ctx\": [101, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"tick\", \"height\": 799}]}}",
+  "rc": 2
+ },
+ {
+  "name": "duplicate key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"delta_c\": 50}, \"height\": 800, \"height\": 800, \"epochs\": [[3, 33]], \"ops\": [{\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 100, \"dd\": 500, \"proof_ctx\": [100, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 101, \"dd\": 500, \"proof_ctx\": [101, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"tick\", \"height\": 799}]}}",
+  "rc": 2
+ },
+ {
+  "name": "unknown op",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "mode": "TEE",
+     "delta_c": 50
+    },
+    "height": 800,
+    "epochs": [
+     [
+      3,
+      33
+     ]
+    ],
+    "ops": [
+     {
+      "op": "nope"
+     }
+    ]
+   }
+  },
+  "rc": 2
+ },
+ {
+  "name": "unknown enum",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"delta_c\": 50}, \"height\": 800, \"epochs\": [[3, 33]], \"ops\": [{\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 100, \"dd\": 500, \"proof_ctx\": [100, 7], \"proof_valid\": true, \"type\": \"spend\"}}, {\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 101, \"dd\": 500, \"proof_ctx\": [101, 7], \"proof_valid\": true, \"type\": \"spend\"}}, {\"op\": \"tick\", \"height\": 799}]}}",
+  "rc": 2
+ },
+ {
+  "name": "protocol 2",
+  "input": "{\"protocol\": \"kink-implementation/2\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"delta_c\": 50}, \"height\": 800, \"epochs\": [[3, 33]], \"ops\": [{\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 100, \"dd\": 500, \"proof_ctx\": [100, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 101, \"dd\": 500, \"proof_ctx\": [101, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"tick\", \"height\": 799}]}}",
+  "rc": 2
+ },
+ {
+  "name": "string integer accepted",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"delta_c\": 50}, \"height\": \"800\", \"epochs\": [[3, 33]], \"ops\": [{\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 100, \"dd\": 500, \"proof_ctx\": [100, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"submit\", \"envelope\": {\"size\": 16384, \"pub\": {\"version\": 1, \"epoch\": 3, \"keylist_hash\": 33, \"exp\": 900, \"size_class\": 0, \"auth_ref\": 7, \"reserved\": 0}, \"hd\": 101, \"dd\": 500, \"proof_ctx\": [101, 7], \"proof_valid\": true, \"type\": \"SPEND\"}}, {\"op\": \"tick\", \"height\": 799}]}}",
+  "expect": {
+   "end": "final",
+   "cells": {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 50
+     },
+     "height": 800,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [
+      [
+       3,
+       500
+      ]
+     ],
+     "accepted": [
+      [
+       100,
+       7
+      ]
+     ]
+    },
+    "obs": [
+     {
+      "accepted": [
+       100,
+       7
+      ]
+     },
+     {
+      "refused": [
+       "dd_reused"
+      ]
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     }
+    ]
+   }
+  }
+ },
+ {
+  "name": "step kinds",
+  "args": [
+   "--step"
+  ],
+  "match": "keys",
+  "input": [
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 50
+     },
+     "height": 800,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [],
+     "accepted": []
+    },
+    "op": {
+     "op": "submit",
+     "envelope": {
+      "size": 16384,
+      "pub": {
+       "version": 1,
+       "epoch": 3,
+       "keylist_hash": 33,
+       "exp": 900,
+       "size_class": 0,
+       "auth_ref": 7,
+       "reserved": 0
+      },
+      "hd": 100,
+      "dd": 500,
+      "proof_ctx": [
+       100,
+       7
+      ],
+      "proof_valid": true,
+      "type": "SPEND"
+     }
+    }
+   },
+   "{\"state\": 1}",
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 50
+     },
+     "height": 800,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [
+      [
+       3,
+       500
+      ]
+     ],
+     "accepted": [
+      [
+       100,
+       7
+      ]
+     ]
+    },
+    "op": {
+     "op": "header",
+     "header": {
+      "suite": "BIP340",
+      "K": 8,
+      "L": 2,
+      "tickets": 29,
+      "slots": [
+       {
+        "g": 1,
+        "j": 1,
+        "l": 150
+       },
+       {
+        "g": 1,
+        "j": 2,
+        "l": 151
+       },
+       {
+        "g": 2,
+        "j": 1,
+        "l": 152
+       },
+       {
+        "g": 2,
+        "j": 2,
+        "l": 153
+       }
+      ],
+      "R_A": [
+       1,
+       2
+      ],
+      "R_ecdsa": [],
+      "pairs": [],
+      "layout": {
+       "body_0": 9,
+       "bodies": [
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40
+       ],
+       "capsules": [
+        385,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "n_capsules": 1,
+      "region_outside": false,
+      "length_mismatch": false,
+      "has_ic": true,
+      "has_r_tkc": true,
+      "tkc": 5,
+      "auth_tkc": 5,
+      "recompute_mismatch": false
+     }
+    }
+   }
+  ],
+  "expect": [
+   {
+    "state": 0,
+    "obs": 0
+   },
+   {
+    "error": 0
+   },
+   {
+    "state": 0,
+    "obs": 0
+   }
+  ]
+ },
+ {
+  "name": "step answers",
+  "args": [
+   "--step"
+  ],
+  "input": [
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 50
+     },
+     "height": 800,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [
+      [
+       3,
+       500
+      ]
+     ],
+     "accepted": [
+      [
+       100,
+       7
+      ]
+     ]
+    },
+    "op": {
+     "op": "submit",
+     "envelope": {
+      "size": 16384,
+      "pub": {
+       "version": 1,
+       "epoch": 3,
+       "keylist_hash": 33,
+       "exp": 900,
+       "size_class": 0,
+       "auth_ref": 7,
+       "reserved": 0
+      },
+      "hd": 101,
+      "dd": 500,
+      "proof_ctx": [
+       101,
+       7
+      ],
+      "proof_valid": true,
+      "type": "SPEND"
+     }
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 50
+     },
+     "height": 800,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [
+      [
+       3,
+       500
+      ],
+      [
+       3,
+       500
+      ]
+     ],
+     "accepted": [
+      [
+       100,
+       7
+      ]
+     ]
+    },
+    "op": {
+     "op": "tick",
+     "height": 801
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 50
+     },
+     "height": 800,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [
+      [
+       3,
+       500
+      ]
+     ],
+     "accepted": [
+      [
+       100,
+       7
+      ]
+     ]
+    },
+    "op": {
+     "op": "header",
+     "header": {
+      "suite": "BIP340",
+      "K": 8,
+      "L": 2,
+      "tickets": 29,
+      "slots": [
+       {
+        "g": 1,
+        "j": 1,
+        "l": 150
+       },
+       {
+        "g": 1,
+        "j": 2,
+        "l": 151
+       },
+       {
+        "g": 2,
+        "j": 1,
+        "l": 152
+       },
+       {
+        "g": 2,
+        "j": 2,
+        "l": 153
+       }
+      ],
+      "R_A": [
+       1,
+       2
+      ],
+      "R_ecdsa": [],
+      "pairs": [],
+      "layout": {
+       "body_0": 9,
+       "bodies": [
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40
+       ],
+       "capsules": [
+        385,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "n_capsules": 1,
+      "region_outside": false,
+      "length_mismatch": false,
+      "has_ic": true,
+      "has_r_tkc": true,
+      "tkc": 5,
+      "auth_tkc": 5,
+      "recompute_mismatch": false
+     }
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 50
+     },
+     "height": 800,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [
+      [
+       3,
+       500
+      ]
+     ],
+     "accepted": [
+      [
+       100,
+       7
+      ]
+     ]
+    },
+    "op": {
+     "op": "combine",
+     "t": 7,
+     "dealing_ok": true,
+     "partials": [
+      {
+       "sender": 1,
+       "proof_ok": true
+      },
+      {
+       "sender": 2,
+       "proof_ok": true
+      },
+      {
+       "sender": 3,
+       "proof_ok": true
+      },
+      {
+       "sender": 4,
+       "proof_ok": true
+      },
+      {
+       "sender": 5,
+       "proof_ok": false
+      },
+      {
+       "sender": 6,
+       "proof_ok": true
+      },
+      {
+       "sender": 7,
+       "proof_ok": true
+      },
+      {
+       "sender": 8,
+       "proof_ok": true
+      },
+      {
+       "sender": 9,
+       "proof_ok": true
+      }
+     ]
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 50
+     },
+     "height": 800,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [],
+     "accepted": []
+    },
+    "op": {
+     "op": "submit",
+     "envelope": {
+      "size": 16384,
+      "pub": {
+       "version": 1,
+       "epoch": 3,
+       "keylist_hash": 33,
+       "exp": 900,
+       "size_class": 0,
+       "auth_ref": 7,
+       "reserved": 0
+      },
+      "hd": 100,
+      "dd": 500,
+      "proof_ctx": [
+       100,
+       7
+      ],
+      "proof_valid": true,
+      "type": "SPEND"
+     }
+    }
+   }
+  ],
+  "expect": [
+   {
+    "refused": [
+     "dd_reused"
+    ]
+   },
+   {
+    "refused": [
+     "outside-state-domain"
+    ]
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 50
+     },
+     "height": 800,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [
+      [
+       3,
+       500
+      ]
+     ],
+     "accepted": [
+      [
+       100,
+       7
+      ]
+     ]
+    },
+    "obs": {
+     "faults": [
+      "EN-010"
+     ]
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 50
+     },
+     "height": 800,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [
+      [
+       3,
+       500
+      ]
+     ],
+     "accepted": [
+      [
+       100,
+       7
+      ]
+     ]
+    },
+    "obs": {
+     "combined": "opened"
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 50
+     },
+     "height": 800,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [
+      [
+       3,
+       500
+      ]
+     ],
+     "accepted": [
+      [
+       100,
+       7
+      ]
+     ]
+    },
+    "obs": {
+     "accepted": [
+      100,
+      7
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "name": "EN-023 at acceptance and for the ordering block",
+  "args": [
+   "--step"
+  ],
+  "match": "exact",
+  "input": [
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 600
+     },
+     "height": 99,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [],
+     "accepted": []
+    },
+    "op": {
+     "op": "submit",
+     "envelope": {
+      "size": 16384,
+      "pub": {
+       "version": 1,
+       "epoch": 3,
+       "keylist_hash": 33,
+       "exp": 650,
+       "size_class": 0,
+       "auth_ref": 7,
+       "reserved": 0
+      },
+      "hd": 100,
+      "dd": 500,
+      "proof_ctx": [
+       100,
+       7
+      ],
+      "proof_valid": true,
+      "type": "SPEND"
+     }
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 600
+     },
+     "height": 99,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [],
+     "accepted": []
+    },
+    "op": {
+     "op": "order_check",
+     "exp": 650,
+     "height": 100
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 600
+     },
+     "height": 99,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [],
+     "accepted": []
+    },
+    "op": {
+     "op": "order_check",
+     "exp": 701,
+     "height": 100
+    }
+   }
+  ],
+  "expect": [
+   {
+    "refused": [
+     "exp_c_not_below_exp"
+    ]
+   },
+   {
+    "refused": [
+     "exp_c_not_below_exp"
+    ]
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "delta_c": 600
+     },
+     "height": 99,
+     "epochs": [
+      [
+       3,
+       33
+      ]
+     ],
+     "seen": [],
+     "accepted": []
+    },
+    "obs": {
+     "ok": true
+    }
+   }
+  ]
+ }
+]

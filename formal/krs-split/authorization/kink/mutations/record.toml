@@ -1,0 +1,100 @@
+# Plausible misreadings of AU-001 (records and their birth) and of the record domain (ledger 5).
+
+[[mutation]]
+id = "au001-dup-rid"
+expect = "kill"
+misunderstanding = "AU-001, ledger 5: a record id may land twice"
+  [[mutation.edit]]
+  rule = "split_authorization--record_outside_1"
+  find = "anyRid ( Rs:List , Rid:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "au001-nf-not-fresh"
+expect = "kill"
+misunderstanding = "AU-001: a record may be born under a settlement nullifier N(nsk, auth, outcome)"
+  [[mutation.edit]]
+  rule = "split_authorization--record_outside_1"
+  find = "notBool isFresh ( Nf:Nf )"
+  replace = "false"
+
+[[mutation]]
+id = "au001-nf-used"
+expect = "kill"
+misunderstanding = "AU-001, AU-008: a birth nullifier already used by an accepted authorize is still unused for a new record"
+  [[mutation.edit]]
+  rule = "split_authorization--record_outside_1"
+  find = "Nf:Nf in usedNfs ( Used:List )"
+  replace = "false"
+
+[[mutation]]
+id = "au001-nf-on-record"
+expect = "kill"
+misunderstanding = "AU-001: two records may hold the same current nullifier"
+  [[mutation.edit]]
+  rule = "split_authorization--record_outside_1"
+  find = "anyRecNf ( Rs:List , Nf:Nf )"
+  replace = "false"
+
+[[mutation]]
+id = "au001-slr-g-any-profile"
+expect = "kill"
+misunderstanding = "AU-001, AU-006: a record under a P0 or P1 charter may have slr_G"
+  [[mutation.edit]]
+  rule = "split_authorization--record_outside_1"
+  find = "(Profile:Profile =/=K profP2)"
+  replace = "false"
+
+[[mutation]]
+id = "au001-slr-g-required"
+expect = "kill"
+misunderstanding = "AU-001, AU-006: every record outside P2 is refused, with or without slr_G"
+  [[mutation.edit]]
+  rule = "split_authorization--record_outside_1"
+  find = "(size(SlrG:List) >Int 0) andThenBool (Profile:Profile =/=K profP2)"
+  replace = "(Profile:Profile =/=K profP2)"
+
+[[mutation]]
+id = "au001-no-charter-outside"
+expect = "kill"
+misunderstanding = "AU-001: a record under an unregistered charter is outside-capability, not no-rule"
+  [[mutation.edit]]
+  rule = "split_authorization--record_refusals_1"
+  find = "ListItem(noRuleCode)"
+  replace = "ListItem(outsideCapability)"
+
+[[mutation]]
+id = "au001-board-first-dropped"
+expect = "kill"
+misunderstanding = "AU-001: a record does not take board_first from its charter"
+  [[mutation.edit]]
+  rule = "split_authorization--new_rec_1"
+  find = "BoardFirst:Bool , rsUNSPENT"
+  replace = "false , rsUNSPENT"
+
+[[mutation]]
+id = "au001-born-pending"
+expect = "kill"
+misunderstanding = "AU-001: a record lands PENDING"
+  [[mutation.edit]]
+  rule = "split_authorization--new_rec_1"
+  find = "rsUNSPENT"
+  replace = "rsPENDING"
+
+[[mutation]]
+id = "au001-prepend"
+expect = "kill"
+misunderstanding = "AU-001: a new record goes before the earlier ones"
+  [[mutation.edit]]
+  rule = "record"
+  find = "Records:List => Records:List ListItem(newRec ( findCharter ( Charters:List , Cid:Int ) , Rid:Int , CmAddr:Int , Nf:Nf , HoldTag:Int , SlrOwn:List , SlrG:List ))"
+  replace = "Records:List => ListItem(newRec ( findCharter ( Charters:List , Cid:Int ) , Rid:Int , CmAddr:Int , Nf:Nf , HoldTag:Int , SlrOwn:List , SlrG:List )) Records:List"
+
+[[mutation]]
+id = "au001-refuse-accepts"
+expect = "kill"
+misunderstanding = "AU-001: a refused record is reported as accepted"
+  [[mutation.edit]]
+  rule = "record-refuse"
+  find = "ListItem(refused ( recordRefusals ( findCharter ( Charters:List , Cid:Int ) , Records:List , Used:List , Rid:Int , Nf:Nf , SlrG:List ) ))"
+  replace = "ListItem(accepted)"

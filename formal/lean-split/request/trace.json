@@ -1,0 +1,94 @@
+{
+  "prefix": "RQ",
+  "namespace": "SplitRequest",
+  "spec": "openspec/changes/add-split-line-dealing/specs/split-request/spec.md",
+  "count": 75,
+  "proved": {
+    "RQ-005": [
+      "rq005_terminal_code"
+    ],
+    "RQ-008": [
+      "C8_sealed_until_order"
+    ],
+    "RQ-029": [
+      "run_reqInv"
+    ],
+    "RQ-032": [
+      "C7_no_release_after_revocation"
+    ],
+    "RQ-033": [
+      "C7_hold_p2"
+    ],
+    "RQ-035": [
+      "rq035_tee_acks"
+    ],
+    "RQ-049": [
+      "rq049_final_outcome"
+    ],
+    "RQ-056": [
+      "reqStep_forward",
+      "expire_forward"
+    ],
+    "RQ-057": [
+      "rq057_release_needs_admitted",
+      "C20_no_release_before_admission"
+    ],
+    "RQ-058": [
+      "C9_release_only_anchor"
+    ],
+    "RQ-059": [
+      "C7_no_release_after_revocation"
+    ],
+    "RQ-069": [
+      "rq069_send_after_record"
+    ],
+    "RQ-071": [
+      "rq071_mixed_reads_none"
+    ],
+    "RQ-073": [
+      "rq073_no_stalled_after_release"
+    ]
+  },
+  "exceptions": {
+    "RQ-063": "liveness under partial synchrony (C13) is not a state property; `witness_C13_final` shows the FINAL branch fires on an honest run"
+  },
+  "ledger": {
+    "RQ-002": "3",
+    "RQ-003": "2",
+    "RQ-005": "1, 18",
+    "RQ-006": "23",
+    "RQ-007": "1",
+    "RQ-011": "20",
+    "RQ-012": "20",
+    "RQ-017": "13",
+    "RQ-018": "8",
+    "RQ-019": "1",
+    "RQ-020": "1, 8",
+    "RQ-021": "8, 9",
+    "RQ-026": "13",
+    "RQ-027": "6, 7",
+    "RQ-028": "7, 16",
+    "RQ-029": "17",
+    "RQ-030": "21",
+    "RQ-037": "15",
+    "RQ-042": "5, 10",
+    "RQ-043": "1, 10",
+    "RQ-044": "11",
+    "RQ-045": "24",
+    "RQ-046": "4, 19, 27",
+    "RQ-048": "28",
+    "RQ-052": "11, 28",
+    "RQ-054": "4, 12",
+    "RQ-058": "15",
+    "RQ-060": "25",
+    "RQ-062": "14",
+    "RQ-063": "22",
+    "RQ-067": "3",
+    "RQ-068": "12, 28",
+    "RQ-069": "26",
+    "RQ-072": "24",
+    "RQ-074": "24",
+    "RQ-075": "8",
+    "RQ-076": "28"
+  }
+}

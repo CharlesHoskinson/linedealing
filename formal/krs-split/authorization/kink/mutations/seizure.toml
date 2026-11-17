@@ -1,0 +1,72 @@
+# Plausible misreadings of AU-028 (seizure requests), AU-027 (recover) and the end of a run.
+
+[[mutation]]
+id = "au028-dreg-unchecked"
+expect = "kill"
+misunderstanding = "AU-028: a seizure output that does not pay D_reg is admitted"
+  [[mutation.edit]]
+  rule = "split_authorization--seizure_obs_2"
+  find = "void ( AUTH_REFUSED )"
+  replace = "ok"
+
+[[mutation]]
+id = "au028-always-ok"
+expect = "kill"
+misunderstanding = "AU-028: every seizure request with a seizure-source authorization is admitted"
+  [[mutation.edit]]
+  rule = "seizure"
+  find = "ListItem(seizureObs ( AllToDreg:Bool ))"
+  replace = "ListItem(ok)"
+
+[[mutation]]
+id = "au028-any-source"
+expect = "kill"
+misunderstanding = "AU-028: a request is a seizure request whatever its authorization's source"
+  [[mutation.edit]]
+  rule = "split_authorization--any_seizure_auth_2"
+  find = "(Source:List ==K ListItem(srcSEIZURE))"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_authorization--any_seizure_auth_3"
+  find = "(Source:List ==K ListItem(srcSEIZURE))"
+  replace = "true"
+
+[[mutation]]
+id = "au028-unchecked"
+expect = "kill"
+misunderstanding = "AU-028, ledger 2: a seizure request needs no seizure-source authorization"
+  [[mutation.edit]]
+  rule = "split_authorization--seizure_refusals_1"
+  find = "notBool anySeizureAuth ( Bs:List , A:Int )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--seizure_refusals_2"
+  find = "notBool anySeizureAuth ( Bs:List , A:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "au028-refuse-void"
+expect = "kill"
+misunderstanding = "AU-028, ledger 2: a request without a seizure-source authorization is VOID AUTH_REFUSED"
+  [[mutation.edit]]
+  rule = "seizure-refuse"
+  find = "ListItem(refused ( seizureRefusals ( allAuths ( Records:List ) , A:Int ) ))"
+  replace = "ListItem(void ( AUTH_REFUSED ))"
+
+[[mutation]]
+id = "au027-recover-not-recorded"
+expect = "kill"
+misunderstanding = "AU-027: recover does not record the recovery transition"
+  [[mutation.edit]]
+  rule = "recover"
+  find = "<recovered> _ => true </recovered>"
+  replace = "<recovered> _ => false </recovered>"
+
+[[mutation]]
+id = "run-ends-early"
+expect = "kill"
+misunderstanding = "runOps: a run with no operation left has no end; the node waits for more operations instead of answering"
+  [[mutation.edit]]
+  rule = "done"
+  find = "<ops> .List </ops>"
+  replace = "<ops> .List </ops> requires false"

@@ -1,0 +1,9 @@
+# ledger 3: the TEE ledger read is no rule for a non-TEE committee
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "NonTee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { ReadLedger = { ok = true, tickets = [{ P = [0, 0] }, { P = [1, 0] }, { P = [2, 0] }, { P = [3, 0] }], cov = [] } },
+  { Boot = {} },
+  { NonTeeRestart = {} },
+]

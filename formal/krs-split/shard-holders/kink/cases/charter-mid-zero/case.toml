@@ -1,0 +1,6 @@
+# SH-002: a group child with member id 0
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { FixCharter = { id = 8, gamma = { Group = { mid = 0, kk = 1, children = [{ Leaf = { mid = 0, actor = 1 } }, { Leaf = { mid = 1, actor = 2 } }] } } } },
+]

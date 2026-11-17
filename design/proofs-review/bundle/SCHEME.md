@@ -450,9 +450,9 @@ The design is wrong if: a forgery or key recovery against open ECDSA uses the ba
 
 ## 12. References
 
-- **BRIEF.md**: read in full (`design/BRIEF.md`).
-- **REPORT.md**: read in full (`research/REPORT.md`).
-- **[GS22]** J. Groth, V. Shoup, *On the security of ECDSA with additive key derivation and presignatures*: from memory, not checked, except these passages read from `research/sources/groth-shoup-2021-1330.txt`: the attack on ECDSA with presignatures in section 1.1, Definitions 1 and 2, the opening of section 7, section 7.3 (Definition 7, Theorem 3, its proof and notes 1 to 4). Not read: the EC generic group model of section 2, Theorem 1 and its proof, section 8 onward. Every use above is limited to the passages read.
+- **BRIEF.md**: read in full (`/home/hoskinson/Projects/mpcexperiments/design/BRIEF.md`).
+- **REPORT.md**: read in full (`/home/hoskinson/Projects/mpcexperiments/research/REPORT.md`).
+- **[GS22]** J. Groth, V. Shoup, *On the security of ECDSA with additive key derivation and presignatures*: from memory, not checked, except these passages read from `/home/hoskinson/Projects/mpcexperiments/research/sources/groth-shoup-2021-1330.txt`: the attack on ECDSA with presignatures in section 1.1, Definitions 1 and 2, the opening of section 7, section 7.3 (Definition 7, Theorem 3, its proof and notes 1 to 4). Not read: the EC generic group model of section 2, Theorem 1 and its proof, section 8 onward. Every use above is limited to the passages read.
 - **RFC 9591 (FROST)**, local at `research/sources/lifecycle/rfc9591.txt`: from memory, not checked.
 - From memory, not checked: Feldman VSS (1987); Komlo and Goldberg, FROST; Bellare et al. on non-interactive threshold Schnorr; Nick, Ruffing, Seurin, MuSig2; Benhamouda et al. on ROS; Abdalla, Bellare, Rogaway on gap and oracle Diffie-Hellman; BIP125, BIP143, BIP340, BIP341; RFC 8032; EIP-2, EIP-1559, EIP-2718; Solana durable nonces.
 - Statements about cgVSS, Groth NI-DKG, Ika and the Internet Computer are taken from REPORT.md.

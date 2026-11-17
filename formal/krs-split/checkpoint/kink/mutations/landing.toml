@@ -1,0 +1,368 @@
+# Plausible misreadings of the committee contract's landing rules (CP-001 to CP-011,
+# ledger 2, ledger 4), as K patches of kink/definition.k.
+
+[[mutation]]
+id = "cp007-lowered-unchecked"
+expect = "kill"
+misunderstanding = "CP-007: a later checkpoint may lower h for a pool"
+  [[mutation.edit]]
+  rule = "split_checkpoint--land_refusals_2"
+  find = "opt ( lowered ( cpPools ( C1:Cp ) , cpPools ( C2:Cp ) ) , hLowered ) "
+  replace = ""
+
+[[mutation]]
+id = "cp007-equal-lowered"
+expect = "kill"
+misunderstanding = "CP-007: h must rise, so an equal h is also h_lowered"
+  [[mutation.edit]]
+  rule = "split_checkpoint--below_prev_2_1"
+  find = "H:Int <Int H1:Int"
+  replace = "H:Int <=Int H1:Int"
+
+[[mutation]]
+id = "cp007-first-pool-only"
+expect = "kill"
+misunderstanding = "CP-007: only the first pool of the candidate is compared with the previous checkpoint"
+  [[mutation.edit]]
+  rule = "split_checkpoint--lowered_2_2"
+  find = "=> lowered ( Prev:List , Rest:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp001-seq-unchecked"
+expect = "kill"
+misunderstanding = "CP-001, ledger 2: a later checkpoint's seq need not follow the latest by one"
+  [[mutation.edit]]
+  rule = "split_checkpoint--land_refusals_2"
+  find = "opt ( cpSeq ( C2:Cp ) =/=Int (cpSeq ( C1:Cp ) +Int 1) , noRule ) "
+  replace = ""
+
+[[mutation]]
+id = "cp001-first-seq-any"
+expect = "kill"
+misunderstanding = "CP-001, ledger 2: the first checkpoint may carry any seq"
+  [[mutation.edit]]
+  rule = "split_checkpoint--land_refusals_1"
+  find = "opt ( cpSeq ( C2:Cp ) =/=Int 0 , noRule ) "
+  replace = ""
+
+[[mutation]]
+id = "cp008-gap-at-h-plus-1"
+expect = "kill"
+misunderstanding = "CP-008: pending_min = h + 1 is already a gap (pending_min > h is refused)"
+  [[mutation.edit]]
+  rule = "split_checkpoint--gap_2_1"
+  find = "(H:Int +Int 1) <Int PendingMin:Int"
+  replace = "H:Int <Int PendingMin:Int"
+  [[mutation.edit]]
+  rule = "split_checkpoint--gap_2_2"
+  find = "(H:Int +Int 1) <Int PendingMin:Int"
+  replace = "H:Int <Int PendingMin:Int"
+
+[[mutation]]
+id = "cp008-first-unchecked"
+expect = "kill"
+misunderstanding = "CP-008: the first checkpoint has no predecessor, so its pools are not checked for a gap"
+  [[mutation.edit]]
+  rule = "split_checkpoint--land_refusals_1"
+  find = "opt ( gap ( cpPools ( C2:Cp ) ) , pendingGap )"
+  replace = ".List"
+
+[[mutation]]
+id = "cp008-later-unchecked"
+expect = "kill"
+misunderstanding = "CP-008: a later checkpoint is not checked for a gap"
+  [[mutation.edit]]
+  rule = "split_checkpoint--land_refusals_2"
+  find = "opt ( gap ( cpPools ( C2:Cp ) ) , pendingGap ) "
+  replace = ""
+
+[[mutation]]
+id = "cp008-first-pool-only"
+expect = "kill"
+misunderstanding = "CP-008: only the first pool of a checkpoint is checked for a gap"
+  [[mutation.edit]]
+  rule = "split_checkpoint--gap_2_2"
+  find = "=> gap ( Rest:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp009-unchecked"
+expect = "kill"
+misunderstanding = "CP-009, CP-041: the contract does not check the restart jump"
+  [[mutation.edit]]
+  rule = "split_checkpoint--land_refusals_2"
+  find = "opt ( jumpCode ( P:Params , Chain:List , C1:Cp , C2:Cp ) , restartJump )"
+  replace = ".List"
+
+[[mutation]]
+id = "cp009-anchor-ignored"
+expect = "kill"
+misunderstanding = "CP-009: the restart jump is checked with slot_anchor on too"
+  [[mutation.edit]]
+  rule = "split_checkpoint--jump_bad"
+  find = "(notBool anchorOf ( P:Params ))"
+  replace = "true"
+
+[[mutation]]
+id = "cp009-kept-w"
+expect = "kill"
+misunderstanding = "CP-009: the jump applies when fewer than w counters are kept, not fewer than w + 1"
+  [[mutation.edit]]
+  rule = "split_checkpoint--jump_bad"
+  find = "(wOf ( P:Params ) +Int 1)"
+  replace = "wOf ( P:Params )"
+
+[[mutation]]
+id = "cp009-kept-ignored"
+expect = "kill"
+misunderstanding = "CP-009: every checkpoint must move the floor by B, whatever counters it keeps"
+  [[mutation.edit]]
+  rule = "split_checkpoint--jump_bad"
+  find = "(countEq ( 0 , nOf ( P:Params ) , cpCounters ( C1:Cp ) , cpCounters ( C2:Cp ) ) <Int (wOf ( P:Params ) +Int 1))"
+  replace = "true"
+
+[[mutation]]
+id = "cp009-h-at-window-end"
+expect = "kill"
+misunderstanding = "CP-009: cp2.h = cp1.h + B is still inside the window"
+  [[mutation.edit]]
+  rule = "split_checkpoint--jump_pool_2_1"
+  find = "(H:Int <Int (H1:Int +Int Bb:Int))"
+  replace = "(H:Int <=Int (H1:Int +Int Bb:Int))"
+
+[[mutation]]
+id = "cp009-pending-min-unchecked"
+expect = "kill"
+misunderstanding = "CP-009: only h is compared with cp1.h + B, not pending_min"
+  [[mutation.edit]]
+  rule = "split_checkpoint--jump_pool_2_1"
+  find = " orElseBool (Pm:Int <=Int (H1:Int +Int Bb:Int))"
+  replace = ""
+
+[[mutation]]
+id = "cp009-pending-min-strict"
+expect = "kill"
+misunderstanding = "CP-009: pending_min = cp1.h + B is past the window"
+  [[mutation.edit]]
+  rule = "split_checkpoint--jump_pool_2_1"
+  find = "(Pm:Int <=Int (H1:Int +Int Bb:Int))"
+  replace = "(Pm:Int <Int (H1:Int +Int Bb:Int))"
+
+[[mutation]]
+id = "cp009-first-prev-pool"
+expect = "kill"
+misunderstanding = "CP-009: a pool is compared only with the first pool of cp1"
+  [[mutation.edit]]
+  rule = "split_checkpoint--jump_pool_2_2"
+  find = "=> jumpPool ( Rest:List , Pid:Int , H:Int , Pm:Int , Bb:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp010-unchecked"
+expect = "kill"
+misunderstanding = "CP-010: a later checkpoint may record a boot counter without its RestoreDone"
+  [[mutation.edit]]
+  rule = "split_checkpoint--land_refusals_2"
+  find = "opt ( noStatement ( Chain:List , C2:Cp ) , noRestoreStatement ) "
+  replace = ""
+
+[[mutation]]
+id = "cp010-first-unchecked"
+expect = "kill"
+misunderstanding = "CP-010: the first checkpoint's boot counters need no RestoreDone"
+  [[mutation.edit]]
+  rule = "split_checkpoint--land_refusals_1"
+  find = "opt ( noStatement ( Chain:List , C2:Cp ) , noRestoreStatement ) "
+  replace = ""
+
+[[mutation]]
+id = "cp010-same-cp-only"
+expect = "kill"
+misunderstanding = "CP-010: the RestoreDone must be in the same checkpoint, an earlier landed one does not count"
+  [[mutation.edit]]
+  rule = "split_checkpoint--no_statement"
+  find = "cpRestores ( C2:Cp ) allRestores ( Chain:List )"
+  replace = "cpRestores ( C2:Cp )"
+
+[[mutation]]
+id = "cp010-earlier-only"
+expect = "kill"
+misunderstanding = "CP-010: the RestoreDone must be in an earlier landed checkpoint"
+  [[mutation.edit]]
+  rule = "split_checkpoint--no_statement"
+  find = "cpRestores ( C2:Cp ) allRestores ( Chain:List )"
+  replace = "allRestores ( Chain:List )"
+
+[[mutation]]
+id = "cp010-latest-landed-only"
+expect = "kill"
+misunderstanding = "CP-010: only the latest landed checkpoint's statements count"
+  [[mutation.edit]]
+  rule = "split_checkpoint--all_restores_2"
+  find = "=> cpRestores ( C:Cp ) allRestores ( Rest:List )"
+  replace = "=> cpRestores ( C:Cp )"
+
+[[mutation]]
+id = "cp010-seat-only"
+expect = "kill"
+misunderstanding = "CP-010: any RestoreDone of the seat counts, whatever boot counter it names"
+  [[mutation.edit]]
+  rule = "split_checkpoint--has_restore_2_1"
+  find = "(Seat:Int ==Int S:Int) andThenBool (BootCtr:Int ==Int Ctr:Int)"
+  replace = "Seat:Int ==Int S:Int"
+  [[mutation.edit]]
+  rule = "split_checkpoint--has_restore_2_2"
+  find = "(Seat:Int ==Int S:Int) andThenBool (BootCtr:Int ==Int Ctr:Int)"
+  replace = "Seat:Int ==Int S:Int"
+
+[[mutation]]
+id = "cp010-counter-only"
+expect = "kill"
+misunderstanding = "CP-010: a RestoreDone for the counter counts, whichever seat appended it"
+  [[mutation.edit]]
+  rule = "split_checkpoint--has_restore_2_1"
+  find = "(Seat:Int ==Int S:Int) andThenBool (BootCtr:Int ==Int Ctr:Int)"
+  replace = "BootCtr:Int ==Int Ctr:Int"
+  [[mutation.edit]]
+  rule = "split_checkpoint--has_restore_2_2"
+  find = "(Seat:Int ==Int S:Int) andThenBool (BootCtr:Int ==Int Ctr:Int)"
+  replace = "BootCtr:Int ==Int Ctr:Int"
+
+[[mutation]]
+id = "cp010-first-counter-only"
+expect = "kill"
+misunderstanding = "CP-010: only the first recorded boot counter needs its RestoreDone"
+  [[mutation.edit]]
+  rule = "split_checkpoint--missing_restore_2_1"
+  find = "=> missingRestore ( Rest:List , Rs:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "land-code-order"
+expect = "kill"
+misunderstanding = "CP-007, ledger 2: no-rule for the seq goes before h_lowered"
+  [[mutation.edit]]
+  rule = "split_checkpoint--land_refusals_2"
+  find = "opt ( lowered ( cpPools ( C1:Cp ) , cpPools ( C2:Cp ) ) , hLowered ) opt ( cpSeq ( C2:Cp ) =/=Int (cpSeq ( C1:Cp ) +Int 1) , noRule )"
+  replace = "opt ( cpSeq ( C2:Cp ) =/=Int (cpSeq ( C1:Cp ) +Int 1) , noRule ) opt ( lowered ( cpPools ( C1:Cp ) , cpPools ( C2:Cp ) ) , hLowered )"
+
+[[mutation]]
+id = "land-refuse-no-rule"
+expect = "kill"
+misunderstanding = "CP-007 to CP-010: a refused checkpoint carries no-rule, not the failed checks' codes"
+  [[mutation.edit]]
+  rule = "land-refuse"
+  find = "ListItem(refused ( landRefusals ( Params:Params , Chain:List , Chain:List , C:Cp ) ))"
+  replace = "ListItem(refused ( ListItem(noRule) ))"
+
+[[mutation]]
+id = "cp011-never-set"
+expect = "kill"
+misunderstanding = "CP-011: restart_seq keeps its value; a whole_restart RestoreDone does not set it"
+  [[mutation.edit]]
+  rule = "split_checkpoint--next_from_1"
+  find = "=> cpSeq ( C2:Cp )"
+  replace = "=> Cur:Int"
+
+[[mutation]]
+id = "cp011-any-restore"
+expect = "kill"
+misunderstanding = "CP-011: any RestoreDone sets restart_seq, also one with whole_restart = false"
+  [[mutation.edit]]
+  rule = "split_checkpoint--any_whole_2_1"
+  find = "Whole:Bool andThenBool (Cur:Int <=Int CpSeq:Int)"
+  replace = "(Cur:Int <=Int CpSeq:Int)"
+  [[mutation.edit]]
+  rule = "split_checkpoint--any_whole_2_2"
+  find = "Whole:Bool andThenBool (Cur:Int <=Int CpSeq:Int)"
+  replace = "(Cur:Int <=Int CpSeq:Int)"
+
+[[mutation]]
+id = "cp011-above-only"
+expect = "kill"
+misunderstanding = "CP-011: the RestoreDone must name a checkpoint above restart_seq, not at it"
+  [[mutation.edit]]
+  rule = "split_checkpoint--any_whole_2_1"
+  find = "(Cur:Int <=Int CpSeq:Int)"
+  replace = "(Cur:Int <Int CpSeq:Int)"
+  [[mutation.edit]]
+  rule = "split_checkpoint--any_whole_2_2"
+  find = "(Cur:Int <=Int CpSeq:Int)"
+  replace = "(Cur:Int <Int CpSeq:Int)"
+
+[[mutation]]
+id = "cp011-any-named-cp"
+expect = "kill"
+misunderstanding = "CP-011: a whole_restart RestoreDone sets restart_seq whatever checkpoint it names"
+  [[mutation.edit]]
+  rule = "split_checkpoint--any_whole_2_1"
+  find = "Whole:Bool andThenBool (Cur:Int <=Int CpSeq:Int)"
+  replace = "Whole:Bool"
+  [[mutation.edit]]
+  rule = "split_checkpoint--any_whole_2_2"
+  find = "Whole:Bool andThenBool (Cur:Int <=Int CpSeq:Int)"
+  replace = "Whole:Bool"
+
+[[mutation]]
+id = "cp011-first-restore-only"
+expect = "kill"
+misunderstanding = "CP-011: only the first RestoreDone of a checkpoint is read"
+  [[mutation.edit]]
+  rule = "split_checkpoint--any_whole_2_2"
+  find = "=> anyWhole ( Rest:List , Cur:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp011-candidate-value"
+expect = "kill"
+misunderstanding = "CP-011, ledger 4: the contract keeps the restart_seq that the candidate carries"
+  [[mutation.edit]]
+  rule = "land"
+  find = "ListItem(withRestartSeq ( C:Cp , nextRestartSeq ( Chain:List , C:Cp ) )) Chain:List"
+  replace = "ListItem(C:Cp) Chain:List"
+
+[[mutation]]
+id = "cp003-no-write"
+expect = "kill"
+misunderstanding = "CP-003, CP-005: a landing writes no record of its own"
+  [[mutation.edit]]
+  rule = "land"
+  find = "ListItem(wCheckpoint) Writes:List"
+  replace = "Writes:List"
+
+[[mutation]]
+id = "cp005-write-per-statement"
+expect = "kill"
+misunderstanding = "CP-005: a landing also writes one record for the boot statements it carries"
+  [[mutation.edit]]
+  rule = "land"
+  find = "ListItem(wCheckpoint) Writes:List"
+  replace = "ListItem(wCheckpoint) ListItem(wEvent) Writes:List"
+
+[[mutation]]
+id = "cp004-statements-stay"
+expect = "kill"
+misunderstanding = "CP-004: a carried RestoreDone stays pending after the checkpoint lands"
+  [[mutation.edit]]
+  rule = "land"
+  find = "notCarried ( Waiting:List , cpRestores ( C:Cp ) )"
+  replace = "Waiting:List"
+
+[[mutation]]
+id = "cp004-first-statement-only"
+expect = "kill"
+misunderstanding = "CP-004: a landing clears a carried statement only while every newer pending statement is carried too"
+  [[mutation.edit]]
+  rule = "split_checkpoint--not_carried_2_2"
+  find = "=> ListItem(R:Restore) notCarried ( Rest:List , Carried:List )"
+  replace = "=> ListItem(R:Restore) Rest:List"
+
+[[mutation]]
+id = "cp034-landing-height-kept"
+expect = "kill"
+misunderstanding = "CP-034: Δ_rec counts from Midnight height 0, not from the latest landing"
+  [[mutation.edit]]
+  rule = "land"
+  find = "<landmh> _ => Mh:Int </landmh>"
+  replace = "<landmh> _ => 0 </landmh>"

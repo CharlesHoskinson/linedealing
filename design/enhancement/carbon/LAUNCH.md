@@ -1,1 +1,1 @@
-Read design/enhancement/BRIEF.md and do the task it gives. Write your deliverable to design/enhancement/carbon/PROPOSAL.md. Use web search and URL fetching for prior art. Do not edit any other file. Do not run git.
+Read /home/hoskinson/Projects/mpcexperiments/design/enhancement/BRIEF.md and do the task it gives. Write your deliverable to /home/hoskinson/Projects/mpcexperiments/design/enhancement/carbon/PROPOSAL.md. Use web search and URL fetching for prior art. Do not edit any other file. Do not run git.

@@ -1,0 +1,8 @@
+# Ledger 2: a second post of a held eid is refused with no-rule.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Post = { eid = 1, epoch = 0, exp = 5, rtype = "Spend", profile = "PfP1" } },
+]

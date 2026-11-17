@@ -1,0 +1,338 @@
+# The public checks of `submit` (EN-003 to EN-008, EN-023) and the ordering-block
+# check `order_check` (EN-023).
+
+[[mutation]]
+id = "en004-size-unchecked"
+expect = "kill"
+misunderstanding = "EN-004, EN-001: a frame of another size than 16,384 bytes is accepted"
+  [[mutation.edit]]
+  rule = "split_envelope--bad_shape_of_1"
+  find = "(Size:Int =/=Int 16384)"
+  replace = "false"
+
+[[mutation]]
+id = "en004-version-unchecked"
+expect = "kill"
+misunderstanding = "EN-004: an unknown version is accepted"
+  [[mutation.edit]]
+  rule = "split_envelope--bad_shape_of_1"
+  find = "(Version:Int =/=Int 1)"
+  replace = "false"
+
+[[mutation]]
+id = "en004-class-unchecked"
+expect = "kill"
+misunderstanding = "EN-004: an unknown size_class is accepted"
+  [[mutation.edit]]
+  rule = "split_envelope--bad_shape_of_1"
+  find = "(SizeClass:Int =/=Int 0)"
+  replace = "false"
+
+[[mutation]]
+id = "en005-epoch-unchecked"
+expect = "kill"
+misunderstanding = "EN-005: an envelope of an epoch that is not current, or with another key-list hash, is accepted"
+  [[mutation.edit]]
+  rule = "split_envelope--bad_epoch_of_1"
+  find = "notBool pr ( Epoch:Int , KeylistHash:Int ) in Epochs:List"
+  replace = "false"
+
+[[mutation]]
+id = "en006-expired-at-height"
+expect = "kill"
+misunderstanding = "EN-006: an envelope whose exp equals the board height is already expired"
+  [[mutation.edit]]
+  rule = "split_envelope--expired_of_1"
+  find = "Exp:Int <Int Height:Int"
+  replace = "Exp:Int <=Int Height:Int"
+
+[[mutation]]
+id = "en006-unchecked"
+expect = "kill"
+misunderstanding = "EN-006: the board height is not compared with exp"
+  [[mutation.edit]]
+  rule = "split_envelope--expired_of_1"
+  find = "Exp:Int <Int Height:Int"
+  replace = "false"
+
+[[mutation]]
+id = "en007-context-unchecked"
+expect = "kill"
+misunderstanding = "EN-007: a proof made for another eid (a rewritten auth_ref) verifies"
+  [[mutation.edit]]
+  rule = "split_envelope--bad_proof_of_1"
+  find = "(ProofCtx:NN =/=K pr ( Hd:Int , AuthRef:Int )) orElseBool (notBool ProofValid:Bool)"
+  replace = "notBool ProofValid:Bool"
+
+[[mutation]]
+id = "en007-validity-unchecked"
+expect = "kill"
+misunderstanding = "EN-007: a proof made for the right eid is enough, whether or not it verifies"
+  [[mutation.edit]]
+  rule = "split_envelope--bad_proof_of_1"
+  find = "(ProofCtx:NN =/=K pr ( Hd:Int , AuthRef:Int )) orElseBool (notBool ProofValid:Bool)"
+  replace = "ProofCtx:NN =/=K pr ( Hd:Int , AuthRef:Int )"
+
+[[mutation]]
+id = "en003-eid-order"
+expect = "kill"
+misunderstanding = "EN-003, EN-007: eid = H(auth_ref ‖ hd), so a proof is checked against the swapped pair"
+  [[mutation.edit]]
+  rule = "split_envelope--bad_proof_of_1"
+  find = "pr ( Hd:Int , AuthRef:Int )"
+  replace = "pr ( AuthRef:Int , Hd:Int )"
+
+[[mutation]]
+id = "en003-accepted-eid-order"
+expect = "kill"
+misunderstanding = "EN-003: the node records eid as (auth_ref, hd)"
+  [[mutation.edit]]
+  rule = "split_envelope--eid_of_1"
+  find = "pr ( Hd:Int , AuthRef:Int )"
+  replace = "pr ( AuthRef:Int , Hd:Int )"
+
+[[mutation]]
+id = "en008-unchecked"
+expect = "kill"
+misunderstanding = "EN-008: an outer-dealing digest of an earlier envelope of the same epoch is accepted again"
+  [[mutation.edit]]
+  rule = "split_envelope--dd_reused_of_1"
+  find = "pr ( Epoch:Int , Dd:Int ) in Seen:List"
+  replace = "false"
+
+[[mutation]]
+id = "en008-seen-swapped"
+expect = "kill"
+misunderstanding = "EN-008: the node records (dd, epoch) for an accepted envelope"
+  [[mutation.edit]]
+  rule = "split_envelope--seen_of_1"
+  find = "pr ( Epoch:Int , Dd:Int )"
+  replace = "pr ( Dd:Int , Epoch:Int )"
+
+[[mutation]]
+id = "en004-en008-code-order"
+expect = "kill"
+misunderstanding = "EN-004 to EN-008, ledger 1: the refusal codes are listed in check order (EN-004 first), not in code order"
+  [[mutation.edit]]
+  rule = "split_envelope--public_refusals"
+  find = "epochCode ( Epochs:List , E:Envelope ) proofCode ( E:Envelope ) shapeCode ( E:Envelope )"
+  replace = "shapeCode ( E:Envelope ) epochCode ( Epochs:List , E:Envelope ) proofCode ( E:Envelope )"
+
+[[mutation]]
+id = "en008-seen-oldest-first"
+expect = "kill"
+misunderstanding = "EN-008, EN-003: an accepted envelope goes to the end of seen and accepted, not the front"
+  [[mutation.edit]]
+  rule = "submit-accept"
+  find = "Seen:List => ListItem(seenOf ( E:Envelope )) Seen:List"
+  replace = "Seen:List => Seen:List ListItem(seenOf ( E:Envelope ))"
+  [[mutation.edit]]
+  rule = "submit-accept"
+  find = "Accepted:List => ListItem(eidOf ( E:Envelope )) Accepted:List"
+  replace = "Accepted:List => Accepted:List ListItem(eidOf ( E:Envelope ))"
+
+[[mutation]]
+id = "en008-refused-recorded"
+expect = "kill"
+misunderstanding = "EN-004 to EN-008: a refused envelope's (epoch, dd) is still recorded as seen"
+  [[mutation.edit]]
+  rule = "submit-refuse"
+  find = "<seen> Seen:List </seen>"
+  replace = "<seen> Seen:List => ListItem(seenOf ( E:Envelope )) Seen:List </seen>"
+
+[[mutation]]
+id = "en022-accept-unobserved"
+expect = "kill"
+misunderstanding = "EN-003, EN-022: an accepted envelope gives the plain ok answer, not its eid"
+  [[mutation.edit]]
+  rule = "submit-accept"
+  find = "ListItem(accepted ( eidOf ( E:Envelope ) ))"
+  replace = "ListItem(ok)"
+
+# The refusal-code helpers of the submit check.
+
+[[mutation]]
+id = "en005-code-name"
+expect = "kill"
+misunderstanding = "EN-005: an envelope of a stale epoch is refused with EN-007's bad_proof code"
+  [[mutation.edit]]
+  rule = "split_envelope--epoch_code_1"
+  find = "=> ListItem(bad_epoch)"
+  replace = "=> ListItem(bad_proof)"
+
+[[mutation]]
+id = "en005-code-always"
+expect = "kill"
+misunderstanding = "EN-005: every envelope is refused with bad_epoch, whether or not the check fails"
+  [[mutation.edit]]
+  rule = "split_envelope--epoch_code_2"
+  find = "=> .List"
+  replace = "=> ListItem(bad_epoch)"
+
+[[mutation]]
+id = "en007-code-name"
+expect = "kill"
+misunderstanding = "EN-007: an envelope whose proof fails is refused with EN-005's bad_epoch code"
+  [[mutation.edit]]
+  rule = "split_envelope--proof_code_1"
+  find = "=> ListItem(bad_proof)"
+  replace = "=> ListItem(bad_epoch)"
+
+[[mutation]]
+id = "en007-code-always"
+expect = "kill"
+misunderstanding = "EN-007: every envelope is refused with bad_proof, whether or not the check fails"
+  [[mutation.edit]]
+  rule = "split_envelope--proof_code_2"
+  find = "=> .List"
+  replace = "=> ListItem(bad_proof)"
+
+[[mutation]]
+id = "en004-code-name"
+expect = "kill"
+misunderstanding = "EN-004: an envelope of a bad shape is refused with EN-007's bad_proof code"
+  [[mutation.edit]]
+  rule = "split_envelope--shape_code_1"
+  find = "=> ListItem(bad_shape)"
+  replace = "=> ListItem(bad_proof)"
+
+[[mutation]]
+id = "en004-code-always"
+expect = "kill"
+misunderstanding = "EN-004: every envelope is refused with bad_shape, whether or not the check fails"
+  [[mutation.edit]]
+  rule = "split_envelope--shape_code_2"
+  find = "=> .List"
+  replace = "=> ListItem(bad_shape)"
+
+[[mutation]]
+id = "en008-code-name"
+expect = "kill"
+misunderstanding = "EN-008: an envelope with a reused outer-dealing digest is refused with EN-004's bad_shape code"
+  [[mutation.edit]]
+  rule = "split_envelope--dd_code_1"
+  find = "=> ListItem(dd_reused)"
+  replace = "=> ListItem(bad_shape)"
+
+[[mutation]]
+id = "en008-code-always"
+expect = "kill"
+misunderstanding = "EN-008: every envelope is refused with dd_reused, whether or not the check fails"
+  [[mutation.edit]]
+  rule = "split_envelope--dd_code_2"
+  find = "=> .List"
+  replace = "=> ListItem(dd_reused)"
+
+[[mutation]]
+id = "en006-code-name"
+expect = "kill"
+misunderstanding = "EN-006: an expired envelope is refused with EN-008's dd_reused code"
+  [[mutation.edit]]
+  rule = "split_envelope--expired_code_1"
+  find = "=> ListItem(expired)"
+  replace = "=> ListItem(dd_reused)"
+
+[[mutation]]
+id = "en006-code-always"
+expect = "kill"
+misunderstanding = "EN-006: every envelope is refused with expired, whether or not the check fails"
+  [[mutation.edit]]
+  rule = "split_envelope--expired_code_2"
+  find = "=> .List"
+  replace = "=> ListItem(expired)"
+
+# EN-023 (ledger 10): the window check at acceptance and for the ordering block.
+
+[[mutation]]
+id = "en023-window-at-height"
+expect = "kill"
+misunderstanding = "EN-023, ledger 10: at acceptance the ordering block is the current board height, not the next block"
+  [[mutation.edit]]
+  rule = "split_envelope--window_bad_of_1"
+  find = "Height:Int +Int 1"
+  replace = "Height:Int"
+
+[[mutation]]
+id = "en023-window-two-ahead"
+expect = "kill"
+misunderstanding = "EN-023, ledger 10: the earliest ordering block is two blocks ahead"
+  [[mutation.edit]]
+  rule = "split_envelope--window_bad_of_1"
+  find = "Height:Int +Int 1"
+  replace = "Height:Int +Int 2"
+
+[[mutation]]
+id = "en023-window-unchecked"
+expect = "kill"
+misunderstanding = "EN-023: a node accepts an envelope whose collection window reaches exp"
+  [[mutation.edit]]
+  rule = "split_envelope--window_bad_of_1"
+  find = "notBool windowInside ( Height:Int +Int 1 , DeltaC:Int , Exp:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "en023-window-non-strict"
+expect = "kill"
+misunderstanding = "EN-021, EN-023: exp_c may equal exp (b + delta_c <= exp is accepted)"
+  [[mutation.edit]]
+  rule = "split_envelope--window_inside"
+  find = "(B:Int +Int DeltaC:Int) <Int Exp:Int"
+  replace = "(B:Int +Int DeltaC:Int) <=Int Exp:Int"
+
+[[mutation]]
+id = "en023-window-no-delta"
+expect = "kill"
+misunderstanding = "EN-023: the check compares the ordering block with exp and ignores delta_c"
+  [[mutation.edit]]
+  rule = "split_envelope--window_inside"
+  find = "(B:Int +Int DeltaC:Int) <Int Exp:Int"
+  replace = "B:Int <Int Exp:Int"
+
+[[mutation]]
+id = "en023-code-name"
+expect = "kill"
+misunderstanding = "EN-023: an envelope whose window reaches exp is refused with EN-006's expired code"
+  [[mutation.edit]]
+  rule = "split_envelope--window_code_1"
+  find = "=> ListItem(exp_c_not_below_exp)"
+  replace = "=> ListItem(expired)"
+
+[[mutation]]
+id = "en023-code-always"
+expect = "kill"
+misunderstanding = "EN-023: every envelope is refused with exp_c_not_below_exp"
+  [[mutation.edit]]
+  rule = "split_envelope--window_code_2"
+  find = "=> .List"
+  replace = "=> ListItem(exp_c_not_below_exp)"
+
+[[mutation]]
+id = "en023-order-check-next-block"
+expect = "kill"
+misunderstanding = "EN-023: the ordering-block check adds the acceptance rule's next block to b, so a block b with b + delta_c just below exp is refused"
+  [[mutation.edit]]
+  rule = "order-check"
+  find = "requires windowInside ( B:Int , DeltaC:Int , Exp:Int )"
+  replace = "requires windowInside ( B:Int +Int 1 , DeltaC:Int , Exp:Int )"
+  [[mutation.edit]]
+  rule = "order-check-refused"
+  find = "requires notBool windowInside ( B:Int , DeltaC:Int , Exp:Int )"
+  replace = "requires notBool windowInside ( B:Int +Int 1 , DeltaC:Int , Exp:Int )"
+
+[[mutation]]
+id = "en023-order-check-no-refusal"
+expect = "kill"
+misunderstanding = "EN-023: the ordering-block check only reports; it never refuses"
+  [[mutation.edit]]
+  rule = "order-check-refused"
+  find = "ListItem(refused ( ListItem(exp_c_not_below_exp) ))"
+  replace = "ListItem(ok)"
+
+[[mutation]]
+id = "en023-order-check-code"
+expect = "kill"
+misunderstanding = "EN-023: the ordering block refuses with expired"
+  [[mutation.edit]]
+  rule = "order-check-refused"
+  find = "ListItem(refused ( ListItem(exp_c_not_below_exp) ))"
+  replace = "ListItem(refused ( ListItem(expired) ))"

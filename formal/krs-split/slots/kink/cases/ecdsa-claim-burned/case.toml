@@ -1,0 +1,23 @@
+# SL-009, SL-017: a claim does not take a slot out of BURNED.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealE = { pool = 1, leaf_set = 5, root = "Own", kcount = 1 } },
+  { DealE = { pool = 2, leaf_set = 5, root = "Own", kcount = 1 } },
+  { InForce = { eid = 1, root = "Own" } },
+  { InForce = { eid = 2, root = "Own" } },
+  { OpenE = { eid = 1, pos = 10, names = [{ Ek = { pool = 1, idx = 1 } }] } },
+  { OpenE = { eid = 2, pos = 20, names = [{ Ek = { pool = 2, idx = 1 } }] } },
+  { Reserve = { eid = 1 } },
+  { Reserve = { eid = 2 } },
+  { ClaimOp = { eid = 2 } },
+  { Reserve = { eid = 2 } },
+  { BurnPool = { pool = 2 } },
+  { ClaimOp = { eid = 2 } },
+  { DealE = { pool = 3, leaf_set = 5, root = "Own", kcount = 1 } },
+  { InForce = { eid = 3, root = "Own" } },
+  { OpenE = { eid = 3, pos = 30, names = [{ Ek = { pool = 3, idx = 1 } }] } },
+  { Reserve = { eid = 3 } },
+  { ClaimOp = { eid = 3 } },
+  { Reserve = { eid = 3 } },
+]

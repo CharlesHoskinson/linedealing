@@ -1,0 +1,38 @@
+# AU-023, AU-029 (DECISIONS 60): misreadings of a VOID settlement of an authorization
+# accepted on a LOCKED record (`lockedAtAccept`: the record holds a pin).
+
+[[mutation]]
+id = "au029-void-locked-unlocks"
+expect = "kill"
+misunderstanding = "AU-029: a VOID settlement of an authorization accepted on a LOCKED record makes the record UNSPENT, as AU-023 says for an UNSPENT one"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_outcome_3"
+  find = "rsLOCKED , ofSettle"
+  replace = "rsUNSPENT , ofSettle"
+
+[[mutation]]
+id = "au029-void-locked-drops-pin"
+expect = "kill"
+misunderstanding = "AU-029: the VOID successor of a LOCKED record is LOCKED but loses the pin it was locked to"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_outcome_3"
+  find = "setVOID ) , Pin:List , HoldTag"
+  replace = "setVOID ) , .List , HoldTag"
+
+[[mutation]]
+id = "au023-void-locked-nf-tag"
+expect = "kill"
+misunderstanding = "AU-023, AU-029: the VOID successor of a LOCKED record is named by N(nsk, auth, RELEASED)"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_outcome_3"
+  find = "ofSettle ( A:Int , setVOID )"
+  replace = "ofSettle ( A:Int , setRELEASED )"
+
+[[mutation]]
+id = "au029-lock-everywhere"
+expect = "kill"
+misunderstanding = "AU-023, AU-029: every VOID settlement locks the record, also one accepted on an UNSPENT record with no pin"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_outcome_2"
+  find = "rsUNSPENT , ofSettle"
+  replace = "rsLOCKED , ofSettle"

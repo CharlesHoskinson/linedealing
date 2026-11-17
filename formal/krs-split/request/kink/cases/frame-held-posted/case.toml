@@ -1,0 +1,9 @@
+# RQ-021: a frame for a POSTED request is held with its board height.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Tick = { h = 5 } },
+  { FrameOp = { eid = 1, fr = { Fr = { position = 0, token_ok = true, lengths_ok = true, height = 999, cid = 77 } } } },
+]

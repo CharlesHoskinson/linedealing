@@ -1,0 +1,2680 @@
+# kink's verdicts of a corpus, one section per command: [run] (`run` on a mutation list),
+# [coverage] (`coverage`), [compare] (`compare`) and [query] (`query` on a pattern list). As a
+# lock (`--lock FILE`; krs keeps <corpus>/kink.lock), each command reads, checks (--locked) and
+# rewrites only its own section, and keeps the others as they are.
+schema = "kink-flow-verdicts"
+definition = "split-authorization-reference:main"
+
+[run]
+# The verdicts of kink's `run` command (`krs kink run`, `kink-flow run`): the next run tries
+# each `killer` first, a run without --locked rewrites this section, and `run --locked` checks
+# that it is current.
+version = 28
+profile = "z3"
+z3_version = "5.3.3.0 430d19e697e2ec9bad79ff210d41b4a7a5fcfa3e 430d19e"
+work_factor = 5
+
+[run.spec]
+outcome = "admitted"
+
+# Each [[run.mutation]] is a mutation of the list, by its id, and its verdict: killed (a
+# program's result differs on the mutant; `killer` names it), survived (every program agreed;
+# `horizon`, those that agreed only up to an observation horizon), equivalent or unkillable (no
+# program can tell the mutant apart), timeout, unknown or error (no verdict), invalid-mutation
+# or not-admitted (its author must fix it; `reason` says why).
+[[run.mutation]]
+id = "authorize/au004-used-appended"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "authorize/au004-refuse-accepts"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "authorize/au004-stays-unspent"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "authorize/au004-auth-appended"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "authorize/au002-born-final"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "authorize/au002-not-direct"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "authorize/au009-no-pin"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "authorize/au005-nf-unchecked"
+status = "killed"
+killer = "cases/authorize-statement-nf/case.toml"
+
+[[run.mutation]]
+id = "authorize/au005-spent-unchecked"
+status = "killed"
+killer = "cases/authorize-statement-spent/case.toml"
+
+[[run.mutation]]
+id = "authorize/au005-inputs-unchecked"
+status = "killed"
+killer = "cases/authorize-statement-inputs/case.toml"
+
+[[run.mutation]]
+id = "authorize/au007-checks-skipped"
+status = "killed"
+killer = "cases/authorize-checks-p1/case.toml"
+
+[[run.mutation]]
+id = "authorize/au006-source-skipped"
+status = "killed"
+killer = "cases/authorize-source/case.toml"
+
+[[run.mutation]]
+id = "authorize/au005-slot-skipped"
+status = "killed"
+killer = "cases/authorize-slot-g-unset/case.toml"
+
+[[run.mutation]]
+id = "authorize/au005-ticket-always"
+status = "killed"
+killer = "cases/authorize-tee-no-ticket/case.toml"
+
+[[run.mutation]]
+id = "authorize/au005-ticket-never"
+status = "killed"
+killer = "cases/authorize-non-tee/case.toml"
+
+[[run.mutation]]
+id = "authorize/au006-owner-p0-only"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "authorize/au006-seizure-not-p2"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "authorize/au006-seizure-p0-p1"
+status = "killed"
+killer = "cases/authorize-source/case.toml"
+
+[[run.mutation]]
+id = "authorize/au006-recovery-p0"
+status = "killed"
+killer = "cases/authorize-source/case.toml"
+
+[[run.mutation]]
+id = "authorize/au006-recovery-not-p1-p2"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "authorize/au007-p0-checked"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "authorize/au007-p1-no-gamma"
+status = "killed"
+killer = "cases/authorize-checks-p1/case.toml"
+
+[[run.mutation]]
+id = "authorize/au007-p1-no-predicate"
+status = "killed"
+killer = "cases/authorize-checks-p1/case.toml"
+
+[[run.mutation]]
+id = "authorize/au007-p2-no-predicate"
+status = "killed"
+killer = "cases/authorize-checks-p2/case.toml"
+
+[[run.mutation]]
+id = "authorize/au007-p2-no-gamma"
+status = "killed"
+killer = "cases/authorize-checks-p2/case.toml"
+
+[[run.mutation]]
+id = "authorize/au007-p2-no-blacklist"
+status = "killed"
+killer = "cases/authorize-checks-p2/case.toml"
+
+[[run.mutation]]
+id = "authorize/au007-p2-owner-no-hold"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "authorize/au007-p2-recovery-no-hold"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "authorize/au007-p1-recovery-checked"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "authorize/au007-seizure-checked"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "authorize/au007-hold-ignored"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "authorize/au005-slot-any-record"
+status = "killed"
+killer = "cases/authorize-slot/case.toml"
+
+[[run.mutation]]
+id = "authorize/au006-slot-any-root"
+status = "killed"
+killer = "cases/authorize-slot/case.toml"
+
+[[run.mutation]]
+id = "authorize/au006-slot-root-unset"
+status = "killed"
+killer = "cases/authorize-slot-g-unset/case.toml"
+
+[[run.mutation]]
+id = "authorize/au006-seizure-own-root"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "authorize/au006-own-root-always-set"
+status = "killed"
+killer = "cases/authorize-slot/case.toml"
+
+[[run.mutation]]
+id = "authorize/au006-g-root-always-set"
+status = "killed"
+killer = "cases/authorize-slot-g-unset/case.toml"
+
+[[run.mutation]]
+id = "authorize/au012-unchecked"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "authorize/au012-any-record"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "authorize/au008-unchecked"
+status = "killed"
+killer = "cases/authorize-nf-used/case.toml"
+
+[[run.mutation]]
+id = "authorize/au005-missing-record"
+status = "killed"
+killer = "cases/authorize-no-record/case.toml"
+
+[[run.mutation]]
+id = "authorize/au005-statement-unchecked"
+status = "killed"
+killer = "cases/authorize-checks-p1/case.toml"
+
+[[run.mutation]]
+id = "authorize/au027-before-recover"
+status = "killed"
+killer = "cases/authorize-recovery/case.toml"
+
+[[run.mutation]]
+id = "authorize/au027-any-destination"
+status = "killed"
+killer = "cases/authorize-recovery/case.toml"
+
+[[run.mutation]]
+id = "authorize/au027-every-source"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "authorize/au004-auth-reused"
+status = "killed"
+killer = "cases/authorize-auth-exists/case.toml"
+
+[[run.mutation]]
+id = "authorize/au009-unchecked"
+status = "killed"
+killer = "cases/authorize-pin/case.toml"
+
+[[run.mutation]]
+id = "authorize/au009-every-record"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "authorize/au009-locked-always"
+status = "killed"
+killer = "cases/authorize-pin/case.toml"
+
+[[run.mutation]]
+id = "authorize/au022-code-order"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "board/au010-midnight-ignored"
+status = "killed"
+killer = "cases/carry-reissue/case.toml"
+
+[[run.mutation]]
+id = "board/au016-board-ignored"
+status = "killed"
+killer = "cases/bf-call-accept/case.toml"
+
+[[run.mutation]]
+id = "board/au010-strictly-after"
+status = "killed"
+killer = "cases/carry-reissue/case.toml"
+
+[[run.mutation]]
+id = "board/au010-at-inclusion"
+status = "killed"
+killer = "cases/oracle-p1-and-board-first/case.toml"
+
+[[run.mutation]]
+id = "board/au013-no-proof"
+status = "killed"
+killer = "cases/bf-call-checks/case.toml"
+
+[[run.mutation]]
+id = "board/au013-root-not-final"
+status = "killed"
+killer = "cases/bf-call-checks/case.toml"
+
+[[run.mutation]]
+id = "board/au013-bound-strict"
+status = "killed"
+killer = "cases/bf-call-checks/case.toml"
+
+[[run.mutation]]
+id = "board/au013-no-fm"
+status = "killed"
+killer = "cases/bf-call-checks/case.toml"
+
+[[run.mutation]]
+id = "board/au013-landed-unchecked"
+status = "killed"
+killer = "cases/bf-call-checks/case.toml"
+
+[[run.mutation]]
+id = "board/au013-carry-unchecked"
+status = "killed"
+killer = "cases/bf-call-checks/case.toml"
+
+[[run.mutation]]
+id = "board/au013-more-than-q"
+status = "killed"
+killer = "cases/bf-call-accept/case.toml"
+
+[[run.mutation]]
+id = "board/au015-unchecked"
+status = "killed"
+killer = "cases/bf-call-pending/case.toml"
+
+[[run.mutation]]
+id = "board/au014-not-pending"
+status = "killed"
+killer = "cases/bf-call-accept/case.toml"
+
+[[run.mutation]]
+id = "board/au016-not-in-force"
+status = "killed"
+killer = "cases/bf-call-accept/case.toml"
+
+[[run.mutation]]
+id = "board/au013-refuse-accepts"
+status = "killed"
+killer = "cases/bf-call-checks/case.toml"
+
+[[run.mutation]]
+id = "board/au026-records-unchanged"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "board/au026-pending-kept"
+status = "killed"
+killer = "cases/bf-call-checks/case.toml"
+
+[[run.mutation]]
+id = "board/au026-not-landed"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "board/au026-refuse-ok"
+status = "killed"
+killer = "cases/bf-root-refusals/case.toml"
+
+[[run.mutation]]
+id = "board/au026-stays-unspent"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "board/au026-direct"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "board/au026-any-board-first"
+status = "killed"
+killer = "cases/bf-root-accept/case.toml"
+
+[[run.mutation]]
+id = "board/au026-unnamed-nf"
+status = "killed"
+killer = "cases/bf-root-refusals/case.toml"
+
+[[run.mutation]]
+id = "board/au026-any-record-nf"
+status = "killed"
+killer = "cases/bf-root-refusals/case.toml"
+
+[[run.mutation]]
+id = "board/au026-auth-exists"
+status = "killed"
+killer = "cases/bf-root-refusals/case.toml"
+
+[[run.mutation]]
+id = "board/au026-auth-repeated"
+status = "killed"
+killer = "cases/bf-root-refusals/case.toml"
+
+[[run.mutation]]
+id = "carry/au021-carry-ignored"
+status = "killed"
+killer = "cases/carry-bad/case.toml"
+
+[[run.mutation]]
+id = "carry/au021-statement-before-carry"
+status = "killed"
+killer = "cases/carry-bad/case.toml"
+
+[[run.mutation]]
+id = "carry/au021-no-rule-after-carry"
+status = "killed"
+killer = "cases/carry-bad/case.toml"
+
+[[run.mutation]]
+id = "carry/au021-carry-any-auth"
+status = "killed"
+killer = "cases/carry-no-rule/case.toml"
+
+[[run.mutation]]
+id = "carry/au021-carry-final"
+status = "killed"
+killer = "cases/carry-bad/case.toml"
+
+[[run.mutation]]
+id = "carry/au021-carry-self"
+status = "killed"
+killer = "cases/carry-self/case.toml"
+
+[[run.mutation]]
+id = "carry/au022-any-outcome"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "carry/au022-more-than-q"
+status = "killed"
+killer = "cases/carry-no-rule/case.toml"
+
+[[run.mutation]]
+id = "carry/au022-unchecked"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "charter/au011-p2-allowed"
+status = "killed"
+killer = "cases/charter-refusals/case.toml"
+
+[[run.mutation]]
+id = "charter/au011-stateful-allowed"
+status = "killed"
+killer = "cases/charter-refusals/case.toml"
+
+[[run.mutation]]
+id = "charter/au011-without-bf"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "charter/au011-dup-cid"
+status = "killed"
+killer = "cases/charter-refusals/case.toml"
+
+[[run.mutation]]
+id = "charter/au011-code-order"
+status = "killed"
+killer = "cases/charter-refusals/case.toml"
+
+[[run.mutation]]
+id = "charter/au011-prepend"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "charter/au011-refuse-accepts"
+status = "killed"
+killer = "cases/charter-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-add-auth-2"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-add-auth-all-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-add-auth-all-2"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-after-carry-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-after-carry-3"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-all-auths-1"
+status = "killed"
+killer = "cases/carry-no-rule/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-all-auths-2"
+status = "killed"
+killer = "cases/oracle-seizure/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-all-tuples-named-1"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-all-tuples-named-2"
+status = "killed"
+killer = "cases/bf-root-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-all-tuples-named-3"
+status = "killed"
+killer = "cases/bf-root-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any3-1"
+status = "killed"
+killer = "cases/revoke-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any3-2"
+status = "killed"
+killer = "cases/revoke-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any3-3"
+status = "killed"
+killer = "cases/revoke-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any3-4"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-an-1"
+status = "killed"
+killer = "cases/oracle-p1-and-board-first/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-an-2"
+status = "killed"
+killer = "cases/bf-call-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-an-3"
+status = "killed"
+killer = "cases/bf-root-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-bad-statement-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-bf-rec-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-hit-1"
+status = "killed"
+killer = "cases/revoke-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-hit-2"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-hit-3"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-hit-not-p2-1"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-hit-not-p2-2"
+status = "killed"
+killer = "cases/finalize/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-hit-not-p2-3"
+status = "killed"
+killer = "cases/lookup-later/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-hit-other-tag-1"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-none-leaf-1"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-none-leaf-3"
+status = "killed"
+killer = "cases/settle-none-leaf/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-pin-mismatch-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-rec-nf-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-rec-nf-2"
+status = "killed"
+killer = "cases/record-outside/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-rec-nf-3"
+status = "killed"
+killer = "cases/lookup-later/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-revoked-1"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-revoked-2"
+status = "killed"
+killer = "cases/revoke-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-revoked-3"
+status = "killed"
+killer = "cases/revoke-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-rid"
+status = "killed"
+killer = "cases/record-outside/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-seizure-auth-1"
+status = "killed"
+killer = "cases/oracle-p2-hold-and-recovery/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-sel-1"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-sel-2"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-sel-3"
+status = "killed"
+killer = "cases/void-locked-carry/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-settled-1"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-settled-2"
+status = "killed"
+killer = "cases/revoke-settled/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-settled-3"
+status = "killed"
+killer = "cases/lookup-later/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-submitted-1"
+status = "killed"
+killer = "cases/finalize/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-tuple-auth-exists-1"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-tuple-auth-exists-2"
+status = "killed"
+killer = "cases/bf-root-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-tuple-auth-exists-3"
+status = "killed"
+killer = "cases/bf-root-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-auth-exists-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-auth-exists-2"
+status = "killed"
+killer = "cases/authorize-auth-exists/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-auth-exists-3"
+status = "killed"
+killer = "cases/lookup-later/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-bf-all-1"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-bf-all-2"
+status = "killed"
+killer = "cases/void-locked-carry/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-bf-call-refusals-1"
+status = "killed"
+killer = "cases/bf-call-checks/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-bf-rec-has-nf-1"
+status = "killed"
+killer = "cases/bf-root-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-bf-recs-1"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-bf-recs-2"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-bf-root-refusals"
+status = "killed"
+killer = "cases/bf-root-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-call-an-1"
+status = "killed"
+killer = "cases/bf-call-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-call-nf-1"
+status = "killed"
+killer = "cases/bf-call-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-carry-code-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-carry-no-rule-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-carry-no-rule-2"
+status = "killed"
+killer = "cases/carry-bad/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-carry-no-rule-3"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-carry-of-1"
+status = "killed"
+killer = "cases/carry-bad/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-carry-sigs-ok-1"
+status = "killed"
+killer = "cases/bf-call-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-drop-nfs-1"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-drop-nfs-2"
+status = "killed"
+killer = "cases/bf-call-checks/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-drop-nfs-3"
+status = "killed"
+killer = "cases/bf-root-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-final-in-2"
+status = "killed"
+killer = "cases/carry-reissue/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-find-charter-1"
+status = "killed"
+killer = "cases/record-no-charter/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-find-charter-2"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-find-charter-3"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-fresh-code-1"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-fresh-code-2"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-has-cid-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-has-cid-2"
+status = "killed"
+killer = "cases/charter-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-has-cid-3"
+status = "killed"
+killer = "cases/charter-dup-later/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-has-rid-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-has-rid-2"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-has-rid-3"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-in-force-midnight-1"
+status = "killed"
+killer = "cases/oracle-p1-and-board-first/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-in-force-midnight-2"
+status = "killed"
+killer = "cases/carry-reissue/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-in-force-midnight-3"
+status = "killed"
+killer = "cases/lookup-later/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-is-fresh-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-is-fresh-2"
+status = "killed"
+killer = "cases/record-outside/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-map-auth-1"
+status = "killed"
+killer = "cases/carry-reissue/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-map-auth-2"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-map-auths-1"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-map-auths-2"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-map-rec-auths-1"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-map-rec-auths-2"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-nodup-b-1"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-nodup-b-2"
+status = "killed"
+killer = "cases/bf-root-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-nodup-b-3"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-opt-1"
+status = "killed"
+killer = "cases/authorize-checks-p1/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-opt-2"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-pin-of-1"
+status = "killed"
+killer = "cases/authorize-pin/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-pin-of-2"
+status = "killed"
+killer = "cases/authorize-pin/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-pin-of-3"
+status = "killed"
+killer = "cases/settle-released-pin/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-q-of-1"
+status = "killed"
+killer = "cases/bf-call-checks/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-record-refusals-2"
+status = "killed"
+killer = "cases/record-nf-used/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-record-refusals-3"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-revoke-in-2"
+status = "killed"
+killer = "cases/revoke-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-revoke-no-rule-code"
+status = "killed"
+killer = "cases/revoke-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-root-of-2"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-seizure-obs-1"
+status = "killed"
+killer = "cases/oracle-seizure/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-settle-all-1"
+status = "killed"
+killer = "cases/carry-bad/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-settle-all-2"
+status = "killed"
+killer = "cases/carry-bad/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-settle-leaves-1"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-settle-leaves-2"
+status = "killed"
+killer = "cases/settle-released/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-settle-recs-1"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-settle-recs-2"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-slot-ok-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-tuple-auths-1"
+status = "killed"
+killer = "cases/bf-root-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-tuple-auths-2"
+status = "killed"
+killer = "cases/bf-root-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-tuple-nfs-1"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-tuple-nfs-2"
+status = "killed"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-upd-2"
+status = "killed"
+killer = "cases/oracle-reissue-non-tee/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-upd-all-1"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-upd-all-2"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-used-nfs-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-used-nfs-2"
+status = "killed"
+killer = "cases/authorize-nf-used/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-used-of-1"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "helpers/h-any-none-leaf-2"
+status = "killed"
+killer = "cases/settle-none-leaf/case.toml"
+
+[[run.mutation]]
+id = "record/au001-dup-rid"
+status = "killed"
+killer = "cases/record-outside/case.toml"
+
+[[run.mutation]]
+id = "record/au001-nf-not-fresh"
+status = "killed"
+killer = "cases/record-outside/case.toml"
+
+[[run.mutation]]
+id = "record/au001-nf-used"
+status = "killed"
+killer = "cases/record-nf-used/case.toml"
+
+[[run.mutation]]
+id = "record/au001-nf-on-record"
+status = "killed"
+killer = "cases/record-outside/case.toml"
+
+[[run.mutation]]
+id = "record/au001-slr-g-any-profile"
+status = "killed"
+killer = "cases/record-outside/case.toml"
+
+[[run.mutation]]
+id = "record/au001-slr-g-required"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "record/au001-no-charter-outside"
+status = "killed"
+killer = "cases/record-no-charter/case.toml"
+
+[[run.mutation]]
+id = "record/au001-board-first-dropped"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "record/au001-born-pending"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "record/au001-prepend"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "record/au001-refuse-accepts"
+status = "killed"
+killer = "cases/record-nf-used/case.toml"
+
+[[run.mutation]]
+id = "revoke/au018-no-hold"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "revoke/au018-not-revoked"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "revoke/au018-refuse-ok"
+status = "killed"
+killer = "cases/finalize/case.toml"
+
+[[run.mutation]]
+id = "revoke/au018-unknown-auth"
+status = "killed"
+killer = "cases/revoke-refusals/case.toml"
+
+[[run.mutation]]
+id = "revoke/au018-any-tag"
+status = "killed"
+killer = "cases/revoke-refusals/case.toml"
+
+[[run.mutation]]
+id = "revoke/au018-tag-equal"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "revoke/au018-twice"
+status = "killed"
+killer = "cases/revoke-refusals/case.toml"
+
+[[run.mutation]]
+id = "revoke/au018-revoked-final"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "revoke/au019-p1-revocable"
+status = "killed"
+killer = "cases/finalize/case.toml"
+
+[[run.mutation]]
+id = "revoke/au019-settled-revocable"
+status = "killed"
+killer = "cases/revoke-settled/case.toml"
+
+[[run.mutation]]
+id = "revoke/au019-code-order"
+status = "killed"
+killer = "cases/revoke-settled/case.toml"
+
+[[run.mutation]]
+id = "revoke/au010-not-final"
+status = "killed"
+killer = "cases/carry-reissue/case.toml"
+
+[[run.mutation]]
+id = "revoke/au010-refuse-ok"
+status = "killed"
+killer = "cases/finalize/case.toml"
+
+[[run.mutation]]
+id = "revoke/au010-no-height"
+status = "killed"
+killer = "cases/carry-reissue/case.toml"
+
+[[run.mutation]]
+id = "revoke/au002-refinalize"
+status = "killed"
+killer = "cases/finalize/case.toml"
+
+[[run.mutation]]
+id = "revoke/au002-any-status"
+status = "killed"
+killer = "cases/finalize/case.toml"
+
+[[run.mutation]]
+id = "seizure/au028-dreg-unchecked"
+status = "killed"
+killer = "cases/oracle-seizure/case.toml"
+
+[[run.mutation]]
+id = "seizure/au028-always-ok"
+status = "killed"
+killer = "cases/oracle-seizure/case.toml"
+
+[[run.mutation]]
+id = "seizure/au028-any-source"
+status = "killed"
+killer = "cases/oracle-p2-hold-and-recovery/case.toml"
+
+[[run.mutation]]
+id = "seizure/au028-unchecked"
+status = "killed"
+killer = "cases/oracle-p2-hold-and-recovery/case.toml"
+
+[[run.mutation]]
+id = "seizure/au028-refuse-void"
+status = "killed"
+killer = "cases/oracle-p2-hold-and-recovery/case.toml"
+
+[[run.mutation]]
+id = "seizure/au027-recover-not-recorded"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "seizure/run-ends-early"
+status = "killed"
+killer = "cases/authorize-accept/case.toml"
+
+[[run.mutation]]
+id = "settle/au020-root-ignored"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "settle/au020-refuse-ok"
+status = "killed"
+killer = "cases/settle-none-leaf/case.toml"
+
+[[run.mutation]]
+id = "settle/au020-none-leaf"
+status = "killed"
+killer = "cases/settle-none-leaf/case.toml"
+
+[[run.mutation]]
+id = "settle/au020-void-leaf-refused"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "settle/au020-resettle"
+status = "killed"
+killer = "cases/carry-no-rule/case.toml"
+
+[[run.mutation]]
+id = "settle/au020-every-record"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "settle/au020-outcome-final"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "settle/au023-final-not-spent"
+status = "killed"
+killer = "cases/authorize-statement-spent/case.toml"
+
+[[run.mutation]]
+id = "settle/au023-void-keeps-state"
+status = "killed"
+killer = "cases/carry-no-rule/case.toml"
+
+[[run.mutation]]
+id = "settle/au023-void-nf-tag"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[run.mutation]]
+id = "settle/au023-released-unspent"
+status = "killed"
+killer = "cases/authorize-pin/case.toml"
+
+[[run.mutation]]
+id = "settle/au023-released-no-pin"
+status = "killed"
+killer = "cases/authorize-pin/case.toml"
+
+[[run.mutation]]
+id = "settle/au023-released-nf-tag"
+status = "killed"
+killer = "cases/authorize-pin/case.toml"
+
+[[run.mutation]]
+id = "void-locked/au029-void-locked-unlocks"
+status = "killed"
+killer = "cases/au029-locked-void/case.toml"
+
+[[run.mutation]]
+id = "void-locked/au029-void-locked-drops-pin"
+status = "killed"
+killer = "cases/au029-locked-void/case.toml"
+
+[[run.mutation]]
+id = "void-locked/au023-void-locked-nf-tag"
+status = "killed"
+killer = "cases/au029-locked-void/case.toml"
+
+[[run.mutation]]
+id = "void-locked/au029-lock-everywhere"
+status = "killed"
+killer = "cases/authorize-p2-held/case.toml"
+
+[coverage]
+# The verdicts of kink's `coverage` command (`krs kink coverage`, `kink-flow coverage`): the
+# next run tries each flip's `killer` first, a run without --locked rewrites this section, and
+# `coverage --locked` checks that it is current.
+version = 28
+profile = "z3"
+z3_version = "5.3.3.0 430d19e697e2ec9bad79ff210d41b4a7a5fcfa3e 430d19e"
+krs_annotation = 10
+
+[coverage.spec]
+outcome = "admitted"
+
+[coverage.settings]
+depth = 1
+mcdc = true
+work_factor = 5
+
+# Each family lists its obligations by id: `open`, those no program covers; `argued`, those an
+# argument of FLOW.toml ([[coverage.argued]]) stands in for, each with the `standing` it rests
+# on (text: its text alone; connected, checked-on-runs or proved: its invariant's checks hold;
+# unchecked: a check did not decide); `undecided`, those the records cannot decide.
+[coverage.rules]
+open = [
+]
+argued = [
+]
+
+[coverage.requirements]
+open = [
+]
+argued = [
+  { id = "requirement:crate::bf_in_1:board_first:mcdc", standing = "text" },
+  { id = "requirement:crate::bf_in_2:board_first:mcdc", standing = "text" },
+  { id = "requirement:crate::final_in_1:status.eq::<K>(StatusC::Submitted):false", standing = "text" },
+  { id = "requirement:crate::final_in_1:status.eq::<K>(StatusC::Submitted):mcdc", standing = "text" },
+  { id = "requirement:crate::final_in_2:status.eq::<K>(StatusC::Submitted):false", standing = "text" },
+  { id = "requirement:crate::final_in_2:status.eq::<K>(StatusC::Submitted):mcdc", standing = "text" },
+]
+
+[coverage.syntax]
+open = [
+]
+argued = [
+]
+
+# Each [[coverage.flip]] is a condition flip: a mutant kink generates from the definition by
+# negating one condition (`negates`, as the source writes it) or toggling one bit of an encoding
+# (`toggles`) in the `rules` it lists, and runs as `run` runs a mutation. Its status:
+# distinguished (a program's result differs on it; `killer` names it), undistinguished (every
+# comparable program agreed), unreached (no program reaches the condition), argued (an
+# argument stands in for a program; its `standing`), equivalent (no program can tell it
+# apart), refused (the flipped definition is not admitted; `reason`), unknown (no verdict).
+[coverage.flips]
+run = true
+
+[[coverage.flip]]
+id = "flip--add_auth_1+add_auth_2--IntEqual"
+negates = "rid == crid"
+rules = [
+  "rule:crate::add_auth_1",
+  "rule:crate::add_auth_2",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--after_carry_2+after_carry_3--CarryOk"
+negates = "CarryOk(q, k)"
+rules = [
+  "rule:crate::after_carry_2",
+  "rule:crate::after_carry_3",
+]
+status = "distinguished"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--all_tuples_named_2+all_tuples_named_3--BfRecHasNf"
+negates = "BfRecHasNf(rs, nf)"
+rules = [
+  "rule:crate::all_tuples_named_2",
+  "rule:crate::all_tuples_named_3",
+]
+status = "distinguished"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_an_2+any_an_3--IntEqual"
+negates = "x == a"
+rules = [
+  "rule:crate::any_an_2",
+  "rule:crate::any_an_3",
+]
+status = "distinguished"
+killer = "cases/bf-call-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_bad_statement_2+any_bad_statement_3--IntEqual"
+negates = "x == rid"
+rules = [
+  "rule:crate::any_bad_statement_2",
+  "rule:crate::any_bad_statement_3",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_bad_statement_2+any_bad_statement_3--StatementOk"
+negates = "StatementOk(m, list::contains(hold_tag, holds), r, c)"
+rules = [
+  "rule:crate::any_bad_statement_2",
+  "rule:crate::any_bad_statement_3",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_bf_rec_2+any_bf_rec_3--IntEqual"
+negates = "x == rid"
+rules = [
+  "rule:crate::any_bf_rec_2",
+  "rule:crate::any_bf_rec_3",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_bf_rec_2+any_bf_rec_3--board_first"
+negates = "board_first"
+rules = [
+  "rule:crate::any_bf_rec_2",
+  "rule:crate::any_bf_rec_3",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_hit_2+any_hit_3--AuthExists"
+negates = "AuthExists(auths, a)"
+rules = [
+  "rule:crate::any_hit_2",
+  "rule:crate::any_hit_3",
+]
+status = "distinguished"
+killer = "cases/revoke-refusals/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_hit_not_p2_2+any_hit_not_p2_3--AuthExists"
+negates = "AuthExists(auths, a)"
+rules = [
+  "rule:crate::any_hit_not_p2_2",
+  "rule:crate::any_hit_not_p2_3",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_hit_not_p2_2+any_hit_not_p2_3--P2"
+negates = "profile.ne::<K>(ProfileC::P2)"
+rules = [
+  "rule:crate::any_hit_not_p2_2",
+  "rule:crate::any_hit_not_p2_3",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_hit_other_tag_2+any_hit_other_tag_3--AuthExists"
+negates = "AuthExists(auths, a)"
+rules = [
+  "rule:crate::any_hit_other_tag_2",
+  "rule:crate::any_hit_other_tag_3",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_hit_other_tag_2+any_hit_other_tag_3--IntNotEqual"
+negates = "hold_tag != tag"
+rules = [
+  "rule:crate::any_hit_other_tag_2",
+  "rule:crate::any_hit_other_tag_3",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_none_leaf_2+any_none_leaf_3--SetNone"
+negates = "o.eq::<K>(SettledC::SetNone)"
+rules = [
+  "rule:crate::any_none_leaf_2",
+  "rule:crate::any_none_leaf_3",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_pin_mismatch_2+any_pin_mismatch_3--IntEqual"
+negates = "x == rid"
+rules = [
+  "rule:crate::any_pin_mismatch_2",
+  "rule:crate::any_pin_mismatch_3",
+]
+status = "distinguished"
+killer = "cases/authorize-pin/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_pin_mismatch_2+any_pin_mismatch_3--Locked"
+negates = "rstate.eq::<K>(RStateC::Locked)"
+rules = [
+  "rule:crate::any_pin_mismatch_2",
+  "rule:crate::any_pin_mismatch_3",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_pin_mismatch_2+any_pin_mismatch_3--KEqualNe"
+negates = "rpin.ne::<K>(list::item(pin))"
+rules = [
+  "rule:crate::any_pin_mismatch_2",
+  "rule:crate::any_pin_mismatch_3",
+]
+status = "distinguished"
+killer = "cases/authorize-pin/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_rec_nf_2+any_rec_nf_3--KEqualEq"
+negates = "x.eq::<K>(nf)"
+rules = [
+  "rule:crate::any_rec_nf_2",
+  "rule:crate::any_rec_nf_3",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_revoked_2+any_revoked_3--IntEqual"
+negates = "auth == a"
+rules = [
+  "rule:crate::any_revoked_2",
+  "rule:crate::any_revoked_3",
+]
+status = "distinguished"
+killer = "cases/revoke-refusals/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_revoked_2+any_revoked_3--Revoked"
+negates = "status.eq::<K>(StatusC::Revoked)"
+rules = [
+  "rule:crate::any_revoked_2",
+  "rule:crate::any_revoked_3",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_seizure_auth_2+any_seizure_auth_3--IntEqual"
+negates = "auth == a"
+rules = [
+  "rule:crate::any_seizure_auth_2",
+  "rule:crate::any_seizure_auth_3",
+]
+status = "distinguished"
+killer = "cases/oracle-seizure/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_seizure_auth_2+any_seizure_auth_3--KEqualEq"
+negates = "source.eq::<K>(list::item(SourceC::Seizure))"
+rules = [
+  "rule:crate::any_seizure_auth_2",
+  "rule:crate::any_seizure_auth_3",
+]
+status = "distinguished"
+killer = "cases/oracle-p2-hold-and-recovery/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_sel_2+any_sel_3--Sel"
+negates = "Sel(a, b)"
+rules = [
+  "rule:crate::any_sel_2",
+  "rule:crate::any_sel_3",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_settled_2+any_settled_3--IntEqual"
+negates = "auth == a"
+rules = [
+  "rule:crate::any_settled_2",
+  "rule:crate::any_settled_3",
+]
+status = "distinguished"
+killer = "cases/revoke-settled/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_settled_2+any_settled_3--SetNone"
+negates = "settled.ne::<K>(SettledC::SetNone)"
+rules = [
+  "rule:crate::any_settled_2",
+  "rule:crate::any_settled_3",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_submitted_2+any_submitted_3--IntEqual"
+negates = "auth == a"
+rules = [
+  "rule:crate::any_submitted_2",
+  "rule:crate::any_submitted_3",
+]
+status = "distinguished"
+killer = "cases/finalize/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_submitted_2+any_submitted_3--Submitted"
+negates = "status.eq::<K>(StatusC::Submitted)"
+rules = [
+  "rule:crate::any_submitted_2",
+  "rule:crate::any_submitted_3",
+]
+status = "distinguished"
+killer = "cases/carry-reissue/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_tuple_auth_exists_2+any_tuple_auth_exists_3--AuthExists"
+negates = "AuthExists(bs, auth)"
+rules = [
+  "rule:crate::any_tuple_auth_exists_2",
+  "rule:crate::any_tuple_auth_exists_3",
+]
+status = "distinguished"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--auth_exists_2+auth_exists_3--IntEqual"
+negates = "auth == a"
+rules = [
+  "rule:crate::auth_exists_2",
+  "rule:crate::auth_exists_3",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--authorize+authorize_refuse--IntEqual"
+negates = "list::size(AuthorizeRefusals(params, records, used, holds, recovered, c)) == 0"
+rules = [
+  "rule:crate::authorize",
+  "rule:crate::authorize_refuse",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_call+bf_call_refuse--IntEqual"
+negates = "list::size(BfCallRefusals(QOf(params), pending, landed, c)) == 0"
+rules = [
+  "rule:crate::bf_call",
+  "rule:crate::bf_call_refuse",
+]
+status = "distinguished"
+killer = "cases/bf-call-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_call_refusals_1+bf_call_refusals_2+bf_call_refusals_3--BfChecks"
+negates = "BfChecks(q, landed, c)"
+rules = [
+  "rule:crate::bf_call_refusals_1",
+  "rule:crate::bf_call_refusals_2",
+  "rule:crate::bf_call_refusals_3",
+]
+status = "distinguished"
+killer = "cases/bf-call-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_call_refusals_2+bf_call_refusals_3--atom"
+negates = "list::contains(nf, pending)"
+rules = [
+  "rule:crate::bf_call_refusals_2",
+  "rule:crate::bf_call_refusals_3",
+]
+status = "distinguished"
+killer = "cases/bf-call-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_forbidden_code_1+bf_forbidden_code_2--bf"
+negates = "bf"
+rules = [
+  "rule:crate::bf_forbidden_code_1",
+  "rule:crate::bf_forbidden_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_forbidden_code_1+bf_forbidden_code_2--P2"
+negates = "p.eq::<K>(ProfileC::P2)"
+rules = [
+  "rule:crate::bf_forbidden_code_1",
+  "rule:crate::bf_forbidden_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_forbidden_code_1+bf_forbidden_code_2--stateful"
+negates = "stateful"
+rules = [
+  "rule:crate::bf_forbidden_code_1",
+  "rule:crate::bf_forbidden_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_in_1+bf_in_2--board_first"
+negates = "board_first"
+rules = [
+  "rule:crate::bf_in_1",
+  "rule:crate::bf_in_2",
+]
+status = "distinguished"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_in_1+bf_in_2--KEqualEq"
+negates = "nf.eq::<K>(tnf)"
+rules = [
+  "rule:crate::bf_in_1",
+  "rule:crate::bf_in_2",
+]
+status = "distinguished"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_rec_has_nf_2+bf_rec_has_nf_3--board_first"
+negates = "board_first"
+rules = [
+  "rule:crate::bf_rec_has_nf_2",
+  "rule:crate::bf_rec_has_nf_3",
+]
+status = "distinguished"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_rec_has_nf_2+bf_rec_has_nf_3--KEqualEq"
+negates = "x.eq::<K>(nf)"
+rules = [
+  "rule:crate::bf_rec_has_nf_2",
+  "rule:crate::bf_rec_has_nf_3",
+]
+status = "distinguished"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_record_code_1+bf_record_code_2--AnyBfRec"
+negates = "AnyBfRec(rs1, rid)"
+rules = [
+  "rule:crate::bf_record_code_1",
+  "rule:crate::bf_record_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_root+bf_root_refuse--IntEqual"
+negates = "list::size(BfRootRefusals(ts, records)) == 0"
+rules = [
+  "rule:crate::bf_root",
+  "rule:crate::bf_root_refuse",
+]
+status = "distinguished"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_root_no_rule_code_1+bf_root_no_rule_code_2--AllTuplesNamed"
+negates = "AllTuplesNamed(ts, rs)"
+rules = [
+  "rule:crate::bf_root_no_rule_code_1",
+  "rule:crate::bf_root_no_rule_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--bf_root_outside_code_1+bf_root_outside_code_2--Any3"
+negates = "Any3(AnyTupleAuthExists(ts, AllAuths(rs)), !NodupB(TupleAuths(ts)), false)"
+rules = [
+  "rule:crate::bf_root_outside_code_1",
+  "rule:crate::bf_root_outside_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--carry_code_2+carry_code_3--CarryOk"
+negates = "CarryOk(q, k)"
+rules = [
+  "rule:crate::carry_code_2",
+  "rule:crate::carry_code_3",
+]
+status = "distinguished"
+killer = "cases/authorize-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--carry_no_rule_2+carry_no_rule_3--CarryOk"
+negates = "CarryOk(q, k)"
+rules = [
+  "rule:crate::carry_no_rule_2",
+  "rule:crate::carry_no_rule_3",
+]
+status = "distinguished"
+killer = "cases/carry-no-rule/case.toml"
+
+[[coverage.flip]]
+id = "flip--charter+charter_refuse--IntEqual"
+negates = "list::size(CharterRefusals(charters, cid, profile, board_first, stateful)) == 0"
+rules = [
+  "rule:crate::charter",
+  "rule:crate::charter_refuse",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--cid_code_1+cid_code_2--HasCid"
+negates = "HasCid(chs, cid)"
+rules = [
+  "rule:crate::cid_code_1",
+  "rule:crate::cid_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--drop_nfs_2+drop_nfs_3--atom"
+negates = "list::contains(x, nfs)"
+rules = [
+  "rule:crate::drop_nfs_2",
+  "rule:crate::drop_nfs_3",
+]
+status = "distinguished"
+killer = "cases/bf-call-checks/case.toml"
+
+[[coverage.flip]]
+id = "flip--final_in_1+final_in_2--IntEqual"
+negates = "auth == a"
+rules = [
+  "rule:crate::final_in_1",
+  "rule:crate::final_in_2",
+]
+status = "distinguished"
+killer = "cases/carry-reissue/case.toml"
+
+[[coverage.flip]]
+id = "flip--final_in_1+final_in_2--Submitted"
+negates = "status.eq::<K>(StatusC::Submitted)"
+rules = [
+  "rule:crate::final_in_1",
+  "rule:crate::final_in_2",
+]
+status = "distinguished"
+killer = "cases/carry-reissue/case.toml"
+
+[[coverage.flip]]
+id = "flip--finalize+finalize_refuse--IntEqual"
+negates = "list::size(FinalizeRefusals(AllAuths(records), a)) == 0"
+rules = [
+  "rule:crate::finalize",
+  "rule:crate::finalize_refuse",
+]
+status = "distinguished"
+killer = "cases/carry-reissue/case.toml"
+
+[[coverage.flip]]
+id = "flip--finalize_refusals_1+finalize_refusals_2--AnySubmitted"
+negates = "AnySubmitted(bs, a)"
+rules = [
+  "rule:crate::finalize_refusals_1",
+  "rule:crate::finalize_refusals_2",
+]
+status = "distinguished"
+killer = "cases/carry-reissue/case.toml"
+
+[[coverage.flip]]
+id = "flip--find_charter_2+find_charter_3--IntEqual"
+negates = "x == cid"
+rules = [
+  "rule:crate::find_charter_2",
+  "rule:crate::find_charter_3",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--fresh_code_1+fresh_code_2--FreshAuth"
+negates = "FreshAuth(bs, c)"
+rules = [
+  "rule:crate::fresh_code_1",
+  "rule:crate::fresh_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--has_cid_2+has_cid_3--IntEqual"
+negates = "x == cid"
+rules = [
+  "rule:crate::has_cid_2",
+  "rule:crate::has_cid_3",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--has_rid_2+has_rid_3--IntEqual"
+negates = "x == rid"
+rules = [
+  "rule:crate::has_rid_2",
+  "rule:crate::has_rid_3",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--in_force_midnight_2+in_force_midnight_3--IntEqual"
+negates = "auth == a"
+rules = [
+  "rule:crate::in_force_midnight_2",
+  "rule:crate::in_force_midnight_3",
+]
+status = "distinguished"
+killer = "cases/carry-reissue/case.toml"
+
+[[coverage.flip]]
+id = "flip--in_force_midnight_2+in_force_midnight_3--FinalAt"
+negates = "FinalAt(h, final_height)"
+rules = [
+  "rule:crate::in_force_midnight_2",
+  "rule:crate::in_force_midnight_3",
+]
+status = "distinguished"
+killer = "cases/carry-reissue/case.toml"
+
+[[coverage.flip]]
+id = "flip--nf_used_code_1+nf_used_code_2--atom"
+negates = "list::contains(nf, UsedNfs(used))"
+rules = [
+  "rule:crate::nf_used_code_1",
+  "rule:crate::nf_used_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--not_revocable_code_1+not_revocable_code_2--Any3"
+negates = "Any3(AnyHitNotP2(rs, a), AnySettled(AllAuths(rs), a), false)"
+rules = [
+  "rule:crate::not_revocable_code_1",
+  "rule:crate::not_revocable_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--pin_code_1+pin_code_2--AnyPinMismatch"
+negates = "AnyPinMismatch(rs1, rid, pin)"
+rules = [
+  "rule:crate::pin_code_1",
+  "rule:crate::pin_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--pin_of_2+pin_of_3--Sel"
+negates = "Sel(a, b)"
+rules = [
+  "rule:crate::pin_of_2",
+  "rule:crate::pin_of_3",
+]
+status = "distinguished"
+killer = "cases/authorize-pin/case.toml"
+
+[[coverage.flip]]
+id = "flip--record+record_refuse--IntEqual"
+negates = "list::size(RecordRefusals(FindCharter(charters, cid), records, used, rid, nf, slr_g)) == 0"
+rules = [
+  "rule:crate::record",
+  "rule:crate::record_refuse",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--record_refusals_2+record_refusals_3--RecordOutside"
+negates = "RecordOutside(ch, rs, used, rid, nf, slr_g)"
+rules = [
+  "rule:crate::record_refusals_2",
+  "rule:crate::record_refusals_3",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--recovery_code_1+recovery_code_2--Recovery"
+negates = "source.eq::<K>(SourceC::Recovery)"
+rules = [
+  "rule:crate::recovery_code_1",
+  "rule:crate::recovery_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-accept/case.toml"
+
+[[coverage.flip]]
+id = "flip--recovery_code_1+recovery_code_2--recovered"
+negates = "recovered"
+rules = [
+  "rule:crate::recovery_code_1",
+  "rule:crate::recovery_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--recovery_code_1+recovery_code_2--to_exit"
+negates = "to_exit"
+rules = [
+  "rule:crate::recovery_code_1",
+  "rule:crate::recovery_code_2",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--revoke+revoke_refuse--IntEqual"
+negates = "list::size(RevokeRefusals(records, a, tag)) == 0"
+rules = [
+  "rule:crate::revoke",
+  "rule:crate::revoke_refuse",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--revoke_in_1+revoke_in_2--IntEqual"
+negates = "auth == a"
+rules = [
+  "rule:crate::revoke_in_1",
+  "rule:crate::revoke_in_2",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--seizure+seizure_refuse--IntEqual"
+negates = "list::size(SeizureRefusals(AllAuths(records), a)) == 0"
+rules = [
+  "rule:crate::seizure",
+  "rule:crate::seizure_refuse",
+]
+status = "distinguished"
+killer = "cases/oracle-p2-hold-and-recovery/case.toml"
+
+[[coverage.flip]]
+id = "flip--seizure_obs_1+seizure_obs_2--all_to_dreg"
+negates = "all_to_dreg"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--seizure_refusals_1+seizure_refusals_2--AnySeizureAuth"
+negates = "AnySeizureAuth(bs, a)"
+rules = [
+  "rule:crate::seizure_refusals_1",
+  "rule:crate::seizure_refusals_2",
+]
+status = "distinguished"
+killer = "cases/oracle-p2-hold-and-recovery/case.toml"
+
+[[coverage.flip]]
+id = "flip--settle_in_1+settle_in_2--AnySel"
+negates = "AnySel(auths, a)"
+rules = [
+  "rule:crate::settle_in_1",
+  "rule:crate::settle_in_2",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--settle_outcome_2+settle_outcome_3--IntEqual"
+negates = "list::size(pin) == 0"
+rules = [
+  "rule:crate::settle_outcome_2",
+  "rule:crate::settle_outcome_3",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--settle_root+settle_root_refuse--IntEqual"
+negates = "list::size(SettleRootRefusals(leaves)) == 0"
+rules = [
+  "rule:crate::settle_root",
+  "rule:crate::settle_root_refuse",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--settle_root_refusals_1+settle_root_refusals_2--AnyNoneLeaf"
+negates = "AnyNoneLeaf(leaves)"
+rules = [
+  "rule:crate::settle_root_refusals_1",
+  "rule:crate::settle_root_refusals_2",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[[coverage.flip]]
+id = "flip--upd_1+upd_2--Sel"
+negates = "Sel(a, b)"
+rules = [
+  "rule:crate::upd_1",
+  "rule:crate::upd_2",
+]
+status = "distinguished"
+killer = "cases/authorize-p2-held/case.toml"
+
+[compare]
+# The verdicts of kink's `compare` command (`krs kink compare`, `kink-flow compare`): a run
+# without --locked rewrites this section, and `compare --locked` checks that it is current.
+version = 28
+profile = "z3"
+z3_version = "5.3.3.0 430d19e697e2ec9bad79ff210d41b4a7a5fcfa3e 430d19e"
+protocol = "kink-implementation/1"
+
+[compare.spec]
+outcome = "admitted"
+
+# Each [[compare.verdict]] is one view of one implementation on one program, and its verdict:
+# equal (its end agrees with the definition's under the view), different (`difference`, the
+# first difference), could-not-apply (it declined the program; `reason`, its own words) or
+# not-compared (`reason` says why). `request_sha256` names the request it was given, and
+# `identity_sha256` its build (its `identity` file); a run that gave no answer keeps its rows.
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/au029-locked-void/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "3b3760115b0f991758c5e3e5c7cb8376cc1747064e2519d484086abf08e56c61"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/au029-unlocked-void/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "d533c431c09f12afa8422e1f1af6101681eb914fb2fc8e9e47e6b5633324c26b"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-accept/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "f9facf4981547be59e673073e2a81f0314969091193d89c125197b03ff3fe871"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-all-codes/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c13df91bacccdfe9ac8aa0cba694c1859f42e8d265e9abbb0c7ddb7a334cf199"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-auth-exists/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "08f229f453364b007bf40baa8cb960cec63ae544cdb7a157ae922e74a9959c3e"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-board-first/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "062c2499984f8844ee8036f191ae68e0ce5c1af9a266c918c663892fa40ec47c"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-checks-p1/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "eaee75a1d4c2edae232611569a41cb8103b08070bda06195e680b4e2f35d96a9"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-checks-p2/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "ac8e43d2d98f978c1dbb1ee85a76576b09d7b24e50b23030bc12d885728da5bc"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-nf-used/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "ba1c8568aa5253c8f1e8d77de2360939085977d68a78aefad5b5e73a124d5fe8"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-no-record/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "60ce9eb5fd60fabb1f15248263c4e0ee9b599720a0f91c745fc165f4e1252340"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-non-tee/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "21a976f79306fc3e1843b9d02f766df8b0ceb43a75074c2e60a239ff66a3f42c"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-p2-held/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "b9298299e3c9f4f548122855febf5d53cd15fb182dd6b07baff9cc151c321a1c"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-p2-recovery/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c4c8433d073e14bd866e340544a4b184f0fe69c9788e594952e1a60b23a09aa7"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-pin/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "1ac21cd5423addb877b0c8ff6eafb5dfbbb497d49710c19e5eadfd27f404b725"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-recovery/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "0379cf5102e1b5c5ba302e84f3e3eb5bf3ed810ab48f63d6a772766ba3b1a900"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-slot-g-unset/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "99920f3359becb049d801a7fd3ea9195bafc3fa3defc90eb5071dd336d572730"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-slot/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "012c74f293ae26bb5f9ef4a85e92f47eda6ae1a2112bf3f45bc589da2536fc3c"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-source/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "a762f99dfd2c49c1bd000f594db5be970ea2863c989b38f124ba7c0b8a21a64e"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-statement-inputs/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "f85b5df2eec81e277479b6cf8b1e9aadf6c1fce9c460ef1d7fc6d01ebe294688"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-statement-nf/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "30ce8a837c8f755a3545f04b9254c631b60d2cae9bd545ed819ff0b41fc07d49"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-statement-spent/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "bf6454006384b42a41c6e7f937cdcc93a5e8996e6704f84f4a176676e5b63097"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/authorize-tee-no-ticket/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "61c13f832f4178a9f65075e675dc92415ebe932c2f0bb0df203b2737bb5c6cf8"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/bf-call-accept/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "daf657580333ddb7316c9e3f85f068f369151d28057dbfef75435b5e79fd9064"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/bf-call-checks/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "215ceb5568441a29fa0e95b5bbf0861bfa3e6eb194b3a2ea66cd2768226b717e"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/bf-call-pending/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "df5291ed9a7096c41e88224ed61c376e50e530c4679010fda491ec4210d62fbc"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/bf-root-accept/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "cb0cbf3016a539bbfe35bd315e07ce30ff399ad3d5210fb2c96863c6b9e88819"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/bf-root-empty/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "ebeb34f412e88fe2566e21615e0c33e8aac91d607a5ece08b6c8dd86b427d17f"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/bf-root-refusals/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "8eac3ce42b3ebb15eda477f092bce4f5ca25595b047eae021d0907abd538403d"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/carry-bad/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "2d6b98605b5cea1207ca0103ca7f8c5b54fa45c58640a77c768154f91efbc1b2"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/carry-no-rule/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "09f98221688ece7bfde3aae192fefde92b0bad9635b27e06f7ae1f4b2988d806"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/carry-reissue/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "0bca2ef76454a12c872a53042b46282f0d9cef90819a16b95741d36aac04e690"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/carry-self/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "76d286cb5b29422eb5a21ad5e0fa77ce87f1cce7be9b85ac63d0ce466537653f"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-accept/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "35125942d0b2e268137fee6c80c45c9a2245b034e3202a60e09a781f37fb5d2b"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-dup-later/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "2b08a8d1bf4e6181f20218b83ec4aaab726e57edfd16ab188bc6d6e8cd342b9f"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-refusals/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "75570e6b95630574c5a6f1d2d89f2aa072e94f2c3e0960bf258feb4363bb176f"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/finalize/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "33e77b31519db5d08670411314e6308493c5270349713e3282f5d6dcd1c8238b"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/lookup-later/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "5f110c238df4d080c2ba8a0a2d9d3115216d4f9c0c06b4740baacb349a86adf2"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/oracle-p1-and-board-first/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "a6efdeab1bfd21fa4c39d313812a2c287a356ee03c59879b5491dc4000e1599f"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/oracle-p2-hold-and-recovery/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "f3ef4f62f0daa37c1dd3e5f79e6072677e64d8837d09c2f7c725a7ad7e10a33a"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/oracle-reissue-non-tee/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "6a3b91680f654f024c1405de7a17b2008862754984ec3333a74b97b33c3c98c3"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/oracle-seizure/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "473cda8577e79e697d5f01f16df514fb19511eea9fee6aaf1294777fbd503ac8"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/query/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "a329b33c418d50e6c3d80d9537ecc029aa18acd9ab9639b8379050720f93b3ac"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-accept/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "18895b1bce6e2e3daec804fe0b5578f3421ad8a3a00438e3babdf0f4475eea8b"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-nf-used/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "e10e6b8adcb31cb7639be4fdab0d79fde07c5574b14fa5771089329bc2c56453"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-no-charter/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c738fb34250d4f6ab0757a0c4ca975359b5d35574d25c5dcb682ea47966158cb"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-outside/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "86bdd58656f2ed709cc1efa37de54c3c4ca68ee8948021e2caa6bd11f929e194"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/recover/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c5e0da676a490cb61a87cfe2c9b0123838a65707788e57699babb79767022c8d"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/revoke-accept/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "90ce51391c3f7d4720406fab8686658f59a87fc8e18c14c238ab7aadf1ee661c"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/revoke-refusals/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "ba19b19599a36b6845ef287ffa3c51b266269e39558bd5fe8bf17670c97852d8"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/revoke-settled/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "a6ca970984d0a6b04f9d95f7fcd44749395c5f21aec98dec4de10c4ce861e8b7"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/seizure/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "39467bd78a29dd01ff76765e2102af2b8bd15a08963ce874c43bcb962fadcbd4"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/settle-final/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "4f54b97dd1a86a4f0925fff7750c8b4486331533d9b4b6ec79e5b78aa2e8486d"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/settle-none-leaf/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "a502924059e56d6c3fc97ea690091439f3e93dada178e4fcb08532d56e53f269"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/settle-released-pin/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "817e5e67454e388f71dd727de537c680c97b6743e5eba151623a988ed37ab2b4"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/settle-released/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "8d3efa46481e7c2594eeed59193c5afaafdd076dd8344190004897a7db38dd7a"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/settle-void/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "23a6feb774b2be3599ee829a61c565ba2a164a0076172a0135f7c5f04b937187"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/void-locked-carry/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "569e795f6540d9f9183ca67a5ffda73892cf41222e5c6a2a923f78b435851521"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/void-locked-leaf/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "61724e6a4baac967c6c3cda81132943909710c9197bdba95dc00c39b8b7f3f0a"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/void-locked-root/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "3a669a12d79635ed1828598f2757dba542043a04fcfeb596d3284b677b46bc23"

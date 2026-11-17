@@ -13,9 +13,9 @@ The primary target is an **existing address**: a plain secp256k1 key (ECDSA for 
 
 ## Required reading
 
-- `research/REPORT.md`: our state-of-the-art report. Its sections 1 (Form A and Form B), 3 (comparison tables) and 5.1 (six open gaps) frame the problem.
-- `research/lanes/`: the detailed lane findings that the report rests on.
-- `research/sources/`: the downloaded papers and their text. More ePrint PDFs are arriving in `sources/oneshot/` while you work; read what is there.
+- `/home/hoskinson/Projects/mpcexperiments/research/REPORT.md`: our state-of-the-art report. Its sections 1 (Form A and Form B), 3 (comparison tables) and 5.1 (six open gaps) frame the problem.
+- `/home/hoskinson/Projects/mpcexperiments/research/lanes/`: the detailed lane findings that the report rests on.
+- `/home/hoskinson/Projects/mpcexperiments/research/sources/`: the downloaded papers and their text. More ePrint PDFs are arriving in `sources/oneshot/` while you work; read what is there.
 
 Rule: cite a paper only after you have read it in full from the local copy. Mark anything you know only from memory or an abstract as "from memory, not checked".
 

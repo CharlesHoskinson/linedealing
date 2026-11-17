@@ -1,0 +1,11 @@
+# CP-004, CP-042: a landing that carries every statement empties RAM and the board, so the
+# seat may reboot
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { RestoreDone = { r = { Rd = { seat = 2, boot_ctr = 1, cp_seq = 0, whole = false } } } },
+  { RestoreDone = { r = { Rd = { seat = 3, boot_ctr = 1, cp_seq = 0, whole = false } } } },
+  { Land = { c = { CpOf = { seq = 1, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 102, pending_min = 103, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [{ Rd = { seat = 2, boot_ctr = 1, cp_seq = 0, whole = false } }, { Rd = { seat = 3, boot_ctr = 1, cp_seq = 0, whole = false } }] } }, mh = 1000 } },
+  { MayReboot = {} },
+]

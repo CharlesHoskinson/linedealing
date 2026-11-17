@@ -1,0 +1,165 @@
+# Plausible misreadings of AU-018 and AU-019 (revoke and the hold accumulator), ledger 9, and of AU-002 and AU-010 (finalize), ledger 10.
+
+[[mutation]]
+id = "au018-no-hold"
+expect = "kill"
+misunderstanding = "AU-018: a revoke does not add its tag to the hold accumulator"
+  [[mutation.edit]]
+  rule = "revoke"
+  find = "ListItem(Tag:Int) Holds:List"
+  replace = "Holds:List"
+
+[[mutation]]
+id = "au018-not-revoked"
+expect = "kill"
+misunderstanding = "AU-018: a revoke leaves the authorization's status"
+  [[mutation.edit]]
+  rule = "revoke"
+  find = "mapRecAuths ( revokeTag , A:Int , Records:List )"
+  replace = "Records:List"
+
+[[mutation]]
+id = "au018-refuse-ok"
+expect = "kill"
+misunderstanding = "AU-018: a refused revoke is reported ok"
+  [[mutation.edit]]
+  rule = "revoke-refuse"
+  find = "ListItem(refused ( revokeRefusals ( Records:List , A:Int , Tag:Int ) ))"
+  replace = "ListItem(ok)"
+
+[[mutation]]
+id = "au018-unknown-auth"
+expect = "kill"
+misunderstanding = "AU-018, ledger 9: a revoke may name an authorization no record holds"
+  [[mutation.edit]]
+  rule = "split_authorization--revoke_no_rule"
+  find = "notBool anyHit ( Rs:List , A:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "au018-any-tag"
+expect = "kill"
+misunderstanding = "AU-018, ledger 9: SetHold may carry another tag than the record's"
+  [[mutation.edit]]
+  rule = "split_authorization--revoke_no_rule"
+  find = "anyHitOtherTag ( Rs:List , A:Int , Tag:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "au018-tag-equal"
+expect = "kill"
+misunderstanding = "AU-018, ledger 9: SetHold must carry a tag other than the record's"
+  [[mutation.edit]]
+  rule = "split_authorization--any_hit_other_tag_2"
+  find = "(HoldTag:Int =/=Int Tag:Int)"
+  replace = "(HoldTag:Int ==Int Tag:Int)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_hit_other_tag_3"
+  find = "(HoldTag:Int =/=Int Tag:Int)"
+  replace = "(HoldTag:Int ==Int Tag:Int)"
+
+[[mutation]]
+id = "au018-twice"
+expect = "kill"
+misunderstanding = "AU-018, ledger 9: an authorization may be revoked twice"
+  [[mutation.edit]]
+  rule = "split_authorization--revoke_no_rule"
+  find = "anyRevoked ( allAuths ( Rs:List ) , A:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "au018-revoked-final"
+expect = "kill"
+misunderstanding = "AU-018: a revoked authorization is FINAL"
+  [[mutation.edit]]
+  rule = "split_authorization--revoke_in_1"
+  find = "stREVOKED"
+  replace = "stFINAL"
+
+[[mutation]]
+id = "au019-p1-revocable"
+expect = "kill"
+misunderstanding = "AU-019: an authorization of a P0 or P1 record is revocable"
+  [[mutation.edit]]
+  rule = "split_authorization--not_revocable_code_1"
+  find = "anyHitNotP2 ( Rs:List , A:Int )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--not_revocable_code_2"
+  find = "anyHitNotP2 ( Rs:List , A:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "au019-settled-revocable"
+expect = "kill"
+misunderstanding = "AU-019: a settled authorization is revocable"
+  [[mutation.edit]]
+  rule = "split_authorization--not_revocable_code_1"
+  find = "anySettled ( allAuths ( Rs:List ) , A:Int )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--not_revocable_code_2"
+  find = "anySettled ( allAuths ( Rs:List ) , A:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "au019-code-order"
+expect = "kill"
+misunderstanding = "AU-019: not_revocable is listed before no-rule"
+  [[mutation.edit]]
+  rule = "split_authorization--revoke_refusals"
+  find = "revokeNoRuleCode ( Rs:List , A:Int , Tag:Int ) notRevocableCode ( Rs:List , A:Int )"
+  replace = "notRevocableCode ( Rs:List , A:Int ) revokeNoRuleCode ( Rs:List , A:Int , Tag:Int )"
+
+[[mutation]]
+id = "au010-not-final"
+expect = "kill"
+misunderstanding = "AU-002, AU-010: a final authorize transaction leaves the authorization SUBMITTED"
+  [[mutation.edit]]
+  rule = "finalize"
+  find = "mapRecAuths ( finalTag ( H:Int ) , A:Int , Records:List )"
+  replace = "Records:List"
+
+[[mutation]]
+id = "au010-refuse-ok"
+expect = "kill"
+misunderstanding = "AU-002, ledger 10: a finalize of an authorization that is not SUBMITTED is reported ok"
+  [[mutation.edit]]
+  rule = "finalize-refuse"
+  find = "ListItem(refused ( finalizeRefusals ( allAuths ( Records:List ) , A:Int ) ))"
+  replace = "ListItem(ok)"
+
+[[mutation]]
+id = "au010-no-height"
+expect = "kill"
+misunderstanding = "AU-010: the final height is not recorded"
+  [[mutation.edit]]
+  rule = "split_authorization--final_in_1"
+  find = "ListItem(H:Int)"
+  replace = ".List"
+
+[[mutation]]
+id = "au002-refinalize"
+expect = "kill"
+misunderstanding = "AU-002, ledger 10: a FINAL or REVOKED authorization may be finalized again"
+  [[mutation.edit]]
+  rule = "split_authorization--finalize_refusals_1"
+  find = "notBool anySubmitted ( Bs:List , A:Int )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--finalize_refusals_2"
+  find = "notBool anySubmitted ( Bs:List , A:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "au002-any-status"
+expect = "kill"
+misunderstanding = "AU-002, ledger 10: an authorization of any status counts as SUBMITTED"
+  [[mutation.edit]]
+  rule = "split_authorization--any_submitted_2"
+  find = "(Status:Status ==K stSUBMITTED)"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_authorization--any_submitted_3"
+  find = "(Status:Status ==K stSUBMITTED)"
+  replace = "true"

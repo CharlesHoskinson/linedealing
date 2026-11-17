@@ -41,8 +41,8 @@ At t = 7, the hand-timed open ECDSA model includes 25 post-signature checks. At 
 
 The code explains two avoidable costs:
 
-- In [algebra.rs](impl/src/algebra.rs:140), Commitment::evaluate uses Horner evaluation but converts the small node index into a full Scalar before each point multiplication. [ed25519.rs](impl/src/ed25519.rs:423) does the same.
-- In [signing.rs](impl/src/signing.rs:160), partial creation calls verify_partial, which evaluates commitment polynomials again. Ed25519 serialization also repeats subgroup tests on already validated or internally generated points.
+- In [algebra.rs](/home/hoskinson/Projects/mpcexperiments/impl/src/algebra.rs:140), Commitment::evaluate uses Horner evaluation but converts the small node index into a full Scalar before each point multiplication. [ed25519.rs](/home/hoskinson/Projects/mpcexperiments/impl/src/ed25519.rs:423) does the same.
+- In [signing.rs](/home/hoskinson/Projects/mpcexperiments/impl/src/signing.rs:160), partial creation calls verify_partial, which evaluates commitment polynomials again. Ed25519 serialization also repeats subgroup tests on already validated or internally generated points.
 
 ### Split-line estimates
 
@@ -454,12 +454,12 @@ Measure the next implementation with continuous refill enabled, all three curves
 
 ### Local protocol and implementation
 
-- [DESIGN.md](design/enhancement/DESIGN.md): split algebra, envelopes, claims C1–C16, witness bounds, and original cost estimates.
-- [DECISIONS.md](design/enhancement/DECISIONS.md): decisions 21–25, arbitrary outside actors, access structures, fixed signer subsets, and joint ECDSA presigning.
-- [SCHEME.md](design/SCHEME.md): base dealing, transcript labels, public validation, complaints, anchors, and optimistic combination.
-- [PROOFS.md](design/PROOFS.md): ciphertext binding, complaint security, prime-order requirements, corruption bounds, nonce accounting, and restoration conditions.
-- [BENCHMARKS.md](impl/BENCHMARKS.md): measured microbenchmarks, hand-timed CPU, simulation scope, and omitted production costs.
-- [algebra.rs](impl/src/algebra.rs), [signing.rs](impl/src/signing.rs), [message.rs](impl/src/message.rs), [ed25519.rs](impl/src/ed25519.rs), and [Cargo.toml](impl/Cargo.toml): actual evaluation, verification, DH reuse, subgroup checks, and pinned libraries.
+- [DESIGN.md](/home/hoskinson/Projects/mpcexperiments/design/enhancement/DESIGN.md): split algebra, envelopes, claims C1–C16, witness bounds, and original cost estimates.
+- [DECISIONS.md](/home/hoskinson/Projects/mpcexperiments/design/enhancement/DECISIONS.md): decisions 21–25, arbitrary outside actors, access structures, fixed signer subsets, and joint ECDSA presigning.
+- [SCHEME.md](/home/hoskinson/Projects/mpcexperiments/design/SCHEME.md): base dealing, transcript labels, public validation, complaints, anchors, and optimistic combination.
+- [PROOFS.md](/home/hoskinson/Projects/mpcexperiments/design/PROOFS.md): ciphertext binding, complaint security, prime-order requirements, corruption bounds, nonce accounting, and restoration conditions.
+- [BENCHMARKS.md](/home/hoskinson/Projects/mpcexperiments/impl/BENCHMARKS.md): measured microbenchmarks, hand-timed CPU, simulation scope, and omitted production costs.
+- [algebra.rs](/home/hoskinson/Projects/mpcexperiments/impl/src/algebra.rs), [signing.rs](/home/hoskinson/Projects/mpcexperiments/impl/src/signing.rs), [message.rs](/home/hoskinson/Projects/mpcexperiments/impl/src/message.rs), [ed25519.rs](/home/hoskinson/Projects/mpcexperiments/impl/src/ed25519.rs), and [Cargo.toml](/home/hoskinson/Projects/mpcexperiments/impl/Cargo.toml): actual evaluation, verification, DH reuse, subgroup checks, and pinned libraries.
 
 ### Public sources opened
 

@@ -1,0 +1,15 @@
+# SL-004, SL-016 (DECISIONS 68, oracle pin `copied`): request 2 names the slot of request 1
+# before its authorization is in force: the open is not VOID. When the authorization of
+# request 2 comes into force, it is VOID SLOT_TAKEN; request 1 keeps precedence. The in_force
+# of request 1, whose own slot it holds, is not VOID; the in_force of request 5, which never
+# opened, is not VOID.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealC = { suite = "Bip340", epoch = 3, kcount = 1 } },
+  { OpenC = { eid = 1, pos = 10, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 1 } }] } },
+  { OpenC = { eid = 2, pos = 20, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 1 } }] } },
+  { InForce = { eid = 2, root = "Own" } },
+  { InForce = { eid = 1, root = "Own" } },
+  { InForce = { eid = 5, root = "Own" } },
+]

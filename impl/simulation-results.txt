@@ -1,144 +1,144 @@
 suite=1 mode=open n=9 f=2 t=3 requests=16 latency_ms=0 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=676.532 p99_ms=851.750 requests_per_second=18.784 elapsed_seconds=0.851781 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=606.490 p99_ms=725.543 requests_per_second=22.047 elapsed_seconds=0.725728 posts=576 board_batches=576 channel_batches=1152
 suite=1 mode=open n=9 f=2 t=3 requests=16 latency_ms=0 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=104.769 p99_ms=115.744 requests_per_second=132.551 elapsed_seconds=0.120708 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=87.973 p99_ms=95.256 requests_per_second=162.368 elapsed_seconds=0.098541 posts=576 board_batches=36 channel_batches=72
 suite=1 mode=open n=9 f=2 t=3 requests=16 latency_ms=25 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=810.708 p99_ms=979.658 requests_per_second=16.332 elapsed_seconds=0.979674 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=657.714 p99_ms=776.400 requests_per_second=20.608 elapsed_seconds=0.776414 posts=576 board_batches=576 channel_batches=1152
 suite=1 mode=open n=9 f=2 t=3 requests=16 latency_ms=25 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=327.121 p99_ms=335.650 requests_per_second=46.402 elapsed_seconds=0.344813 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=274.385 p99_ms=280.663 requests_per_second=56.208 elapsed_seconds=0.284658 posts=576 board_batches=36 channel_batches=72
 suite=1 mode=open n=9 f=2 t=3 requests=16 latency_ms=50 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=875.046 p99_ms=1034.566 requests_per_second=15.465 elapsed_seconds=1.034576 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=706.755 p99_ms=825.165 requests_per_second=19.390 elapsed_seconds=0.825177 posts=576 board_batches=576 channel_batches=1152
 suite=1 mode=open n=9 f=2 t=3 requests=16 latency_ms=50 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=498.437 p99_ms=517.709 requests_per_second=30.577 elapsed_seconds=0.523269 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=471.128 p99_ms=478.362 requests_per_second=33.219 elapsed_seconds=0.481657 posts=576 board_batches=36 channel_batches=72
 suite=1 mode=open n=9 f=2 t=7 requests=16 latency_ms=0 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=695.702 p99_ms=851.820 requests_per_second=18.735 elapsed_seconds=0.854021 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=617.731 p99_ms=740.995 requests_per_second=21.592 elapsed_seconds=0.741014 posts=576 board_batches=576 channel_batches=1152
 suite=1 mode=open n=9 f=2 t=7 requests=16 latency_ms=0 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=176.444 p99_ms=199.206 requests_per_second=76.677 elapsed_seconds=0.208667 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=101.376 p99_ms=110.067 requests_per_second=140.271 elapsed_seconds=0.114065 posts=576 board_batches=36 channel_batches=72
 suite=1 mode=open n=9 f=2 t=7 requests=16 latency_ms=25 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=819.953 p99_ms=989.236 requests_per_second=16.142 elapsed_seconds=0.991195 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=667.651 p99_ms=791.335 requests_per_second=20.219 elapsed_seconds=0.791351 posts=576 board_batches=576 channel_batches=1152
 suite=1 mode=open n=9 f=2 t=7 requests=16 latency_ms=25 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=369.749 p99_ms=380.967 requests_per_second=40.984 elapsed_seconds=0.390396 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=288.091 p99_ms=297.484 requests_per_second=53.071 elapsed_seconds=0.301485 posts=576 board_batches=36 channel_batches=72
 suite=1 mode=open n=9 f=2 t=7 requests=16 latency_ms=50 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=822.460 p99_ms=991.914 requests_per_second=16.130 elapsed_seconds=0.991923 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=717.019 p99_ms=840.550 requests_per_second=19.035 elapsed_seconds=0.840564 posts=576 board_batches=576 channel_batches=1152
 suite=1 mode=open n=9 f=2 t=7 requests=16 latency_ms=50 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=559.599 p99_ms=571.745 requests_per_second=27.548 elapsed_seconds=0.580811 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=492.590 p99_ms=501.389 requests_per_second=31.655 elapsed_seconds=0.505444 posts=576 board_batches=36 channel_batches=72
 suite=1 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=0 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=510.418 p99_ms=682.457 requests_per_second=23.444 elapsed_seconds=0.682468 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=466.281 p99_ms=609.130 requests_per_second=26.267 elapsed_seconds=0.609134 posts=432 board_batches=432 channel_batches=864
 suite=1 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=0 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=184.602 p99_ms=239.388 requests_per_second=65.813 elapsed_seconds=0.243112 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=110.794 p99_ms=139.537 requests_per_second=112.367 elapsed_seconds=0.142390 posts=432 board_batches=27 channel_batches=54
 suite=1 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=25 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=643.465 p99_ms=832.934 requests_per_second=19.209 elapsed_seconds=0.832949 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=516.619 p99_ms=658.149 requests_per_second=24.310 elapsed_seconds=0.658164 posts=432 board_batches=432 channel_batches=864
 suite=1 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=25 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=311.174 p99_ms=354.911 requests_per_second=44.604 elapsed_seconds=0.358716 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=251.422 p99_ms=279.830 requests_per_second=56.599 elapsed_seconds=0.282690 posts=432 board_batches=27 channel_batches=54
 suite=1 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=50 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=668.141 p99_ms=850.591 requests_per_second=18.668 elapsed_seconds=0.857082 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=565.840 p99_ms=707.295 requests_per_second=22.621 elapsed_seconds=0.707299 posts=432 board_batches=432 channel_batches=864
 suite=1 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=50 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=457.823 p99_ms=505.401 requests_per_second=31.428 elapsed_seconds=0.509100 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=400.798 p99_ms=430.467 requests_per_second=36.924 elapsed_seconds=0.433317 posts=432 board_batches=27 channel_batches=54
 suite=1 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=0 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=650.773 p99_ms=872.730 requests_per_second=18.333 elapsed_seconds=0.872737 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=486.055 p99_ms=639.465 requests_per_second=25.020 elapsed_seconds=0.639481 posts=432 board_batches=432 channel_batches=864
 suite=1 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=0 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=270.282 p99_ms=335.919 requests_per_second=46.724 elapsed_seconds=0.342439 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=134.897 p99_ms=170.433 requests_per_second=91.957 elapsed_seconds=0.173995 posts=432 board_batches=27 channel_batches=54
 suite=1 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=25 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=690.676 p99_ms=932.514 requests_per_second=17.157 elapsed_seconds=0.932555 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=534.323 p99_ms=688.739 requests_per_second=23.230 elapsed_seconds=0.688751 posts=432 board_batches=432 channel_batches=864
 suite=1 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=25 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=398.863 p99_ms=471.254 requests_per_second=33.513 elapsed_seconds=0.477422 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=279.123 p99_ms=314.376 requests_per_second=50.223 elapsed_seconds=0.318581 posts=432 board_batches=27 channel_batches=54
 suite=1 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=50 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=706.065 p99_ms=926.008 requests_per_second=17.278 elapsed_seconds=0.926009 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=584.022 p99_ms=739.403 requests_per_second=21.639 elapsed_seconds=0.739407 posts=432 board_batches=432 channel_batches=864
 suite=1 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=50 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=558.169 p99_ms=626.460 requests_per_second=25.289 elapsed_seconds=0.632678 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=429.488 p99_ms=465.228 requests_per_second=34.130 elapsed_seconds=0.468800 posts=432 board_batches=27 channel_batches=54
 suite=2 mode=open n=9 f=2 t=3 requests=16 latency_ms=0 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=692.632 p99_ms=844.435 requests_per_second=18.948 elapsed_seconds=0.844437 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=611.391 p99_ms=734.102 requests_per_second=21.795 elapsed_seconds=0.734106 posts=576 board_batches=576 channel_batches=1152
 suite=2 mode=open n=9 f=2 t=3 requests=16 latency_ms=0 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=118.153 p99_ms=141.739 requests_per_second=108.000 elapsed_seconds=0.148148 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=89.976 p99_ms=98.376 requests_per_second=157.141 elapsed_seconds=0.101819 posts=576 board_batches=36 channel_batches=72
 suite=2 mode=open n=9 f=2 t=3 requests=16 latency_ms=25 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=714.125 p99_ms=875.137 requests_per_second=18.283 elapsed_seconds=0.875145 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=661.032 p99_ms=784.463 requests_per_second=20.396 elapsed_seconds=0.784478 posts=576 board_batches=576 channel_batches=1152
 suite=2 mode=open n=9 f=2 t=3 requests=16 latency_ms=25 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=309.303 p99_ms=340.685 requests_per_second=46.080 elapsed_seconds=0.347220 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=278.557 p99_ms=286.574 requests_per_second=55.169 elapsed_seconds=0.290018 posts=576 board_batches=36 channel_batches=72
 suite=2 mode=open n=9 f=2 t=3 requests=16 latency_ms=50 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=850.359 p99_ms=1018.474 requests_per_second=15.710 elapsed_seconds=1.018483 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=712.811 p99_ms=837.427 requests_per_second=19.106 elapsed_seconds=0.837431 posts=576 board_batches=576 channel_batches=1152
 suite=2 mode=open n=9 f=2 t=3 requests=16 latency_ms=50 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=515.136 p99_ms=527.604 requests_per_second=29.958 elapsed_seconds=0.534083 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=475.853 p99_ms=483.553 requests_per_second=32.856 elapsed_seconds=0.486976 posts=576 board_batches=36 channel_batches=72
 suite=2 mode=open n=9 f=2 t=7 requests=16 latency_ms=0 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=698.936 p99_ms=866.911 requests_per_second=18.456 elapsed_seconds=0.866913 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=624.021 p99_ms=755.159 requests_per_second=21.187 elapsed_seconds=0.755176 posts=576 board_batches=576 channel_batches=1152
 suite=2 mode=open n=9 f=2 t=7 requests=16 latency_ms=0 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=205.323 p99_ms=218.744 requests_per_second=69.296 elapsed_seconds=0.230893 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=109.826 p99_ms=118.161 requests_per_second=130.678 elapsed_seconds=0.122439 posts=576 board_batches=36 channel_batches=72
 suite=2 mode=open n=9 f=2 t=7 requests=16 latency_ms=25 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=737.434 p99_ms=929.121 requests_per_second=17.127 elapsed_seconds=0.934215 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=673.826 p99_ms=802.704 requests_per_second=19.933 elapsed_seconds=0.802708 posts=576 board_batches=576 channel_batches=1152
 suite=2 mode=open n=9 f=2 t=7 requests=16 latency_ms=25 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=392.013 p99_ms=422.918 requests_per_second=36.794 elapsed_seconds=0.434856 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=297.662 p99_ms=306.740 requests_per_second=51.456 elapsed_seconds=0.310944 posts=576 board_batches=36 channel_batches=72
 suite=2 mode=open n=9 f=2 t=7 requests=16 latency_ms=50 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=843.052 p99_ms=1008.697 requests_per_second=15.862 elapsed_seconds=1.008709 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=724.023 p99_ms=854.504 requests_per_second=18.724 elapsed_seconds=0.854518 posts=576 board_batches=576 channel_batches=1152
 suite=2 mode=open n=9 f=2 t=7 requests=16 latency_ms=50 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=594.255 p99_ms=608.568 requests_per_second=25.762 elapsed_seconds=0.621062 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=497.882 p99_ms=507.119 requests_per_second=31.292 elapsed_seconds=0.511307 posts=576 board_batches=36 channel_batches=72
 suite=2 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=0 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=584.452 p99_ms=765.428 requests_per_second=20.903 elapsed_seconds=0.765439 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=458.437 p99_ms=592.280 requests_per_second=27.013 elapsed_seconds=0.592297 posts=432 board_batches=432 channel_batches=864
 suite=2 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=0 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=179.315 p99_ms=236.050 requests_per_second=66.753 elapsed_seconds=0.239690 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=93.604 p99_ms=116.222 requests_per_second=134.716 elapsed_seconds=0.118768 posts=432 board_batches=27 channel_batches=54
 suite=2 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=25 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=559.273 p99_ms=742.734 requests_per_second=21.542 elapsed_seconds=0.742746 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=505.494 p99_ms=638.216 requests_per_second=25.070 elapsed_seconds=0.638220 posts=432 board_batches=432 channel_batches=864
 suite=2 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=25 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=348.547 p99_ms=407.591 requests_per_second=38.864 elapsed_seconds=0.411692 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=238.185 p99_ms=261.351 requests_per_second=60.623 elapsed_seconds=0.263928 posts=432 board_batches=27 channel_batches=54
 suite=2 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=50 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=642.329 p99_ms=821.797 requests_per_second=19.469 elapsed_seconds=0.821805 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=558.588 p99_ms=690.432 requests_per_second=23.173 elapsed_seconds=0.690447 posts=432 board_batches=432 channel_batches=864
 suite=2 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=50 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=466.174 p99_ms=506.666 requests_per_second=31.342 elapsed_seconds=0.510502 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=390.669 p99_ms=413.457 requests_per_second=38.457 elapsed_seconds=0.416051 posts=432 board_batches=27 channel_batches=54
 suite=2 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=0 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=645.086 p99_ms=873.917 requests_per_second=18.308 elapsed_seconds=0.873919 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=471.232 p99_ms=612.021 requests_per_second=26.142 elapsed_seconds=0.612031 posts=432 board_batches=432 channel_batches=864
 suite=2 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=0 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=265.069 p99_ms=317.249 requests_per_second=49.423 elapsed_seconds=0.323737 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=121.952 p99_ms=148.310 requests_per_second=105.469 elapsed_seconds=0.151704 posts=432 board_batches=27 channel_batches=54
 suite=2 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=25 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=661.996 p99_ms=861.835 requests_per_second=18.565 elapsed_seconds=0.861845 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=520.041 p99_ms=661.184 requests_per_second=24.198 elapsed_seconds=0.661200 posts=432 board_batches=432 channel_batches=864
 suite=2 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=25 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=411.598 p99_ms=467.233 requests_per_second=33.815 elapsed_seconds=0.473165 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=262.243 p99_ms=289.370 requests_per_second=54.652 elapsed_seconds=0.292761 posts=432 board_batches=27 channel_batches=54
 suite=2 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=50 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=705.609 p99_ms=930.208 requests_per_second=17.200 elapsed_seconds=0.930218 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=570.469 p99_ms=712.624 requests_per_second=22.452 elapsed_seconds=0.712635 posts=432 board_batches=432 channel_batches=864
 suite=2 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=50 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=578.121 p99_ms=648.235 requests_per_second=24.455 elapsed_seconds=0.654269 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=413.729 p99_ms=440.503 requests_per_second=36.042 elapsed_seconds=0.443925 posts=432 board_batches=27 channel_batches=54
 suite=3 mode=open n=9 f=2 t=3 requests=16 latency_ms=0 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=830.909 p99_ms=1031.701 requests_per_second=15.508 elapsed_seconds=1.031703 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=632.039 p99_ms=776.070 requests_per_second=20.617 elapsed_seconds=0.776074 posts=576 board_batches=576 channel_batches=1152
 suite=3 mode=open n=9 f=2 t=3 requests=16 latency_ms=0 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=211.676 p99_ms=238.979 requests_per_second=65.397 elapsed_seconds=0.244660 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=128.587 p99_ms=152.019 requests_per_second=102.983 elapsed_seconds=0.155365 posts=576 board_batches=36 channel_batches=72
 suite=3 mode=open n=9 f=2 t=3 requests=16 latency_ms=25 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=881.756 p99_ms=1075.308 requests_per_second=14.820 elapsed_seconds=1.079591 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=683.016 p99_ms=827.206 requests_per_second=19.342 elapsed_seconds=0.827224 posts=576 board_batches=576 channel_batches=1152
 suite=3 mode=open n=9 f=2 t=3 requests=16 latency_ms=25 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=389.485 p99_ms=416.772 requests_per_second=37.869 elapsed_seconds=0.422507 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=317.428 p99_ms=340.734 requests_per_second=46.390 elapsed_seconds=0.344899 posts=576 board_batches=36 channel_batches=72
 suite=3 mode=open n=9 f=2 t=3 requests=16 latency_ms=50 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=829.279 p99_ms=1008.730 requests_per_second=15.861 elapsed_seconds=1.008739 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=733.093 p99_ms=878.135 requests_per_second=18.220 elapsed_seconds=0.878151 posts=576 board_batches=576 channel_batches=1152
 suite=3 mode=open n=9 f=2 t=3 requests=16 latency_ms=50 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=573.900 p99_ms=615.944 requests_per_second=25.740 elapsed_seconds=0.621605 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=515.877 p99_ms=538.246 requests_per_second=29.498 elapsed_seconds=0.542417 posts=576 board_batches=36 channel_batches=72
 suite=3 mode=open n=9 f=2 t=7 requests=16 latency_ms=0 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=809.996 p99_ms=1020.832 requests_per_second=15.585 elapsed_seconds=1.026631 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=649.263 p99_ms=804.171 requests_per_second=19.896 elapsed_seconds=0.804187 posts=576 board_batches=576 channel_batches=1152
 suite=3 mode=open n=9 f=2 t=7 requests=16 latency_ms=0 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=326.145 p99_ms=360.506 requests_per_second=43.118 elapsed_seconds=0.371074 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=169.546 p99_ms=200.775 requests_per_second=78.077 elapsed_seconds=0.204925 posts=576 board_batches=36 channel_batches=72
 suite=3 mode=open n=9 f=2 t=7 requests=16 latency_ms=25 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=784.146 p99_ms=989.662 requests_per_second=16.167 elapsed_seconds=0.989664 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=699.463 p99_ms=855.555 requests_per_second=18.701 elapsed_seconds=0.855573 posts=576 board_batches=576 channel_batches=1152
 suite=3 mode=open n=9 f=2 t=7 requests=16 latency_ms=25 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=494.328 p99_ms=529.894 requests_per_second=29.575 elapsed_seconds=0.541000 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=353.558 p99_ms=384.794 requests_per_second=41.146 elapsed_seconds=0.388862 posts=576 board_batches=36 channel_batches=72
 suite=3 mode=open n=9 f=2 t=7 requests=16 latency_ms=50 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=892.067 p99_ms=1154.182 requests_per_second=13.862 elapsed_seconds=1.154194 posts=576 board_batches=576 channel_batches=1152
+completed=16 p50_ms=750.683 p99_ms=909.349 requests_per_second=17.595 elapsed_seconds=0.909366 posts=576 board_batches=576 channel_batches=1152
 suite=3 mode=open n=9 f=2 t=7 requests=16 latency_ms=50 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=687.860 p99_ms=731.391 requests_per_second=21.564 elapsed_seconds=0.741986 posts=576 board_batches=36 channel_batches=72
+completed=16 p50_ms=556.519 p99_ms=588.494 requests_per_second=26.993 elapsed_seconds=0.592740 posts=576 board_batches=36 channel_batches=72
 suite=3 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=0 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=621.021 p99_ms=829.545 requests_per_second=19.287 elapsed_seconds=0.829558 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=508.057 p99_ms=687.500 requests_per_second=23.273 elapsed_seconds=0.687504 posts=432 board_batches=432 channel_batches=864
 suite=3 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=0 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=317.486 p99_ms=389.195 requests_per_second=40.724 elapsed_seconds=0.392891 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=182.054 p99_ms=246.062 requests_per_second=64.329 elapsed_seconds=0.248721 posts=432 board_batches=27 channel_batches=54
 suite=3 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=25 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=767.080 p99_ms=1060.511 requests_per_second=15.087 elapsed_seconds=1.060521 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=561.398 p99_ms=743.859 requests_per_second=21.509 elapsed_seconds=0.743882 posts=432 board_batches=432 channel_batches=864
 suite=3 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=25 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=480.345 p99_ms=553.987 requests_per_second=28.696 elapsed_seconds=0.557573 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=323.121 p99_ms=386.807 requests_per_second=41.082 elapsed_seconds=0.389468 posts=432 board_batches=27 channel_batches=54
 suite=3 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=50 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=739.988 p99_ms=975.469 requests_per_second=16.402 elapsed_seconds=0.975480 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=610.542 p99_ms=792.101 requests_per_second=20.199 elapsed_seconds=0.792121 posts=432 board_batches=432 channel_batches=864
 suite=3 mode=sealed-k8 n=9 f=2 t=3 requests=16 latency_ms=50 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=642.867 p99_ms=738.464 requests_per_second=21.562 elapsed_seconds=0.742030 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=473.466 p99_ms=537.339 requests_per_second=29.630 elapsed_seconds=0.540001 posts=432 board_batches=27 channel_batches=54
 suite=3 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=0 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=789.977 p99_ms=1084.702 requests_per_second=14.751 elapsed_seconds=1.084708 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=553.047 p99_ms=774.709 requests_per_second=20.653 elapsed_seconds=0.774714 posts=432 board_batches=432 channel_batches=864
 suite=3 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=0 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=579.761 p99_ms=684.550 requests_per_second=23.167 elapsed_seconds=0.690651 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=274.495 p99_ms=366.405 requests_per_second=43.268 elapsed_seconds=0.369791 posts=432 board_batches=27 channel_batches=54
 suite=3 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=25 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=773.276 p99_ms=1093.967 requests_per_second=14.311 elapsed_seconds=1.118053 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=606.798 p99_ms=833.171 requests_per_second=19.203 elapsed_seconds=0.833199 posts=432 board_batches=432 channel_batches=864
 suite=3 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=25 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=717.987 p99_ms=826.443 requests_per_second=19.231 elapsed_seconds=0.832000 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=421.558 p99_ms=512.319 requests_per_second=30.991 elapsed_seconds=0.516279 posts=432 board_batches=27 channel_batches=54
 suite=3 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=50 batch_size=1 board_ms=1 seed=42
-completed=16 p50_ms=823.035 p99_ms=1110.372 requests_per_second=14.107 elapsed_seconds=1.134179 posts=432 board_batches=432 channel_batches=864
+completed=16 p50_ms=654.158 p99_ms=877.700 requests_per_second=18.229 elapsed_seconds=0.877704 posts=432 board_batches=432 channel_batches=864
 suite=3 mode=sealed-k8 n=9 f=2 t=7 requests=16 latency_ms=50 batch_size=16 board_ms=1 seed=42
-completed=16 p50_ms=863.822 p99_ms=974.686 requests_per_second=16.320 elapsed_seconds=0.980405 posts=432 board_batches=27 channel_batches=54
+completed=16 p50_ms=567.124 p99_ms=658.562 requests_per_second=24.162 elapsed_seconds=0.662186 posts=432 board_batches=27 channel_batches=54

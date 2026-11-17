@@ -1,0 +1,26 @@
+# Ambiguity ledger: split-slots
+
+One ledger for the capability, shared by the Lean oracle (this package) and the
+Quint model of LOOP item 14. Each entry is a sentence of
+`openspec/changes/add-split-line-dealing/specs/split-slots/spec.md` that
+admits more than one reading, or a case the oracle must answer and the spec
+does not state. Where the spec is silent, the oracle refuses and the entry
+says with which code.
+
+- **Status.** `open`: no ruling yet. `ruled`: the spec owner chose a reading.
+  `held`: a reading is applied until a ruling replaces it.
+- **Gate.** `gates.sh oracle slots` fails while any entry is `open`.
+- **Spec version.** The commit the entry was read at.
+
+| # | ID | Sentence | Readings | Found by | Status | Ruling | Spec version |
+|---|---|---|---|---|---|---|---|
+| 1 | SL-004, SL-005, SL-009, SL-010 | the request events "lapses", "ends", "claim", "in force" | an event that no request lifecycle allows: an `in_force` or `lapse` of a request that is in force, lapsed or ended; a `reserve` of a request not in force; a `reserve`, `claim` or `end` of an ended request | oracle author | held | No requirement defines these events. The oracle refuses each with the harness code `no-rule` and changes nothing. | 93ec63b |
+| 2 | SL-006 | "When an authorization for a request comes into force, the slot ledger SHALL give precedence ... to that request" | a header that names an ECDSA slot after its request is already in force: (a) no precedence, the trigger has passed; (b) precedence at the open | oracle author | held | Reading (b): the oracle applies SL-006 at the open as well, so the in-force request gets precedence on the slots its later headers name. Reading (a) would leave an authorized request without a slot. | 93ec63b |
+| 3 | SL-006, SL-017 | SL-006 sets `prec`; SL-017 orders `bstat` forward | the `bstat` of an ECDSA slot when SL-006 gives precedence | oracle author | held | The oracle moves the slot from UNNAMED to NAMED when SL-006 sets `prec`, so `prec ≠ none` always goes with `bstat ≥ NAMED` and SL-017 holds on ECDSA slots too. | 93ec63b |
+| 4 | SL-004, Q-003 | "the earliest header in board order" | headers that reach the oracle out of board order | oracle author | held | The oracle judges headers in the order the operations give them; an `open_c` or `open_e` with a board position at or below the last one is refused with `no-rule` (Q-003: board order is the order of record). | 93ec63b |
+| 5 | SL-004, SL-022 | "the committee slot it names" | a header that names a slot that was never dealt | oracle author | held | No requirement defines a precedence on an undealt slot. The open is refused with `no-rule`. The SL-022 scenario "header named" is then the dealt-and-named case only. | 93ec63b |
+| 6 | SL-018, SL-019, SL-020, SL-030 | the seat slot states free, bound to `d`, burned | prohibited moves without a code: release on a free or burned slot, release of a bound slot that is not current, bind of a slot bound to another digest, bind or burn of a burned slot, a second `seat_put` of one key, any other seat operation on a key the seat does not hold. A bind for the digest the slot already holds is a later ack round: it can make the slot current and never makes it not current | oracle author | held | The spec gives a code only for SL-020 (`slot_bound`, release for another digest). Every other prohibited move is refused with `no-rule` and changes nothing. | 93ec63b |
+| 7 | SL-020, SL-021, SL-027 | "a restored seat slot", "whole-committee restart" | the oracle has no seat restore or rollback | oracle author | held | Restore, rollback and the restart burn are split-checkpoint (CP-020, CP-021, CP-029). The oracle applies SL-020 to every bound slot, and C12 (`C12_run_one_ticket`) is stated for runs without a rollback. | 93ec63b |
+| 8 | SL-018, SL-019 | "Where `mode = TEE`" | seat operations when `mode = NON_TEE` | oracle author | held | The seat slots are a TEE structure. In NON_TEE mode every seat operation is refused with `no-rule`. | 93ec63b |
+| 9 | SL-005, SL-012, SL-016, SL-025, SL-030 | domains and inputs of the pure checks | `B = 0` (SL-012 says "at least 1"); `t = 0`; a header that names one slot twice; `burn_range` with `lo > hi`; a lapse is a fact, not a computed timeout; SL-016 with no precedence | oracle author | held | `B = 0`, `t = 0`, a repeated name and `lo > hi` are outside the domain sentences: refused with `outside-capability`, state unchanged. The lapse is an input operation (SL-005 names no timer). SL-016 gives `SLOT_TAKEN` only when `prec` is another request; a burned slot with no precedence is judged by SL-012 to SL-014. The SL-030 burn of a seat slot is its own operation, not tied to a request id. | 93ec63b |
+| 10 | SL-005, SL-010 | "hold the precedence of that request lapsed on every slot where it holds `prec`, also on a slot taken after `b + Δ_c`" (DECISIONS 63) | the `lapse` event comes at `b + Δ_c`; a header that opens later takes `prec` | oracle author | held | `lapse` stays an input event at `b + Δ_c` (entry 9) and puts the request in `lapsed`; from then on a slot whose `prec` a lapsed request takes at `open_c` burns at once (`burnIfLapsed`, SL-010). `C13_run_lapsed_burned` proves that every committee slot under a lapsed precedence is BURNED. | 04a3c4f |

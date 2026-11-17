@@ -1,0 +1,9 @@
+# RQ-001: n = 5, f = 1 gives w = 3, t = 4, q = 4
+[inputs]
+params = { Params = { n = 5, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { ColdStart = { intact = 3, signers = 3 } },
+  { ColdStart = { intact = 3, signers = 4 } },
+  { Eks = { e = 1, acks = [3, 3, 3, 3, 3], sigs = 3 } },
+  { Eks = { e = 1, acks = [3, 3, 3, 3, 3], sigs = 4 } },
+]

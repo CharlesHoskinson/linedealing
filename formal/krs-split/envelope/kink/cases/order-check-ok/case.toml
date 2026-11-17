@@ -1,0 +1,8 @@
+# EN-023: the ordering block b = 879 with delta_c 20 gives exp_c = 899 below exp = 900: ok, no state change.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { OrderCheck = { exp = 900, b = 879 } },
+]

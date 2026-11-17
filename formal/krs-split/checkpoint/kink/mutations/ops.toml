@@ -1,0 +1,10 @@
+# Misreadings of the run itself (`runOps`).
+
+[[mutation]]
+id = "run-no-end"
+expect = "kill"
+misunderstanding = "CP-003: a run with no operation left has no end; the node waits for more operations instead of answering"
+  [[mutation.edit]]
+  rule = "done"
+  find = "<ops> .List </ops>"
+  replace = "<ops> .List </ops> requires false"

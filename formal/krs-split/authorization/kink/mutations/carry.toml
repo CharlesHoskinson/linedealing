@@ -1,0 +1,86 @@
+# Plausible misreadings of AU-021 and AU-022 (the carried VOID leaf of a reissue) and ledger 6.
+
+[[mutation]]
+id = "au021-carry-ignored"
+expect = "kill"
+misunderstanding = "AU-021: an accepted reissue does not settle auth_0"
+  [[mutation.edit]]
+  rule = "authorize"
+  find = "afterCarry ( qOf ( Params:Params ) , carryOf ( C:Call ) , Records:List )"
+  replace = "Records:List"
+
+[[mutation]]
+id = "au021-statement-before-carry"
+expect = "kill"
+misunderstanding = "AU-021: the reissue's statement is checked against the records before the carried settlement"
+  [[mutation.edit]]
+  rule = "split_authorization--authorize_refusals_1"
+  find = "statementCode ( Mode:Mode , Q:Int , Holds:List , Records:List , afterCarry ( Q:Int , Carry:List , Records:List ) , C:Call )"
+  replace = "statementCode ( Mode:Mode , Q:Int , Holds:List , Records:List , Records:List , C:Call )"
+
+[[mutation]]
+id = "au021-no-rule-after-carry"
+expect = "kill"
+misunderstanding = "AU-021, ledger 6: the carried auth_0 must be unsettled after its own settlement"
+  [[mutation.edit]]
+  rule = "split_authorization--statement_code_1"
+  find = "allAuths ( Rs0:List )"
+  replace = "allAuths ( Rs1:List )"
+
+[[mutation]]
+id = "au021-carry-any-auth"
+expect = "kill"
+misunderstanding = "AU-021, ledger 6: a carry may name an auth_0 with no unsettled authorization"
+  [[mutation.edit]]
+  rule = "split_authorization--statement_code_1"
+  find = "carryNoRule ( Q:Int , Carry:List , allAuths ( Rs0:List ) )"
+  replace = "false"
+
+[[mutation]]
+id = "au021-carry-final"
+expect = "kill"
+misunderstanding = "AU-021: the carried leaf settles auth_0 FINAL"
+  [[mutation.edit]]
+  rule = "split_authorization--after_carry_2"
+  find = "settleAll ( Auth0:Int , setVOID , Rs:List )"
+  replace = "settleAll ( Auth0:Int , setFINAL , Rs:List )"
+
+[[mutation]]
+id = "au021-carry-self"
+expect = "kill"
+misunderstanding = "AU-021, ledger 5: a reissue may carry its own auth as auth_0"
+  [[mutation.edit]]
+  rule = "split_authorization--fresh_auth_2"
+  find = "(notBool authExists ( Bs:List , Auth:Int )) andThenBool (Auth0:Int =/=Int Auth:Int)"
+  replace = "notBool authExists ( Bs:List , Auth:Int )"
+
+[[mutation]]
+id = "au022-any-outcome"
+expect = "kill"
+misunderstanding = "AU-022: a carried leaf with an outcome other than VOID is valid"
+  [[mutation.edit]]
+  rule = "split_authorization--carry_ok_1"
+  find = "(Outcome:Settled ==K setVOID) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "au022-more-than-q"
+expect = "kill"
+misunderstanding = "AU-022: a carried leaf needs more than q signatures"
+  [[mutation.edit]]
+  rule = "split_authorization--carry_ok_1"
+  find = "(Q:Int <=Int Sigs:Int)"
+  replace = "(Q:Int <Int Sigs:Int)"
+
+[[mutation]]
+id = "au022-unchecked"
+expect = "kill"
+misunderstanding = "AU-022: a carry that is not valid is no bad_carry"
+  [[mutation.edit]]
+  rule = "split_authorization--carry_code_2"
+  find = "carryOk ( Q:Int , K:Carry )"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_authorization--carry_code_3"
+  find = "carryOk ( Q:Int , K:Carry )"
+  replace = "true"

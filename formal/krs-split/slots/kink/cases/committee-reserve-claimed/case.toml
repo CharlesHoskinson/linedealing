@@ -1,0 +1,18 @@
+# SL-008, SL-009, SL-017: reserve only a NAMED slot, claim only a RESERVED one, never out of BURNED.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealC = { suite = "Bip340", epoch = 3, kcount = 4 } },
+  { OpenC = { eid = 1, pos = 10, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 1 } }, { Ck = { suite = "Bip340", epoch = 3, idx = 2 } }] } },
+  { OpenC = { eid = 2, pos = 20, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 3 } }] } },
+  { OpenC = { eid = 3, pos = 30, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 4 } }] } },
+  { InForce = { eid = 1, root = "Own" } },
+  { InForce = { eid = 2, root = "Own" } },
+  { InForce = { eid = 3, root = "Own" } },
+  { BurnRange = { suite = "Bip340", epoch = 3, lo = 2, hi = 2 } },
+  { Reserve = { eid = 1 } },
+  { Reserve = { eid = 3 } },
+  { ClaimOp = { eid = 3 } },
+  { ClaimOp = { eid = 2 } },
+  { Reserve = { eid = 3 } },
+]

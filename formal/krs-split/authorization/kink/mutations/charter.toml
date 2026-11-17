@@ -1,0 +1,76 @@
+# Plausible misreadings of AU-011 (board-first charters) and of the charter domain (ledger 5).
+
+[[mutation]]
+id = "au011-p2-allowed"
+expect = "kill"
+misunderstanding = "AU-011: board_first is forbidden only with a stateful predicate, so a board-first P2 charter registers"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_forbidden_code_1"
+  find = "(P:Profile ==K profP2) orElseBool Stateful:Bool"
+  replace = "Stateful:Bool"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_forbidden_code_2"
+  find = "(P:Profile ==K profP2) orElseBool Stateful:Bool"
+  replace = "Stateful:Bool"
+
+[[mutation]]
+id = "au011-stateful-allowed"
+expect = "kill"
+misunderstanding = "AU-011: board_first is forbidden only with P2, so a board-first charter with a stateful predicate registers"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_forbidden_code_1"
+  find = "(P:Profile ==K profP2) orElseBool Stateful:Bool"
+  replace = "(P:Profile ==K profP2)"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_forbidden_code_2"
+  find = "(P:Profile ==K profP2) orElseBool Stateful:Bool"
+  replace = "(P:Profile ==K profP2)"
+
+[[mutation]]
+id = "au011-without-bf"
+expect = "kill"
+misunderstanding = "AU-011: a P2 or stateful charter is board_first_forbidden even when it does not set board_first"
+  [[mutation.edit]]
+  rule = "split_authorization--charter_refusals"
+  find = "bfForbiddenCode ( P:Profile , Bf:Bool , Stateful:Bool )"
+  replace = "bfForbiddenCode ( P:Profile , true , Stateful:Bool )"
+
+[[mutation]]
+id = "au011-dup-cid"
+expect = "kill"
+misunderstanding = "AU-011, ledger 5: a charter id may register twice"
+  [[mutation.edit]]
+  rule = "split_authorization--cid_code_1"
+  find = "hasCid ( Chs:List , Cid:Int )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--cid_code_2"
+  find = "hasCid ( Chs:List , Cid:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "au011-code-order"
+expect = "kill"
+misunderstanding = "AU-011: outside-capability is listed before board_first_forbidden"
+  [[mutation.edit]]
+  rule = "split_authorization--charter_refusals"
+  find = "bfForbiddenCode ( P:Profile , Bf:Bool , Stateful:Bool ) cidCode ( Chs:List , Cid:Int )"
+  replace = "cidCode ( Chs:List , Cid:Int ) bfForbiddenCode ( P:Profile , Bf:Bool , Stateful:Bool )"
+
+[[mutation]]
+id = "au011-prepend"
+expect = "kill"
+misunderstanding = "AU-011: a new charter goes before the registered ones"
+  [[mutation.edit]]
+  rule = "charter"
+  find = "Charters:List ListItem(charter ( Cid:Int , Profile:Profile , BoardFirst:Bool ))"
+  replace = "ListItem(charter ( Cid:Int , Profile:Profile , BoardFirst:Bool )) Charters:List"
+
+[[mutation]]
+id = "au011-refuse-accepts"
+expect = "kill"
+misunderstanding = "AU-011: a refused charter is reported as accepted"
+  [[mutation.edit]]
+  rule = "charter-refuse"
+  find = "ListItem(refused ( charterRefusals ( Charters:List , Cid:Int , Profile:Profile , BoardFirst:Bool , Stateful:Bool ) ))"
+  replace = "ListItem(accepted)"

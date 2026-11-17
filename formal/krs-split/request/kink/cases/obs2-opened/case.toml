@@ -1,0 +1,12 @@
+# RQ-028: an OBS set before ADMITTED is refused with no-rule.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { HostFee = { h = 50, m = 15 } },
+  { HostFee = { h = 60, m = 25 } },
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { Open = { eid = 1, kk = 3, ll = 1, collecting = false, npos = 0, rates = [10, 20, 30] } },
+  { Obs2 = { eid = 1, gen1_missed = true, heights = [60, 60, 60] } },
+]

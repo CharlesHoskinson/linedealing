@@ -1,0 +1,6 @@
+# CP-008: pending_min = h + 2 is a gap
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }, { PoolOf = { pool = 2, h = 100, pending_min = 102, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+]

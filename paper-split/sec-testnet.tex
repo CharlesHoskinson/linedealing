@@ -1,0 +1,29 @@
+\section{Live spends}\label{sec:testnet}
+
+The prototype's committee, nine nodes with threshold seven, controls one address on each of five public test networks and signs a spend from it. Every spend in \cref{tab:testnet} is confirmed on its network and sends the funds back to the wallet that funded the address. No single key signs any of them: each signature is the sum of the committee's partials and the actor's contribution, as in \cref{sec:construction}.
+
+On Bitcoin signet, Cardano preprod and Solana devnet each spend runs the whole request: the envelope, the board, the release and the combination. Bitcoin signs once with ECDSA from a P2WPKH output, over the BIP143 sighash, and once with BIP340 from the key path of a P2TR output with the BIP86 tweak. Cardano signs with Ed25519 for an enterprise address, over the BLAKE2b-256 hash of the transaction body. Solana signs a system transfer with Ed25519. On Sepolia and Midnight Preview the same committee signs with the same slots and the same combination, without the envelope, which has no host format for these two chains. Sepolia takes an EIP-1559 transfer signed with ECDSA. On Midnight the committee is its own unshielded wallet. It signs a registration of its NIGHT for DUST and then the transfer of all its NIGHT, each with BIP340 over the SHA-256 hash of the signature data, and the DUST pays the fee.
+
+Transactions of each kind that the committee signs are also checked against tools that do not share the prototype's code. Bitcoin Core in regtest accepts and mines a committee spend of a mined coinbase for each of the two output types. For Cardano, \texttt{cardano-cli} reads the signed transaction and returns its transaction id. For Solana, \texttt{solana decode-transaction} verifies the committee signature. The Midnight ledger's own signature check accepts the committee signature. The sender that EIP-1559 recovers from the Sepolia signature is the committee address.
+
+The runs do not exercise the distributed parts of the protocol. All parties run in one process, the committee and actor shares come from a trusted dealer instead of the committee's key generation, the ECDSA slots come from the ideal functionalities of \cref{sec:ecdsa-slots}, and the board is in memory.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{2.7cm}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+Network & Signature & Block & Spend transaction \\
+\midrule
+Bitcoin signet & ECDSA, P2WPKH, envelope & 331087 & \texttt{\seqsplit{79d574fe8b4623ceb9bca48e32e1df0d37dd9668441721c60e28b39f99c67b59}} \\
+Bitcoin signet & BIP340, P2TR key path, envelope & 331089 & \texttt{\seqsplit{7d7eb102955836ddfb066fac2fb328cb054c6ea003b730da698cd1e9d1eacf21}} \\
+Ethereum Sepolia & ECDSA, EIP-1559 & 12145512 & \texttt{\seqsplit{0xae54d21ce2b91cae8e4170036f18e0f0999c6139f71829480720b808c3a534cb}} \\
+Cardano preprod & Ed25519, envelope & 5418202 & \texttt{\seqsplit{3a2cdfc001eacc3dfb99fb6e1f8a741b8b4e4b4c51ad8e6ea14a4e699129007b}} \\
+Solana devnet & Ed25519, envelope & slot 522816069 & \texttt{\seqsplit{5RyGLuAZcoR62QoLaaSu8pSFNrERPhCStpGwWJ1cJWYh4TKk9boBMzn43dGAPAFbqLiehXdWmw1zXB24AgrFzePr}} \\
+Midnight Preview & BIP340, DUST registration & 130887 & \texttt{\seqsplit{8ef47232392e08b60e16960eb189a4b14cd8c64fe4240d3111c17935ae5f97ea}} \\
+Midnight Preview & BIP340, NIGHT transfer & 130891 & \texttt{\seqsplit{33edbd9f9ad802c09c1341df9e55e4123fe1fae14ccd748846039fd2fc4a6352}} \\
+\bottomrule
+\end{tabularx}
+\caption{Committee-signed spends on public test networks. ``Envelope'' marks a spend that runs the whole request.}
+\label{tab:testnet}
+\end{table}

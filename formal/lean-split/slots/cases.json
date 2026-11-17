@@ -1,0 +1,807 @@
+[
+ {
+  "name": "run with verdicts and refusals",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "mode": "TEE",
+     "w": 6
+    },
+    "ops": [
+     {
+      "op": "deal_c",
+      "suite": "BIP340",
+      "epoch": 3,
+      "k": 1
+     },
+     {
+      "op": "open_c",
+      "eid": 1,
+      "pos": 10,
+      "names": [
+       {
+        "suite": "BIP340",
+        "epoch": 3,
+        "idx": 1
+       }
+      ]
+     },
+     {
+      "op": "open_c",
+      "eid": 2,
+      "pos": 20,
+      "names": [
+       {
+        "suite": "BIP340",
+        "epoch": 3,
+        "idx": 1
+       }
+      ]
+     },
+     {
+      "op": "seat_put",
+      "key": 1
+     },
+     {
+      "op": "seat_bind",
+      "key": 1,
+      "d": 7,
+      "slot_acks": 6,
+      "sealed_acks": 6
+     },
+     {
+      "op": "seat_release",
+      "key": 1,
+      "d": 8
+     },
+     {
+      "op": "seat_release",
+      "key": 1,
+      "d": 7
+     },
+     {
+      "op": "judge",
+      "listed": true,
+      "h": 100,
+      "pending_min": 90,
+      "pending": [],
+      "B": 200,
+      "eid": 1,
+      "idxs": [
+       150,
+       95,
+       301
+      ]
+     },
+     {
+      "op": "reserve",
+      "eid": 1
+     },
+     {
+      "op": "in_force",
+      "eid": 2,
+      "root": "OWN"
+     }
+    ]
+   }
+  },
+  "expect": {
+   "cells": {
+    "obs": [
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "slot_bound"
+      ]
+     },
+     {
+      "released": 7
+     },
+     {
+      "verdicts": [
+       "in_window",
+       "SLOT_TAKEN",
+       "above_window"
+      ]
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     },
+     {
+      "void": "SLOT_TAKEN"
+     }
+    ],
+    "state": {
+     "cslots": [
+      {
+       "bstat": "NAMED",
+       "epoch": 3,
+       "idx": 1,
+       "namers": [
+        [
+         1,
+         10
+        ],
+        [
+         2,
+         20
+        ]
+       ],
+       "prec": 1,
+       "suite": "BIP340"
+      }
+     ],
+     "ended": [],
+     "eslots": [],
+     "in_force": [
+      {
+       "eid": 2,
+       "root": "OWN"
+      }
+     ],
+     "lapsed": [],
+     "last_pos": 20,
+     "opened": [
+      2,
+      1
+     ],
+     "params": {
+      "mode": "TEE",
+      "w": 6
+     },
+     "seat": [
+      {
+       "current": true,
+       "key": 1,
+       "signed": [
+        7
+       ],
+       "st": {
+        "bound": 7
+       }
+      }
+     ]
+    }
+   },
+   "end": "final"
+  }
+ },
+ {
+  "name": "exponent",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"w\": 6e0}, \"ops\": [{\"op\": \"deal_c\", \"suite\": \"BIP340\", \"epoch\": 3, \"k\": 1}, {\"op\": \"open_c\", \"eid\": 1, \"pos\": 10, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"open_c\", \"eid\": 2, \"pos\": 20, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"seat_put\", \"key\": 1}, {\"op\": \"seat_bind\", \"key\": 1, \"d\": 7, \"slot_acks\": 6, \"sealed_acks\": 6}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 8}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 7}, {\"op\": \"judge\", \"listed\": true, \"h\": 100, \"pending_min\": 90, \"pending\": [], \"B\": 200, \"eid\": 1, \"idxs\": [150, 95, 301]}, {\"op\": \"reserve\", \"eid\": 1}]}}",
+  "rc": 2
+ },
+ {
+  "name": "fraction",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"w\": 6.0}, \"ops\": [{\"op\": \"deal_c\", \"suite\": \"BIP340\", \"epoch\": 3, \"k\": 1}, {\"op\": \"open_c\", \"eid\": 1, \"pos\": 10, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"open_c\", \"eid\": 2, \"pos\": 20, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"seat_put\", \"key\": 1}, {\"op\": \"seat_bind\", \"key\": 1, \"d\": 7, \"slot_acks\": 6, \"sealed_acks\": 6}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 8}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 7}, {\"op\": \"judge\", \"listed\": true, \"h\": 100, \"pending_min\": 90, \"pending\": [], \"B\": 200, \"eid\": 1, \"idxs\": [150, 95, 301]}, {\"op\": \"reserve\", \"eid\": 1}]}}",
+  "rc": 2
+ },
+ {
+  "name": "leading zero",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"w\": \"06\"}, \"ops\": [{\"op\": \"deal_c\", \"suite\": \"BIP340\", \"epoch\": 3, \"k\": 1}, {\"op\": \"open_c\", \"eid\": 1, \"pos\": 10, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"open_c\", \"eid\": 2, \"pos\": 20, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"seat_put\", \"key\": 1}, {\"op\": \"seat_bind\", \"key\": 1, \"d\": 7, \"slot_acks\": 6, \"sealed_acks\": 6}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 8}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 7}, {\"op\": \"judge\", \"listed\": true, \"h\": 100, \"pending_min\": 90, \"pending\": [], \"B\": 200, \"eid\": 1, \"idxs\": [150, 95, 301]}, {\"op\": \"reserve\", \"eid\": 1}]}}",
+  "rc": 2
+ },
+ {
+  "name": "underscore",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"w\": \"6_0\"}, \"ops\": [{\"op\": \"deal_c\", \"suite\": \"BIP340\", \"epoch\": 3, \"k\": 1}, {\"op\": \"open_c\", \"eid\": 1, \"pos\": 10, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"open_c\", \"eid\": 2, \"pos\": 20, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"seat_put\", \"key\": 1}, {\"op\": \"seat_bind\", \"key\": 1, \"d\": 7, \"slot_acks\": 6, \"sealed_acks\": 6}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 8}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 7}, {\"op\": \"judge\", \"listed\": true, \"h\": 100, \"pending_min\": 90, \"pending\": [], \"B\": 200, \"eid\": 1, \"idxs\": [150, 95, 301]}, {\"op\": \"reserve\", \"eid\": 1}]}}",
+  "rc": 2
+ },
+ {
+  "name": "extra key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"w\": 6, \"extra\": 1}, \"ops\": [{\"op\": \"deal_c\", \"suite\": \"BIP340\", \"epoch\": 3, \"k\": 1}, {\"op\": \"open_c\", \"eid\": 1, \"pos\": 10, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"open_c\", \"eid\": 2, \"pos\": 20, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"seat_put\", \"key\": 1}, {\"op\": \"seat_bind\", \"key\": 1, \"d\": 7, \"slot_acks\": 6, \"sealed_acks\": 6}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 8}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 7}, {\"op\": \"judge\", \"listed\": true, \"h\": 100, \"pending_min\": 90, \"pending\": [], \"B\": 200, \"eid\": 1, \"idxs\": [150, 95, 301]}, {\"op\": \"reserve\", \"eid\": 1}]}}",
+  "rc": 2
+ },
+ {
+  "name": "missing key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\"}, \"ops\": [{\"op\": \"deal_c\", \"suite\": \"BIP340\", \"epoch\": 3, \"k\": 1}, {\"op\": \"open_c\", \"eid\": 1, \"pos\": 10, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"open_c\", \"eid\": 2, \"pos\": 20, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"seat_put\", \"key\": 1}, {\"op\": \"seat_bind\", \"key\": 1, \"d\": 7, \"slot_acks\": 6, \"sealed_acks\": 6}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 8}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 7}, {\"op\": \"judge\", \"listed\": true, \"h\": 100, \"pending_min\": 90, \"pending\": [], \"B\": 200, \"eid\": 1, \"idxs\": [150, 95, 301]}, {\"op\": \"reserve\", \"eid\": 1}]}}",
+  "rc": 2
+ },
+ {
+  "name": "duplicate key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"w\": 6, \"w\": 6}, \"ops\": [{\"op\": \"deal_c\", \"suite\": \"BIP340\", \"epoch\": 3, \"k\": 1}, {\"op\": \"open_c\", \"eid\": 1, \"pos\": 10, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"open_c\", \"eid\": 2, \"pos\": 20, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"seat_put\", \"key\": 1}, {\"op\": \"seat_bind\", \"key\": 1, \"d\": 7, \"slot_acks\": 6, \"sealed_acks\": 6}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 8}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 7}, {\"op\": \"judge\", \"listed\": true, \"h\": 100, \"pending_min\": 90, \"pending\": [], \"B\": 200, \"eid\": 1, \"idxs\": [150, 95, 301]}, {\"op\": \"reserve\", \"eid\": 1}]}}",
+  "rc": 2
+ },
+ {
+  "name": "unknown op",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "mode": "TEE",
+     "w": 6
+    },
+    "ops": [
+     {
+      "op": "nope"
+     }
+    ]
+   }
+  },
+  "rc": 2
+ },
+ {
+  "name": "unknown enum",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"w\": 6}, \"ops\": [{\"op\": \"deal_c\", \"suite\": \"bip340\", \"epoch\": 3, \"k\": 1}, {\"op\": \"open_c\", \"eid\": 1, \"pos\": 10, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"open_c\", \"eid\": 2, \"pos\": 20, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"seat_put\", \"key\": 1}, {\"op\": \"seat_bind\", \"key\": 1, \"d\": 7, \"slot_acks\": 6, \"sealed_acks\": 6}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 8}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 7}, {\"op\": \"judge\", \"listed\": true, \"h\": 100, \"pending_min\": 90, \"pending\": [], \"B\": 200, \"eid\": 1, \"idxs\": [150, 95, 301]}, {\"op\": \"reserve\", \"eid\": 1}]}}",
+  "rc": 2
+ },
+ {
+  "name": "protocol 2",
+  "input": "{\"protocol\": \"kink-implementation/2\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"w\": 6}, \"ops\": [{\"op\": \"deal_c\", \"suite\": \"BIP340\", \"epoch\": 3, \"k\": 1}, {\"op\": \"open_c\", \"eid\": 1, \"pos\": 10, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"open_c\", \"eid\": 2, \"pos\": 20, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"seat_put\", \"key\": 1}, {\"op\": \"seat_bind\", \"key\": 1, \"d\": 7, \"slot_acks\": 6, \"sealed_acks\": 6}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 8}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 7}, {\"op\": \"judge\", \"listed\": true, \"h\": 100, \"pending_min\": 90, \"pending\": [], \"B\": 200, \"eid\": 1, \"idxs\": [150, 95, 301]}, {\"op\": \"reserve\", \"eid\": 1}]}}",
+  "rc": 2
+ },
+ {
+  "name": "string integer accepted",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"w\": \"6\"}, \"ops\": [{\"op\": \"deal_c\", \"suite\": \"BIP340\", \"epoch\": 3, \"k\": 1}, {\"op\": \"open_c\", \"eid\": 1, \"pos\": 10, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"open_c\", \"eid\": 2, \"pos\": 20, \"names\": [{\"suite\": \"BIP340\", \"epoch\": 3, \"idx\": 1}]}, {\"op\": \"seat_put\", \"key\": 1}, {\"op\": \"seat_bind\", \"key\": 1, \"d\": 7, \"slot_acks\": 6, \"sealed_acks\": 6}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 8}, {\"op\": \"seat_release\", \"key\": 1, \"d\": 7}, {\"op\": \"judge\", \"listed\": true, \"h\": 100, \"pending_min\": 90, \"pending\": [], \"B\": 200, \"eid\": 1, \"idxs\": [150, 95, 301]}, {\"op\": \"reserve\", \"eid\": 1}]}}",
+  "expect": {
+   "cells": {
+    "obs": [
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "slot_bound"
+      ]
+     },
+     {
+      "released": 7
+     },
+     {
+      "verdicts": [
+       "in_window",
+       "SLOT_TAKEN",
+       "above_window"
+      ]
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     }
+    ],
+    "state": {
+     "cslots": [
+      {
+       "bstat": "NAMED",
+       "epoch": 3,
+       "idx": 1,
+       "namers": [
+        [
+         1,
+         10
+        ],
+        [
+         2,
+         20
+        ]
+       ],
+       "prec": 1,
+       "suite": "BIP340"
+      }
+     ],
+     "ended": [],
+     "eslots": [],
+     "in_force": [],
+     "lapsed": [],
+     "last_pos": 20,
+     "opened": [
+      2,
+      1
+     ],
+     "params": {
+      "mode": "TEE",
+      "w": 6
+     },
+     "seat": [
+      {
+       "current": true,
+       "key": 1,
+       "signed": [
+        7
+       ],
+       "st": {
+        "bound": 7
+       }
+      }
+     ]
+    }
+   },
+   "end": "final"
+  }
+ },
+ {
+  "name": "domain refusal",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "mode": "TEE",
+     "w": 6
+    },
+    "ops": [
+     {
+      "op": "qualify",
+      "t": 0,
+      "dealers": []
+     }
+    ]
+   }
+  },
+  "expect": {
+   "end": "final",
+   "cells": {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "w": 6
+     },
+     "cslots": [],
+     "eslots": [],
+     "seat": [],
+     "in_force": [],
+     "opened": [],
+     "last_pos": null,
+     "lapsed": [],
+     "ended": []
+    },
+    "obs": [
+     {
+      "refused": [
+       "outside-capability"
+      ]
+     }
+    ]
+   }
+  }
+ },
+ {
+  "name": "step answers",
+  "args": [
+   "--step"
+  ],
+  "input": [
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "w": 6
+     },
+     "cslots": [
+      {
+       "suite": "BIP340",
+       "epoch": 3,
+       "idx": 1,
+       "bstat": "NAMED",
+       "prec": 1,
+       "namers": [
+        [
+         1,
+         10
+        ],
+        [
+         2,
+         20
+        ]
+       ]
+      }
+     ],
+     "eslots": [],
+     "seat": [
+      {
+       "key": 1,
+       "st": {
+        "bound": 7
+       },
+       "current": true,
+       "signed": [
+        7
+       ]
+      }
+     ],
+     "in_force": [],
+     "opened": [
+      2,
+      1
+     ],
+     "last_pos": 20,
+     "lapsed": [],
+     "ended": []
+    },
+    "op": {
+     "op": "seat_release",
+     "key": 1,
+     "d": 9
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "w": 6
+     },
+     "cslots": [
+      {
+       "suite": "BIP340",
+       "epoch": 3,
+       "idx": 1,
+       "bstat": "NAMED",
+       "prec": 1,
+       "namers": [
+        [
+         1,
+         10
+        ],
+        [
+         2,
+         20
+        ]
+       ]
+      }
+     ],
+     "eslots": [],
+     "seat": [
+      {
+       "key": 1,
+       "st": {
+        "bound": 7
+       },
+       "current": true,
+       "signed": [
+        7,
+        8
+       ]
+      }
+     ],
+     "in_force": [],
+     "opened": [
+      2,
+      1
+     ],
+     "last_pos": 20,
+     "lapsed": [],
+     "ended": []
+    },
+    "op": {
+     "op": "seat_burn",
+     "key": 1
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "w": 6
+     },
+     "cslots": [
+      {
+       "suite": "BIP340",
+       "epoch": 3,
+       "idx": 1,
+       "bstat": "NAMED",
+       "prec": 1,
+       "namers": [
+        [
+         1,
+         10
+        ],
+        [
+         2,
+         20
+        ]
+       ]
+      }
+     ],
+     "eslots": [],
+     "seat": [
+      {
+       "key": 1,
+       "st": {
+        "bound": 7
+       },
+       "current": true,
+       "signed": [
+        7
+       ]
+      }
+     ],
+     "in_force": [],
+     "opened": [
+      2,
+      1
+     ],
+     "last_pos": 20,
+     "lapsed": [],
+     "ended": []
+    },
+    "op": {
+     "op": "seat_burn",
+     "key": 1
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "w": 6
+     },
+     "cslots": [
+      {
+       "suite": "BIP340",
+       "epoch": 3,
+       "idx": 1,
+       "bstat": "NAMED",
+       "prec": 1,
+       "namers": [
+        [
+         1,
+         10
+        ],
+        [
+         2,
+         20
+        ]
+       ]
+      }
+     ],
+     "eslots": [],
+     "seat": [
+      {
+       "key": 1,
+       "st": {
+        "bound": 7
+       },
+       "current": true,
+       "signed": [
+        7
+       ]
+      }
+     ],
+     "in_force": [],
+     "opened": [
+      2,
+      1
+     ],
+     "last_pos": 20,
+     "lapsed": [],
+     "ended": []
+    },
+    "op": {
+     "op": "qualify",
+     "t": 2,
+     "dealers": [
+      {
+       "dealer": 1,
+       "complained": false
+      },
+      {
+       "dealer": 2,
+       "complained": true
+      },
+      {
+       "dealer": 3,
+       "complained": false
+      }
+     ]
+    }
+   }
+  ],
+  "expect": [
+   {
+    "refused": [
+     "slot_bound"
+    ]
+   },
+   {
+    "refused": [
+     "outside-state-domain"
+    ]
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "w": 6
+     },
+     "cslots": [
+      {
+       "suite": "BIP340",
+       "epoch": 3,
+       "idx": 1,
+       "bstat": "NAMED",
+       "prec": 1,
+       "namers": [
+        [
+         1,
+         10
+        ],
+        [
+         2,
+         20
+        ]
+       ]
+      }
+     ],
+     "eslots": [],
+     "seat": [
+      {
+       "key": 1,
+       "st": "burned",
+       "current": true,
+       "signed": [
+        7
+       ]
+      }
+     ],
+     "in_force": [],
+     "opened": [
+      2,
+      1
+     ],
+     "last_pos": 20,
+     "lapsed": [],
+     "ended": []
+    },
+    "obs": {
+     "ok": true
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "w": 6
+     },
+     "cslots": [
+      {
+       "suite": "BIP340",
+       "epoch": 3,
+       "idx": 1,
+       "bstat": "NAMED",
+       "prec": 1,
+       "namers": [
+        [
+         1,
+         10
+        ],
+        [
+         2,
+         20
+        ]
+       ]
+      }
+     ],
+     "eslots": [],
+     "seat": [
+      {
+       "key": 1,
+       "st": {
+        "bound": 7
+       },
+       "current": true,
+       "signed": [
+        7
+       ]
+      }
+     ],
+     "in_force": [],
+     "opened": [
+      2,
+      1
+     ],
+     "last_pos": 20,
+     "lapsed": [],
+     "ended": []
+    },
+    "obs": {
+     "qualified": [
+      1,
+      3
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "name": "step decode error",
+  "args": [
+   "--step"
+  ],
+  "match": "keys",
+  "input": [
+   "{\"state\": 1}",
+   {
+    "state": {
+     "params": {
+      "mode": "TEE",
+      "w": 6
+     },
+     "cslots": [
+      {
+       "suite": "BIP340",
+       "epoch": 3,
+       "idx": 1,
+       "bstat": "NAMED",
+       "prec": 1,
+       "namers": [
+        [
+         1,
+         10
+        ],
+        [
+         2,
+         20
+        ]
+       ]
+      }
+     ],
+     "eslots": [],
+     "seat": [
+      {
+       "key": 1,
+       "st": {
+        "bound": 7
+       },
+       "current": true,
+       "signed": [
+        7
+       ]
+      }
+     ],
+     "in_force": [],
+     "opened": [
+      2,
+      1
+     ],
+     "last_pos": 20,
+     "lapsed": [],
+     "ended": []
+    },
+    "op": {
+     "op": "end",
+     "eid": 1,
+     "x": 1
+    }
+   }
+  ],
+  "expect": [
+   {
+    "error": 0
+   },
+   {
+    "error": 0
+   }
+  ]
+ }
+]

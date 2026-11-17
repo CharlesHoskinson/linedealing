@@ -1,0 +1,8 @@
+# SH-013 and ledger 4 together
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { PostPool = { actor = 1, root = 1, key = 1024 } },
+  { PostPool = { actor = 1, root = 1, key = 1023 } },
+  { PostPool = { actor = 1, root = 1, key = 1023 } },
+]

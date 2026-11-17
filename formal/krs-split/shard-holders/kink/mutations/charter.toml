@@ -1,0 +1,361 @@
+# Plausible misreadings of SH-001 and SH-002 (the charter's access structure) and of
+# ledger 3 (a charter id fixed twice), as K patches of kink/definition.k.
+
+[[mutation]]
+id = "sh001-and-empty-ok"
+expect = "kill"
+misunderstanding = "SH-001: an AND gate without a child is a valid gate"
+  [[mutation.edit]]
+  rule = "split_shard_holders--shape_ok_2"
+  find = "(size(Children:List) >Int 0) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "sh001-group-k-zero"
+expect = "kill"
+misunderstanding = "SH-001: a group with k = 0 is a valid k-of-m gate"
+  [[mutation.edit]]
+  rule = "split_shard_holders--shape_ok_3"
+  find = "(1 <=Int Kk:Int)"
+  replace = "(0 <=Int Kk:Int)"
+
+[[mutation]]
+id = "sh001-group-k-above-m"
+expect = "kill"
+misunderstanding = "SH-001: a group may ask for more members than it has"
+  [[mutation.edit]]
+  rule = "split_shard_holders--shape_ok_3"
+  find = "(Kk:Int <=Int size(Children:List))"
+  replace = "true"
+
+[[mutation]]
+id = "sh001-group-k-below-m"
+expect = "kill"
+misunderstanding = "SH-001: k must be below m, so an m-of-m group is not a group gate"
+  [[mutation.edit]]
+  rule = "split_shard_holders--shape_ok_3"
+  find = "(Kk:Int <=Int size(Children:List))"
+  replace = "(Kk:Int <Int size(Children:List))"
+
+[[mutation]]
+id = "sh001-group-children-unchecked"
+expect = "kill"
+misunderstanding = "SH-001: only the top gate of a group is checked, not the gates below it"
+  [[mutation.edit]]
+  rule = "split_shard_holders--shape_ok_3"
+  find = "andThenBool shapeOkL ( Children:List )"
+  replace = "andThenBool true"
+
+[[mutation]]
+id = "sh001-and-children-unchecked"
+expect = "kill"
+misunderstanding = "SH-001: the children of an AND gate are not checked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--shape_ok_2"
+  find = "andThenBool shapeOkL ( Children:List )"
+  replace = "andThenBool true"
+
+[[mutation]]
+id = "sh001-or-primary-unchecked"
+expect = "kill"
+misunderstanding = "SH-001: the primary child of an OR gate is not checked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--shape_ok_4"
+  find = "shapeOk ( Primary:Gate ) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "sh001-or-escrow-unchecked"
+expect = "kill"
+misunderstanding = "SH-001: the escrow child of an OR gate is not checked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--shape_ok_4"
+  find = " andThenBool shapeOk ( Escrow:Gate )"
+  replace = ""
+
+[[mutation]]
+id = "sh001-list-first-only"
+expect = "kill"
+misunderstanding = "SH-001: only the first child of a gate is checked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--shape_ok_l_2"
+  find = "shapeOk ( G:Gate ) andThenBool shapeOkL ( Rest:List )"
+  replace = "shapeOk ( G:Gate )"
+
+[[mutation]]
+id = "sh001-leaf-bad"
+expect = "kill"
+misunderstanding = "SH-001: a leaf alone is not a gate"
+  [[mutation.edit]]
+  rule = "split_shard_holders--shape_ok_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh001-empty-list-bad"
+expect = "kill"
+misunderstanding = "SH-001: the check of a child list fails at its end"
+  [[mutation.edit]]
+  rule = "split_shard_holders--shape_ok_l_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh002-mid-zero-ok"
+expect = "kill"
+misunderstanding = "SH-002: member id 0 is a valid member id"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mids_ok_3"
+  find = "allNonzero ( mids ( Children:List ) ) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "sh002-mid-dup-ok"
+expect = "kill"
+misunderstanding = "SH-002: two members of a group may share a member id"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mids_ok_3"
+  find = "andThenBool nodupB ( mids ( Children:List ) )"
+  replace = "andThenBool true"
+
+[[mutation]]
+id = "sh002-group-nested-unchecked"
+expect = "kill"
+misunderstanding = "SH-002: member ids are checked in the top group only"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mids_ok_3"
+  find = "andThenBool midsOkL ( Children:List )"
+  replace = "andThenBool true"
+
+[[mutation]]
+id = "sh002-and-nested-unchecked"
+expect = "kill"
+misunderstanding = "SH-002: groups below an AND gate are not checked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mids_ok_2"
+  find = "=> midsOkL ( Children:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh002-or-primary-unchecked"
+expect = "kill"
+misunderstanding = "SH-002: groups below the primary child of an OR gate are not checked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mids_ok_4"
+  find = "midsOk ( Primary:Gate ) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "sh002-or-escrow-unchecked"
+expect = "kill"
+misunderstanding = "SH-002: groups below the escrow child of an OR gate are not checked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mids_ok_4"
+  find = " andThenBool midsOk ( Escrow:Gate )"
+  replace = ""
+
+[[mutation]]
+id = "sh002-list-first-only"
+expect = "kill"
+misunderstanding = "SH-002: only the first child's groups are checked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mids_ok_l_2"
+  find = "midsOk ( G:Gate ) andThenBool midsOkL ( Rest:List )"
+  replace = "midsOk ( G:Gate )"
+
+[[mutation]]
+id = "sh002-leaf-and-end-bad"
+expect = "kill"
+misunderstanding = "SH-002: a leaf or the end of a child list fails the member-id check"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mids_ok_1"
+  find = "=> true"
+  replace = "=> false"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mids_ok_l_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh002-leaf-dup-ok"
+expect = "kill"
+misunderstanding = "SH-002 (ledger 11): one actor may hold two leaves"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaves_ok"
+  find = "andThenBool nodupB ( leaves ( G:Gate ) )"
+  replace = "andThenBool true"
+
+[[mutation]]
+id = "sh002-mids-only-leaves"
+expect = "kill"
+misunderstanding = "SH-002: the member ids need not be checked when the leaves are distinct"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaves_ok"
+  find = "midsOk ( G:Gate ) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "sh002-allnonzero-first-only"
+expect = "kill"
+misunderstanding = "SH-002: only the first member id of a group must be nonzero"
+  [[mutation.edit]]
+  rule = "split_shard_holders--all_nonzero_2_1"
+  find = "=> allNonzero ( Rest:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh002-allnonzero-zero-ok"
+expect = "kill"
+misunderstanding = "SH-002: a zero member id passes the nonzero check"
+  [[mutation.edit]]
+  rule = "split_shard_holders--all_nonzero_2_2"
+  find = "=> false"
+  replace = "=> allNonzero ( Rest:List )"
+
+[[mutation]]
+id = "sh002-allnonzero-end-bad"
+expect = "kill"
+misunderstanding = "SH-002: the nonzero check fails at the end of the list"
+  [[mutation.edit]]
+  rule = "split_shard_holders--all_nonzero_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh002-mid-wrong-field"
+expect = "kill"
+misunderstanding = "SH-002: the member id of a leaf is its actor"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mid_1"
+  find = "gLeaf ( Mid:Int , _ ) ) => Mid:Int"
+  replace = "gLeaf ( Mid:Int , Actor:Int ) ) => Actor:Int"
+
+[[mutation]]
+id = "sh002-mid-of-and-zero"
+expect = "kill"
+misunderstanding = "SH-002: an AND child of a group carries no member id of its own"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mid_2"
+  find = "=> Mid:Int"
+  replace = "=> 0"
+
+[[mutation]]
+id = "sh002-mid-of-group-zero"
+expect = "kill"
+misunderstanding = "SH-002: a group child of a group carries no member id of its own"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mid_3"
+  find = "=> Mid:Int"
+  replace = "=> 0"
+
+[[mutation]]
+id = "sh002-mid-of-or-zero"
+expect = "kill"
+misunderstanding = "SH-002: an OR child of a group carries no member id of its own"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mid_4"
+  find = "=> Mid:Int"
+  replace = "=> 0"
+
+[[mutation]]
+id = "sh002-mids-first-only"
+expect = "kill"
+misunderstanding = "SH-002: the member ids of a group are its first child's id only"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mids_2"
+  find = "ListItem(mid ( G:Gate )) mids ( Rest:List )"
+  replace = "ListItem(mid ( G:Gate ))"
+
+[[mutation]]
+id = "sh002-mids-end-zero"
+expect = "kill"
+misunderstanding = "SH-002: the member-id list of a group ends with an implicit 0"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mids_1"
+  find = "=> .List"
+  replace = "=> ListItem(0)"
+
+[[mutation]]
+id = "sh001-codes-order"
+expect = "kill"
+misunderstanding = "SH-001, SH-002 (ledger 2): the codes of an invalid charter are listed SH-002 first"
+  [[mutation.edit]]
+  rule = "split_shard_holders--charter_refusals"
+  find = "opt ( notBool shapeOk ( G:Gate ) , rSH001 ) opt ( notBool leavesOk ( G:Gate ) , rSH002 )"
+  replace = "opt ( notBool leavesOk ( G:Gate ) , rSH002 ) opt ( notBool shapeOk ( G:Gate ) , rSH001 )"
+
+[[mutation]]
+id = "charter-refix-allowed"
+expect = "kill"
+misunderstanding = "SH-001 (ledger 3): a charter id may be fixed again, replacing Gamma"
+  [[mutation.edit]]
+  rule = "split_shard_holders--charter_refusals"
+  find = "opt ( isSomeG ( charterOf ( Charters:List , Id:Int ) ) , rNoRule )"
+  replace = ".List"
+
+[[mutation]]
+id = "charter-fixed-appended"
+expect = "kill"
+misunderstanding = "SH-001: a fixed charter goes last in the charter list"
+  [[mutation.edit]]
+  rule = "fix-charter"
+  find = "Charters:List => ListItem(charter ( Id:Int , Gamma:Gate )) Charters:List"
+  replace = "Charters:List => Charters:List ListItem(charter ( Id:Int , Gamma:Gate ))"
+
+[[mutation]]
+id = "charter-refused-fixed"
+expect = "kill"
+misunderstanding = "SH-001: an invalid charter is fixed anyway after the refusal"
+  [[mutation.edit]]
+  rule = "fix-charter-refused"
+  find = "<charters> Charters:List </charters>"
+  replace = "<charters> Charters:List => ListItem(charter ( Id:Int , Gamma:Gate )) Charters:List </charters>"
+
+[[mutation]]
+id = "charter-ok-obs-first"
+expect = "kill"
+misunderstanding = "SH-001: the observation of a fixed charter goes before the earlier observations"
+  [[mutation.edit]]
+  rule = "fix-charter"
+  find = "Obs:List => Obs:List ListItem(oOk)"
+  replace = "Obs:List => ListItem(oOk) Obs:List"
+
+[[mutation]]
+id = "isSome-flipped"
+expect = "kill"
+misunderstanding = "SH-001 (ledger 3): an id with no charter counts as already fixed"
+  [[mutation.edit]]
+  rule = "split_shard_holders--is_some_g_1"
+  find = "=> false"
+  replace = "=> true"
+  [[mutation.edit]]
+  rule = "split_shard_holders--is_some_g_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "charterOf-last-match"
+expect = "kill"
+misunderstanding = "SH-011, SH-022: a charter lookup skips a matching id"
+  [[mutation.edit]]
+  rule = "split_shard_holders--charter_of_2_1"
+  find = "=> someG ( Gamma:Gate )"
+  replace = "=> charterOf ( Rest:List , C:Int )"
+
+[[mutation]]
+id = "charterOf-first-any"
+expect = "kill"
+misunderstanding = "SH-011, SH-022: a charter lookup returns the first charter whatever its id"
+  [[mutation.edit]]
+  rule = "split_shard_holders--charter_of_2_2"
+  find = "=> charterOf ( Rest:List , C:Int )"
+  replace = "=> someG ( Gamma:Gate )"
+
+[[mutation]]
+id = "charterOf-empty-found"
+expect = "kill"
+misunderstanding = "SH-011 (ledger 3): an unknown charter id has some default Gamma"
+  [[mutation.edit]]
+  rule = "split_shard_holders--charter_of_1"
+  find = "=> noneG"
+  replace = "=> someG ( gLeaf ( 0 , 0 ) )"

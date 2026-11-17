@@ -1,0 +1,8 @@
+# Ledger 1, CP-007 to CP-010, CP-040, CP-041: a candidate that fails every landing check
+# gets every code once, sorted by code string
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 50, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { Land = { c = { CpOf = { seq = 5, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 90, pending_min = 40, pending = [], pending_count = 0 } }, { PoolOf = { pool = 2, h = 10, pending_min = 20, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [{ P = [0, 1] }, { P = [1, 1] }, { P = [2, 1] }], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+]

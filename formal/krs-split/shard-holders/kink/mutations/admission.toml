@@ -1,0 +1,736 @@
+# Plausible misreadings of SH-003 (the signing set is admitted on Gamma) and SH-004 (the
+# actor's weight from the signing set), as K patches of kink/definition.k. Each one
+# shows in a contribution as a bad_request (SH-022) the oracle does not give, or the
+# reverse.
+
+[[mutation]]
+id = "sh003-initiator-not-member"
+expect = "kill"
+misunderstanding = "SH-003: the signing set need not name the initiator"
+  [[mutation.edit]]
+  rule = "split_shard_holders--admitted"
+  find = "Initiator:Int in S:List )"
+  replace = "true )"
+[[mutation]]
+id = "sh003-repeats-ok"
+expect = "kill"
+misunderstanding = "SH-003: an actor may appear twice in the signing set"
+  [[mutation.edit]]
+  rule = "split_shard_holders--admitted_named_1"
+  find = "nodupB ( S:List ) )"
+  replace = "true )"
+[[mutation]]
+id = "sh003-outsiders-ok"
+expect = "kill"
+misunderstanding = "SH-003: the signing set may name actors that hold no leaf of Gamma"
+  [[mutation.edit]]
+  rule = "split_shard_holders--admitted_once_1"
+  find = "allIn ( S:List , leaves ( G:Gate ) ) )"
+  replace = "true )"
+[[mutation]]
+id = "sh003-structure-unchecked"
+expect = "kill"
+misunderstanding = "SH-003: any set of actors of Gamma with the initiator is admitted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--admitted_in_1"
+  find = "=> adm ( S:List , G:Gate )"
+  replace = "=> true"
+[[mutation]]
+id = "sh003-group-at-least-k"
+expect = "kill"
+misunderstanding = "SH-003: a group gate needs at least k used members, not exactly k"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_3_1"
+  find = "usedCount ( S:List , Children:List ) ==Int Kk:Int"
+  replace = "usedCount ( S:List , Children:List ) >=Int Kk:Int"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_3_2"
+  find = "usedCount ( S:List , Children:List ) ==Int Kk:Int"
+  replace = "usedCount ( S:List , Children:List ) >=Int Kk:Int"
+[[mutation]]
+id = "sh003-group-used-unchecked"
+expect = "kill"
+misunderstanding = "SH-003: a group with k used children is admitted whether or not they are"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_3_1"
+  find = "=> admUsed ( S:List , Children:List )"
+  replace = "=> true"
+[[mutation]]
+id = "sh003-or-both-children"
+expect = "kill"
+misunderstanding = "SH-003: an OR gate may use both of its children"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_4_1"
+  find = "uses ( S:List , Primary:Gate ) =/=Bool uses ( S:List , Escrow:Gate )"
+  replace = "uses ( S:List , Primary:Gate ) orBool uses ( S:List , Escrow:Gate )"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_4_2"
+  find = "uses ( S:List , Primary:Gate ) =/=Bool uses ( S:List , Escrow:Gate )"
+  replace = "uses ( S:List , Primary:Gate ) orBool uses ( S:List , Escrow:Gate )"
+[[mutation]]
+id = "sh003-or-child-unchecked"
+expect = "kill"
+misunderstanding = "SH-003: the used child of an OR gate need not itself be admitted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_4_1"
+  find = "=> admOr ( S:List , Primary:Gate , Escrow:Gate )"
+  replace = "=> true"
+[[mutation]]
+id = "sh003-or-primary-always"
+expect = "kill"
+misunderstanding = "SH-003: an OR gate is admitted by its primary child alone"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_or_2"
+  find = "=> adm ( S:List , E:Gate )"
+  replace = "=> adm ( S:List , P:Gate )"
+
+[[mutation]]
+id = "sh003-or-escrow-always"
+expect = "kill"
+misunderstanding = "SH-003: an OR gate is admitted by its escrow child alone"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_or_1"
+  find = "admOr ( S:List , P:Gate , _ )"
+  replace = "admOr ( S:List , P:Gate , E:Gate )"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_or_1"
+  find = "=> adm ( S:List , P:Gate )"
+  replace = "=> adm ( S:List , E:Gate )"
+[[mutation]]
+id = "sh003-and-first-child"
+expect = "kill"
+misunderstanding = "SH-003: an AND gate is admitted when its first child is"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_all_2_1"
+  find = "=> admAll ( S:List , Rest:List )"
+  replace = "=> true"
+[[mutation]]
+id = "sh003-and-unchecked"
+expect = "kill"
+misunderstanding = "SH-003: an AND gate admits any signing set"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_2"
+  find = "=> admAll ( S:List , Children:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh003-leaf-always"
+expect = "kill"
+misunderstanding = "SH-003: a leaf is admitted whether or not its actor signs"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_1"
+  find = "=> Actor:Int in S:List"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh003-ends-false"
+expect = "kill"
+misunderstanding = "SH-003: the admission of a child list fails at its end"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_all_1"
+  find = "=> true"
+  replace = "=> false"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_used_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh003-used-first-only"
+expect = "kill"
+misunderstanding = "SH-003: only the first used child of a group is checked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_used_if_1"
+  find = "=> admUsed ( S:List , Rest:List )"
+  replace = "=> true"
+[[mutation]]
+id = "sh003-unused-child-checked"
+expect = "kill"
+misunderstanding = "SH-003: every child of a group must be admitted, used or not"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_used_2"
+  find = "admUsedStep ( S:List , uses ( S:List , G:Gate ) ,"
+  replace = "admUsedStep ( S:List , true ,"
+[[mutation]]
+id = "sh003-count-first-only"
+expect = "kill"
+misunderstanding = "SH-003: the used-children count of a group stops after its first child"
+  [[mutation.edit]]
+  rule = "split_shard_holders--used_count_2"
+  find = "usedOne ( S:List , G:Gate ) +Int usedCount ( S:List , Rest:List )"
+  replace = "usedOne ( S:List , G:Gate )"
+
+[[mutation]]
+id = "sh003-count-starts-one"
+expect = "kill"
+misunderstanding = "SH-003: the used-children count of a group starts at one"
+  [[mutation.edit]]
+  rule = "split_shard_holders--used_count_1"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "sh003-count-every-child"
+expect = "kill"
+misunderstanding = "SH-003: every child of a group counts, used or not"
+  [[mutation.edit]]
+  rule = "split_shard_holders--used_one_2"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "sh003-count-used-zero"
+expect = "kill"
+misunderstanding = "SH-003: a used child does not count toward k"
+  [[mutation.edit]]
+  rule = "split_shard_holders--used_one_1"
+  find = "=> 1"
+  replace = "=> 0"
+
+[[mutation]]
+id = "sh003-uses-leaf-always"
+expect = "kill"
+misunderstanding = "SH-003: every leaf counts as used"
+  [[mutation.edit]]
+  rule = "split_shard_holders--uses_1"
+  find = "=> Actor:Int in S:List"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh003-uses-and-never"
+expect = "kill"
+misunderstanding = "SH-003: an AND child of a group never counts as used"
+  [[mutation.edit]]
+  rule = "split_shard_holders--uses_2"
+  find = "=> usesL ( S:List , Children:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh003-uses-group-never"
+expect = "kill"
+misunderstanding = "SH-003: a group child of a group never counts as used"
+  [[mutation.edit]]
+  rule = "split_shard_holders--uses_3"
+  find = "=> usesL ( S:List , Children:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh003-uses-or-primary-only"
+expect = "kill"
+misunderstanding = "SH-003: an OR gate counts as used only through its primary child"
+  [[mutation.edit]]
+  rule = "split_shard_holders--uses_4_2"
+  find = "=> uses ( S:List , Escrow:Gate )"
+  replace = "=> false"
+[[mutation]]
+id = "sh003-uses-or-escrow-only"
+expect = "kill"
+misunderstanding = "SH-003: an OR gate counts as used only through its escrow child"
+  [[mutation.edit]]
+  rule = "split_shard_holders--uses_4_1"
+  find = "=> true"
+  replace = "=> uses ( S:List , Escrow:Gate )"
+[[mutation]]
+id = "sh003-uses-first-child"
+expect = "kill"
+misunderstanding = "SH-003: a gate counts as used only through its first child"
+  [[mutation.edit]]
+  rule = "split_shard_holders--uses_l_2_2"
+  find = "=> usesL ( S:List , Rest:List )"
+  replace = "=> false"
+[[mutation]]
+id = "sh003-uses-end-true"
+expect = "kill"
+misunderstanding = "SH-003: every gate with children counts as used"
+  [[mutation.edit]]
+  rule = "split_shard_holders--uses_l_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh003-leaves-or-primary"
+expect = "kill"
+misunderstanding = "SH-003: the actors of an OR gate are those of its primary child"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaves_4"
+  find = "=> leaves ( Primary:Gate ) leaves ( Escrow:Gate )"
+  replace = "=> leaves ( Primary:Gate )"
+
+[[mutation]]
+id = "sh003-leaves-and-none"
+expect = "kill"
+misunderstanding = "SH-003: the actors below an AND gate are not actors of Gamma"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaves_2"
+  find = "=> leavesL ( Children:List )"
+  replace = "=> .List"
+
+[[mutation]]
+id = "sh003-leaves-group-none"
+expect = "kill"
+misunderstanding = "SH-003: the actors below a group gate are not actors of Gamma"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaves_3"
+  find = "=> leavesL ( Children:List )"
+  replace = "=> .List"
+
+[[mutation]]
+id = "sh003-leaves-leaf-mid"
+expect = "kill"
+misunderstanding = "SH-003: a leaf names its member id, not its actor"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaves_1"
+  find = "gLeaf ( _ , Actor:Int ) ) => ListItem(Actor:Int)"
+  replace = "gLeaf ( Mid:Int , _ ) ) => ListItem(Mid:Int)"
+
+[[mutation]]
+id = "sh003-leaves-first-child"
+expect = "kill"
+misunderstanding = "SH-003: the actors of a gate are those of its first child"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaves_l_2"
+  find = "=> leaves ( G:Gate ) leavesL ( Rest:List )"
+  replace = "=> leaves ( G:Gate )"
+
+[[mutation]]
+id = "sh003-leaves-end-zero"
+expect = "kill"
+misunderstanding = "SH-003, SH-002: actor 0 is implicitly a leaf of every gate with children"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaves_l_1"
+  find = "=> .List"
+  replace = "=> ListItem(0)"
+
+[[mutation]]
+id = "sh003-allin-first-only"
+expect = "kill"
+misunderstanding = "SH-003: only the first member of the signing set must hold a leaf"
+  [[mutation.edit]]
+  rule = "split_shard_holders--all_in_2_1"
+  find = "=> allIn ( Rest:List , Ys:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh003-allin-outsider-ok"
+expect = "kill"
+misunderstanding = "SH-003: a member outside the list is skipped"
+  [[mutation.edit]]
+  rule = "split_shard_holders--all_in_2_2"
+  find = "=> false"
+  replace = "=> allIn ( Rest:List , Ys:List )"
+
+[[mutation]]
+id = "sh003-allin-end-false"
+expect = "kill"
+misunderstanding = "SH-003: the containment check fails at the end of the list"
+  [[mutation.edit]]
+  rule = "split_shard_holders--all_in_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "nodup-repeat-ok"
+expect = "kill"
+misunderstanding = "SH-003, SH-022: a repeated element passes the distinctness check"
+  [[mutation.edit]]
+  rule = "split_shard_holders--nodup_b_2_1"
+  find = "=> false"
+  replace = "=> nodupB ( Rest:List )"
+
+[[mutation]]
+id = "nodup-first-only"
+expect = "kill"
+misunderstanding = "SH-003, SH-022: only the first element is checked for a repeat"
+  [[mutation.edit]]
+  rule = "split_shard_holders--nodup_b_2_2"
+  find = "=> nodupB ( Rest:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "nodup-empty-false"
+expect = "kill"
+misunderstanding = "SH-002, SH-003: an empty list fails the distinctness check"
+  [[mutation.edit]]
+  rule = "split_shard_holders--nodup_b_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh003-no-initiator-admitted"
+expect = "kill"
+misunderstanding = "SH-003: a signing set without the initiator is admitted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--admitted_named_2"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh003-repeat-admitted"
+expect = "kill"
+misunderstanding = "SH-003: a signing set with a repeated actor is admitted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--admitted_once_2"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh003-outsider-admitted"
+expect = "kill"
+misunderstanding = "SH-003: a signing set with an actor outside Gamma is admitted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--admitted_in_2"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh003-group-count-ignored"
+expect = "kill"
+misunderstanding = "SH-003: a group with the wrong number of used children is admitted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_3_2"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh003-or-count-ignored"
+expect = "kill"
+misunderstanding = "SH-003: an OR gate with both or neither child used is admitted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_4_2"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh003-and-child-skipped"
+expect = "kill"
+misunderstanding = "SH-003: an AND gate skips a child that is not admitted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_all_2_2"
+  find = "=> false"
+  replace = "=> admAll ( S:List , Rest:List )"
+
+[[mutation]]
+id = "sh003-used-child-bad-ok"
+expect = "kill"
+misunderstanding = "SH-003: a used child of a group that is not admitted passes"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_used_if_2"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh003-unused-child-ends"
+expect = "kill"
+misunderstanding = "SH-003: an unused child ends the check of a group"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_used_step_1"
+  find = "=> admUsed ( S:List , Rest:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh003-used-child-unadmitted"
+expect = "kill"
+misunderstanding = "SH-003: a used child of a group need not itself be admitted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--adm_used_step_2"
+  find = "admUsedIf ( S:List , adm ( S:List , G:Gate ) , Rest:List )"
+  replace = "admUsedIf ( S:List , true , Rest:List )"
+
+[[mutation]]
+id = "sh003-uses-later-child"
+expect = "kill"
+misunderstanding = "SH-003: a used first child counts only when a later child is used too"
+  [[mutation.edit]]
+  rule = "split_shard_holders--uses_l_2_1"
+  find = "=> true"
+  replace = "=> usesL ( S:List , Rest:List )"
+
+# ---- SH-004: weights
+
+[[mutation]]
+id = "sh004-leaf-weight-any"
+expect = "kill"
+misunderstanding = "SH-004: every leaf weighs 1, whoever holds it"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaf_weight_2"
+  find = "=> noneQ"
+  replace = "=> someQ ( q ( 1 , 1 ) )"
+
+[[mutation]]
+id = "sh004-leaf-weight-none"
+expect = "kill"
+misunderstanding = "SH-004: an actor's own leaf has no weight"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaf_weight_1"
+  find = "=> someQ ( q ( 1 , 1 ) )"
+  replace = "=> noneQ"
+
+[[mutation]]
+id = "sh004-weight-via-leaf"
+expect = "kill"
+misunderstanding = "SH-004: a leaf's weight is looked up for its own actor, not the contributing actor"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_1"
+  find = "=> leafWeight ( A:Int , Actor:Int )"
+  replace = "=> leafWeight ( Actor:Int , Actor:Int )"
+
+[[mutation]]
+id = "sh004-and-weight-none"
+expect = "kill"
+misunderstanding = "SH-004: an actor below an AND gate has no weight"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_2"
+  find = "=> weightL ( S:List , A:Int , Children:List )"
+  replace = "=> noneQ"
+
+[[mutation]]
+id = "sh004-group-all-children"
+expect = "kill"
+misunderstanding = "SH-004: the Lagrange coefficient runs over every child of the group, not the used ones"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_3"
+  find = "groupWeight ( mids ( usedChildren ( S:List , Children:List ) ) ,"
+  replace = "groupWeight ( mids ( Children:List ) ,"
+
+[[mutation]]
+id = "sh004-or-primary-only"
+expect = "kill"
+misunderstanding = "SH-004: an escrow holder of an OR gate has no weight"
+  [[mutation.edit]]
+  rule = "split_shard_holders--or_weight_2"
+  find = "=> weight ( S:List , A:Int , E:Gate )"
+  replace = "=> noneQ"
+
+[[mutation]]
+id = "sh004-or-escrow-first"
+expect = "kill"
+misunderstanding = "SH-004: an OR gate weighs its escrow child even when the actor is in the primary"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_4"
+  find = "=> orWeight ( S:List , A:Int , weight ( S:List , A:Int , Primary:Gate ) , Escrow:Gate )"
+  replace = "=> orWeight ( S:List , A:Int , weight ( S:List , A:Int , Escrow:Gate ) , Escrow:Gate )"
+
+[[mutation]]
+id = "sh004-or-weight-half"
+expect = "kill"
+misunderstanding = "SH-004: an OR child weighs 1/2, not 1"
+  [[mutation.edit]]
+  rule = "split_shard_holders--or_weight_1"
+  find = "=> someQ ( W:Q )"
+  replace = "=> someQ ( qMul ( W:Q , q ( 1 , 2 ) ) )"
+
+[[mutation]]
+id = "sh004-group-weight-none"
+expect = "kill"
+misunderstanding = "SH-004: an actor below a group gate has its child's weight without the Lagrange factor"
+  [[mutation.edit]]
+  rule = "split_shard_holders--group_weight_2"
+  find = "=> someQ ( qMul ( lagrange0 ( X:Int , Xs:List ) , W:Q ) )"
+  replace = "=> someQ ( W:Q )"
+
+[[mutation]]
+id = "sh004-group-absent-one"
+expect = "kill"
+misunderstanding = "SH-004: an actor not below a group gets weight 1 from it"
+  [[mutation.edit]]
+  rule = "split_shard_holders--group_weight_1"
+  find = "=> noneQ"
+  replace = "=> someQ ( q ( 1 , 1 ) )"
+
+[[mutation]]
+id = "sh004-andlist-end-one"
+expect = "kill"
+misunderstanding = "SH-004: an actor below no child of an AND gate weighs 1"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_l_1"
+  find = "=> noneQ"
+  replace = "=> someQ ( q ( 1 , 1 ) )"
+
+[[mutation]]
+id = "sh004-andlist-first-only"
+expect = "kill"
+misunderstanding = "SH-004: an AND gate weighs only its first child"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_l_2"
+  find = "=> weightLStep ( S:List , A:Int , weight ( S:List , A:Int , G:Gate ) , Rest:List )"
+  replace = "=> weight ( S:List , A:Int , G:Gate )"
+
+[[mutation]]
+id = "sh004-andlist-found-continue"
+expect = "kill"
+misunderstanding = "SH-004: the weight found in an AND child is replaced by the later children's"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_l_step_1"
+  find = "someQ ( W:Q ) , _ ) => someQ ( W:Q )"
+  replace = "someQ ( W:Q ) , _ ) => noneQ"
+
+[[mutation]]
+id = "sh004-andlist-stop"
+expect = "kill"
+misunderstanding = "SH-004: an AND gate gives no weight when the first child does not hold the actor"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_l_step_2"
+  find = "=> weightL ( S:List , A:Int , Rest:List )"
+  replace = "=> noneQ"
+
+[[mutation]]
+id = "sh004-grouplist-end"
+expect = "kill"
+misunderstanding = "SH-004: an actor below no child of a group has member id 0 and weight 1"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_g_1"
+  find = "=> noneMQ"
+  replace = "=> someMQ ( mq ( 0 , q ( 1 , 1 ) ) )"
+
+[[mutation]]
+id = "sh004-grouplist-first-mid"
+expect = "kill"
+misunderstanding = "SH-004: the Lagrange coefficient is taken at the first child's member id"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_g_2"
+  find = "=> weightGStep ( S:List , A:Int , mid ( G:Gate ) , weight ( S:List , A:Int , G:Gate ) , Rest:List )"
+  replace = "=> weightGStep ( S:List , A:Int , mid ( G:Gate ) , weight ( S:List , A:Int , G:Gate ) , .List )"
+
+[[mutation]]
+id = "sh004-grouplist-found-mid"
+expect = "kill"
+misunderstanding = "SH-004: the coefficient is taken at member id 1 whatever child holds the actor"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_g_step_1"
+  find = "=> someMQ ( mq ( M:Int , W:Q ) )"
+  replace = "=> someMQ ( mq ( 1 , W:Q ) )"
+
+[[mutation]]
+id = "sh004-grouplist-stop"
+expect = "kill"
+misunderstanding = "SH-004: a group gives no weight when its first child does not hold the actor"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_g_step_2"
+  find = "=> weightG ( S:List , A:Int , Rest:List )"
+  replace = "=> noneMQ"
+
+[[mutation]]
+id = "sh004-lagrange-sign"
+expect = "kill"
+misunderstanding = "SH-004: the Lagrange factor is y / (x - y)"
+  [[mutation.edit]]
+  rule = "split_shard_holders--lag_fold_2"
+  find = "q ( Y:Int , Y:Int -Int X:Int )"
+  replace = "q ( Y:Int , X:Int -Int Y:Int )"
+
+[[mutation]]
+id = "sh004-lagrange-end"
+expect = "kill"
+misunderstanding = "SH-004: the Lagrange product ignores its accumulator"
+  [[mutation.edit]]
+  rule = "split_shard_holders--lag_fold_1"
+  find = "=> Acc:Q"
+  replace = "=> q ( 1 , 1 )"
+
+[[mutation]]
+id = "sh004-lagrange-start"
+expect = "kill"
+misunderstanding = "SH-004: the Lagrange product starts at 2"
+  [[mutation.edit]]
+  rule = "split_shard_holders--lagrange0"
+  find = "q ( 1 , 1 ) )"
+  replace = "q ( 2 , 1 ) )"
+
+[[mutation]]
+id = "sh004-others-keep-self"
+expect = "kill"
+misunderstanding = "SH-004: the Lagrange product includes the actor's own member id"
+  [[mutation.edit]]
+  rule = "split_shard_holders--others_2_2"
+  find = "=> others ( X:Int , Rest:List )"
+  replace = "=> ListItem(Y:Int) others ( X:Int , Rest:List )"
+
+[[mutation]]
+id = "sh004-others-drop"
+expect = "kill"
+misunderstanding = "SH-004: the Lagrange product runs over no other member"
+  [[mutation.edit]]
+  rule = "split_shard_holders--others_2_1"
+  find = "=> ListItem(Y:Int) others ( X:Int , Rest:List )"
+  replace = "=> others ( X:Int , Rest:List )"
+
+[[mutation]]
+id = "sh004-others-end"
+expect = "kill"
+misunderstanding = "SH-004: the Lagrange product has an extra member id 3"
+  [[mutation.edit]]
+  rule = "split_shard_holders--others_1"
+  find = "=> .List"
+  replace = "=> ListItem(3)"
+
+[[mutation]]
+id = "sh004-used-children-all"
+expect = "kill"
+misunderstanding = "SH-004: an unused child of a group counts in the Lagrange set"
+  [[mutation.edit]]
+  rule = "split_shard_holders--used_children_2_2"
+  find = "=> usedChildren ( S:List , Rest:List )"
+  replace = "=> ListItem(G:Gate) usedChildren ( S:List , Rest:List )"
+
+[[mutation]]
+id = "sh004-used-children-drop"
+expect = "kill"
+misunderstanding = "SH-004: a used child of a group is left out of the Lagrange set"
+  [[mutation.edit]]
+  rule = "split_shard_holders--used_children_2_1"
+  find = "=> ListItem(G:Gate) usedChildren ( S:List , Rest:List )"
+  replace = "=> usedChildren ( S:List , Rest:List )"
+
+[[mutation]]
+id = "sh004-used-children-end"
+expect = "kill"
+misunderstanding = "SH-004: the Lagrange set holds an extra leaf with member id 3"
+  [[mutation.edit]]
+  rule = "split_shard_holders--used_children_1"
+  find = "=> .List"
+  replace = "=> ListItem(gLeaf ( 3 , 0 ))"
+
+[[mutation]]
+id = "sh004-qmul-add"
+expect = "kill"
+misunderstanding = "SH-004: weights along a path are multiplied numerator by numerator but the denominators are not"
+  [[mutation.edit]]
+  rule = "split_shard_holders--q_mul_1"
+  find = "q ( An:Int *Int Bn:Int , Ad:Int *Int Bd:Int )"
+  replace = "q ( An:Int *Int Bn:Int , Ad:Int )"
+
+[[mutation]]
+id = "sh004-eqv-equal-num"
+expect = "kill"
+misunderstanding = "SH-004, SH-022: weights are compared by numerator only"
+  [[mutation.edit]]
+  rule = "split_shard_holders--q_eqv_1"
+  find = "((An:Int *Int Bd:Int) ==Int (Bn:Int *Int Ad:Int))"
+  replace = "(An:Int ==Int Bn:Int)"
+
+[[mutation]]
+id = "sh004-eqv-zero-den"
+expect = "kill"
+misunderstanding = "SH-022: a claimed weight with denominator 0 may equal the computed weight"
+  [[mutation.edit]]
+  rule = "split_shard_holders--q_eqv_1"
+  find = " andThenBool (Bd:Int =/=Int 0)"
+  replace = ""
+
+[[mutation]]
+id = "sh022-weight-unchecked"
+expect = "kill"
+misunderstanding = "SH-022: the claimed weight is not checked against the signing set"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_bad_1"
+  find = "=> notBool qEqv ( W:Q , Claimed:Q )"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh022-no-weight-ok"
+expect = "kill"
+misunderstanding = "SH-022: an actor with no weight on Gamma may contribute"
+  [[mutation.edit]]
+  rule = "split_shard_holders--weight_bad_2"
+  find = "=> true"
+  replace = "=> false"

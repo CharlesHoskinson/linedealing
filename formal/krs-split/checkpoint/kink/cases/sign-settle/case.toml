@@ -1,0 +1,13 @@
+# CP-013: exactly the ended leaves, each once, and no VOID that Midnight records given another outcome
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { SignSettle = { leaves = [{ Lf = [1, "Final"] }, { Lf = [2, "Void"] }], ended = [{ Lf = [2, "Void"] }, { Lf = [1, "Final"] }], mv = [] } },
+  { SignSettle = { leaves = [{ Lf = [1, "Final"] }, { Lf = [1, "Final"] }], ended = [{ Lf = [1, "Final"] }, { Lf = [2, "Void"] }], mv = [] } },
+  { SignSettle = { leaves = [{ Lf = [1, "Final"] }], ended = [{ Lf = [1, "Final"] }, { Lf = [2, "Void"] }], mv = [] } },
+  { SignSettle = { leaves = [{ Lf = [1, "Final"] }, { Lf = [3, "Released"] }], ended = [{ Lf = [1, "Final"] }, { Lf = [2, "Void"] }], mv = [] } },
+  { SignSettle = { leaves = [{ Lf = [2, "Void"] }, { Lf = [1, "Final"] }], ended = [{ Lf = [1, "Final"] }, { Lf = [2, "Void"] }], mv = [2] } },
+  { SignSettle = { leaves = [{ Lf = [1, "Final"] }, { Lf = [2, "Void"] }], ended = [{ Lf = [1, "Final"] }, { Lf = [2, "Void"] }], mv = [1] } },
+  { SignSettle = { leaves = [{ Lf = [3, "Released"] }], ended = [{ Lf = [3, "Released"] }], mv = [3] } },
+  { SignSettle = { leaves = [], ended = [], mv = [1] } },
+]

@@ -1,0 +1,22 @@
+# SL-008 to SL-010: reserve, claim and end of the request with prec.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealC = { suite = "Bip340", epoch = 3, kcount = 2 } },
+  { OpenC = { eid = 1, pos = 10, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 1 } }] } },
+  { OpenC = { eid = 2, pos = 20, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 2 } }] } },
+  { InForce = { eid = 1, root = "Own" } },
+  { ClaimOp = { eid = 1 } },
+  { Reserve = { eid = 1 } },
+  { Reserve = { eid = 1 } },
+  { ClaimOp = { eid = 1 } },
+  { ClaimOp = { eid = 1 } },
+  { EndReq = { eid = 2 } },
+  { EndReq = { eid = 1 } },
+  { EndReq = { eid = 1 } },
+  { ClaimOp = { eid = 1 } },
+  { Reserve = { eid = 1 } },
+  { Reserve = { eid = 3 } },
+  { InForce = { eid = 1, root = "Gr" } },
+  { InForce = { eid = 2, root = "Own" } },
+]

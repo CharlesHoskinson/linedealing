@@ -1,0 +1,7 @@
+# RQ-001: n = 3f + 1 is inside the committee domain.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Rotate = { e = 2, n = 4, f = 1 } },
+]

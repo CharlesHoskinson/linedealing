@@ -1,0 +1,14 @@
+# CP-036: an order below max(peer heights, latest checkpoint height) without a proof of non-service is below_floor
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { OrderReq = { order_h = 0, peers = [], proof = false } },
+  { OrderReq = { order_h = 5, peers = [3, 9, 4], proof = false } },
+  { OrderReq = { order_h = 5, peers = [3, 9, 4], proof = true } },
+  { OrderReq = { order_h = 9, peers = [3, 9, 4], proof = false } },
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 50, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { OrderReq = { order_h = 49, peers = [3], proof = false } },
+  { OrderReq = { order_h = 50, peers = [3], proof = false } },
+  { OrderReq = { order_h = 49, peers = [60], proof = true } },
+  { OrderReq = { order_h = 55, peers = [60, 2], proof = false } },
+]

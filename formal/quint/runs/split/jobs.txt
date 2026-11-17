@@ -1,0 +1,130 @@
+# Sample counts of the n = 7 and n = 9 runs (2026-11-15): one sample took 78 s on sl_n7 initArmedEcdsa (10 samples, 782 s) and 475 s on sl_n9 (3 samples, 1432 s), so 200 samples exceeded the 7200 s timeout. Armed n7 runs: 30 samples; armed n9 runs: 5; n9 init runs: 40; q1_sl_n7_*: 60. q1_sl_n9_* expected ok: 15 (one 14-step sample at n = 9 takes several minutes; 400 samples exceed the 7200 s timeout); the q1_sl_n9 violation jobs keep 400 and stop at the first violation. The sl_n4 runs keep full depth (2000 samples) and are the main sampled evidence.
+# NAME|EXPECT|command; see run_all.sh. EXPECT: ok, violation, testfail (the run must fail), exit0.
+# Commands run from formal/quint. quint typecheck, test and run only (no verify).
+tc_splitline|exit0|typecheck splitline.qnt
+tc_splitline_instances|exit0|typecheck splitline_instances.qnt
+tc_splitline_test|exit0|typecheck splitline_test.qnt
+tc_splitline_pools|exit0|typecheck splitline_pools.qnt
+tc_splitline_pools_test|exit0|typecheck splitline_pools_test.qnt
+pl_design_pstep|ok|run splitline_pools.qnt --main pl_design --init pinit --step pstep --max-steps 80 --max-samples 20000 --seed 41 --invariant PoolInvariants --witnesses PoolPartialReached RestartReached PartialAfterRestartReached BurnedVoidReached SlotTakenFloorReached LostIndexReached BatchRefusalReached RecoveryReached ReshareSignReached CoveredRestoreReached
+pl_design_pstepRestart|ok|run splitline_pools.qnt --main pl_design --init pinit --step pstepRestart --max-steps 80 --max-samples 20000 --seed 41 --invariant PoolInvariants --witnesses PoolPartialReached RestartReached PartialAfterRestartReached BurnedVoidReached SlotTakenFloorReached LostIndexReached BatchRefusalReached RecoveryReached ReshareSignReached CoveredRestoreReached
+pl_design_pstepRecover|ok|run splitline_pools.qnt --main pl_design --init pinit --step pstepRecover --max-steps 80 --max-samples 20000 --seed 41 --invariant PoolInvariants --witnesses PoolPartialReached RestartReached PartialAfterRestartReached BurnedVoidReached SlotTakenFloorReached LostIndexReached BatchRefusalReached RecoveryReached ReshareSignReached CoveredRestoreReached
+pl_anchor_pstep|ok|run splitline_pools.qnt --main pl_anchor --init pinit --step pstep --max-steps 80 --max-samples 20000 --seed 41 --invariant PoolInvariants --witnesses PoolPartialReached RestartReached PartialAfterRestartReached BurnedVoidReached SlotTakenFloorReached LostIndexReached BatchRefusalReached RecoveryReached ReshareSignReached CoveredRestoreReached
+pl_anchor_pstepRestart|ok|run splitline_pools.qnt --main pl_anchor --init pinit --step pstepRestart --max-steps 80 --max-samples 20000 --seed 41 --invariant PoolInvariants --witnesses PoolPartialReached RestartReached PartialAfterRestartReached BurnedVoidReached SlotTakenFloorReached LostIndexReached BatchRefusalReached RecoveryReached ReshareSignReached CoveredRestoreReached
+pl_anchor_pstepRecover|ok|run splitline_pools.qnt --main pl_anchor --init pinit --step pstepRecover --max-steps 80 --max-samples 20000 --seed 41 --invariant PoolInvariants --witnesses PoolPartialReached RestartReached PartialAfterRestartReached BurnedVoidReached SlotTakenFloorReached LostIndexReached BatchRefusalReached RecoveryReached ReshareSignReached CoveredRestoreReached
+pm_shared_pool|violation|run splitline_pools.qnt --main pm_shared_pool --init pinit --step pstepRestart --max-steps 80 --max-samples 20000 --seed 41 --invariant C13_LostOnlyOwnSuite
+pm_bind_per_slot|violation|run splitline_pools.qnt --main pm_bind_per_slot --init pinit --step pstepRestart --max-steps 80 --max-samples 20000 --seed 41 --invariant C13_OneBindRound
+pm_partial_before_bind|violation|run splitline_pools.qnt --main pm_partial_before_bind --init pinit --step pstepRestart --max-steps 80 --max-samples 20000 --seed 41 --invariant C12_NoPartialBeforeBind
+pm_no_pending_burn|violation|run splitline_pools.qnt --main pm_no_pending_burn --init pinit --step pstepRestart --max-steps 80 --max-samples 20000 --seed 41 --invariant C16_NoSlotTwice
+pm_no_account_burn|violation|run splitline_pools.qnt --main pm_no_account_burn --init pinit --step pstepRestart --max-steps 80 --max-samples 20000 --seed 41 --invariant C16_NoSlotTwice
+test_pt_design|ok|test splitline_pools_test.qnt --main pt_design --match '(windowVote|pending|reshareNoAnchor|acctEarliest|burnedIndex|restartEnds|windowBind).*Holds'
+test_pt_seald|ok|test splitline_pools_test.qnt --main pt_seald --match '(windowBurn|account).*Holds'
+test_pt_acct_race|ok|test splitline_pools_test.qnt --main pt_acct_race --match 'acctEarliestBroken'
+test_pt_window_bind|ok|test splitline_pools_test.qnt --main pt_window_bind --match 'windowBindBroken'
+test_pt_anchor|ok|test splitline_pools_test.qnt --main pt_anchor --match 'reshareCoveredHolds'
+test_pt_no_window_burn|ok|test splitline_pools_test.qnt --main pt_no_window_burn --match 'windowBurnBroken'
+test_pt_no_pending_burn|ok|test splitline_pools_test.qnt --main pt_no_pending_burn --match 'pendingBurnBroken'
+test_pt_window|ok|test splitline_pools_test.qnt --main pt_window --match 'windowVoteBroken'
+test_pt_no_account_burn|ok|test splitline_pools_test.qnt --main pt_no_account_burn --match 'accountBurnBroken'
+test_pt_reshare_no_anchor|ok|test splitline_pools_test.qnt --main pt_reshare_no_anchor --match 'reshareNoAnchorBroken'
+test_pt_reshare_all|ok|test splitline_pools_test.qnt --main pt_reshare_all --match 'reshareCoveredBroken'
+sl_n4_init|ok|run splitline_instances.qnt --main sl_n4 --init init --step stepMostlyProgress --max-steps 30 --max-samples 2000 --seed 11 --invariant AllInvariants --witnesses LapsedReached SlotTakenReached EcdsaUnauthEndNoBurnReached EcdsaAuthAfterUnauthReached TwoReqsShareSlotReached FinalReached
+sl_n4_schnorr|ok|run splitline_instances.qnt --main sl_n4 --init initArmedSchnorr --step stepRelease4 --max-steps 25 --max-samples 2000 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n4_ecdsa|ok|run splitline_instances.qnt --main sl_n4 --init initArmedEcdsa --step stepRelease4 --max-steps 25 --max-samples 2000 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n4_ecdsa_cold|ok|run splitline_instances.qnt --main sl_n4 --init initArmedEcdsa --step stepReleaseCold --max-steps 25 --max-samples 2000 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n4_tee_init|ok|run splitline_instances.qnt --main sl_n4_tee --init init --step stepMostlyProgress --max-steps 30 --max-samples 2000 --seed 11 --invariant AllInvariants --witnesses LapsedReached SlotTakenReached EcdsaUnauthEndNoBurnReached EcdsaAuthAfterUnauthReached TwoReqsShareSlotReached FinalReached
+sl_n4_tee_schnorr|ok|run splitline_instances.qnt --main sl_n4_tee --init initArmedSchnorr --step stepRelease4 --max-steps 25 --max-samples 2000 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n4_tee_ecdsa|ok|run splitline_instances.qnt --main sl_n4_tee --init initArmedEcdsa --step stepRelease4 --max-steps 25 --max-samples 2000 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n4_tee_ecdsa_cold|ok|run splitline_instances.qnt --main sl_n4_tee --init initArmedEcdsa --step stepReleaseCold --max-steps 25 --max-samples 2000 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n7_init|ok|run splitline_instances.qnt --main sl_n7 --init init --step stepMostlyProgress --max-steps 30 --max-samples 200 --seed 11 --invariant AllInvariants --witnesses LapsedReached SlotTakenReached EcdsaUnauthEndNoBurnReached EcdsaAuthAfterUnauthReached TwoReqsShareSlotReached FinalReached
+sl_n7_schnorr|ok|run splitline_instances.qnt --main sl_n7 --init initArmedSchnorr --step stepRelease4 --max-steps 25 --max-samples 30 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n7_ecdsa|ok|run splitline_instances.qnt --main sl_n7 --init initArmedEcdsa --step stepRelease4 --max-steps 25 --max-samples 30 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n7_ecdsa_cold|ok|run splitline_instances.qnt --main sl_n7 --init initArmedEcdsa --step stepReleaseCold --max-steps 25 --max-samples 30 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n7_tee_init|ok|run splitline_instances.qnt --main sl_n7_tee --init init --step stepMostlyProgress --max-steps 30 --max-samples 200 --seed 11 --invariant AllInvariants --witnesses LapsedReached SlotTakenReached EcdsaUnauthEndNoBurnReached EcdsaAuthAfterUnauthReached TwoReqsShareSlotReached FinalReached
+sl_n7_tee_schnorr|ok|run splitline_instances.qnt --main sl_n7_tee --init initArmedSchnorr --step stepRelease4 --max-steps 25 --max-samples 30 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n7_tee_ecdsa|ok|run splitline_instances.qnt --main sl_n7_tee --init initArmedEcdsa --step stepRelease4 --max-steps 25 --max-samples 30 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n7_tee_ecdsa_cold|ok|run splitline_instances.qnt --main sl_n7_tee --init initArmedEcdsa --step stepReleaseCold --max-steps 25 --max-samples 30 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n9_init|ok|run splitline_instances.qnt --main sl_n9 --init init --step stepMostlyProgress --max-steps 30 --max-samples 40 --seed 11 --invariant AllInvariants --witnesses LapsedReached SlotTakenReached EcdsaUnauthEndNoBurnReached EcdsaAuthAfterUnauthReached TwoReqsShareSlotReached FinalReached
+sl_n9_schnorr|ok|run splitline_instances.qnt --main sl_n9 --init initArmedSchnorr --step stepRelease4 --max-steps 25 --max-samples 5 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n9_ecdsa|ok|run splitline_instances.qnt --main sl_n9 --init initArmedEcdsa --step stepRelease4 --max-steps 25 --max-samples 5 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n9_ecdsa_cold|ok|run splitline_instances.qnt --main sl_n9 --init initArmedEcdsa --step stepReleaseCold --max-steps 25 --max-samples 5 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n9_tee_init|ok|run splitline_instances.qnt --main sl_n9_tee --init init --step stepMostlyProgress --max-steps 30 --max-samples 40 --seed 11 --invariant AllInvariants --witnesses LapsedReached SlotTakenReached EcdsaUnauthEndNoBurnReached EcdsaAuthAfterUnauthReached TwoReqsShareSlotReached FinalReached
+sl_n9_tee_schnorr|ok|run splitline_instances.qnt --main sl_n9_tee --init initArmedSchnorr --step stepRelease4 --max-steps 25 --max-samples 5 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n9_tee_ecdsa|ok|run splitline_instances.qnt --main sl_n9_tee --init initArmedEcdsa --step stepRelease4 --max-steps 25 --max-samples 5 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+sl_n9_tee_ecdsa_cold|ok|run splitline_instances.qnt --main sl_n9_tee --init initArmedEcdsa --step stepReleaseCold --max-steps 25 --max-samples 5 --seed 11 --invariant AllInvariants --witnesses AdmittedReached ReleaseReached SignedReached EcdsaSignedReached Gen2ReleaseReached FinalReached SlotTakenReached RollbackAfterReleaseReached ColdStartReached
+q1_sl_n4_b2|violation|run splitline_instances.qnt --main sl_n4_b2 --init initArmedSchnorr --step stepRelease4 --max-steps 14 --max-samples 400 --seed 21 --invariant C12_SchnorrSlotOneTicket
+q1_sl_n4_b2_anchor|ok|run splitline_instances.qnt --main sl_n4_b2_anchor --init initArmedSchnorr --step stepRelease4 --max-steps 14 --max-samples 400 --seed 21 --invariant C12_SchnorrSlotOneTicket
+# Runner 26d: the sampled jobs of these mutants and of q1_sl_n7_b3 and q1_sl_n9_b5 found no violation in
+# 25 steps from init (q1_sl_n9_b5 hit the 7200 s timeout). Each is replaced by a deterministic run that
+# reaches the violation on the mutant; jobs neg_mt_design and neg_wk_design_holds check the design side.
+# m_witkey: the witness keeps one entry per key, so C13_WitnessKeyUnambiguous cannot fail in this model;
+# the mutant shows as a refused honest release, so its job expects the release run to fail (testfail).
+test_q1_n7_b3|ok|test splitline_test.qnt --main q1_n7_b3 --match 'q1ForkBroken'
+q1_sl_n7_b3_anchor|ok|run splitline_instances.qnt --main sl_n7_b3_anchor --init initArmedSchnorr --step stepRelease4 --max-steps 14 --max-samples 60 --seed 21 --invariant C12_SchnorrSlotOneTicket
+q1_sl_n7_b4|violation|run splitline_instances.qnt --main sl_n7_b4 --init initArmedSchnorr --step stepRelease4 --max-steps 14 --max-samples 60 --seed 21 --invariant C12_SchnorrSlotOneTicket
+q1_sl_n7_b4_anchor|ok|run splitline_instances.qnt --main sl_n7_b4_anchor --init initArmedSchnorr --step stepRelease4 --max-steps 14 --max-samples 60 --seed 21 --invariant C12_SchnorrSlotOneTicket
+q1_sl_n9_b3|ok|run splitline_instances.qnt --main sl_n9_b3 --init initArmedSchnorr --step stepRelease4 --max-steps 14 --max-samples 15 --seed 21 --invariant C12_SchnorrSlotOneTicket
+q1_sl_n9_b3_anchor|ok|run splitline_instances.qnt --main sl_n9_b3_anchor --init initArmedSchnorr --step stepRelease4 --max-steps 14 --max-samples 15 --seed 21 --invariant C12_SchnorrSlotOneTicket
+q1_sl_n9_b4|ok|run splitline_instances.qnt --main sl_n9_b4 --init initArmedSchnorr --step stepRelease4 --max-steps 14 --max-samples 15 --seed 21 --invariant C12_SchnorrSlotOneTicket
+q1_sl_n9_b4_anchor|ok|run splitline_instances.qnt --main sl_n9_b4_anchor --init initArmedSchnorr --step stepRelease4 --max-steps 14 --max-samples 15 --seed 21 --invariant C12_SchnorrSlotOneTicket
+test_q1_n9_b5|ok|test splitline_test.qnt --main q1_n9_b5 --match 'q1ForkBroken'
+q1_sl_n9_b5_anchor|ok|run splitline_instances.qnt --main sl_n9_b5_anchor --init initArmedSchnorr --step stepRelease4 --max-steps 14 --max-samples 15 --seed 21 --invariant C12_SchnorrSlotOneTicket
+q1_sl_n9_b6|violation|run splitline_instances.qnt --main sl_n9_b6 --init initArmedSchnorr --step stepRelease4 --max-steps 14 --max-samples 400 --seed 21 --invariant C12_SchnorrSlotOneTicket
+q1_sl_n9_b6_anchor|ok|run splitline_instances.qnt --main sl_n9_b6_anchor --init initArmedSchnorr --step stepRelease4 --max-steps 14 --max-samples 15 --seed 21 --invariant C12_SchnorrSlotOneTicket
+test_mt_m_burn|ok|test splitline_test.qnt --main mt_m_burn --match 'burnBroken'
+test_mt_m_precedence|ok|test splitline_test.qnt --main mt_m_precedence --match 'precedenceBroken'
+test_mt_m_distinct|ok|test splitline_test.qnt --main mt_m_distinct --match 'distinctBroken'
+m_gens3|violation|run splitline_instances.qnt --main m_gens3 --init initArmedSchnorr --step stepRelease4 --max-steps 25 --max-samples 400 --seed 31 --invariant GMAX_OneFeeBump
+m_ecdsa_shared|violation|run splitline_instances.qnt --main m_ecdsa_shared --init initArmedEcdsa --step stepRelease4 --max-steps 25 --max-samples 400 --seed 31 --invariant C3_EcdsaOneMessagePerSlot
+test_mt_m_bf_p2|ok|test splitline_test.qnt --main mt_m_bf_p2 --match 'bfP2Broken'
+test_mt_m_inclusion|ok|test splitline_test.qnt --main mt_m_inclusion --match 'inclusionBroken'
+m_direct_call|violation|run splitline_instances.qnt --main m_direct_call --init init --step stepMostlyProgress --max-steps 25 --max-samples 400 --seed 51 --invariant C11_OneAuthPerNullifier
+m_partial_qc|violation|run splitline_instances.qnt --main m_partial_qc --init init --step stepMostlyProgress --max-steps 25 --max-samples 400 --seed 31 --invariant C8_NoPartialBeforeOrder
+test_mt_m_no_collect|ok|test splitline_test.qnt --main mt_m_no_collect --match 'noCollectBroken'
+test_rt_m_leafset|ok|test splitline_test.qnt --main rt_m_leafset --match 'leafSetBroken'
+test_mt_m_cold_old|ok|test splitline_test.qnt --main mt_m_cold_old --match 'coldOldBroken'
+m_dd|violation|run splitline_instances.qnt --main m_dd --init init --step stepMostlyProgress --max-steps 25 --max-samples 400 --seed 31 --invariant C9_DdUnique
+m_ra|violation|run splitline_instances.qnt --main m_ra --init init --step stepMostlyProgress --max-steps 25 --max-samples 400 --seed 31 --invariant C18_ContribOnlyMatchingRA
+test_rt_m_slot_root|ok|test splitline_test.qnt --main rt_m_slot_root --match 'slotRootBroken'
+m_settle_unspent|violation|run splitline_instances.qnt --main m_settle_unspent --init initArmedSchnorr --step stepMostlyProgress --max-steps 25 --max-samples 400 --seed 31 --invariant C11_ReleasedNeverUnspent
+m_auth_ref|violation|run splitline_instances.qnt --main m_auth_ref --init init --step stepMostlyProgress --max-steps 25 --max-samples 400 --seed 31 --invariant C13_NoRewrittenCopyOrdered
+m_stall_local|violation|run splitline_instances.qnt --main m_stall_local --init init --step stepMostlyProgress --max-steps 25 --max-samples 400 --seed 31 --invariant C13_StallResolves
+test_mt_m_hold0|ok|test splitline_test.qnt --main mt_m_hold0 --match 'hold0Broken'
+neg_mt_design|testfail|test splitline_test.qnt --main mt_design --match 'Broken'
+m_bf_pending|violation|run splitline_instances.qnt --main m_bf_pending --init init --step stepMostlyProgress --max-steps 25 --max-samples 400 --seed 31 --invariant C11_PendingOnlyVerified
+neg_wk_m_witkey|testfail|test splitline_test.qnt --main wk_m_witkey --match 'witkeyReleaseHolds'
+test_wk_design|ok|test splitline_test.qnt --main wk_design --match 'witkeyReleaseHolds'
+m_open_final|violation|run splitline_instances.qnt --main m_open_final --init init --step stepMostlyProgress --max-steps 25 --max-samples 400 --seed 31 --invariant C13_OpenNotBlocked
+m_cold_void|violation|run splitline_instances.qnt --main m_cold_void --init initArmedEcdsa --step stepReleaseCold --max-steps 25 --max-samples 200 --seed 11 --invariant C11_ReleasedNeverUnspent
+m_g5|violation|run splitline_instances.qnt --main m_g5 --init init --step stepMostlyProgress --max-steps 25 --max-samples 400 --seed 31 --invariant C13_EcdsaPrecOnlyInForce
+m_g5_burn|violation|run splitline_instances.qnt --main m_g5 --init init --step stepMostlyProgress --max-steps 25 --max-samples 2000 --seed 31 --invariant C13_EcdsaNoBurnByUnauthorized
+m_cold_old_c16|violation|run splitline_instances.qnt --main m_cold_old --init initArmedEcdsa --step stepReleaseCold --max-steps 25 --max-samples 400 --seed 31 --invariant C16_ColdStartBurnsAll
+test_gt_design|ok|test splitline_test.qnt --main gt_design --match 'g5.*Holds'
+test_gt_m_g5|ok|test splitline_test.qnt --main gt_m_g5 --match 'g5.*Broken'
+neg_gt_design_broken|testfail|test splitline_test.qnt --main gt_design --match 'g5.*Broken'
+neg_gt_m_g5_holds|testfail|test splitline_test.qnt --main gt_m_g5 --match 'g5VoidHolds'
+neg_pt_design_broken|testfail|test splitline_pools_test.qnt --main pt_design --match 'windowBurnBroken'
+neg_pt_design_acct|testfail|test splitline_pools_test.qnt --main pt_design --match 'acctEarliestBroken'
+test_fix_design|ok|test splitline_test.qnt --main fix_scenarios --match 'Holds'
+test_w5_mutant|ok|test splitline_test.qnt --main w5_scenarios --match 'w5Broken'
+test_rt_design|ok|test splitline_test.qnt --main rt_design --match 'Holds'
+neg_rt_design_broken|testfail|test splitline_test.qnt --main rt_design --match 'Broken'
+tc_splitline_birth|exit0|typecheck splitline_birth.qnt
+test_pg1_design|ok|test splitline_test.qnt --main pg1_design --match 'pg1.*Holds'
+test_pg1_m_open|ok|test splitline_test.qnt --main pg1_m_open --match 'pg1OpenVoidBroken'
+neg_pg1_design_broken|testfail|test splitline_test.qnt --main pg1_design --match 'pg1OpenVoidBroken'
+neg_pg1_m_open_refused|testfail|test splitline_test.qnt --main pg1_m_open --match 'pg1OpenVoidRefusedHolds'
+birth_design|ok|run splitline_birth.qnt --main bl_design --init binit --step bstep --max-steps 12 --max-samples 5000 --seed 7 --invariant BirthInvariants --witnesses BadEcBornReached FundedReached
+birth_m_fund_on_final|violation|run splitline_birth.qnt --main bm_fund_on_final --init binit --step bstep --max-steps 12 --max-samples 5000 --seed 7 --invariant BirthInvariants
+birth_m_ack_no_pop|violation|run splitline_birth.qnt --main bm_ack_no_pop --init binit --step bstep --max-steps 12 --max-samples 5000 --seed 7 --invariant C1_AckedOnlyDerivable
+test_bt_design|ok|test splitline_birth.qnt --main bt_design --match '.*Holds'
+test_bt_fund_on_final|ok|test splitline_birth.qnt --main bt_fund_on_final --match 'badEcFundBroken'
+test_bt_ack_no_pop|ok|test splitline_birth.qnt --main bt_ack_no_pop --match 'fakeAckBroken'
+neg_bt_design_broken|testfail|test splitline_birth.qnt --main bt_design --match '.*Broken'
+test_pt_acct_named|ok|test splitline_pools_test.qnt --main pt_acct_named --match 'accountBurnBroken'
+bc_typecheck|exit0|typecheck ../../design/enhancement/quint/batched_checkpoint.qnt
+bc_tests|ok|test ../../design/enhancement/quint/batched_checkpoint.qnt --main tests --match '.*Test'
+bc_design|ok|run ../../design/enhancement/quint/batched_checkpoint.qnt --main design --invariant allInvariants --max-samples 20000 --max-steps 40 --seed 1
+bc_mut11|violation|run ../../design/enhancement/quint/batched_checkpoint.qnt --main mut11_proofBelowPendingMin --invariant allInvariants --max-samples 20000 --max-steps 40 --seed 1
+counterexample_vectors|exit0|SH python3 -I ../../design/enhancement/vectors/quint_counterexamples.py
+export_traces|exit0|SH ./runs/split/export_traces.sh

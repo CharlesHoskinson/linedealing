@@ -1,0 +1,270 @@
+# Plausible misreadings of the TEE seat (SL-018 to SL-021, SL-027, SL-030) and of its
+# refusals (ledgers 6, 8), as K patches of kink/definition.k.
+
+[[mutation]]
+id = "ledger8-put-non-tee"
+expect = "kill"
+misunderstanding = "SL-018, ledger 8: a NON_TEE node keeps a seat too"
+  [[mutation.edit]]
+  rule = "seat-put"
+  find = "(Mode:Mode ==K NON_TEE) orElseBool "
+  replace = ""
+  [[mutation.edit]]
+  rule = "seat-put-refused"
+  find = "(Mode:Mode ==K NON_TEE) orElseBool "
+  replace = ""
+
+[[mutation]]
+id = "ledger6-put-twice"
+expect = "kill"
+misunderstanding = "Ledger 6: a slot share may enter the seat twice"
+  [[mutation.edit]]
+  rule = "seat-put"
+  find = " orElseBool hasSeat ( Key:Int , Seat:List )"
+  replace = ""
+  [[mutation.edit]]
+  rule = "seat-put-refused"
+  find = " orElseBool hasSeat ( Key:Int , Seat:List )"
+  replace = ""
+
+[[mutation]]
+id = "sl018-put-bound"
+expect = "kill"
+misunderstanding = "SL-018: a slot share enters the seat already bound"
+  [[mutation.edit]]
+  rule = "seat-put"
+  find = "seatSlot ( Key:Int , free , false , .List )"
+  replace = "seatSlot ( Key:Int , bound ( 0 ) , false , .List )"
+
+[[mutation]]
+id = "seat-put-refused-code"
+expect = "kill"
+misunderstanding = "Ledger 6: a second put of a slot share is outside the capability"
+  [[mutation.edit]]
+  rule = "seat-put-refused"
+  find = "ListItem(noRule)"
+  replace = "ListItem(outsideCapability)"
+
+[[mutation]]
+id = "ledger6-bind-other-digest"
+expect = "kill"
+misunderstanding = "SL-018, ledger 6: a bind of a slot bound to another digest is answered ok and changes nothing"
+  [[mutation.edit]]
+  rule = "split_slots--bind_bad_st_2"
+  find = "=> D2:Int =/=Int D:Int"
+  replace = "=> false"
+
+[[mutation]]
+id = "ledger6-bind-burned"
+expect = "kill"
+misunderstanding = "SL-018, ledger 6: a bind of a burned slot is answered ok"
+  [[mutation.edit]]
+  rule = "split_slots--bind_bad_st_3"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "ledger6-bind-absent"
+expect = "kill"
+misunderstanding = "Ledger 6: a bind of a slot the seat does not hold is answered ok"
+  [[mutation.edit]]
+  rule = "split_slots--bind_bad_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "sl019-current-slot-acks"
+expect = "kill"
+misunderstanding = "SL-019: a bind is current once the slot entries have w acks, whatever the sealed version has"
+  [[mutation.edit]]
+  rule = "split_slots--s_bind_1"
+  find = "(W:Int <=Int Sa:Int) andThenBool (W:Int <=Int Va:Int)"
+  replace = "(W:Int <=Int Sa:Int)"
+
+[[mutation]]
+id = "sl019-current-sealed-acks"
+expect = "kill"
+misunderstanding = "SL-019: a bind is current once the sealed version has w acks, whatever the slot entries have"
+  [[mutation.edit]]
+  rule = "split_slots--s_bind_1"
+  find = "(W:Int <=Int Sa:Int) andThenBool (W:Int <=Int Va:Int)"
+  replace = "(W:Int <=Int Va:Int)"
+
+[[mutation]]
+id = "sl019-later-round-slot-acks"
+expect = "kill"
+misunderstanding = "SL-019: a later ack round makes the slot current once the slot entries have w acks"
+  [[mutation.edit]]
+  rule = "split_slots--s_bind_2_1"
+  find = "((W:Int <=Int Sa:Int) andThenBool (W:Int <=Int Va:Int))"
+  replace = "(W:Int <=Int Sa:Int)"
+
+[[mutation]]
+id = "sl019-current-not-kept"
+expect = "kill"
+misunderstanding = "SL-019: a later ack round with fewer acks makes a current slot not current"
+  [[mutation.edit]]
+  rule = "split_slots--s_bind_2_1"
+  find = "Current:Bool orElseBool "
+  replace = ""
+
+[[mutation]]
+id = "sl018-bind-every-slot"
+expect = "kill"
+misunderstanding = "SL-018: a bind binds every slot share of the seat"
+  [[mutation.edit]]
+  rule = "split_slots--s_step_1_1"
+  find = "requires sKey ( X:SeatSlot ) ==Int Key:Int"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_slots--s_step_1_2"
+  find = "requires notBool (sKey ( X:SeatSlot ) ==Int Key:Int)"
+  replace = "requires false"
+
+[[mutation]]
+id = "seat-bind-noop"
+expect = "kill"
+misunderstanding = "SL-018: a bind answers ok and leaves the seat"
+  [[mutation.edit]]
+  rule = "seat-bind"
+  find = "Seat:List => mapS ( W:Int , Op:Op , Seat:List )"
+  replace = "Seat:List"
+
+[[mutation]]
+id = "seat-bind-refused-code"
+expect = "kill"
+misunderstanding = "Ledger 6: a bind to another digest is answered slot_bound"
+  [[mutation.edit]]
+  rule = "seat-bind-refused"
+  find = "ListItem(noRule)"
+  replace = "ListItem(slotBound)"
+
+[[mutation]]
+id = "sl020-slot-bound-no-rule"
+expect = "kill"
+misunderstanding = "SL-020: a release for another digest is refused with no-rule, not slot_bound"
+  [[mutation.edit]]
+  rule = "split_slots--release_on_1_1"
+  find = "ListItem(slotBound)"
+  replace = "ListItem(noRule)"
+
+[[mutation]]
+id = "sl019-release-not-current"
+expect = "kill"
+misunderstanding = "SL-019: a bound slot may release before its bind is current"
+  [[mutation.edit]]
+  rule = "split_slots--release_on_1_2"
+  find = "=> noRuleIf ( notBool Current:Bool )"
+  replace = "=> .List"
+
+[[mutation]]
+id = "ledger6-release-free"
+expect = "kill"
+misunderstanding = "SL-019, ledger 6: a free slot answers a release"
+  [[mutation.edit]]
+  rule = "split_slots--release_on_2"
+  find = "ListItem(noRule)"
+  replace = ".List"
+
+[[mutation]]
+id = "ledger6-release-burned"
+expect = "kill"
+misunderstanding = "SL-018, ledger 6: a burned slot answers a release"
+  [[mutation.edit]]
+  rule = "split_slots--release_on_3"
+  find = "ListItem(noRule)"
+  replace = ".List"
+
+[[mutation]]
+id = "ledger6-release-absent"
+expect = "kill"
+misunderstanding = "Ledger 6: a slot the seat does not hold answers a release"
+  [[mutation.edit]]
+  rule = "split_slots--release_find_1"
+  find = "ListItem(noRule)"
+  replace = ".List"
+
+[[mutation]]
+id = "sl021-signed-twice"
+expect = "kill"
+misunderstanding = "SL-021, SL-027: each release of the same ticket records it again"
+  [[mutation.edit]]
+  rule = "split_slots--add_signed_1"
+  find = "=> Signed_2:List"
+  replace = "=> ListItem(D:Int) Signed_2:List"
+
+[[mutation]]
+id = "sl021-signed-not-recorded"
+expect = "kill"
+misunderstanding = "SL-021, SL-027: a release does not record the ticket it signed"
+  [[mutation.edit]]
+  rule = "split_slots--s_release_1_1"
+  find = "addSigned ( D:Int , Signed_2:List )"
+  replace = "Signed_2:List"
+
+[[mutation]]
+id = "seat-release-obs"
+expect = "kill"
+misunderstanding = "SL-019: a release answers ok, not the released digest"
+  [[mutation.edit]]
+  rule = "seat-release"
+  find = "ListItem(released ( D:Int ))"
+  replace = "ListItem(ok)"
+
+[[mutation]]
+id = "seat-release-refused-fixed"
+expect = "kill"
+misunderstanding = "SL-020: every refused release is no-rule"
+  [[mutation.edit]]
+  rule = "seat-release-refused"
+  find = "ListItem(refused ( releaseRef ( Mode:Mode , Key:Int , D:Int , Seat:List ) ))"
+  replace = "ListItem(refused ( ListItem(noRule) ))"
+
+[[mutation]]
+id = "sl030-burn-noop"
+expect = "kill"
+misunderstanding = "SL-018, SL-030: slot_burn answers ok and leaves the slot share"
+  [[mutation.edit]]
+  rule = "seat-burn"
+  find = "Seat:List => mapS ( W:Int , Op:Op , Seat:List )"
+  replace = "Seat:List"
+
+[[mutation]]
+id = "sl030-burn-every-slot"
+expect = "kill"
+misunderstanding = "SL-030: slot_burn burns every slot share of the seat"
+  [[mutation.edit]]
+  rule = "split_slots--s_step_3_1"
+  find = "requires sKey ( X:SeatSlot ) ==Int Key:Int"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_slots--s_step_3_2"
+  find = "requires notBool (sKey ( X:SeatSlot ) ==Int Key:Int)"
+  replace = "requires false"
+
+[[mutation]]
+id = "ledger6-burn-twice"
+expect = "kill"
+misunderstanding = "SL-018, ledger 6: a burned slot may be burned again"
+  [[mutation.edit]]
+  rule = "split_slots--is_burned_1"
+  find = "=> St:SeatSt ==K burnedSeat"
+  replace = "=> false"
+
+[[mutation]]
+id = "ledger6-burn-absent"
+expect = "kill"
+misunderstanding = "Ledger 6: slot_burn of a slot the seat does not hold is answered ok"
+  [[mutation.edit]]
+  rule = "split_slots--burn_bad_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "seat-burn-refused-code"
+expect = "kill"
+misunderstanding = "Ledger 6: a second slot_burn is outside the capability"
+  [[mutation.edit]]
+  rule = "seat-burn-refused"
+  find = "ListItem(noRule)"
+  replace = "ListItem(outsideCapability)"

@@ -1,4 +1,4 @@
-   Compiling line-dealing v0.1.0 (impl)
+   Compiling line-dealing v0.1.0 (/home/hoskinson/Projects/mpcexperiments-wt-rust/impl)
     Finished `release` profile [optimized] target(s) in 9.37s
      Running unittests src/lib.rs (target/release/deps/line_dealing-6a1db1d761c5f613)
 

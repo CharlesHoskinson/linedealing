@@ -1,0 +1,14 @@
+# AU-021, RQ-060, RQ-052: a restart burn of a live request, then f + 1 STALLED posts: VOID
+# with reason STALLED and outcome RELEASED (restart_end, not confirmed). Only a VOID leaf is
+# carried, so the carry is refused with no-rule although the reason reads as STALLED.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { RestartBurn = { eid = 1 } },
+  { PostVoid = { eid = 1, epoch = 0, member = 0, reason = "Stalled" } },
+  { PostVoid = { eid = 1, epoch = 0, member = 1, reason = "Stalled" } },
+  { Carry = { eid = 1 } },
+]

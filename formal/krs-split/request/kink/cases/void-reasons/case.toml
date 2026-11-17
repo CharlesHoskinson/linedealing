@@ -1,0 +1,22 @@
+# RQ-065: a VOID post may carry each reason other than NONE.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { PostVoid = { eid = 1, epoch = 0, member = 0, reason = "ShareComplaint" } },
+  { Post = { eid = 2, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { PostVoid = { eid = 2, epoch = 0, member = 0, reason = "Malformed" } },
+  { Post = { eid = 3, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { PostVoid = { eid = 3, epoch = 0, member = 0, reason = "AuthRefused" } },
+  { Post = { eid = 4, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { PostVoid = { eid = 4, epoch = 0, member = 0, reason = "ReleaseCheck" } },
+  { Post = { eid = 5, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { PostVoid = { eid = 5, epoch = 0, member = 0, reason = "DealerFault" } },
+  { Post = { eid = 6, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { PostVoid = { eid = 6, epoch = 0, member = 0, reason = "PinSpent" } },
+  { Post = { eid = 7, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { PostVoid = { eid = 7, epoch = 0, member = 0, reason = "Revoked" } },
+  { Post = { eid = 8, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { PostVoid = { eid = 8, epoch = 0, member = 0, reason = "SlotTaken" } },
+]

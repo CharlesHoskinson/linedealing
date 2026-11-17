@@ -4,9 +4,9 @@ You are one of three independent lanes. Research current best practice online, t
 
 ## Read first
 
-- `design/enhancement/VERITEE-MODEL.md`: a cited digest of what Veritee does today.
-- `~/Projects/veritee/veritee-vm/`: the code. Key paths: `server/akx/src`, `server/azure_attestation_server/src`, `server/guest_attestation`, `veritee-os/measured_setup`, `veritee-os/mkosi`, `cli/veritee`, `docs/attested-channel-implementation-plan.md`, `docs/tls-channel-binding.md`, `AGENTS.md`. A graph is in `graphify-out/GRAPH_REPORT.md`.
-- `design/enhancement/BRIEF.md`: the protocol context (TEE mode and non-TEE mode of a co-custody signing committee with a threshold-encrypted mempool on a BFT board, Midnight as the authorization chain).
+- `/home/hoskinson/Projects/mpcexperiments/design/enhancement/VERITEE-MODEL.md`: a cited digest of what Veritee does today.
+- `/home/hoskinson/Projects/veritee/veritee-vm/`: the code. Key paths: `server/akx/src`, `server/azure_attestation_server/src`, `server/guest_attestation`, `veritee-os/measured_setup`, `veritee-os/mkosi`, `cli/veritee`, `docs/attested-channel-implementation-plan.md`, `docs/tls-channel-binding.md`, `AGENTS.md`. A graph is in `graphify-out/GRAPH_REPORT.md`.
+- `/home/hoskinson/Projects/mpcexperiments/design/enhancement/BRIEF.md`: the protocol context (TEE mode and non-TEE mode of a co-custody signing committee with a threshold-encrypted mempool on a BFT board, Midnight as the authorization chain).
 
 Veritee today: Azure Confidential VMs on AMD SEV-SNP with a vTPM (Azure HCL paravisor), dm-verity root in RAM, PCR4 boot image, PCR15 app root hash plus TLS evidence, nonce-bound attestation via MAA or raw HCL report, akx (per-boot Ed25519 key attested with a constant nonce, interactive HPKE sessions), measured egress proxy, a Warden that reproduces images and records measurements on Midnight. The companion repos (Warden, spec, contracts) are not available; state assumptions about them.
 

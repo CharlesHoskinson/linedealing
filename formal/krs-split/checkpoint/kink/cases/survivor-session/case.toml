@@ -1,0 +1,14 @@
+# CP-022, ledger 16: a node that did not reboot reads a whole-committee restart: each open
+# session takes the burn range of its pool at once (a session of a pool the checkpoint
+# lacks takes nothing); a second whole read adds the newer ranges in front
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 95, pending = [], pending_count = 0 } }, { PoolOf = { pool = 3, h = 50, pending_min = 51, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { ReadLedger = { ok = true, tickets = [{ P = [0, 0] }, { P = [1, 0] }, { P = [2, 0] }, { P = [3, 0] }], cov = [] } },
+  { OpenSession = { pool = 1 } },
+  { OpenSession = { pool = 2 } },
+  { ReadLedger = { ok = true, tickets = [{ P = [0, 1] }, { P = [1, 1] }, { P = [2, 1] }, { P = [3, 1] }], cov = [] } },
+  { Land = { c = { CpOf = { seq = 1, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 120, pending_min = 121, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { ReadLedger = { ok = true, tickets = [{ P = [0, 1] }, { P = [1, 1] }, { P = [2, 1] }, { P = [3, 1] }], cov = [] } },
+]

@@ -1,0 +1,180 @@
+# Plausible misreadings of the board height, the current epochs, the PRF combination
+# (EN-014, RQ-015) and the run loop, as K patches of kink/definition.k.
+
+[[mutation]]
+id = "tick-strict"
+expect = "kill"
+misunderstanding = "EN-006, ledger 4: a tick to the current height is refused no-rule"
+# Correlated: tick and tick-back have complementary guards; widening one alone overlaps.
+  [[mutation.edit]]
+  rule = "tick"
+  find = "H:Int >=Int Height:Int"
+  replace = "H:Int >Int Height:Int"
+  [[mutation.edit]]
+  rule = "tick-back"
+  find = "H:Int <Int Height:Int"
+  replace = "H:Int <=Int Height:Int"
+
+[[mutation]]
+id = "tick-keeps-height"
+expect = "kill"
+misunderstanding = "EN-006: a tick does not move the board height the expiry check reads"
+  [[mutation.edit]]
+  rule = "tick"
+  find = "<height> Height:Int => H:Int </height>"
+  replace = "<height> Height:Int </height>"
+
+[[mutation]]
+id = "tick-back-moves"
+expect = "kill"
+misunderstanding = "Ledger 4: a lower board height is recorded although it is refused"
+  [[mutation.edit]]
+  rule = "tick-back"
+  find = "<height> Height:Int </height>"
+  replace = "<height> Height:Int => H:Int </height>"
+
+[[mutation]]
+id = "en005-epochs-unchanged"
+expect = "kill"
+misunderstanding = "EN-005: a change of the current epochs is ignored"
+  [[mutation.edit]]
+  rule = "set-epochs"
+  find = "<epochs> _ => Es:List </epochs>"
+  replace = "<epochs> _ </epochs>"
+
+[[mutation]]
+id = "en005-epochs-dup-allowed"
+expect = "kill"
+misunderstanding = "EN-005, ledger 5: an epoch listed twice is a valid current-epoch list"
+  [[mutation.edit]]
+  rule = "set-epochs"
+  find = "requires nodupB ( firsts ( Es:List ) )"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "set-epochs-dup"
+  find = "requires notBool nodupB ( firsts ( Es:List ) )"
+  replace = "requires false"
+
+[[mutation]]
+id = "en014-need-more-faults"
+expect = "kill"
+misunderstanding = "EN-014: fewer than t partials is a dealer fault, not a wait for more"
+  [[mutation.edit]]
+  rule = "split_envelope--combine_of_1"
+  find = "=> need_more"
+  replace = "=> dealer_fault"
+
+[[mutation]]
+id = "en014-no-fallback"
+expect = "kill"
+misunderstanding = "EN-014, RQ-015: when the first t partials fail the tag the request is VOID DEALER_FAULT at once, without asking for proofs"
+  [[mutation.edit]]
+  rule = "split_envelope--combine_of_3"
+  find = "=> combineProved ( T:Int , DealingOk:Bool , proved ( Ps:List ) )"
+  replace = "=> dealer_fault"
+
+[[mutation]]
+id = "en014-fallback-keeps-bad"
+expect = "kill"
+misunderstanding = "EN-014: the fallback combines the first t partials again without dropping those whose proof fails"
+  [[mutation.edit]]
+  rule = "split_envelope--combine_of_3"
+  find = "proved ( Ps:List )"
+  replace = "Ps:List"
+
+[[mutation]]
+id = "en014-fallback-short-faults"
+expect = "kill"
+misunderstanding = "EN-014, RQ-015: fewer than t proved partials after the drop is a dealer fault"
+  [[mutation.edit]]
+  rule = "split_envelope--combine_proved_1"
+  find = "=> need_more"
+  replace = "=> dealer_fault"
+
+[[mutation]]
+id = "en014-fault-opens"
+expect = "kill"
+misunderstanding = "RQ-015: t proved partials that still fail the tag are waited on, not a dealer fault"
+  [[mutation.edit]]
+  rule = "split_envelope--combine_proved_3"
+  find = "=> dealer_fault"
+  replace = "=> need_more"
+
+[[mutation]]
+id = "en014-tag-ignores-proofs"
+expect = "kill"
+misunderstanding = "EN-014: a good dealing opens the tag whatever its partials"
+  [[mutation.edit]]
+  rule = "split_envelope--tag_opens"
+  find = "DealingOk:Bool andThenBool allProved ( Ps:List )"
+  replace = "DealingOk:Bool"
+
+[[mutation]]
+id = "en014-first-round-all"
+expect = "survive"
+misunderstanding = "EN-014: the first round combines every partial at hand instead of the first t. Argued equivalent: with at least t partials, both readings open exactly when the dealing is good and at least t partials are proved, give dealer_fault exactly when the dealing is bad and at least t are proved, and need_more otherwise, because the fallback takes the first t proved partials either way; the answer is one of these three codes. Tried: every combine case of the corpus (fallback-open with a bad first partial, fallback-short, dealer-fault, bad-dealing-short)."
+  [[mutation.edit]]
+  rule = "split_envelope--combine_of_2"
+  find = "takeN ( T:Int , Ps:List )"
+  replace = "Ps:List"
+  [[mutation.edit]]
+  rule = "split_envelope--combine_of_3"
+  find = "takeN ( T:Int , Ps:List )"
+  replace = "Ps:List"
+
+[[mutation]]
+id = "en014-t-zero-allowed"
+expect = "kill"
+misunderstanding = "EN-014, ledger 5: t = 0 is a valid threshold"
+  [[mutation.edit]]
+  rule = "combine"
+  find = "(T:Int ==Int 0)"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "combine-outside"
+  find = "(T:Int ==Int 0)"
+  replace = "false"
+
+[[mutation]]
+id = "en014-t-one-outside"
+expect = "kill"
+misunderstanding = "EN-014, ledger 5: a threshold must be at least 2"
+  [[mutation.edit]]
+  rule = "combine"
+  find = "(T:Int ==Int 0)"
+  replace = "(T:Int <=Int 1)"
+  [[mutation.edit]]
+  rule = "combine-outside"
+  find = "(T:Int ==Int 0)"
+  replace = "(T:Int <=Int 1)"
+
+[[mutation]]
+id = "en014-dup-sender-allowed"
+expect = "kill"
+misunderstanding = "EN-014, ledger 5: two partials of one sender count twice toward t"
+  [[mutation.edit]]
+  rule = "combine"
+  find = "(notBool nodupB ( senders ( Partials:List ) ))"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "combine-outside"
+  find = "(notBool nodupB ( senders ( Partials:List ) ))"
+  replace = "false"
+
+[[mutation]]
+id = "combine-obs-first"
+expect = "kill"
+misunderstanding = "EN-014: the observation of a combination goes before the earlier observations"
+  [[mutation.edit]]
+  rule = "combine"
+  find = "Obs:List => Obs:List ListItem(combined ( combineOf ( T:Int , DealingOk:Bool , Partials:List ) ))"
+  replace = "Obs:List => ListItem(combined ( combineOf ( T:Int , DealingOk:Bool , Partials:List ) )) Obs:List"
+
+[[mutation]]
+id = "run-never-ends"
+expect = "kill"
+misunderstanding = "runOps: a run with no operation left has no end; the node waits for more operations instead of answering"
+  [[mutation.edit]]
+  rule = "done"
+  find = "<ops> .List </ops>"
+  replace = "<ops> .List </ops> requires false"

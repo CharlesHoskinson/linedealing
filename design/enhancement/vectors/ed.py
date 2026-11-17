@@ -63,8 +63,8 @@ for name,kind,T in cases:
     k0=secrets.randbelow(L); R0=mul(k0,B)
     pr=[(secrets.randbelow(L),secrets.randbelow(L)) for _ in lv[1:]]; PD=[(mul(da,B),mul(ea,B)) for da,ea in pr]
     dl,el=secrets.randbelow(L),secrets.randbelow(L); Dl,El=mul(dl,B),mul(el,B)
-    b=enc(R0)+b''.join(l[0].encode()+enc(Dp)+enc(Ep) for l,(Dp,Ep) in zip(lv[1:],PD))+b"slot"+enc(Dl)+enc(El)
-    assert len({l[0] for l in lv})==len(lv)   # distinct leaf ids, distinct rho_a (DESIGN.md §4.2)
+    b=lv[0][0].encode()+enc(R0)+b''.join(l[0].encode()+enc(Dp)+enc(Ep) for l,(Dp,Ep) in zip(lv[1:],PD))+b"slot"+enc(Dl)+enc(El)
+    assert len({l[0] for l in lv})==len(lv)   # distinct leaf ids, distinct rho_a; the initiator's leaf id is first in the list (DESIGN.md §4.2, DECISIONS 72)
     rho=[Hb(l[0],b,pm) for l in lv[1:]]
     RA=R0
     for (Dp,Ep),r in zip(PD,rho): RA=add(RA,add(Dp,mul(r,Ep)))
@@ -94,7 +94,7 @@ def ed_slot_sharing(K,nact):
             pr=[(secrets.randbelow(L),secrets.randbelow(L)) for _ in range(nact)]; PD=[(mul(a,B),mul(b_,B)) for a,b_ in pr]
             for x in [k0]+[a for a,_ in pr]: assert x not in used; used.add(x)
             sl=b"slot%d"%g
-            b=enc(R0)+b''.join(b"a%d"%i+enc(Dp)+enc(Ep) for i,(Dp,Ep) in enumerate(PD))+sl+enc(Dl)+enc(El)
+            b=lv[0][0].encode()+enc(R0)+b''.join(b"a%d"%i+enc(Dp)+enc(Ep) for i,(Dp,Ep) in enumerate(PD))+sl+enc(Dl)+enc(El)
             rho=[Hb("a%d"%i,b,pm) for i in range(nact)]
             RA=R0
             for (Dp,Ep),r in zip(PD,rho): RA=add(RA,add(Dp,mul(r,Ep)))

@@ -1,0 +1,11 @@
+name = "split_codec"
+defaultTargets = ["SplitCodec"]
+
+# The strict JSON codec and the `#audit_ns` command, shared by every split-line
+# capability oracle (formal plugin, practice 63 and Decision 22).
+[leanOptions]
+autoImplicit = false
+
+[[lean_lib]]
+name = "SplitCodec"
+globs = ["SplitCodec.+"]

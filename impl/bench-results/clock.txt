@@ -1,0 +1,4 @@
+# Delivered core clock, 2026-11-16T14:16:50-07:00, load1 6.92, AC0 online 1
+# method: read acpi_cppc/feedback_ctrs before and after a 2 s busy loop pinned with taskset; delivered perf = reference_perf x d(del)/d(ref); 154 = nominal_perf = 4,004 MHz
+cpu 19: delivered perf 152.5 (highest_perf 158, nominal_perf 154), delivered clock 3966 MHz, cpuinfo_avg_freq 3987648 kHz, governor performance
+cpu 5: delivered perf 152.9 (highest_perf 154, nominal_perf 154), delivered clock 3976 MHz, cpuinfo_avg_freq 3992269 kHz, governor performance

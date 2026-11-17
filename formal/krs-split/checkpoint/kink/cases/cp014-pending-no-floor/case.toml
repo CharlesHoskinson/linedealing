@@ -1,0 +1,13 @@
+# CP-014 (DECISIONS 71, ledger 19; Lean pin_pending_no_floor): the landed checkpoint lists only pool 2
+# (pending_min = 2), so pool 1 has no floor and lists both live indices 1 and 2, while pool 2 takes
+# the floor 2 of its own entry. A live index 0 of pool 1 is listed too (no floor is 0, not 1).
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 2, h = 2, pending_min = 2, pending = [2], pending_count = 1 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { SignPending = { p = { PoolOf = { pool = 1, h = 2, pending_min = 1, pending = [1, 2], pending_count = 2 } }, live = [1, 2] } },
+  { SignPending = { p = { PoolOf = { pool = 1, h = 2, pending_min = 2, pending = [2], pending_count = 1 } }, live = [1, 2] } },
+  { SignPending = { p = { PoolOf = { pool = 2, h = 2, pending_min = 2, pending = [2], pending_count = 1 } }, live = [1, 2] } },
+  { SignPending = { p = { PoolOf = { pool = 2, h = 2, pending_min = 1, pending = [1, 2], pending_count = 2 } }, live = [1, 2] } },
+  { SignPending = { p = { PoolOf = { pool = 1, h = 2, pending_min = 0, pending = [0, 1, 2], pending_count = 3 } }, live = [2, 1, 0] } },
+]

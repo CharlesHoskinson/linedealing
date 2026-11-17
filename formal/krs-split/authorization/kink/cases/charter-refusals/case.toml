@@ -1,0 +1,11 @@
+# AU-011: board_first with P2 or a stateful predicate is board_first_forbidden; ledger 5: a charter id twice
+[inputs]
+params = { Params = { mode = "Tee", q = 3 } }
+ops = [
+  { CharterOp = { cid = 1, profile = "P1", board_first = false, stateful = false } },
+  { CharterOp = { cid = 2, profile = "P2", board_first = true, stateful = false } },
+  { CharterOp = { cid = 3, profile = "P1", board_first = true, stateful = true } },
+  { CharterOp = { cid = 1, profile = "P0", board_first = false, stateful = false } },
+  { CharterOp = { cid = 1, profile = "P2", board_first = true, stateful = false } },
+  { CharterOp = { cid = 4, profile = "P2", board_first = true, stateful = true } },
+]

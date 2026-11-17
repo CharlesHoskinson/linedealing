@@ -1,0 +1,9 @@
+# RQ-027: a different median for a known host height is refused with no-rule.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { HostFee = { h = 50, m = 15 } },
+  { HostFee = { h = 51, m = 3 } },
+  { HostFee = { h = 50, m = 16 } },
+]

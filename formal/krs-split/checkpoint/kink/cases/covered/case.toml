@@ -1,0 +1,16 @@
+# CP-016, CP-037: an entry counts once the latest landed board height covers it; an anchored release waits for it
+# CP-043 (ledger 6): before the first verified ledger read an anchored release is refused ledger_unverified
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { CoveredQ = { h = 10 } },
+  { ReleaseAnchor = { anchor = true, entry_h = 10 } },
+  { ReleaseAnchor = { anchor = false, entry_h = 10 } },
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 50, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { ReadLedger = { ok = true, tickets = [], cov = [] } },
+  { CoveredQ = { h = 50 } },
+  { CoveredQ = { h = 51 } },
+  { ReleaseAnchor = { anchor = true, entry_h = 50 } },
+  { ReleaseAnchor = { anchor = true, entry_h = 51 } },
+  { ReleaseAnchor = { anchor = false, entry_h = 51 } },
+]

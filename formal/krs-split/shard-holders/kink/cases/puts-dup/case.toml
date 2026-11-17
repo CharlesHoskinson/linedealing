@@ -1,0 +1,6 @@
+# ledger 4: a put list that names a slot twice
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { PutShares = { slots = [1, 1] } },
+]

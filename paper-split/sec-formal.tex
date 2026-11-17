@@ -1,6 +1,10 @@
 \section{Formal verification}\label{sec:formal}
 
-\paragraph{Lean.} The propositions of \cref{sec:lean-props} are four modules of a Lean~4 development (version 4.35.0 with Mathlib) that also holds the 103 theorems of line dealing. The four modules have 58 declarations: 57 theorems and one equivalence, \lean{C17_threshold_completions_equiv}. They contain no \texttt{sorry}, no axiom declaration and no \texttt{native\_decide}. A file of the build prints the axioms of each of the 58 declarations, and each depends on \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound} only.
+Split-line dealing is checked by a chain of artifacts, and each is compared with the artifact it restates. The algebra and the counting are Lean~4 theorems (\cref{sec:lean-props}). The protocol is a specification of 238 requirements in the EARS form (Easy Approach to Requirements Syntax), in six capabilities: the envelope, the request, the slots, the authorization, the checkpoint and the shard holders. An executable Lean oracle states each capability as state and transitions. A Quint model written from the specification alone tests it by random simulation, and a second Quint model tests the state machine of the design on committees of up to nine nodes. A reference suite in k-rust restates the oracles and is compared with them case by case. The prototype of \cref{sec:eval} replays the traces of the design model. The oracle and the specification model are written apart, each from the specification only, so a rule that both state wrongly needs two independent mistakes.
+
+\subsection{The algebra in Lean}
+
+\paragraph{Lean.} The propositions of \cref{sec:lean-props} are four modules of a Lean~4 development (version 4.35.0 with Mathlib) that also holds the 103 theorems of line dealing. The four modules state 58 results: 57 theorems and one equivalence, \lean{C17_threshold_completions_equiv}. They contain no \texttt{sorry}, no axiom declaration and no \texttt{native\_decide}. A file of the build prints the axioms of each of the 58 declarations, and each depends on \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound} only.
 
 The model adds five things to the line-dealing model. Access formulas are an inductive type with the three relations of \cref{sec:lean-props} (a dealing, a signing set with its weights, a covering set) and well-formedness. One ECDSA slot is modeled by its answers, with the members' rule as a predicate. The precedence of one committee slot is a step relation over a board of requests with honest and Byzantine voters. A function gives the slots a cold start keeps. The three profiles are a choice of access formula. Two lemmas carry most of the access proofs: Lagrange interpolation at zero for a polynomial of degree below the size of the set, and the shift of a polynomial by a multiple of the basis polynomial that vanishes on a set of nonzero ids, which moves the constant term and fixes every share in the set.
 
@@ -8,6 +12,69 @@ The development does not model curves, point encodings, hashing or the random or
 
 \paragraph{Natural Lean.} All 58 declarations are restated in a Natural Lean project that imports the native development, so every restatement is checked against the live theorem, and the build fails if a theorem uses a further axiom. Four have a natural statement and a natural proof, nine have a natural statement and a proof with native tactic steps, and 45 remain native, because the grammar cannot express their statements: the inductive formulas, the step relation and the equivalence are among them.
 
-\paragraph{Test vectors.} Scripts check the algebra numerically on the curves. The cases are all eight parity cases of BIP340 with and without a script root, Ed25519 and ECDSA, each with AND sets of one to five actors. They include every subset of a $2$-of-$3$ group, a $2$-of-$3$ group with a nested $2$-of-$3$ member on BIP340, both branches of $\mathsf{user} \vee \mathcal{G}$ with a $3$-of-$5$ group and one key under several signing sets. They also cover the ECDSA session among many parties with ideal multiplication, the shared committee slot over two generations, the threshold PRF keys with their Chaum-Pedersen proofs, a forged partial that passes a challenge without the partial and fails the full-statement challenge, a contribution sealed to $P_{v,g}$, and the batch equation with its fallback. Three negative cases pass as expected: the tweak term placed twice fails, the forged partial fails, and a bad share fails the batch equation, which the fallback attributes to its dealing.
+\paragraph{Test vectors.} Scripts check the algebra numerically on the curves. The cases are all eight parity cases of BIP340 with and without a script root, Ed25519 and ECDSA, each with AND sets of one to five actors. They include every subset of a $2$-of-$3$ group, a $2$-of-$3$ group with a nested $2$-of-$3$ member on BIP340, both branches of $\mathsf{user} \vee \mathcal{G}$ with a $3$-of-$5$ group and one key under several signing sets. They also cover the ECDSA session among many parties with ideal multiplication, the shared committee slot over two generations, the threshold PRF keys with their Chaum-Pedersen proofs, a forged partial that passes a challenge without the partial and fails the full-statement challenge, a contribution sealed to $P_{v,g}$, and the batch equation with its fallback. Four negative cases pass as expected: the tweak term placed twice fails, the forged partial fails, a bad share fails the batch equation, which the fallback attributes to its dealing, and a commitment list without the initiator's leaf id gives member~1 of a $2$-of-$3$ group one binding factor under the weights $2$ and $3/2$, from which two answers on one pair give its leaf secret.
 
-\paragraph{Coverage.} No model checker explores the request state machine of \cref{sec:processing}, the envelope or the witness of \cref{sec:tee}. The cryptographic claims of \cref{tab:claims} are outside all three artifacts.
+\subsection{The specification and its oracle}
+
+Each requirement is one EARS sentence with an identifier, and the requirements trace to the claims of \cref{tab:claims}. The oracle is one Lean package per capability, in Lean~4.35 without Mathlib, with no \texttt{sorry} and the standard axioms only. Its executable answers each operation with the next state or a refusal code, in a JSON Lines protocol that the Quint replay and the reference suite use. Each package states the state part of its claims as theorems, quotes every requirement word for word beside the Lean names that state it, and kills every planted mutant of its specification with one of its cases or theorems. Where a sentence has two readings, a ledger records the reading in force. The theorems cover the state part of C1, C2, C6 to C13, C16, C17, C19, C20 and C21, and the cryptographic part of every claim is outside the oracle.
+
+\paragraph{Replay.} The oracle states all 238 requirements and answers the traces of the specification model of \cref{sec:formal-quint}. For the request, the authorization, the slots, the envelope and the shard holders, the oracle agrees with the model at every step of every committed sample trace. A negative control disagrees at the step where it should. The oracle and the Quint model are written apart, and each reaches on its own the unlocked record that rule F5 of \cref{tab:findings} excludes.
+
+\subsection{Two Quint models}\label{sec:formal-quint}
+
+\paragraph{The specification model.} A Quint model written from the six capabilities and the claim list, without the oracle, maps 150 of the 238 requirements to a state, an action or an invariant and excludes each of the other 88 with a written reason, such as key, ciphertext or seat state that the model does not hold. It runs a committee of four nodes with one corrupt member, in TEE and non-TEE mode and for profiles P1 and P2. Every invariant names its requirements and its claim, and together they state the safety parts of C6 to C9, C11 to C13, C16 and C20. Seven rules of \cref{sec:construction} rest on its counterexamples (\cref{tab:findings}): without any one of them the model reaches a double spend, a void reason that no honest node posted, a request that cannot be reissued or a ledger that refuses every honest checkpoint. Each rule is an invariant of the gate, the schedule that breaks it without the rule is a regression test, and the rule's absence is a mutant that the invariant kills. Two more rules come from comparing the model with the oracle: expiry takes effect at the board block that reaches it, and a restart that loses the board tail keeps every release that a request recorded. Each is an invariant with a mutant that breaks it. On the current specification, 16 design runs of 10{,}000 random traces of up to 80 steps find no violation, every scripted test passes, and all 29 mutants are killed: 23 by random runs and six by scripted schedules that random runs reach rarely or never.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Id & Rule & What the model reaches without it \\
+\midrule
+F1 & A non-TEE node sends no partial until its \msg{RELEASE} has committed. & Partials leave before any release is on the board, the request expires and settles void, and two spends of one record state confirm. \\
+F2 & The void reason needs $f + 1$ posts, otherwise \msg{MIXED}. & The corrupt post that completes the $f + 1$ void posts names the reason, for example a revocation in P1. \\
+F3 & Nodes refuse an envelope with $\mathsf{exp}_c \ge \mathsf{exp}$ before order. & The request expires before it can stall and loses its reissue. \\
+F4 & The lapse of precedence is a state of the request. & A header that opens after its lapse height holds live precedence until $\mathsf{exp}$. \\
+F5 & A void settlement on a locked record keeps it locked to its pinned input. & The record unlocks, and a second spend confirms beside the released one. \\
+F6 & After a release, \msg{STALLED} posts do not count toward the void reason. & A stall posted at $\mathsf{exp}_c$, then admission and release, give reason \msg{STALLED} on a released request. \\
+F7 & A checkpoint lists as pending only slots at or above the previous pending floor. & A live request with precedence on a slot below the floor makes the ledger refuse every honest checkpoint until the request ends, and anyone can post such a request again. \\
+\bottomrule
+\end{tabularx}
+\caption{Rules that the Quint model written from the specification requires.}
+\label{tab:findings}
+\end{table}
+
+\paragraph{The design model.} A second Quint model follows the design: the envelope state machine with its merged votes, both authorization paths, committee and ECDSA slots with precedence, reservation, binding and burning, two fee generations, the peer witness with rolled-back and cloned nodes, checkpoints, the cold start and recovery. Its instances have four, seven and nine nodes, in both modes, with and without the slot anchor. A third module models the birth of a shard for an offline holder. All 122 jobs of the run pass: random simulations of the design find no violation, each mutant finds its violation, and every scripted schedule passes. The model reproduces the fork of \cref{sec:slots}: on a non-TEE committee without the anchor, a corrupt coalition signs two tickets on one slot, and with the anchor no run finds it. Each burn of the cold start is needed, because each mutant that leaves out the window burn, the pending burn or the account-pool burn signs one slot twice. Four rules of the design rest on its counterexamples. A request that a whole-committee restart ends settles final or released (\cref{sec:tee}): when it settles void on an unspent pinned input and its release evidence lies in the lost board tail, a second authorization spends the same record state. An ECDSA slot takes precedence only from an authorization in force (\cref{sec:ecdsa-slots}): with precedence by board order, any party voids and burns the ECDSA slots of an address. Precedence and the authorization match are admission checks (\cref{sec:processing}): run at opening, they let a node post \msg{SLOT\_TAKEN} for a request whose authorization is still pending. A payer funds a shard created for an offline holder only after the holder's acknowledgement (\cref{sec:birth}): without it, or with an acknowledgement that does not check $\mathsf{pop}_u$, a payer funds an address whose key nobody can derive.
+
+\paragraph{The binding module.} A companion module of the design model, with a run of its own beside the 122 jobs, opens the contribution step of \cref{sec:contrib} to the pool pair, the input of the binding hash and the weight. It has one $2$-of-$3$ group with an honest member~1, and the adversary holds the other two members and every node. With the initiator's leaf id in the commitment list, no run binds a pair of member~1 to two weights and no nonce of member~1 is answered under two weights, also when its pool is restored from a copy. A list without the leaf id breaks the first invariant, and it breaks the second once the pool is restored.
+
+\subsection{Reference suite and prototype}
+
+\paragraph{Reference suite.} The k-rust reference suite restates the operations of the six oracles as k-rust definitions, one per capability, with the rules of \cref{tab:findings} among them. It covers 237 of the 238 requirements. The other one is the order of the commitment list, which the oracle states as a function that no operation reads. On each of the 522 cases of its corpus the definition gives the oracle's answer (\cref{tab:krs}). The corpus leaves no coverage obligation of a definition open. Of the 1{,}654 mutations of the definitions, a case kills 1{,}627 and the other 27 are argued equivalent. Every case is exported with the oracle's answer as a golden vector for production code.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Capability & Cases equal & Mutations killed & Argued equivalent & Golden vectors \\
+\midrule
+Envelope & 87 & 128 & 2 & 87 \\
+Request & 169 & 323 & 3 & 169 \\
+Slots & 39 & 251 & 16 & 39 \\
+Authorization & 59 & 267 & 0 & 59 \\
+Checkpoint & 79 & 335 & 6 & 79 \\
+Shard holders & 89 & 323 & 0 & 89 \\
+\midrule
+Total & 522 & 1{,}627 & 27 & 522 \\
+\bottomrule
+\end{tabular}
+\caption{The k-rust reference suite against the Lean oracle, on 237 of its 238 requirements. No capability has an open coverage obligation.}
+\label{tab:krs}
+\end{table}
+
+\paragraph{Prototype.} The prototype replays the traces of the design model step by step: 63 of 70 traces replay, and each of the other seven names its reason, such as a transition that the prototype does not have. The replay holds the prototype's restart to three rules of the model: the restart burns the whole window of the latest checkpoint, not only the slots that the board knows; no node votes for an ECDSA slot before the first checkpoint after the restart; and envelopes that the board has not ordered stay posted. Each rule has a regression test that fails without it. The replay also holds the admission order: the prototype checks that the authorization is in force before it checks precedence. The prototype keeps the whole board and cannot lose a board tail, so the account-pool burn after such a loss, which takes every slot of every pool in a node's sessions, is checked in the design model only.
+
+The prototype also replays the scripted traces of the binding model, and two requests that differ only in the initiator give an actor two binding factors on BIP340 and on Ed25519. Another test forges a ticket whose $\ctil$ is the challenge of another transaction on the same $R$. The recomputation of every ticket from the capsules, which the wallet, the actor and the combiner run, refuses it at every position of the header. A node's partial check passes it, and the result is a valid signature on the other transaction. For a blind node the ticket proof, or the enclave's own computation in TEE mode, is the one check that ties $\ctil$ to an admitted transaction (O4).
+
+\paragraph{Coverage.} A Quint run is bounded random simulation, not exhaustive model checking: a run without a violation shows that the sampled traces keep the invariant. Liveness (C13) is a temporal property, and neither model checks it; its safety part is an invariant. The cryptographic claims of \cref{tab:claims} are outside every artifact.

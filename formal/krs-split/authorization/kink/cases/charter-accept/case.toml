@@ -1,0 +1,11 @@
+# AU-011: charters of every profile register; board-first on P0 and P1 without a stateful predicate
+[inputs]
+params = { Params = { mode = "Tee", q = 3 } }
+ops = [
+  { CharterOp = { cid = 1, profile = "P0", board_first = false, stateful = false } },
+  { CharterOp = { cid = 2, profile = "P1", board_first = false, stateful = false } },
+  { CharterOp = { cid = 3, profile = "P2", board_first = false, stateful = false } },
+  { CharterOp = { cid = 4, profile = "P0", board_first = true, stateful = false } },
+  { CharterOp = { cid = 5, profile = "P1", board_first = false, stateful = true } },
+  { CharterOp = { cid = 6, profile = "P2", board_first = false, stateful = true } },
+]

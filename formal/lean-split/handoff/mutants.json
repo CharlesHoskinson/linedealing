@@ -1,0 +1,17 @@
+[
+  {"name": "HO-056 activation rewrites X_f", "file": "SplitHandoff/Spec.lean", "old": "landed := r.target", "new": "landed := r.target\n    xf := { secp := 0, ed := 0 }"},
+  {"name": "HO-057 activation drops the users", "file": "SplitHandoff/Spec.lean", "old": "handovers := (s.ho.H, r.target) :: s.handovers", "new": "handovers := (s.ho.H, r.target) :: s.handovers\n    users := []"},
+  {"name": "HO-058 a user acknowledgement is accepted", "file": "SplitHandoff/Spec.lean", "old": "| .userAck _ => [.noRule]", "new": "| .userAck _ => []"},
+  {"name": "HO-018 exposure: carried shares go to the source roster", "file": "SplitHandoff/Spec.lean", "old": "(install s s.ho.rot.target s.ho.rot.roster)", "new": "(install s s.ho.rot.target s.ho.srcRoster)"},
+  {"name": "HO-032 the board makes a block while ARMED", "file": "SplitHandoff/Spec.lean", "old": "| .block => opt (s.ho.phase = .ARMED) .noRule", "new": "| .block => []"},
+  {"name": "HO-036 the bound epoch still owns at the sweep position", "file": "SplitHandoff/Spec.lean", "old": "if p < w then", "new": "if p ≤ w then"},
+  {"name": "HO-059 two epochs own at the sweep position", "file": "SplitHandoff/Spec.lean", "old": "→ p < w) ∨", "new": "→ p ≤ w) ∨"},
+  {"name": "HO-044 a carried slot installs as free", "file": "SplitHandoff/Spec.lean", "old": "st := slotState s sh.secret", "new": "st := .free"},
+  {"name": "HO-035 abort erases the old sharings", "file": "SplitHandoff/Spec.lean", "old": "then { s1 with ho := abortHo s.ho }", "new": "then { s1 with ho := abortHo s.ho, sharings := [] }"},
+  {"name": "HO-012 a queued ROTATE is never released", "file": "SplitHandoff/Spec.lean", "old": "else release (closeGraces s1)", "new": "else closeGraces s1"},
+  {"name": "HO-064 arm needs more than n' - f' READY posts", "file": "SplitHandoff/Spec.lean", "old": "need s ≤ readyCount", "new": "need s < readyCount"},
+  {"name": "HO-063 unused slots are not carried", "file": "SplitHandoff/Spec.lean", "old": "| .slot a i => boardSlot s (a, i) == .free", "new": "| .slot _ _ => false"},
+  {"name": "HO-055 a ROTATE starts while the previous epoch is in grace", "file": "SplitHandoff/Spec.lean", "old": "≠ some .grace", "new": "≠ some .closed"},
+  {"name": "HO-067 the activation is a source operation", "file": "SplitHandoff/Spec.lean", "old": "| .activate _ _ _ _ _ => .contract", "new": "| .activate _ _ _ _ _ => .source"},
+  {"name": "HO-066 the board stays halted after an armed abort", "file": "SplitHandoff/Spec.lean", "old": "| .block => opt (s.ho.phase = .ARMED) .noRule", "new": "| .block => opt (s.ho.phase = .ARMED ∨ s.ho.phase = .ABORTED) .noRule"}
+]

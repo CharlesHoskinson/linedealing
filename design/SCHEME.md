@@ -488,8 +488,8 @@ The design is wrong if: a forgery or key recovery against open ECDSA uses the ba
 
 ## 12. References
 
-- **BRIEF.md**: read in full (`design/BRIEF.md`).
-- **REPORT.md**: read in full (`research/REPORT.md`).
+- **BRIEF.md**: read in full (`/home/hoskinson/Projects/mpcexperiments/design/BRIEF.md`).
+- **REPORT.md**: read in full (`/home/hoskinson/Projects/mpcexperiments/research/REPORT.md`).
 - **[GS22]** J. Groth, V. Shoup, *On the security of ECDSA with additive key derivation and presignatures*: ePrint 2021/1330, read in full (pp. 1 to 48), `research/sources/groth-shoup-2021-1330.pdf`.
 - **[GS22b]** J. Groth, V. Shoup, *Design and analysis of a distributed ECDSA signing service*: ePrint 2022/506, version of 16 February 2023, `research/sources/eprint/2022-506.pdf`. Section 4 read in full for PROOFS.md; the whole text (pp. 1 to 66, appendix pp. 74 to 99; reference list not read) read for `design/notes-2022-506.md`. Not the same paper as [GS22].
 - **RFC 9591 (FROST)**, local at `research/sources/lifecycle/rfc9591.txt`: from memory, not checked.

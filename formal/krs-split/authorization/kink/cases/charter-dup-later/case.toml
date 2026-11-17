@@ -1,0 +1,8 @@
+# Ledger 5: a charter id that a later charter holds is outside-capability
+[inputs]
+params = { Params = { mode = "Tee", q = 3 } }
+ops = [
+  { CharterOp = { cid = 1, profile = "P1", board_first = false, stateful = false } },
+  { CharterOp = { cid = 2, profile = "P2", board_first = false, stateful = false } },
+  { CharterOp = { cid = 2, profile = "P0", board_first = false, stateful = false } },
+]

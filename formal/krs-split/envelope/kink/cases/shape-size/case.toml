@@ -1,0 +1,8 @@
+# EN-004: a frame of another size is refused bad_shape.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { Submit = { e = { Env = { size = 16383, pubpart = { Pub = { version = 1, epoch = 3, keylist_hash = 33, exp = 900, size_class = 0, auth_ref = 7, reserved = 0 } }, hd = 100, dd = 500, proof_ctx = { P = [100, 7] }, proof_valid = true, rtype = "Spend" } } } },
+]

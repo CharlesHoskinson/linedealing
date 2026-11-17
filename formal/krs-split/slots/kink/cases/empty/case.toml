@@ -1,0 +1,4 @@
+# runOps: no operation leaves the initial state.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = []

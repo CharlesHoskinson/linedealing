@@ -1,0 +1,9 @@
+# EN-023, RQ-006: exp = b + delta_c + 1 (121) orders the request (100 + 20 < 121).
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 121, rtype = "Spend", profile = "PfP1" } },
+  { Tick = { h = 20 } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+]

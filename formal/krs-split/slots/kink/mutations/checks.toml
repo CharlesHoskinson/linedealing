@@ -1,0 +1,270 @@
+# Plausible misreadings of the stateless checks: the window judge (SL-012 to SL-015), the
+# batch check (SL-023, SL-024), the qualified dealers (SL-025) and the slot-anchor gate
+# (SL-026), with their domain (ledger 9), as K patches of kink/definition.k.
+
+[[mutation]]
+id = "sl015-unlisted-taken"
+expect = "kill"
+misunderstanding = "SL-015: a slot of an unlisted pool gets SLOT_TAKEN, not pool_unlisted"
+  [[mutation.edit]]
+  rule = "split_slots--verdict_of_1"
+  find = "=> poolUnlisted"
+  replace = "=> slotTaken"
+
+[[mutation]]
+id = "sl014-top-above"
+expect = "kill"
+misunderstanding = "SL-012, SL-014: the index h + B is above the window"
+  [[mutation.edit]]
+  rule = "split_slots--verdict_of_2"
+  find = "((H:Int +Int Bw:Int) <Int L:Int)"
+  replace = "((H:Int +Int Bw:Int) <=Int L:Int)"
+  [[mutation.edit]]
+  rule = "split_slots--verdict_of_3"
+  find = "((H:Int +Int Bw:Int) <Int L:Int)"
+  replace = "((H:Int +Int Bw:Int) <=Int L:Int)"
+  [[mutation.edit]]
+  rule = "split_slots--verdict_of_4"
+  find = "((H:Int +Int Bw:Int) <Int L:Int)"
+  replace = "((H:Int +Int Bw:Int) <=Int L:Int)"
+  [[mutation.edit]]
+  rule = "split_slots--verdict_of_5"
+  find = "((H:Int +Int Bw:Int) <Int L:Int)"
+  replace = "((H:Int +Int Bw:Int) <=Int L:Int)"
+
+[[mutation]]
+id = "sl012-h-in-window"
+expect = "kill"
+misunderstanding = "SL-012: the index h itself is in the window"
+  [[mutation.edit]]
+  rule = "split_slots--verdict_of_3"
+  find = "(H:Int <Int L:Int)"
+  replace = "(H:Int <=Int L:Int)"
+  [[mutation.edit]]
+  rule = "split_slots--verdict_of_4"
+  find = "(H:Int <Int L:Int)"
+  replace = "(H:Int <=Int L:Int)"
+  [[mutation.edit]]
+  rule = "split_slots--verdict_of_5"
+  find = "(H:Int <Int L:Int)"
+  replace = "(H:Int <=Int L:Int)"
+
+[[mutation]]
+id = "sl013-pending-ignored"
+expect = "kill"
+misunderstanding = "SL-012, SL-013: every index from pending_min to h is in the window, held by the pending list or not"
+  [[mutation.edit]]
+  rule = "split_slots--verdict_of_4"
+  find = "pr ( L:Int , Eid:Int ) in Pending:List"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_slots--verdict_of_5"
+  find = "pr ( L:Int , Eid:Int ) in Pending:List"
+  replace = "true"
+
+[[mutation]]
+id = "sl013-below-min"
+expect = "kill"
+misunderstanding = "SL-013: a pending index of the request below pending_min is still in the window"
+  [[mutation.edit]]
+  rule = "split_slots--verdict_of_4"
+  find = "(Pmin:Int <=Int L:Int))"
+  replace = "true)"
+  [[mutation.edit]]
+  rule = "split_slots--verdict_of_5"
+  find = "(Pmin:Int <=Int L:Int) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "sl012-b-zero"
+expect = "kill"
+misunderstanding = "SL-012, ledger 9: a window of B = 0 is inside the capability"
+  [[mutation.edit]]
+  rule = "judge"
+  find = "requires Bw:Int =/=Int 0"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "judge-refused"
+  find = "requires Bw:Int ==Int 0"
+  replace = "requires false"
+
+[[mutation]]
+id = "judge-refused-code"
+expect = "kill"
+misunderstanding = "Ledger 9: B = 0 is refused with no-rule"
+  [[mutation.edit]]
+  rule = "judge-refused"
+  find = "ListItem(outsideCapability)"
+  replace = "ListItem(noRule)"
+
+[[mutation]]
+id = "sl024-number-from-zero"
+expect = "kill"
+misunderstanding = "SL-023, SL-024: the complaint numbers the polynomials from 0"
+  [[mutation.edit]]
+  rule = "batch"
+  find = "batchFrom ( Polys:List , 1 )"
+  replace = "batchFrom ( Polys:List , 0 )"
+
+[[mutation]]
+id = "sl024-names-passing"
+expect = "kill"
+misunderstanding = "SL-024: the complaint names the polynomials that pass"
+  [[mutation.edit]]
+  rule = "split_slots--batch_from_2_1"
+  find = "requires P:Bool"
+  replace = "requires notBool P:Bool"
+  [[mutation.edit]]
+  rule = "split_slots--batch_from_2_2"
+  find = "requires notBool P:Bool"
+  replace = "requires P:Bool"
+
+[[mutation]]
+id = "sl024-skip-not-counted"
+expect = "kill"
+misunderstanding = "SL-024: a passing polynomial does not count in the numbering"
+  [[mutation.edit]]
+  rule = "split_slots--batch_from_2_1"
+  find = "batchFrom ( Rest:List , I:Int +Int 1 )"
+  replace = "batchFrom ( Rest:List , I:Int )"
+
+[[mutation]]
+id = "sl025-complained-counted"
+expect = "kill"
+misunderstanding = "SL-025: a dealer with a valid complaint still counts"
+  [[mutation.edit]]
+  rule = "split_slots--ok_dealers_2_1"
+  find = "=> okDealers ( Rest:List )"
+  replace = "=> ListItem(Dealer:Int) okDealers ( Rest:List )"
+
+[[mutation]]
+id = "sl025-short-qualifies"
+expect = "kill"
+misunderstanding = "SL-025: fewer than t dealers without a complaint still make a slot"
+  [[mutation.edit]]
+  rule = "split_slots--qualified_of_1"
+  find = "=> .List"
+  replace = "=> ListItem(okDealers ( Ds:List ))"
+
+[[mutation]]
+id = "sl025-all-dealers"
+expect = "kill"
+misunderstanding = "SL-025: the slot is the sum of every dealer without a complaint, not the first t"
+  [[mutation.edit]]
+  rule = "split_slots--qualified_of_2"
+  find = "takeInt ( T:Int , okDealers ( Ds:List ) )"
+  replace = "okDealers ( Ds:List )"
+
+[[mutation]]
+id = "sl025-take-one-short"
+expect = "kill"
+misunderstanding = "SL-025: the first t - 1 dealers make the slot"
+  [[mutation.edit]]
+  rule = "split_slots--take_int_2_1"
+  find = "requires T:Int >Int 0"
+  replace = "requires T:Int >Int 1"
+  [[mutation.edit]]
+  rule = "split_slots--take_int_2_2"
+  find = "requires notBool (T:Int >Int 0)"
+  replace = "requires notBool (T:Int >Int 1)"
+
+[[mutation]]
+id = "ledger9-t-zero"
+expect = "kill"
+misunderstanding = "SL-025, ledger 9: t = 0 is inside the capability"
+  [[mutation.edit]]
+  rule = "qualify"
+  find = "requires T:Int =/=Int 0"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "qualify-refused"
+  find = "requires T:Int ==Int 0"
+  replace = "requires false"
+
+[[mutation]]
+id = "qualify-refused-code"
+expect = "kill"
+misunderstanding = "Ledger 9: t = 0 is refused with no-rule"
+  [[mutation.edit]]
+  rule = "qualify-refused"
+  find = "ListItem(outsideCapability)"
+  replace = "ListItem(noRule)"
+
+[[mutation]]
+id = "sl026-off-checks"
+expect = "kill"
+misunderstanding = "SL-026: the gate checks the seat log even when slot_anchor is off"
+  [[mutation.edit]]
+  rule = "split_slots--anchor_ok_1"
+  find = "requires notBool On:Bool"
+  replace = "requires false"
+  [[mutation.edit]]
+  rule = "split_slots--anchor_ok_2"
+  find = "(notBool (notBool On:Bool)) andThenBool "
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_slots--anchor_ok_3"
+  find = "(notBool (notBool On:Bool)) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "sl026-cover-ignored"
+expect = "kill"
+misunderstanding = "SL-026: the gate holds without a landed root covering nf -> d"
+  [[mutation.edit]]
+  rule = "split_slots--anchor_ok_3"
+  find = "=> false"
+  replace = "=> notBool otherDigest ( Nf:Int , D:Int , Cov:List )"
+
+[[mutation]]
+id = "sl026-other-digest-ignored"
+expect = "kill"
+misunderstanding = "SL-026: the gate holds when nf -> d is covered even if another entry binds nf to another digest"
+  [[mutation.edit]]
+  rule = "split_slots--anchor_ok_2"
+  find = "=> notBool otherDigest ( Nf:Int , D:Int , Cov:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "sl026-other-any-nullifier"
+expect = "kill"
+misunderstanding = "SL-026: a covered entry of another nullifier with another digest also shuts the gate"
+  [[mutation.edit]]
+  rule = "split_slots--other_digest_2_1_1"
+  find = "(A:Int ==Int Nf:Int) andThenBool "
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_slots--other_digest_2_1_2"
+  find = "(A:Int ==Int Nf:Int) andThenBool "
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_slots--other_digest_2_2"
+  find = "requires notBool (A:Int ==Int Nf:Int)"
+  replace = "requires false"
+
+[[mutation]]
+id = "sl026-first-entry-only"
+expect = "kill"
+misunderstanding = "SL-026: only the first covered entry of the nullifier is checked for another digest"
+  [[mutation.edit]]
+  rule = "split_slots--other_digest_2_1_2"
+  find = "=> otherDigest ( Nf:Int , D:Int , Rest:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "sl026-first-entry-any"
+expect = "kill"
+misunderstanding = "SL-026: only the first covered entry is looked at; entries of other nullifiers before it hide the rest"
+  [[mutation.edit]]
+  rule = "split_slots--other_digest_2_2"
+  find = "=> otherDigest ( Nf:Int , D:Int , Rest:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "anchor-gate-always"
+expect = "kill"
+misunderstanding = "SL-026: the slot-anchor gate always holds"
+  [[mutation.edit]]
+  rule = "anchor-gate"
+  find = "ListItem(gate ( anchorOk ( On:Bool , Covered:List , Nf:Int , D:Int ) ))"
+  replace = "ListItem(gate ( true ))"

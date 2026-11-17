@@ -22,6 +22,8 @@ pub enum Refusal {
     Sequence,
     RestartMarker,
     LogUnavailable,
+    /// SS-146 (D-039): pending_min below that of the previous checkpoint.
+    PendingFloor,
 }
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RestoreDone {
@@ -140,7 +142,13 @@ impl Ledger {
                 .zip(&next.boot_counters)
                 .filter(|(a, b)| a == b)
                 .count();
-            if same < p.w + 1
+            // SS-146 (D-039): the pending floor never goes down.
+            if cfg!(feature = "d039") && next.pending_min < old.pending_min {
+                return Err(Refusal::PendingFloor);
+            }
+            // SS-147 (D-039): a checkpoint that advances restart_seq takes the jump.
+            let flagged = cfg!(feature = "d039") && next.restart_seq != old.restart_seq;
+            if (same < p.w + 1 || flagged)
                 && (next.h < old.h.saturating_add(p.b)
                     || next.pending_min <= old.h.saturating_add(p.b))
             {

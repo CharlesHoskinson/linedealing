@@ -1,0 +1,400 @@
+# Plausible misreadings of the request life cycle on slots (SL-006, SL-008 to SL-011,
+# SL-028) and of its refusals (ledger 1, ledger 9), as K patches of kink/definition.k.
+
+[[mutation]]
+id = "sl006-in-force-no-assign"
+expect = "kill"
+misunderstanding = "SL-006: an authorization coming into force gives no precedence; only an open does"
+  [[mutation.edit]]
+  rule = "split_slots--e_step_2_1"
+  find = "=> assignE ( Inf:List ListItem(force ( Eid:Int , Root:Root )) , X:ESlot )"
+  replace = "=> X:ESlot"
+
+[[mutation]]
+id = "sl006-in-force-before-entry"
+expect = "kill"
+misunderstanding = "SL-006: the earliest namer is taken from the in-force list before the new authorization joins it"
+  [[mutation.edit]]
+  rule = "split_slots--e_step_2_1"
+  find = "=> assignE ( Inf:List ListItem(force ( Eid:Int , Root:Root )) , X:ESlot )"
+  replace = "=> assignE ( Inf:List , X:ESlot )"
+
+[[mutation]]
+id = "authorize-not-recorded"
+expect = "kill"
+misunderstanding = "SL-006: the in-force list does not keep the authorization"
+  [[mutation.edit]]
+  rule = "authorize"
+  find = "Forces:List => Forces:List ListItem(force ( Eid:Int , Root:Root ))"
+  replace = "Forces:List"
+
+[[mutation]]
+id = "ledger1-in-force-twice"
+expect = "kill"
+misunderstanding = "Ledger 1: an authorization may come into force twice"
+  [[mutation.edit]]
+  rule = "split_slots--known_req"
+  find = "inForceAny ( Inf:List , Eid:Int ) orElseBool "
+  replace = ""
+
+[[mutation]]
+id = "ledger1-in-force-after-end"
+expect = "kill"
+misunderstanding = "Ledger 1: an ended request's authorization may still come into force"
+  [[mutation.edit]]
+  rule = "split_slots--known_req"
+  find = " orElseBool Eid:Int in Ended:List"
+  replace = ""
+
+[[mutation]]
+id = "ledger1-in-force-any"
+expect = "kill"
+misunderstanding = "Ledger 1: the in-force check looks at the first entry only"
+  [[mutation.edit]]
+  rule = "split_slots--in_force_any_2_2"
+  find = "=> inForceAny ( Rest:List , E:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "authorize-refused-code"
+expect = "kill"
+misunderstanding = "Ledger 1: a second in_force is outside the capability, not no-rule"
+  [[mutation.edit]]
+  rule = "authorize-refused"
+  find = "ListItem(noRule)"
+  replace = "ListItem(outsideCapability)"
+
+[[mutation]]
+id = "sl008-reserve-any-bstat"
+expect = "kill"
+misunderstanding = "SL-008, SL-017: a reserve moves the request's committee slots to RESERVED from any bstat"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_3_1"
+  find = " andThenBool (cBstat ( X:CSlot ) ==K NAMED)"
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_slots--c_step_3_2"
+  find = " andThenBool (cBstat ( X:CSlot ) ==K NAMED)"
+  replace = ""
+
+[[mutation]]
+id = "sl008-reserve-any-prec"
+expect = "kill"
+misunderstanding = "SL-008: a reserve moves every NAMED committee slot, not only the request's"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_3_1"
+  find = "(cPrec ( X:CSlot ) ==K ListItem(Eid:Int)) andThenBool "
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_slots--c_step_3_2"
+  find = "(cPrec ( X:CSlot ) ==K ListItem(Eid:Int)) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "sl008-reserve-needs-no-force"
+expect = "kill"
+misunderstanding = "SL-008: a request may reserve without an authorization in force"
+  [[mutation.edit]]
+  rule = "split_slots--reserve_bad_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "ledger1-reserve-after-end"
+expect = "kill"
+misunderstanding = "Ledger 1: an ended request may still reserve"
+  [[mutation.edit]]
+  rule = "split_slots--reserve_bad_1"
+  find = "=> Eid:Int in Ended:List"
+  replace = "=> false"
+
+[[mutation]]
+id = "reserve-refused-code"
+expect = "kill"
+misunderstanding = "Ledger 1: a refused reserve is outside the capability"
+  [[mutation.edit]]
+  rule = "reserve-refused"
+  find = "ListItem(noRule)"
+  replace = "ListItem(outsideCapability)"
+
+[[mutation]]
+id = "sl008-e-any-prec"
+expect = "kill"
+misunderstanding = "SL-008: a reserve moves every NAMED ECDSA slot, not only the ones where the request holds prec"
+  [[mutation.edit]]
+  rule = "split_slots--e_step_3_1"
+  find = "(ePrec ( X:ESlot ) ==K ListItem(Eid:Int)) andThenBool "
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_slots--e_step_3_2"
+  find = "(ePrec ( X:ESlot ) ==K ListItem(Eid:Int)) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "sl008-e-no-reserver"
+expect = "kill"
+misunderstanding = "SL-008: a reserve of an ECDSA slot does not set reserver"
+  [[mutation.edit]]
+  rule = "split_slots--reserve_e_1"
+  find = "RESERVED , Prec:List , ListItem(Eid:Int) , Namers:List"
+  replace = "RESERVED , Prec:List , .List , Namers:List"
+
+[[mutation]]
+id = "sl008-e-any-bstat"
+expect = "kill"
+misunderstanding = "SL-008, SL-017: a reserve moves the request's ECDSA slots to RESERVED from any bstat"
+  [[mutation.edit]]
+  rule = "split_slots--e_step_3_1"
+  find = " andThenBool (eBstat ( X:ESlot ) ==K NAMED)"
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_slots--e_step_3_2"
+  find = " andThenBool (eBstat ( X:ESlot ) ==K NAMED)"
+  replace = ""
+
+[[mutation]]
+id = "sl009-claim-any-bstat"
+expect = "kill"
+misunderstanding = "SL-009, SL-017: a claim moves the request's committee slots to CLAIMED from any bstat"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_4_1"
+  find = " andThenBool (cBstat ( X:CSlot ) ==K RESERVED)"
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_slots--c_step_4_2"
+  find = " andThenBool (cBstat ( X:CSlot ) ==K RESERVED)"
+  replace = ""
+
+[[mutation]]
+id = "sl009-claim-any-prec"
+expect = "kill"
+misunderstanding = "SL-009: a claim moves every RESERVED committee slot, not only the request's"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_4_1"
+  find = "(cPrec ( X:CSlot ) ==K ListItem(Eid:Int)) andThenBool "
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_slots--c_step_4_2"
+  find = "(cPrec ( X:CSlot ) ==K ListItem(Eid:Int)) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "sl009-e-claim-any-bstat"
+expect = "kill"
+misunderstanding = "SL-009, SL-017: a claim moves the reserver's ECDSA slots to CLAIMED from any bstat, BURNED too"
+  [[mutation.edit]]
+  rule = "split_slots--e_step_4_1"
+  find = " andThenBool (eBstat ( X:ESlot ) ==K RESERVED)"
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_slots--e_step_4_2"
+  find = " andThenBool (eBstat ( X:ESlot ) ==K RESERVED)"
+  replace = ""
+
+[[mutation]]
+id = "sl009-e-claim-any-reserver"
+expect = "kill"
+misunderstanding = "SL-009: a claim moves every RESERVED ECDSA slot, not only the request's"
+  [[mutation.edit]]
+  rule = "split_slots--e_step_4_1"
+  find = "(eReserver ( X:ESlot ) ==K ListItem(Eid:Int)) andThenBool "
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_slots--e_step_4_2"
+  find = "(eReserver ( X:ESlot ) ==K ListItem(Eid:Int)) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "ledger1-claim-after-end"
+expect = "kill"
+misunderstanding = "Ledger 1: an ended request may still claim"
+  [[mutation.edit]]
+  rule = "claim"
+  find = "requires notBool Eid:Int in Ended:List"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "claim-refused"
+  find = "requires Eid:Int in Ended:List"
+  replace = "requires false"
+
+[[mutation]]
+id = "claim-refused-code"
+expect = "kill"
+misunderstanding = "Ledger 1: a claim of an ended request is outside the capability"
+  [[mutation.edit]]
+  rule = "claim-refused"
+  find = "ListItem(noRule)"
+  replace = "ListItem(outsideCapability)"
+
+[[mutation]]
+id = "sl010-end-keeps"
+expect = "kill"
+misunderstanding = "SL-010: the end of the request with prec leaves an unused committee slot as it is"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_5_1"
+  find = "=> burnC ( X:CSlot )"
+  replace = "=> X:CSlot"
+
+[[mutation]]
+id = "sl010-end-burns-all"
+expect = "kill"
+misunderstanding = "SL-010: the end of a request burns every committee slot"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_5_1"
+  find = "requires cPrec ( X:CSlot ) ==K ListItem(Eid:Int)"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_5_2"
+  find = "requires notBool (cPrec ( X:CSlot ) ==K ListItem(Eid:Int))"
+  replace = "requires false"
+
+[[mutation]]
+id = "sl028-end-burns-prec"
+expect = "kill"
+misunderstanding = "SL-011, SL-028: the end of a request burns the ECDSA slots where it holds prec, reserved or not"
+  [[mutation.edit]]
+  rule = "split_slots--e_step_5_1"
+  find = "requires eReserver ( X:ESlot ) ==K ListItem(Eid:Int)"
+  replace = "requires ePrec ( X:ESlot ) ==K ListItem(Eid:Int)"
+  [[mutation.edit]]
+  rule = "split_slots--e_step_5_2"
+  find = "requires notBool (eReserver ( X:ESlot ) ==K ListItem(Eid:Int))"
+  replace = "requires notBool (ePrec ( X:ESlot ) ==K ListItem(Eid:Int))"
+
+[[mutation]]
+id = "sl011-end-keeps-e"
+expect = "kill"
+misunderstanding = "SL-011: the end of the reserver leaves the ECDSA slot as it is"
+  [[mutation.edit]]
+  rule = "split_slots--e_step_5_1"
+  find = "=> burnE ( X:ESlot )"
+  replace = "=> X:ESlot"
+
+[[mutation]]
+id = "ledger1-end-twice"
+expect = "kill"
+misunderstanding = "Ledger 1: a request may end twice"
+  [[mutation.edit]]
+  rule = "end-req"
+  find = "requires notBool Eid:Int in Ended:List"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "end-req-refused"
+  find = "requires Eid:Int in Ended:List"
+  replace = "requires false"
+
+[[mutation]]
+id = "end-not-recorded"
+expect = "kill"
+misunderstanding = "Ledger 1: the end of a request is not recorded"
+  [[mutation.edit]]
+  rule = "end-req"
+  find = "Ended:List => ListItem(Eid:Int) Ended:List"
+  replace = "Ended:List"
+
+[[mutation]]
+id = "end-refused-code"
+expect = "kill"
+misunderstanding = "Ledger 1: a second end is outside the capability"
+  [[mutation.edit]]
+  rule = "end-req-refused"
+  find = "ListItem(noRule)"
+  replace = "ListItem(outsideCapability)"
+
+[[mutation]]
+id = "sl028-range-any-suite"
+expect = "kill"
+misunderstanding = "CP-020, SL-028: a restart burns the index range in both suites of the epoch"
+  [[mutation.edit]]
+  rule = "split_slots--in_range_1"
+  find = "((Suite:Suite ==K Su:Suite) andThenBool (Epoch:Int ==Int E:Int))"
+  replace = "(Epoch:Int ==Int E:Int)"
+
+[[mutation]]
+id = "sl028-range-any-epoch"
+expect = "kill"
+misunderstanding = "CP-020, SL-028: a restart burns the index range in every epoch of the suite"
+  [[mutation.edit]]
+  rule = "split_slots--in_range_1"
+  find = "((Suite:Suite ==K Su:Suite) andThenBool (Epoch:Int ==Int E:Int))"
+  replace = "(Suite:Suite ==K Su:Suite)"
+
+[[mutation]]
+id = "sl028-range-no-lo"
+expect = "kill"
+misunderstanding = "CP-020: a restart burns every index up to hi"
+  [[mutation.edit]]
+  rule = "split_slots--in_range_1"
+  find = "(Lo:Int <=Int Idx:Int)"
+  replace = "true"
+
+[[mutation]]
+id = "sl028-range-no-hi"
+expect = "kill"
+misunderstanding = "CP-020: a restart burns every index from lo"
+  [[mutation.edit]]
+  rule = "split_slots--in_range_1"
+  find = "(Idx:Int <=Int Hi:Int)"
+  replace = "true"
+
+[[mutation]]
+id = "sl028-range-burns-nothing"
+expect = "kill"
+misunderstanding = "CP-020: a restart answers ok and leaves the committee slots"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_6_1"
+  find = "=> burnC ( X:CSlot )"
+  replace = "=> X:CSlot"
+
+[[mutation]]
+id = "ledger9-range-single"
+expect = "kill"
+misunderstanding = "Ledger 9: a range with lo = hi is outside the capability"
+  [[mutation.edit]]
+  rule = "burn-range"
+  find = "requires Lo:Int <=Int Hi:Int"
+  replace = "requires Lo:Int <Int Hi:Int"
+  [[mutation.edit]]
+  rule = "burn-range-refused"
+  find = "requires Lo:Int >Int Hi:Int"
+  replace = "requires Lo:Int >=Int Hi:Int"
+
+[[mutation]]
+id = "burn-range-refused-code"
+expect = "kill"
+misunderstanding = "Ledger 9: an empty range is no-rule"
+  [[mutation.edit]]
+  rule = "burn-range-refused"
+  find = "ListItem(outsideCapability)"
+  replace = "ListItem(noRule)"
+
+[[mutation]]
+id = "sl028-pool-all"
+expect = "kill"
+misunderstanding = "CP-021, SL-028: a restart burns every account pool"
+  [[mutation.edit]]
+  rule = "split_slots--e_step_6_1"
+  find = "requires ePool ( X:ESlot ) ==Int Pool:Int"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_slots--e_step_6_2"
+  find = "requires notBool (ePool ( X:ESlot ) ==Int Pool:Int)"
+  replace = "requires false"
+
+[[mutation]]
+id = "sl028-pool-burns-nothing"
+expect = "kill"
+misunderstanding = "CP-021: a restart answers ok and leaves the account pool"
+  [[mutation.edit]]
+  rule = "burn-pool"
+  find = "Eslots:List => mapE ( Forces:List , Op:Op , Eslots:List )"
+  replace = "Eslots:List"
+
+[[mutation]]
+id = "done-never"
+expect = "kill"
+misunderstanding = "runOps: a run with no operation left has no end; the node waits for more operations instead of answering"
+  [[mutation.edit]]
+  rule = "done"
+  find = "<ops> .List </ops>"
+  replace = "<ops> .List </ops> requires false"

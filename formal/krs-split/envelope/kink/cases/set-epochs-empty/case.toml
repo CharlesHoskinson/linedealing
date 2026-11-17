@@ -1,0 +1,8 @@
+# EN-005: no epoch is current.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { SetEpochs = { es = [] } },
+]

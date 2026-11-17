@@ -1,0 +1,8 @@
+# EN-014: t correct partials of a good dealing open the tag.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { CombineOp = { t = 2, dealing_ok = true, partials = [{ Part = { sender = 1, proof_ok = true } }, { Part = { sender = 2, proof_ok = true } }] } },
+]

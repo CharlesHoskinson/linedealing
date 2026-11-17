@@ -1,0 +1,455 @@
+# Plausible misreadings of SH-030 to SH-037 (the acknowledgement of a network-created
+# shard, DECISIONS 67) and of ledger 14 to 19, as K patches.
+
+# --- SH-034: registration -------------------------------------------------------
+
+[[mutation]]
+id = "sh034-registered-acked"
+expect = "kill"
+misunderstanding = "SH-034: a record registers with acked = true"
+  [[mutation.edit]]
+  rule = "split_shard_holders--rec_of_1"
+  find = "NetworkCreated:Bool , false )"
+  replace = "NetworkCreated:Bool , true )"
+
+[[mutation]]
+id = "sh034-network-flag-dropped"
+expect = "kill"
+misunderstanding = "SH-034 (ledger 14): the record does not keep the network-created flag of the request"
+  [[mutation.edit]]
+  rule = "split_shard_holders--rec_of_1"
+  find = "NetworkCreated:Bool , false )"
+  replace = "false , false )"
+
+# --- findRec --------------------------------------------------------------------
+
+[[mutation]]
+id = "sh035-unknown-record-blocked"
+expect = "kill"
+misunderstanding = "SH-035 (ledger 3): an unknown cm_addr reads as an unacknowledged record with a network-created shard"
+  [[mutation.edit]]
+  rule = "split_shard_holders--find_rec_1"
+  find = "=> noneR"
+  replace = "=> someR ( rec ( 0 , pP0 , 0 , .List , true , false ) )"
+
+[[mutation]]
+id = "sh037-record-not-found"
+expect = "kill"
+misunderstanding = "SH-037: the record of the cm_addr is never found, so every acknowledge call is no rule"
+  [[mutation.edit]]
+  rule = "split_shard_holders--find_rec_2_1"
+  find = "=> someR ( rec ( CmAddr:Int , Profile:Profile , Charter:Int , Sigs:List , NetworkCreated:Bool , Acked:Bool ) )"
+  replace = "=> findRec ( Rest:List , Cm:Int )"
+
+[[mutation]]
+id = "sh035-first-record-read"
+expect = "kill"
+misunderstanding = "SH-035: the payer wallet reads the first record of the contract, not the record of the cm_addr"
+  [[mutation.edit]]
+  rule = "split_shard_holders--find_rec_2_2"
+  find = "=> findRec ( Rest:List , Cm:Int )"
+  replace = "=> someR ( rec ( CmAddr:Int , Profile:Profile , Charter:Int , Sigs:List , NetworkCreated:Bool , Acked:Bool ) )"
+
+[[mutation]]
+id = "sh035-flags-swapped"
+expect = "kill"
+misunderstanding = "SH-035: the read record mixes up its network-created flag and acked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--find_rec_2_1"
+  find = "NetworkCreated:Bool , Acked:Bool ) )"
+  replace = "Acked:Bool , NetworkCreated:Bool ) )"
+
+# --- holder_open (SH-030, SH-036, ledger 14, 16) --------------------------------
+
+[[mutation]]
+id = "sh030-unknown-record-sends"
+expect = "kill"
+misunderstanding = "SH-030 (ledger 14): the holder wallet sends the ACK envelope for a record that is not registered"
+  [[mutation.edit]]
+  rule = "split_shard_holders--holder_refusals_1"
+  find = "=> ListItem(rNoRule)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "sh036-unknown-record-both"
+expect = "kill"
+misunderstanding = "SH-036: an open of an unknown record with x_u·G != X_u also answers SH-036"
+  [[mutation.edit]]
+  rule = "split_shard_holders--holder_refusals_1"
+  find = "=> ListItem(rNoRule)"
+  replace = "=> ListItem(rSH036) ListItem(rNoRule)"
+
+[[mutation]]
+id = "sh036-unchecked"
+expect = "kill"
+misunderstanding = "SH-036: the holder wallet sends the ACK envelope without checking x_u·G = X_u"
+  [[mutation.edit]]
+  rule = "split_shard_holders--holder_refusals_2"
+  find = "opt ( notBool XMatch:Bool , rSH036 )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh036-inverted"
+expect = "kill"
+misunderstanding = "SH-036: the holder wallet refuses exactly when x_u·G = X_u"
+  [[mutation.edit]]
+  rule = "split_shard_holders--holder_refusals_2"
+  find = "opt ( notBool XMatch:Bool , rSH036 )"
+  replace = "opt ( XMatch:Bool , rSH036 )"
+
+[[mutation]]
+id = "sh030-any-record"
+expect = "kill"
+misunderstanding = "SH-030 (ledger 14): the holder wallet sends the ACK envelope for a record without a network-created shard"
+  [[mutation.edit]]
+  rule = "split_shard_holders--holder_refusals_2"
+  find = "opt ( notBool NetworkCreated:Bool , rNoRule )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh030-codes-unsorted"
+expect = "kill"
+misunderstanding = "SH-030, SH-036 (ledger 2): the codes of holder_open are not in code order"
+  [[mutation.edit]]
+  rule = "split_shard_holders--holder_refusals_2"
+  find = "=> opt ( notBool XMatch:Bool , rSH036 ) opt ( notBool NetworkCreated:Bool , rNoRule )"
+  replace = "=> opt ( notBool NetworkCreated:Bool , rNoRule ) opt ( notBool XMatch:Bool , rSH036 )"
+
+[[mutation]]
+id = "sh030-no-envelope"
+expect = "kill"
+misunderstanding = "SH-030: the holder wallet answers ok, not with the ACK envelope"
+  [[mutation.edit]]
+  rule = "holder-open"
+  find = "ListItem(oAckEnvelope)"
+  replace = "ListItem(oOk)"
+
+[[mutation]]
+id = "sh036-fixed-code"
+expect = "kill"
+misunderstanding = "SH-036 (ledger 19): every refused open answers SH-036"
+  [[mutation.edit]]
+  rule = "holder-open-refused"
+  find = "ListItem(oRefused ( holderRefusals ( findRec ( Records:List , CmAddr:Int ) , XMatch:Bool ) ))"
+  replace = "ListItem(oRefused ( ListItem(rSH036) ))"
+
+# --- ack_check (SH-031, SH-032, ledger 4, 17) -----------------------------------
+
+[[mutation]]
+id = "sh031-no-recompute"
+expect = "kill"
+misunderstanding = "SH-031: the node signs ACK_OK without the recomputation of X from the birth data"
+  [[mutation.edit]]
+  rule = "split_shard_holders--ack_passes_1"
+  find = "=> (XRecomputed:Bool andThenBool OpeningOk:Bool) andThenBool PopU:Bool"
+  replace = "=> OpeningOk:Bool andThenBool PopU:Bool"
+
+[[mutation]]
+id = "sh031-no-opening"
+expect = "kill"
+misunderstanding = "SH-031: the node signs ACK_OK without the opening of cm_addr"
+  [[mutation.edit]]
+  rule = "split_shard_holders--ack_passes_1"
+  find = "=> (XRecomputed:Bool andThenBool OpeningOk:Bool) andThenBool PopU:Bool"
+  replace = "=> XRecomputed:Bool andThenBool PopU:Bool"
+
+[[mutation]]
+id = "sh031-no-pop-u"
+expect = "kill"
+misunderstanding = "SH-031: the node signs ACK_OK without checking pop_u under X_u"
+  [[mutation.edit]]
+  rule = "split_shard_holders--ack_passes_1"
+  find = "=> (XRecomputed:Bool andThenBool OpeningOk:Bool) andThenBool PopU:Bool"
+  replace = "=> XRecomputed:Bool andThenBool OpeningOk:Bool"
+
+[[mutation]]
+id = "sh031-any-check"
+expect = "kill"
+misunderstanding = "SH-031: one passing check of the ACK envelope is enough"
+  [[mutation.edit]]
+  rule = "split_shard_holders--ack_passes_1"
+  find = "=> (XRecomputed:Bool andThenBool OpeningOk:Bool) andThenBool PopU:Bool"
+  replace = "=> (XRecomputed:Bool orElseBool OpeningOk:Bool) orElseBool PopU:Bool"
+
+[[mutation]]
+id = "sh032-never-refused"
+expect = "kill"
+misunderstanding = "SH-032: a failed check of SH-031 does not refuse ACK_OK"
+  [[mutation.edit]]
+  rule = "split_shard_holders--ack_refusals"
+  find = "opt ( notBool ackPasses ( A:AckCheck ) , rAckRefused )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh032-node-bound-inclusive"
+expect = "kill"
+misunderstanding = "SH-031 (ledger 4): node index n is still a committee node"
+  [[mutation.edit]]
+  rule = "split_shard_holders--ack_refusals"
+  find = "nOf ( P:Params ) <=Int Node:Int"
+  replace = "nOf ( P:Params ) <Int Node:Int"
+
+[[mutation]]
+id = "sh032-codes-unsorted"
+expect = "kill"
+misunderstanding = "SH-032 (ledger 2): outside-capability comes before ack_refused"
+  [[mutation.edit]]
+  rule = "split_shard_holders--ack_refusals"
+  find = "=> opt ( notBool ackPasses ( A:AckCheck ) , rAckRefused ) opt ( nOf ( P:Params ) <=Int Node:Int , rOutsideCapability )"
+  replace = "=> opt ( nOf ( P:Params ) <=Int Node:Int , rOutsideCapability ) opt ( notBool ackPasses ( A:AckCheck ) , rAckRefused )"
+
+[[mutation]]
+id = "sh031-ack-swapped"
+expect = "kill"
+misunderstanding = "SH-031: ACK_OK is recorded as (cm_addr, node)"
+  [[mutation.edit]]
+  rule = "ack-check"
+  find = "addOnce ( pr ( Node:Int , CmAddr:Int ) , Acks:List )"
+  replace = "addOnce ( pr ( CmAddr:Int , Node:Int ) , Acks:List )"
+
+[[mutation]]
+id = "sh031-ack-every-time"
+expect = "kill"
+misunderstanding = "SH-031 (ledger 17): a node that checks one ACK envelope twice is recorded twice"
+  [[mutation.edit]]
+  rule = "ack-check"
+  find = "addOnce ( pr ( Node:Int , CmAddr:Int ) , Acks:List )"
+  replace = "ListItem(pr ( Node:Int , CmAddr:Int )) Acks:List"
+
+[[mutation]]
+id = "sh031-obs-birth-ok"
+expect = "kill"
+misunderstanding = "SH-031: the node answers BIRTH_OK, not ACK_OK"
+  [[mutation.edit]]
+  rule = "ack-check"
+  find = "ListItem(oAckOk)"
+  replace = "ListItem(oBirthOk)"
+
+[[mutation]]
+id = "sh032-fixed-code"
+expect = "kill"
+misunderstanding = "SH-032: every refused ACK check answers ack_refused"
+  [[mutation.edit]]
+  rule = "ack-check-refused"
+  find = "ListItem(oRefused ( ackRefusals ( Params:Params , Node:Int , Ack:AckCheck ) ))"
+  replace = "ListItem(oRefused ( ListItem(rAckRefused) ))"
+
+# --- acknowledge (SH-033, SH-037, ledger 18) ------------------------------------
+
+[[mutation]]
+id = "sh033-ackers-any"
+expect = "kill"
+misunderstanding = "SH-033: every certificate signer counts, with or without an ACK_OK on the record"
+  [[mutation.edit]]
+  rule = "split_shard_holders--valid_ackers_2_2"
+  find = "=> validAckers ( Rest:List , Acks:List , Cm:Int )"
+  replace = "=> ListItem(N:Int) validAckers ( Rest:List , Acks:List , Cm:Int )"
+
+[[mutation]]
+id = "sh033-ackers-dropped"
+expect = "kill"
+misunderstanding = "SH-033: a signer with a valid ACK_OK is not counted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--valid_ackers_2_1"
+  find = "=> ListItem(N:Int) validAckers ( Rest:List , Acks:List , Cm:Int )"
+  replace = "=> validAckers ( Rest:List , Acks:List , Cm:Int )"
+
+[[mutation]]
+id = "sh033-ackers-extra"
+expect = "kill"
+misunderstanding = "SH-033: the certificate counts one signer more than it carries"
+  [[mutation.edit]]
+  rule = "split_shard_holders--valid_ackers_1"
+  find = "=> .List"
+  replace = "=> ListItem(0)"
+
+[[mutation]]
+id = "sh033-quorum-strict"
+expect = "kill"
+misunderstanding = "SH-033: the acknowledgement certificate needs more than q ACK_OK signatures"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_ack_cert"
+  find = "<Int quorumOf ( P:Params )"
+  replace = "<=Int quorumOf ( P:Params )"
+
+[[mutation]]
+id = "sh033-quorum-f-plus-one"
+expect = "kill"
+misunderstanding = "SH-033: f + 1 ACK_OK signatures make an acknowledgement certificate"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_ack_cert"
+  find = "<Int quorumOf ( P:Params )"
+  replace = "<Int 2"
+
+[[mutation]]
+id = "sh033-signers-counted"
+expect = "kill"
+misunderstanding = "SH-033: the call counts the signers it names, not their ACK_OK signatures"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_ack_cert"
+  find = "size(validAckers ( Signers:List , Acks:List , Cm:Int ))"
+  replace = "size(Signers:List)"
+
+[[mutation]]
+id = "sh033-unknown-record-lands"
+expect = "kill"
+misunderstanding = "SH-037 (ledger 18): an acknowledge call on a record that is not registered lands"
+  [[mutation.edit]]
+  rule = "split_shard_holders--acknowledge_refusals_1"
+  find = "=> ListItem(rNoRule)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "sh033-unchecked"
+expect = "kill"
+misunderstanding = "SH-033: an acknowledge call needs no acknowledgement certificate"
+  [[mutation.edit]]
+  rule = "split_shard_holders--acknowledge_refusals_2"
+  find = "opt ( noAckCert ( P:Params , Acks:List , Cm:Int , Signers:List ) , rNoAckCertificate )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh033-dup-signers-allowed"
+expect = "kill"
+misunderstanding = "SH-033 (ledger 18): a certificate may name a signer twice"
+  [[mutation.edit]]
+  rule = "split_shard_holders--acknowledge_refusals_2"
+  find = "opt ( notBool nodupB ( Signers:List ) , rOutsideCapability )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh033-codes-unsorted"
+expect = "kill"
+misunderstanding = "SH-033 (ledger 2): outside-capability comes before no_ack_certificate"
+  [[mutation.edit]]
+  rule = "split_shard_holders--acknowledge_refusals_2"
+  find = "=> opt ( noAckCert ( P:Params , Acks:List , Cm:Int , Signers:List ) , rNoAckCertificate ) opt ( notBool nodupB ( Signers:List ) , rOutsideCapability )"
+  replace = "=> opt ( notBool nodupB ( Signers:List ) , rOutsideCapability ) opt ( noAckCert ( P:Params , Acks:List , Cm:Int , Signers:List ) , rNoAckCertificate )"
+
+[[mutation]]
+id = "sh037-not-set"
+expect = "kill"
+misunderstanding = "SH-037: the landed call leaves acked unchanged"
+  [[mutation.edit]]
+  rule = "split_shard_holders--set_acked_1_1"
+  find = "NetworkCreated:Bool , true )"
+  replace = "NetworkCreated:Bool , Acked:Bool )"
+
+[[mutation]]
+id = "sh037-sets-every-record"
+expect = "kill"
+misunderstanding = "SH-037: the call sets acked = true on every record, not only its own"
+  [[mutation.edit]]
+  rule = "split_shard_holders--set_acked_1_2"
+  find = "=> rec ( CmAddr:Int , Profile:Profile , Charter:Int , Sigs:List , NetworkCreated:Bool , Acked:Bool )"
+  replace = "=> rec ( CmAddr:Int , Profile:Profile , Charter:Int , Sigs:List , NetworkCreated:Bool , true )"
+
+[[mutation]]
+id = "sh037-clears-network-flag"
+expect = "kill"
+misunderstanding = "SH-037: the acknowledgement clears the network-created flag instead of setting acked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--set_acked_1_1"
+  find = "NetworkCreated:Bool , true )"
+  replace = "false , Acked:Bool )"
+
+[[mutation]]
+id = "sh037-adds-record"
+expect = "kill"
+misunderstanding = "SH-037: the call adds an acknowledged record"
+  [[mutation.edit]]
+  rule = "split_shard_holders--set_acked_l_1"
+  find = "=> .List"
+  replace = "=> ListItem(rec ( 0 , pP0 , 0 , .List , false , true ))"
+
+[[mutation]]
+id = "sh037-first-only"
+expect = "kill"
+misunderstanding = "SH-037: the call keeps only the first record of the contract"
+  [[mutation.edit]]
+  rule = "split_shard_holders--set_acked_l_2"
+  find = "=> ListItem(setAcked ( Cm:Int , R:Rec )) setAckedL ( Cm:Int , Rest:List )"
+  replace = "=> ListItem(setAcked ( Cm:Int , R:Rec ))"
+
+[[mutation]]
+id = "sh037-records-unchanged"
+expect = "kill"
+misunderstanding = "SH-037: the landed acknowledge call changes no record"
+  [[mutation.edit]]
+  rule = "acknowledge"
+  find = "Records:List => setAckedL ( CmAddr:Int , Records:List )"
+  replace = "Records:List => Records:List"
+
+[[mutation]]
+id = "sh037-obs-paid"
+expect = "kill"
+misunderstanding = "SH-037: the landed acknowledge call answers paid"
+  [[mutation.edit]]
+  rule = "acknowledge"
+  find = "ListItem(oOk)"
+  replace = "ListItem(oPaid)"
+
+[[mutation]]
+id = "sh033-fixed-code"
+expect = "kill"
+misunderstanding = "SH-033: every refused acknowledge call answers no_ack_certificate"
+  [[mutation.edit]]
+  rule = "acknowledge-refused"
+  find = "ListItem(oRefused ( acknowledgeRefusals ( Params:Params , Acks:List , findRec ( Records:List , CmAddr:Int ) , CmAddr:Int , Signers:List ) ))"
+  replace = "ListItem(oRefused ( ListItem(rNoAckCertificate) ))"
+
+# --- pay (SH-035, ledger 15, 19) -------------------------------------------------
+
+[[mutation]]
+id = "sh035-every-record"
+expect = "kill"
+misunderstanding = "SH-035 (ledger 15): the payer wallet waits for acked = true also on a record without a network-created shard"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pay_blocked_1"
+  find = "=> NetworkCreated:Bool andThenBool (notBool Acked:Bool)"
+  replace = "=> notBool Acked:Bool"
+
+[[mutation]]
+id = "sh035-acked-ignored"
+expect = "kill"
+misunderstanding = "SH-035: the payer wallet never pays to an address with a network-created shard"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pay_blocked_1"
+  find = "=> NetworkCreated:Bool andThenBool (notBool Acked:Bool)"
+  replace = "=> NetworkCreated:Bool"
+
+[[mutation]]
+id = "sh035-unknown-paid"
+expect = "kill"
+misunderstanding = "SH-035: the payer wallet pays to an address with no registered record"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pay_refusals_1"
+  find = "=> ListItem(rNoRule)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "sh035-unchecked"
+expect = "kill"
+misunderstanding = "SH-035: the payer wallet pays while acked = false"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pay_refusals_2"
+  find = "=> opt ( payBlocked ( R:Rec ) , rSH035 )"
+  replace = "=> .List"
+
+[[mutation]]
+id = "sh035-obs-ok"
+expect = "kill"
+misunderstanding = "SH-035: the payer wallet answers ok, not paid"
+  [[mutation.edit]]
+  rule = "pay"
+  find = "ListItem(oPaid)"
+  replace = "ListItem(oOk)"
+
+[[mutation]]
+id = "sh035-fixed-code"
+expect = "kill"
+misunderstanding = "SH-035 (ledger 19): every refused payment answers SH-035"
+  [[mutation.edit]]
+  rule = "pay-refused"
+  find = "ListItem(oRefused ( payRefusals ( findRec ( Records:List , CmAddr:Int ) ) ))"
+  replace = "ListItem(oRefused ( ListItem(rSH035) ))"

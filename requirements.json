@@ -1,0 +1,306 @@
+{
+  "version": 1,
+  "requirements": [
+    {
+      "id": "SLG-001",
+      "statement": "The split-line capability specs shall pass the EARS lint with a requirement ID on every requirement and no defect or warning.",
+      "specification": "formal/drwatt/GATES.md#specs",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "ears"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "SLG-002",
+      "statement": "The add-split-line-dealing OpenSpec change shall pass strict OpenSpec validation.",
+      "specification": "formal/drwatt/GATES.md#specs",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "openspec"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "SLG-003",
+      "statement": "The refinement baseline and traceability of add-split-line-dealing shall agree with the capability specs and with the DECISIONS entries that the specs consume.",
+      "specification": "formal/drwatt/GATES.md#specs",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "refinement"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "SLG-004",
+      "statement": "The Lean oracle of split-envelope shall build with warnings as errors, with its pins, theorems and axiom audit, with no escape hatch, with its codec and refusal cases, with every Spec mutant killed and with no open ambiguity ledger entry.",
+      "specification": "formal/drwatt/GATES.md#lean-oracle",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "oracle",
+        "envelope"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "SLG-005",
+      "statement": "The Lean oracle of split-request shall build with warnings as errors, with its pins, theorems and axiom audit, with no escape hatch, with its codec and refusal cases, with every Spec mutant killed and with no open ambiguity ledger entry.",
+      "specification": "formal/drwatt/GATES.md#lean-oracle",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "oracle",
+        "request"
+      ],
+      "timeout": 7200
+    },
+    {
+      "id": "SLG-006",
+      "statement": "The Lean oracle of split-slots shall build with warnings as errors, with its pins, theorems and axiom audit, with no escape hatch, with its codec and refusal cases, with every Spec mutant killed and with no open ambiguity ledger entry.",
+      "specification": "formal/drwatt/GATES.md#lean-oracle",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "oracle",
+        "slots"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "SLG-007",
+      "statement": "The Lean oracle of split-authorization shall build with warnings as errors, with its pins, theorems and axiom audit, with no escape hatch, with its codec and refusal cases, with every Spec mutant killed and with no open ambiguity ledger entry.",
+      "specification": "formal/drwatt/GATES.md#lean-oracle",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "oracle",
+        "authorization"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "SLG-008",
+      "statement": "The Lean oracle of split-checkpoint shall build with warnings as errors, with its pins, theorems and axiom audit, with no escape hatch, with its codec and refusal cases, with every Spec mutant killed and with no open ambiguity ledger entry.",
+      "specification": "formal/drwatt/GATES.md#lean-oracle",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "oracle",
+        "checkpoint"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "SLG-009",
+      "statement": "The Lean oracle of split-shard-holders shall build with warnings as errors, with its pins, theorems and axiom audit, with no escape hatch, with its codec and refusal cases, with every Spec mutant killed and with no open ambiguity ledger entry.",
+      "specification": "formal/drwatt/GATES.md#lean-oracle",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "oracle",
+        "shard-holders"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "SLG-010",
+      "statement": "The requirement table of the split-envelope Lean oracle shall quote each EARS sentence of its capability spec word for word.",
+      "specification": "formal/drwatt/GATES.md#lean-oracle",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "trace",
+        "envelope"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "SLG-011",
+      "statement": "The requirement table of the split-request Lean oracle shall quote each EARS sentence of its capability spec word for word.",
+      "specification": "formal/drwatt/GATES.md#lean-oracle",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "trace",
+        "request"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "SLG-012",
+      "statement": "The requirement table of the split-slots Lean oracle shall quote each EARS sentence of its capability spec word for word.",
+      "specification": "formal/drwatt/GATES.md#lean-oracle",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "trace",
+        "slots"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "SLG-013",
+      "statement": "The requirement table of the split-authorization Lean oracle shall quote each EARS sentence of its capability spec word for word.",
+      "specification": "formal/drwatt/GATES.md#lean-oracle",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "trace",
+        "authorization"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "SLG-014",
+      "statement": "The requirement table of the split-checkpoint Lean oracle shall quote each EARS sentence of its capability spec word for word.",
+      "specification": "formal/drwatt/GATES.md#lean-oracle",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "trace",
+        "checkpoint"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "SLG-015",
+      "statement": "The requirement table of the split-shard-holders Lean oracle shall quote each EARS sentence of its capability spec word for word.",
+      "specification": "formal/drwatt/GATES.md#lean-oracle",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "trace",
+        "shard-holders"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "SLG-016",
+      "statement": "The six Lean oracle requirement tables shall hold the 216 EARS IDs of add-split-line-dealing with one row each.",
+      "specification": "formal/drwatt/GATES.md#lean-oracle",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "ids"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "SLG-017",
+      "statement": "The Quint model of add-split-line-dealing and its test module shall typecheck.",
+      "specification": "formal/drwatt/GATES.md#quint-spec-model",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "quint-typecheck"
+      ],
+      "timeout": 300
+    },
+    {
+      "id": "SLG-018",
+      "statement": "The scripted schedules of the Quint test module test_tee_p2 shall all pass.",
+      "specification": "formal/drwatt/GATES.md#quint-spec-model",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "quint-test",
+        "test_tee_p2"
+      ],
+      "timeout": 600
+    },
+    {
+      "id": "SLG-019",
+      "statement": "The scripted schedules of the Quint test module test_nontee_p2 shall all pass.",
+      "specification": "formal/drwatt/GATES.md#quint-spec-model",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "quint-test",
+        "test_nontee_p2"
+      ],
+      "timeout": 600
+    },
+    {
+      "id": "SLG-020",
+      "statement": "The scripted schedules of the Quint test module test_tee_p1 shall all pass.",
+      "specification": "formal/drwatt/GATES.md#quint-spec-model",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "quint-test",
+        "test_tee_p1"
+      ],
+      "timeout": 600
+    },
+    {
+      "id": "SLG-021",
+      "statement": "The Quint model shall have a kill module that passes for every mutant instance.",
+      "specification": "formal/drwatt/GATES.md#quint-spec-model",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "quint-kills"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "SLG-022",
+      "statement": "The split-line prototype in impl shall pass its tests, ITF trace replays among them.",
+      "specification": "formal/drwatt/GATES.md#prototype",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "impl-test"
+      ],
+      "timeout": 2400
+    },
+    {
+      "id": "SLG-023",
+      "statement": "The split-line prototype in impl shall pass clippy on all targets with warnings denied.",
+      "specification": "formal/drwatt/GATES.md#prototype",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "impl-clippy"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "SLG-024",
+      "statement": "The split-line prototype in impl shall match the layout that cargo fmt writes.",
+      "specification": "formal/drwatt/GATES.md#prototype",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "impl-fmt"
+      ],
+      "timeout": 300
+    },
+    {
+      "id": "SLG-025",
+      "statement": "The k-rust reference suite of split-line dealing shall equal the Lean oracle on every program under the locked corpus and match its golden vectors.",
+      "specification": "formal/drwatt/GATES.md#reference-suite",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "reference-suite"
+      ],
+      "timeout": 10800
+    },
+    {
+      "id": "SLG-026",
+      "statement": "The Lean oracle shall agree with the Quint model of add-split-line-dealing on every transition of the replayed ITF traces.",
+      "specification": "formal/drwatt/GATES.md#replay",
+      "check": [
+        "sh",
+        "formal/drwatt/gate.sh",
+        "replay"
+      ],
+      "timeout": 300
+    }
+  ]
+}

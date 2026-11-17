@@ -62,6 +62,46 @@ impl EcdsaVariant {
     }
 }
 
+/// Fixture fee variants: `k` P2WPKH transactions that spend `inputs` outputs
+/// of 100,000 sat to `script` and pay a fee of `v·1000` in variant `v`. The
+/// size measurements (`split_sizes`) and the frame-capacity test use them.
+pub fn fixture_variants(script: &[u8], k: u8, inputs: u8) -> Result<Vec<EcdsaVariant>> {
+    use crate::builder::{OutPoint, SpendKind, Utxo, UtxoTransaction};
+    (1..=k)
+        .map(|v| {
+            EcdsaVariant::bitcoin(&UtxoTransaction {
+                inputs: (0..inputs)
+                    .map(|j| Utxo {
+                        outpoint: OutPoint {
+                            txid: [17; 32],
+                            vout: u32::from(j),
+                        },
+                        value: 100_000,
+                        script_pubkey: script.to_vec(),
+                        confirmations: 6,
+                    })
+                    .collect(),
+                outputs: vec![
+                    crate::wire::Output {
+                        amount: 50_000,
+                        script: script.to_vec(),
+                    },
+                    crate::wire::Output {
+                        amount: u128::from(inputs) * 100_000 - 50_000 - u128::from(v) * 1000,
+                        script: script.to_vec(),
+                    },
+                ],
+                fee: u64::from(v) * 1000,
+                vsize: 200,
+                signed_vsize: None,
+                anchor_height: 100,
+                lock_time: 0,
+                spend_kind: SpendKind::P2wpkh,
+            })
+        })
+        .collect()
+}
+
 /// Actual serialized sizes. Ciphertext sizes include their AEAD tags.
 #[derive(Clone, Debug)]
 pub struct EcdsaSizes {

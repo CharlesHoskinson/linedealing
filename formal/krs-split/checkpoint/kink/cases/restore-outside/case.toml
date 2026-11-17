@@ -1,0 +1,8 @@
+# Domain: a RestoreDone of a seat outside the committee is outside the capability
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { RestoreDone = { r = { Rd = { seat = 4, boot_ctr = 1, cp_seq = 0, whole = false } } } },
+  { RestoreDone = { r = { Rd = { seat = 3, boot_ctr = 1, cp_seq = 0, whole = false } } } },
+  { MayReboot = {} },
+]

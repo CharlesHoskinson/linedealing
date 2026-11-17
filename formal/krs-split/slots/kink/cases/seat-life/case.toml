@@ -1,0 +1,18 @@
+# SL-018, SL-019, SL-021, SL-027, SL-030: put, bind, release once per digest, burn.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { SeatPut = { key = 1 } },
+  { SeatPut = { key = 2 } },
+  { SeatPut = { key = 2 } },
+  { SeatBind = { key = 1, d = 7, slot_acks = 2, sealed_acks = 2 } },
+  { SeatBind = { key = 1, d = 7, slot_acks = 1, sealed_acks = 1 } },
+  { SeatBind = { key = 2, d = 7, slot_acks = 2, sealed_acks = 2 } },
+  { SeatRelease = { key = 1, d = 7 } },
+  { SeatRelease = { key = 1, d = 7 } },
+  { SeatBurn = { key = 1 } },
+  { SeatPut = { key = 3 } },
+  { SeatBind = { key = 3, d = 9, slot_acks = 2, sealed_acks = 2 } },
+  { SeatRelease = { key = 3, d = 9 } },
+  { SeatBurn = { key = 3 } },
+]

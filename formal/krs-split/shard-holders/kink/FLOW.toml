@@ -1,0 +1,30 @@
+# Reference suite for split-shard-holders. The programs are typed cases: cases/*/case.toml.
+# No held area: the oracle implements DECISIONS 65 to 70 (item 13), the ACK path included.
+# `krs kink coverage` must leave no obligation open, `krs kink run` must kill every
+# mutation or carry an argued survivor, and `krs kink compare` checks the reference
+# definition against the Lean oracle (corpus end equivalence: equal ends on every program).
+
+[spec]
+krs = { package = "split-shard-holders-reference", definition = "main" }
+
+# Unique-cause MC/DC on every guard.
+[coverage]
+mcdc = true
+
+[budget]
+time_ms = 600000
+
+[[program]]
+cases = "cases/*/case.toml"
+
+# Spec anchor: the Lean oracle (formal/lean-split/shard-holders, `lake build oracle`),
+# through the schema-driven adapter that translates the KRS typed encoding to the
+# oracle's JSON and back. No identity: the answers depend on the adapter, the schema
+# and the binary, and one identity file cannot cover all three, so kink caches none.
+[[implementation]]
+name = "lean-oracle"
+command = ["python3", "-I", "../../scripts/oracle_adapter.py", "../schema.json",
+           "../../../lean-split/shard-holders/.lake/build/bin/oracle"]
+given = "inputs"
+omits = ["k", "ops"]
+views = [{ name = "end", required = true }]

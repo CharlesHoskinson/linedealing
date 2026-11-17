@@ -49,7 +49,8 @@ for d in B["decisions"]:
     if not e["checks"]: err.append(f"{d['id']} no checks")
     for c in e["checks"]:
         if c["status"] not in ("planned", "passed"): err.append(f"{d['id']} bad status {c['status']}")
-        if c["status"] == "passed" and c["item"] != 20: err.append(f"{d['id']} passed status outside item 20")
+        if c["status"] == "passed" and c["item"] not in (20, 21): err.append(f"{d['id']} passed status outside items 20 and 21")
+        if c["status"] == "passed" and c["item"] == 21 and "; Lean " not in c["ref"]: err.append(f"{d['id']} item 21 passed without a Lean theorem")
 # markdown links
 for md in [ref/"architecture.md", *sorted((ref/"decisions").glob("*.md")), root/"openspec/changes/add-seald-sessions/design.md"]:
     for l in re.findall(r"\]\(([^)#]+)(?:#[^)]*)?\)", md.read_text()):

@@ -1,19 +1,24 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use line_dealing::experiment::{SecpSetup, SeededRng};
 use std::time::Duration;
+#[path = "support/cputime.rs"]
+mod cputime;
+use cputime::criterion_measurement::ThreadCpu;
 
 fn sizes() -> Vec<u16> {
     match std::env::var("LD_BENCH_N") {
         Ok(value) => {
-            let n = value.parse().expect("LD_BENCH_N must be 9, 16, 64, or 256");
-            assert!([9, 16, 64, 256].contains(&n));
+            let n = value
+                .parse()
+                .expect("LD_BENCH_N must be a committee size of at least 4");
+            assert!(n >= 4, "LD_BENCH_N must be at least 4");
             vec![n]
         }
         Err(_) => vec![9, 16, 64, 256],
     }
 }
 
-fn protocol(c: &mut Criterion) {
+fn protocol(c: &mut Criterion<ThreadCpu>) {
     for n in sizes() {
         let f = (n - 1) / 3;
         for t in [f + 1, n - f] {
@@ -63,10 +68,14 @@ fn protocol(c: &mut Criterion) {
         }
     }
 }
-criterion_group!(benches, protocol, ed25519);
+criterion_group! {
+    name = benches;
+    config = Criterion::default().with_measurement(ThreadCpu);
+    targets = protocol, ed25519
+}
 criterion_main!(benches);
 
-fn ed25519(c: &mut Criterion) {
+fn ed25519(c: &mut Criterion<ThreadCpu>) {
     use line_dealing::experiment::EdSetup;
     for n in sizes() {
         let f = (n - 1) / 3;

@@ -132,8 +132,11 @@ module batched_checkpoint {
     val hMin = if (a_restartOpen) prev.h + B else prev.h
     val h = if (a_maxRes > hMin) a_maxRes else hMin
     val cp = { h: h, pendingMin: minOr(pend, h + 1), pend: pend, forged: Set() }
+    // §7.13 contract rules: h never falls, pending_min never falls (DECISIONS 69, D-039, SS-146),
+    // and the first checkpoint after a restart jumps past the window.
     val accepted =
-      cp.h >= prev.h and (not(a_restartOpen) or (cp.h >= prev.h + B and cp.pendingMin > prev.h + B))
+      cp.h >= prev.h and cp.pendingMin >= prev.pendingMin and cp.pendingMin <= cp.h + 1
+      and (not(a_restartOpen) or (cp.h >= prev.h + B and cp.pendingMin > prev.h + B))
     val listOk =
       not(a_restartOpen) or (cp.h >= prev.h + B and cp.pend.intersect(burnList(prev)).size() == 0)
     all {

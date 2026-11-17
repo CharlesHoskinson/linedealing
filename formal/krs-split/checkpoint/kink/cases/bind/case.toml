@@ -1,0 +1,17 @@
+# CP-025: a ready node binds a free slot; a bound, burned or missing slot is no rule
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { BindAcct = { aid = 1, i = 0, d = 5 } },
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { ReadLedger = { ok = true, tickets = [], cov = [] } },
+  { OpenAcct = { a = { AcctOf = { id = 1, slots = ["Free", { Bound = { d = 3 } }, "Burned", "Free"], mark = 0, refill = false } } } },
+  { OpenAcct = { a = { AcctOf = { id = 2, slots = ["Free", "Free"], mark = 0, refill = false } } } },
+  { BindAcct = { aid = 1, i = 3, d = 9 } },
+  { BindAcct = { aid = 1, i = 1, d = 9 } },
+  { BindAcct = { aid = 1, i = 2, d = 9 } },
+  { BindAcct = { aid = 1, i = 4, d = 9 } },
+  { BindAcct = { aid = 3, i = 0, d = 9 } },
+  { BindAcct = { aid = 2, i = 1, d = 7 } },
+  { BindAcct = { aid = 1, i = 3, d = 9 } },
+]

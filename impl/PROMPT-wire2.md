@@ -1,4 +1,4 @@
-Continue the Rust wire lane in . (read impl/PROMPT-wire.md for the task, impl/WIRE-PLAN.md and impl/final-wire.md for your own progress). Never commit, push or run git write commands.
+Continue the Rust wire lane in /home/hoskinson/Projects/mpcexperiments-wt-rust (read impl/PROMPT-wire.md for the task, impl/WIRE-PLAN.md and impl/final-wire.md for your own progress). Never commit, push or run git write commands.
 
 Lead decision on your question: run cargo directly, offline, with at most 4 jobs: `cargo test --offline --release -j 4`, `cargo clippy --offline --all-targets -j 4 -- -D warnings`, `cargo fmt --check`. Do NOT run benchmarks, criterion or the simulation matrix: the lead runs them under the host's exclusive heavy slot.
 

@@ -1,0 +1,95 @@
+# Reference suite for split-checkpoint. The programs are typed cases: cases/*/case.toml.
+# The checkpoint oracle has no held area, so every case runs here and exports a golden vector.
+# `krs kink coverage` must leave no obligation open, `krs kink run` must kill every
+# mutation or carry an argued survivor, and `krs kink compare` checks the reference
+# definition against the Lean oracle (corpus end equivalence: equal ends on every program).
+
+[spec]
+krs = { package = "split-checkpoint-reference", definition = "main" }
+
+# Unique-cause MC/DC on every guard.
+[coverage]
+mcdc = true
+
+# CP-001: a checkpoint carries its seat roots, but no rule reads them (CP-016 coverage
+# reads the board height, CP-015 signs a seat log given as an input). Case land-first
+# lands a checkpoint with seat roots, and the oracle's answer is the same.
+[[coverage.argued]]
+item = "syntax:crate::SeatRootC::Sr"
+argument = "CP-001: the seat roots are carried in the checkpoint; no rule reads them, so no step takes one as an operand"
+
+# CP-033, ledger 3, ledger 6: a non-TEE node is never ready (the TEE ledger read is no
+# rule for it), and open_account is refused before ready, so a non-TEE restart never
+# meets an account pool. The oracle has the same reach (Spec.lean, opRefusals).
+[[coverage.argued]]
+item = "rule:crate::refill_accts_2"
+argument = "CP-033, ledger 3, ledger 6: a non-TEE node is never ready, so it opens no account pool before a non-TEE restart"
+
+# CP-025, ledger 5: bind_account runs only when slot i of the pool is free, so i is
+# inside the pool and setBound never runs past its end.
+[[coverage.argued]]
+item = "rule:crate::set_bound_1"
+argument = "CP-025, ledger 5: a bind runs only on a free slot i, so i is inside the pool and the slot update never passes its end"
+
+# CP-011 (DECISIONS 69 item 6, ledger 15): a landed checkpoint counts as a carrier only while
+# its seq is above restart_seq. From init no landed checkpoint ever qualifies: one that
+# carried a qualifying statement moved restart_seq to its own seq when it landed, and one that
+# did not cannot qualify later because restart_seq only rises. The port keeps the oracle's
+# branch literally; its mutations are argued survivors in mutations/decisions69.toml.
+[[coverage.argued]]
+item = "rule:crate::chain_carries_2_1"
+argument = "CP-011, ledger 15: no run from init lands a checkpoint with seq above restart_seq that carries a qualifying RestoreDone; such a checkpoint moves restart_seq to its own seq when it lands, restart_seq only rises, and seq 0 never passes cur < seq, so a landed checkpoint is never a counting carrier (the oracle reaches it only from a --step state, Tests.lean pin_marker_follows)"
+
+[[coverage.argued]]
+item = "rule:crate::chain_moves_1"
+argument = "CP-011, ledger 15: no run from init lands a checkpoint with seq above restart_seq that carries a qualifying RestoreDone; such a checkpoint moves restart_seq to its own seq when it lands, restart_seq only rises, and seq 0 never passes cur < seq, so a landed checkpoint is never a counting carrier (the oracle reaches it only from a --step state, Tests.lean pin_marker_follows)"
+
+[[coverage.argued]]
+item = "requirement:crate::chain_carries_2_1:held"
+argument = "CP-011, ledger 15: no run from init lands a checkpoint with seq above restart_seq that carries a qualifying RestoreDone; such a checkpoint moves restart_seq to its own seq when it lands, restart_seq only rises, and seq 0 never passes cur < seq, so a landed checkpoint is never a counting carrier (the oracle reaches it only from a --step state, Tests.lean pin_marker_follows)"
+
+[[coverage.argued]]
+item = "requirement:crate::chain_carries_2_1:CarrierQual(c, cur):mcdc"
+argument = "CP-011, ledger 15: no run from init lands a checkpoint with seq above restart_seq that carries a qualifying RestoreDone; such a checkpoint moves restart_seq to its own seq when it lands, restart_seq only rises, and seq 0 never passes cur < seq, so a landed checkpoint is never a counting carrier (the oracle reaches it only from a --step state, Tests.lean pin_marker_follows)"
+
+[[coverage.argued]]
+item = "requirement:crate::chain_carries_2_2:refuted"
+argument = "CP-011, ledger 15: no run from init lands a checkpoint with seq above restart_seq that carries a qualifying RestoreDone; such a checkpoint moves restart_seq to its own seq when it lands, restart_seq only rises, and seq 0 never passes cur < seq, so a landed checkpoint is never a counting carrier (the oracle reaches it only from a --step state, Tests.lean pin_marker_follows)"
+
+[[coverage.argued]]
+item = "requirement:crate::chain_carries_2_2:CarrierQual(c, cur):mcdc"
+argument = "CP-011, ledger 15: no run from init lands a checkpoint with seq above restart_seq that carries a qualifying RestoreDone; such a checkpoint moves restart_seq to its own seq when it lands, restart_seq only rises, and seq 0 never passes cur < seq, so a landed checkpoint is never a counting carrier (the oracle reaches it only from a --step state, Tests.lean pin_marker_follows)"
+
+[[coverage.argued]]
+item = "requirement:crate::chain_moves_1:held"
+argument = "CP-011, ledger 15: no run from init lands a checkpoint with seq above restart_seq that carries a qualifying RestoreDone; such a checkpoint moves restart_seq to its own seq when it lands, restart_seq only rises, and seq 0 never passes cur < seq, so a landed checkpoint is never a counting carrier (the oracle reaches it only from a --step state, Tests.lean pin_marker_follows)"
+
+[[coverage.argued]]
+item = "requirement:crate::chain_moves_1:ChainCarries(chain, cur):mcdc"
+argument = "CP-011, ledger 15: no run from init lands a checkpoint with seq above restart_seq that carries a qualifying RestoreDone; such a checkpoint moves restart_seq to its own seq when it lands, restart_seq only rises, and seq 0 never passes cur < seq, so a landed checkpoint is never a counting carrier (the oracle reaches it only from a --step state, Tests.lean pin_marker_follows)"
+
+[[coverage.argued]]
+item = "requirement:crate::chain_moves_2:refuted"
+argument = "CP-011, ledger 15: no run from init lands a checkpoint with seq above restart_seq that carries a qualifying RestoreDone; such a checkpoint moves restart_seq to its own seq when it lands, restart_seq only rises, and seq 0 never passes cur < seq, so a landed checkpoint is never a counting carrier (the oracle reaches it only from a --step state, Tests.lean pin_marker_follows)"
+
+[[coverage.argued]]
+item = "requirement:crate::chain_moves_2:ChainCarries(chain, cur):mcdc"
+argument = "CP-011, ledger 15: no run from init lands a checkpoint with seq above restart_seq that carries a qualifying RestoreDone; such a checkpoint moves restart_seq to its own seq when it lands, restart_seq only rises, and seq 0 never passes cur < seq, so a landed checkpoint is never a counting carrier (the oracle reaches it only from a --step state, Tests.lean pin_marker_follows)"
+
+[budget]
+time_ms = 600000
+
+[[program]]
+cases = "cases/*/case.toml"
+
+# Spec anchor: the Lean oracle (formal/lean-split/checkpoint, `lake build oracle`), through
+# the schema-driven adapter that translates the KRS typed encoding to the oracle's JSON
+# and back. No identity: the answers depend on the adapter, the schema and the binary,
+# and one identity file cannot cover all three, so kink caches none (practice 26).
+[[implementation]]
+name = "lean-oracle"
+command = ["python3", "-I", "../../scripts/oracle_adapter.py", "../schema.json",
+           "../../../lean-split/checkpoint/.lake/build/bin/oracle"]
+given = "inputs"
+omits = ["k", "ops"]
+views = [{ name = "end", required = true }]

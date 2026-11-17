@@ -1,0 +1,12 @@
+# CP-014, CP-002: the pending fields are the sorted live indices, their minimum or h + 1, and their count
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { SignPending = { p = { PoolOf = { pool = 1, h = 100, pending_min = 95, pending = [95, 96, 98], pending_count = 3 } }, live = [98, 95, 96] } },
+  { SignPending = { p = { PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }, live = [] } },
+  { SignPending = { p = { PoolOf = { pool = 1, h = 100, pending_min = 96, pending = [95, 96, 98], pending_count = 3 } }, live = [98, 95, 96] } },
+  { SignPending = { p = { PoolOf = { pool = 1, h = 100, pending_min = 95, pending = [95, 98, 96], pending_count = 3 } }, live = [98, 95, 96] } },
+  { SignPending = { p = { PoolOf = { pool = 1, h = 100, pending_min = 95, pending = [95, 96, 98], pending_count = 2 } }, live = [98, 95, 96] } },
+  { SignPending = { p = { PoolOf = { pool = 1, h = 100, pending_min = 100, pending = [], pending_count = 0 } }, live = [] } },
+  { SignPending = { p = { PoolOf = { pool = 1, h = 100, pending_min = 95, pending = [95, 95], pending_count = 2 } }, live = [95, 95] } },
+]

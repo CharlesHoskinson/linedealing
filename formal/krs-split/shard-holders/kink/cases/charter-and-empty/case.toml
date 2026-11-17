@@ -1,0 +1,6 @@
+# SH-001: an AND gate without a child is not a valid charter
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { FixCharter = { id = 8, gamma = { And = { mid = 0, children = [] } } } },
+]

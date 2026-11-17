@@ -1,4 +1,16 @@
+.venv-pixelrag/
+research/pixelrag/tiles/
+research/pixelrag/shard/
+research/pixelrag/embeddings/
+research/lanes/*/tiles/
+research/lanes/*/pid
+research/lanes/*/checkpoint.db
+research/pixelrag/logs-smoke.txt
+research/lanes/*/.checkpoint/
 impl/target/
 formal/lean/.lake/
 formal/natural/.lake/
 design/enhancement/**/lane.log
+.drwatt/
+formal/lean-split/*/.lake/
+impl/testnet/*.local

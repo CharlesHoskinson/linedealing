@@ -4,9 +4,9 @@ You are a cryptographer and performance engineer, one of three independent lanes
 
 ## Read first
 
-- `design/enhancement/DESIGN.md`: the protocol (split-line dealing, TEE and non-TEE modes, profiles P0/P1/P2). It is being extended to many outside shard holders while you work; `design/enhancement/DECISIONS.md` items 21-25 state that extension. Optimize for the multi-shard form too.
-- `design/SCHEME.md` and `design/PROOFS.md`: the base protocol and its proofs.
-- `impl/BENCHMARKS.md` and `impl/src`: the measured Rust prototype of the base protocol (n = 9: 2.3 ms CPU per node per request at t = 3, 3.3 ms at t = 7; 132.6 and 76.7 requests per second end to end in simulation).
+- `/home/hoskinson/Projects/mpcexperiments/design/enhancement/DESIGN.md`: the protocol (split-line dealing, TEE and non-TEE modes, profiles P0/P1/P2). It is being extended to many outside shard holders while you work; `/home/hoskinson/Projects/mpcexperiments/design/enhancement/DECISIONS.md` items 21-25 state that extension. Optimize for the multi-shard form too.
+- `/home/hoskinson/Projects/mpcexperiments/design/SCHEME.md` and `design/PROOFS.md`: the base protocol and its proofs.
+- `/home/hoskinson/Projects/mpcexperiments/impl/BENCHMARKS.md` and `impl/src`: the measured Rust prototype of the base protocol (n = 9: 2.3 ms CPU per node per request at t = 3, 3.3 ms at t = 7; 132.6 and 76.7 requests per second end to end in simulation).
 - DESIGN.md §11 gives the cost estimates to beat: about 160-220 scalar multiplications (8-11 ms) per node per request, about 5-6 s latency plus Midnight finality, a STARK wrapped once in BLS12-381 budgeted at 2^20 rows (hard cap 2^21).
 
 Parameters: n = 9, f = 2, q = 6, t = 7 at launch; n = 17, f = 5, q = 12, t = 12 later. Chains: Bitcoin (BIP340, ECDSA), Ethereum (ECDSA), Solana (Ed25519).

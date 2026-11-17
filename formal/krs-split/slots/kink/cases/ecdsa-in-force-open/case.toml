@@ -1,0 +1,10 @@
+# SL-006: an open by a request already in force takes the slot at once.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealE = { pool = 1, leaf_set = 5, root = "Own", kcount = 1 } },
+  { DealE = { pool = 2, leaf_set = 5, root = "Gr", kcount = 1 } },
+  { InForce = { eid = 1, root = "Own" } },
+  { OpenE = { eid = 1, pos = 10, names = [{ Ek = { pool = 1, idx = 1 } }, { Ek = { pool = 2, idx = 1 } }] } },
+  { OpenE = { eid = 2, pos = 20, names = [{ Ek = { pool = 1, idx = 1 } }] } },
+]

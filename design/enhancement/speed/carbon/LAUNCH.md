@@ -1,1 +1,1 @@
-Read design/enhancement/BRIEF-SPEED.md and do the task it gives. Write your deliverable to design/enhancement/speed/carbon/SPEED.md. Use web search and URL fetching. Do not edit any other file. Do not run git.
+Read /home/hoskinson/Projects/mpcexperiments/design/enhancement/BRIEF-SPEED.md and do the task it gives. Write your deliverable to /home/hoskinson/Projects/mpcexperiments/design/enhancement/speed/carbon/SPEED.md. Use web search and URL fetching. Do not edit any other file. Do not run git.

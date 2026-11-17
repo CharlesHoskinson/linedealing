@@ -1,0 +1,10 @@
+# CP-006, ledger 8: an epoch key set needs n acks of at least w keys and q signatures
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Eks = { e = 1, acks = [2, 2, 2], sigs = 3 } },
+  { Eks = { e = 1, acks = [2, 2, 1, 2], sigs = 3 } },
+  { Eks = { e = 1, acks = [2, 3, 2, 2], sigs = 2 } },
+  { Eks = { e = 4, acks = [2, 2, 2, 2], sigs = 3 } },
+  { Eks = { e = 5, acks = [9, 9, 9, 9, 9], sigs = 9 } },
+]

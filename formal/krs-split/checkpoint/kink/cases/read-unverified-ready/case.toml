@@ -1,0 +1,19 @@
+# CP-043, ledger 6: a later ledger view that does not verify on a ready node answers ok,
+# keeps the last verified view and sets ready false; then a bind and an anchored release
+# are refused ledger_unverified, an unanchored release answers, and a verified read makes
+# the node ready again
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { ReadLedger = { ok = true, tickets = [{ P = [0, 0] }, { P = [1, 0] }, { P = [2, 0] }, { P = [3, 0] }], cov = [] } },
+  { OpenAcct = { a = { AcctOf = { id = 7, slots = ["Free", "Free"], mark = 0, refill = false } } } },
+  { ReadLedger = { ok = false, tickets = [{ P = [0, 0] }, { P = [1, 0] }, { P = [2, 0] }, { P = [3, 0] }], cov = [{ CovOf = { account = 7, slot = 0, d = 42 } }] } },
+  { BindAcct = { aid = 7, i = 0, d = 42 } },
+  { ReleaseAnchor = { anchor = true, entry_h = 90 } },
+  { ReleaseAnchor = { anchor = false, entry_h = 90 } },
+  { ReadLedger = { ok = false, tickets = [{ P = [0, 0] }, { P = [1, 0] }, { P = [2, 0] }, { P = [3, 0] }], cov = [] } },
+  { ReadLedger = { ok = true, tickets = [{ P = [0, 0] }, { P = [1, 0] }, { P = [2, 0] }, { P = [3, 0] }], cov = [] } },
+  { ReleaseAnchor = { anchor = true, entry_h = 90 } },
+  { ReleaseAnchor = { anchor = true, entry_h = 101 } },
+]

@@ -1,0 +1,1356 @@
+[
+ {
+  "name": "run with refusals",
+  "match": "subset",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "request",
+   "inputs": {
+    "params": {
+     "n": 9,
+     "f": 2,
+     "delta_c": 600,
+     "delta_hold": 10,
+     "mode": "TEE"
+    },
+    "epochs": [
+     {
+      "e": 0,
+      "n": 9,
+      "f": 2
+     }
+    ],
+    "ops": [
+     {
+      "op": "post",
+      "eid": 1,
+      "epoch": 0,
+      "exp": 5000,
+      "type": "SPEND",
+      "profile": "P1"
+     },
+     {
+      "op": "tick",
+      "height": 100
+     },
+     {
+      "op": "order",
+      "eid": 1,
+      "qc": false,
+      "p": 0
+     },
+     {
+      "op": "order",
+      "eid": 1,
+      "qc": true,
+      "p": 0
+     },
+     {
+      "op": "vote_admit",
+      "eid": 9,
+      "node": 0,
+      "hash": 7,
+      "h": 50
+     }
+    ]
+   }
+  },
+  "expect": {
+   "end": "final",
+   "cells": {
+    "obs": [
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "no_qc"
+      ]
+     },
+     {
+      "phase": "ORDERED"
+     },
+     {
+      "refused": [
+       "unknown_request"
+      ]
+     }
+    ],
+    "state": {
+     "height": 100,
+     "cp_height": 0
+    }
+   }
+  }
+ },
+ {
+  "name": "three codes in code order (EN-023, RQ-007, RQ-005)",
+  "match": "subset",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "request",
+   "inputs": {
+    "params": {
+     "n": 9,
+     "f": 2,
+     "delta_c": 600,
+     "delta_hold": 10,
+     "mode": "TEE"
+    },
+    "epochs": [
+     {
+      "e": 0,
+      "n": 9,
+      "f": 2
+     }
+    ],
+    "ops": [
+     {
+      "op": "post",
+      "eid": 1,
+      "epoch": 0,
+      "exp": 5000,
+      "type": "SPEND",
+      "profile": "P1"
+     },
+     {
+      "op": "tick",
+      "height": 5001
+     },
+     {
+      "op": "order",
+      "eid": 1,
+      "qc": false,
+      "p": 0
+     }
+    ]
+   }
+  },
+  "expect": {
+   "end": "final",
+   "cells": {
+    "obs": [
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "exp_c_not_below_exp",
+       "no_qc",
+       "terminal"
+      ]
+     }
+    ]
+   }
+  }
+ },
+ {
+  "name": "committee outside RQ-001",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "request",
+   "inputs": {
+    "params": {
+     "n": 6,
+     "f": 2,
+     "delta_c": 600,
+     "delta_hold": 10,
+     "mode": "TEE"
+    },
+    "epochs": [
+     {
+      "e": 0,
+      "n": 9,
+      "f": 2
+     }
+    ],
+    "ops": []
+   }
+  },
+  "expect": {
+   "end": "could-not-apply",
+   "reason": "outside-capability"
+  }
+ },
+ {
+  "name": "honest run to FINAL",
+  "match": "subset",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "request",
+   "inputs": {
+    "params": {
+     "n": 9,
+     "f": 2,
+     "delta_c": 600,
+     "delta_hold": 10,
+     "mode": "TEE"
+    },
+    "epochs": [
+     {
+      "e": 0,
+      "n": 9,
+      "f": 2
+     }
+    ],
+    "ops": [
+     {
+      "op": "post",
+      "eid": 1,
+      "epoch": 0,
+      "exp": 5000,
+      "type": "SPEND",
+      "profile": "P1"
+     },
+     {
+      "op": "tick",
+      "height": 100
+     },
+     {
+      "op": "order",
+      "eid": 1,
+      "qc": true,
+      "p": 0
+     },
+     {
+      "op": "open",
+      "eid": 1,
+      "K": 8,
+      "L": 2,
+      "collecting": false,
+      "positions": 0,
+      "rates": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8
+      ]
+     },
+     {
+      "op": "host_fee",
+      "h": 50,
+      "m": 3
+     },
+     {
+      "op": "vote_admit",
+      "eid": 1,
+      "node": 0,
+      "hash": 7,
+      "h": 50
+     },
+     {
+      "op": "vote_admit",
+      "eid": 1,
+      "node": 1,
+      "hash": 7,
+      "h": 50
+     },
+     {
+      "op": "vote_admit",
+      "eid": 1,
+      "node": 2,
+      "hash": 7,
+      "h": 50
+     },
+     {
+      "op": "vote_admit",
+      "eid": 1,
+      "node": 3,
+      "hash": 7,
+      "h": 50
+     },
+     {
+      "op": "vote_admit",
+      "eid": 1,
+      "node": 4,
+      "hash": 7,
+      "h": 50
+     },
+     {
+      "op": "vote_admit",
+      "eid": 1,
+      "node": 5,
+      "hash": 7,
+      "h": 50
+     },
+     {
+      "op": "release",
+      "eid": 1,
+      "g": 1,
+      "j": 3
+     },
+     {
+      "op": "post_final",
+      "eid": 1,
+      "epoch": 0,
+      "member": 0,
+      "ct": 42
+     },
+     {
+      "op": "post_final",
+      "eid": 1,
+      "epoch": 0,
+      "member": 1,
+      "ct": 42
+     },
+     {
+      "op": "post_final",
+      "eid": 1,
+      "epoch": 0,
+      "member": 2,
+      "ct": 42
+     },
+     {
+      "op": "post_final",
+      "eid": 1,
+      "epoch": 0,
+      "member": 3,
+      "ct": 42
+     },
+     {
+      "op": "post_final",
+      "eid": 1,
+      "epoch": 0,
+      "member": 4,
+      "ct": 42
+     },
+     {
+      "op": "post_final",
+      "eid": 1,
+      "epoch": 0,
+      "member": 5,
+      "ct": 42
+     }
+    ]
+   }
+  },
+  "expect": {
+   "end": "final",
+   "cells": {
+    "obs": [
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "phase": "ORDERED"
+     },
+     {
+      "phase": "OPENED"
+     },
+     {
+      "ok": true
+     },
+     {
+      "phase": "OPENED"
+     },
+     {
+      "phase": "OPENED"
+     },
+     {
+      "phase": "OPENED"
+     },
+     {
+      "phase": "OPENED"
+     },
+     {
+      "phase": "OPENED"
+     },
+     {
+      "phase": "ADMITTED"
+     },
+     {
+      "phase": "ADMITTED"
+     },
+     {
+      "phase": "ADMITTED"
+     },
+     {
+      "phase": "ADMITTED"
+     },
+     {
+      "phase": "ADMITTED"
+     },
+     {
+      "phase": "ADMITTED"
+     },
+     {
+      "phase": "ADMITTED"
+     },
+     {
+      "phase": "FINAL"
+     }
+    ]
+   }
+  }
+ },
+ {
+  "name": "exponent",
+  "rc": 2,
+  "expect": null,
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"request\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"delta_c\": 600, \"delta_hold\": 10, \"mode\": \"TEE\"}, \"epochs\": [{\"e\": 0, \"n\": 9, \"f\": 2}], \"ops\": [{\"op\": \"post\", \"eid\": 1, \"epoch\": 0, \"exp\": 5000, \"type\": \"SPEND\", \"profile\": \"P1\"}, {\"op\": \"tick\", \"height\": 1e2}]}}"
+ },
+ {
+  "name": "fraction",
+  "rc": 2,
+  "expect": null,
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"request\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"delta_c\": 600, \"delta_hold\": 10, \"mode\": \"TEE\"}, \"epochs\": [{\"e\": 0, \"n\": 9, \"f\": 2}], \"ops\": [{\"op\": \"post\", \"eid\": 1, \"epoch\": 0, \"exp\": 5000, \"type\": \"SPEND\", \"profile\": \"P1\"}, {\"op\": \"tick\", \"height\": 100.0}]}}"
+ },
+ {
+  "name": "leading zero",
+  "rc": 2,
+  "expect": null,
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"request\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"delta_c\": 600, \"delta_hold\": 10, \"mode\": \"TEE\"}, \"epochs\": [{\"e\": 0, \"n\": 9, \"f\": 2}], \"ops\": [{\"op\": \"post\", \"eid\": 1, \"epoch\": 0, \"exp\": 5000, \"type\": \"SPEND\", \"profile\": \"P1\"}, {\"op\": \"tick\", \"height\": \"0100\"}]}}"
+ },
+ {
+  "name": "underscore",
+  "rc": 2,
+  "expect": null,
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"request\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"delta_c\": 600, \"delta_hold\": 10, \"mode\": \"TEE\"}, \"epochs\": [{\"e\": 0, \"n\": 9, \"f\": 2}], \"ops\": [{\"op\": \"post\", \"eid\": 1, \"epoch\": 0, \"exp\": 5000, \"type\": \"SPEND\", \"profile\": \"P1\"}, {\"op\": \"tick\", \"height\": \"1_00\"}]}}"
+ },
+ {
+  "name": "extra key",
+  "rc": 2,
+  "expect": null,
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"request\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"delta_c\": 600, \"delta_hold\": 10, \"mode\": \"TEE\"}, \"epochs\": [{\"e\": 0, \"n\": 9, \"f\": 2}], \"ops\": [{\"op\": \"post\", \"eid\": 1, \"epoch\": 0, \"exp\": 5000, \"type\": \"SPEND\", \"profile\": \"P1\"}, {\"op\": \"tick\", \"height\": 100, \"x\": 1}]}}"
+ },
+ {
+  "name": "missing key",
+  "rc": 2,
+  "expect": null,
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"request\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"delta_c\": 600, \"delta_hold\": 10, \"mode\": \"TEE\"}, \"epochs\": [{\"e\": 0, \"n\": 9, \"f\": 2}], \"ops\": [{\"op\": \"post\", \"eid\": 1, \"epoch\": 0, \"exp\": 5000, \"type\": \"SPEND\", \"profile\": \"P1\"}, {\"op\": \"tick\"}]}}"
+ },
+ {
+  "name": "duplicate key",
+  "rc": 2,
+  "expect": null,
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"request\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"delta_c\": 600, \"delta_hold\": 10, \"mode\": \"TEE\"}, \"epochs\": [{\"e\": 0, \"n\": 9, \"f\": 2}], \"ops\": [{\"op\": \"post\", \"eid\": 1, \"epoch\": 0, \"exp\": 5000, \"type\": \"SPEND\", \"profile\": \"P1\"}, {\"op\": \"tick\", \"height\": 100, \"height\": 100}]}}"
+ },
+ {
+  "name": "unknown op",
+  "rc": 2,
+  "expect": null,
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "request",
+   "inputs": {
+    "params": {
+     "n": 9,
+     "f": 2,
+     "delta_c": 600,
+     "delta_hold": 10,
+     "mode": "TEE"
+    },
+    "epochs": [
+     {
+      "e": 0,
+      "n": 9,
+      "f": 2
+     }
+    ],
+    "ops": [
+     {
+      "op": "nope"
+     }
+    ]
+   }
+  }
+ },
+ {
+  "name": "unknown enum",
+  "rc": 2,
+  "expect": null,
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"request\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"delta_c\": 600, \"delta_hold\": 10, \"mode\": \"TEE\"}, \"epochs\": [{\"e\": 0, \"n\": 9, \"f\": 2}], \"ops\": [{\"op\": \"post\", \"eid\": 1, \"epoch\": 0, \"exp\": 5000, \"type\": \"SPENT\", \"profile\": \"P1\"}, {\"op\": \"tick\", \"height\": 100}]}}"
+ },
+ {
+  "name": "protocol 2",
+  "rc": 2,
+  "expect": null,
+  "input": {
+   "protocol": "kink-implementation/2",
+   "program": "request",
+   "inputs": {
+    "params": {
+     "n": 9,
+     "f": 2,
+     "delta_c": 600,
+     "delta_hold": 10,
+     "mode": "TEE"
+    },
+    "epochs": [
+     {
+      "e": 0,
+      "n": 9,
+      "f": 2
+     }
+    ],
+    "ops": []
+   }
+  }
+ },
+ {
+  "name": "string integer accepted",
+  "match": "subset",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"request\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"delta_c\": 600, \"delta_hold\": 10, \"mode\": \"TEE\"}, \"epochs\": [{\"e\": 0, \"n\": 9, \"f\": 2}], \"ops\": [{\"op\": \"post\", \"eid\": 1, \"epoch\": 0, \"exp\": 5000, \"type\": \"SPEND\", \"profile\": \"P1\"}, {\"op\": \"tick\", \"height\": \"100\"}]}}",
+  "expect": {
+   "end": "final",
+   "cells": {
+    "state": {
+     "height": 100
+    }
+   }
+  }
+ },
+ {
+  "name": "step kinds",
+  "args": [
+   "--step"
+  ],
+  "match": "keys",
+  "input": [
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "delta_c": 600,
+      "delta_hold": 10,
+      "mode": "TEE"
+     },
+     "height": 100,
+     "cp_height": 0,
+     "epochs": [
+      {
+       "e": 0,
+       "n": 9,
+       "f": 2
+      }
+     ],
+     "host_med": [],
+     "requests": [
+      {
+       "eid": 1,
+       "epoch": 0,
+       "exp": 5000,
+       "type": "SPEND",
+       "profile": "P1",
+       "order_pos": null,
+       "exp_c": null,
+       "phase": "POSTED",
+       "reason": "NONE",
+       "collecting": false,
+       "K": 0,
+       "L": 0,
+       "G": 0,
+       "anchor": [],
+       "released": [],
+       "any_release": false,
+       "restart_end": false,
+       "outcome": "NONE",
+       "rates": [],
+       "positions": [],
+       "held": [],
+       "opened_votes": [],
+       "admit_votes": [],
+       "early_complaint": false,
+       "dealer_fault": false,
+       "final_posts": [],
+       "void_posts": [],
+       "end_height": null,
+       "confirmed": false,
+       "carried": false
+      }
+     ]
+    },
+    "op": {
+     "op": "order",
+     "eid": 1,
+     "qc": true,
+     "p": 0
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "delta_c": 600,
+      "delta_hold": 10,
+      "mode": "TEE"
+     },
+     "height": 100,
+     "cp_height": 0,
+     "epochs": [
+      {
+       "e": 0,
+       "n": 9,
+       "f": 2
+      }
+     ],
+     "host_med": [],
+     "requests": [
+      {
+       "eid": 1,
+       "epoch": 0,
+       "exp": 5000,
+       "type": "SPEND",
+       "profile": "P1",
+       "order_pos": null,
+       "exp_c": null,
+       "phase": "POSTED",
+       "reason": "NONE",
+       "collecting": false,
+       "K": 0,
+       "L": 0,
+       "G": 0,
+       "anchor": [],
+       "released": [],
+       "any_release": false,
+       "restart_end": false,
+       "outcome": "NONE",
+       "rates": [],
+       "positions": [],
+       "held": [],
+       "opened_votes": [],
+       "admit_votes": [],
+       "early_complaint": false,
+       "dealer_fault": false,
+       "final_posts": [],
+       "void_posts": [],
+       "end_height": null,
+       "confirmed": false,
+       "carried": false
+      }
+     ]
+    },
+    "op": {
+     "op": "complaint",
+     "eid": 9
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "delta_c": 600,
+      "delta_hold": 10,
+      "mode": "TEE"
+     },
+     "height": 100,
+     "cp_height": 0,
+     "epochs": [
+      {
+       "e": 0,
+       "n": 9,
+       "f": 2
+      }
+     ],
+     "host_med": [],
+     "requests": [
+      {
+       "eid": 1,
+       "epoch": 0,
+       "exp": 5000,
+       "type": "SPEND",
+       "profile": "P1",
+       "order_pos": null,
+       "exp_c": null,
+       "phase": "POSTED",
+       "reason": "NONE",
+       "collecting": false,
+       "K": 0,
+       "L": 0,
+       "G": 0,
+       "anchor": [],
+       "released": [],
+       "any_release": false,
+       "restart_end": false,
+       "outcome": "VOID",
+       "rates": [],
+       "positions": [],
+       "held": [],
+       "opened_votes": [],
+       "admit_votes": [],
+       "early_complaint": false,
+       "dealer_fault": false,
+       "final_posts": [],
+       "void_posts": [],
+       "end_height": null,
+       "confirmed": false,
+       "carried": false
+      }
+     ]
+    },
+    "op": {
+     "op": "order",
+     "eid": 1,
+     "qc": true,
+     "p": 0
+    }
+   },
+   {
+    "node": {
+     "state": {
+      "params": {
+       "n": 9,
+       "f": 2,
+       "delta_c": 600,
+       "delta_hold": 10,
+       "mode": "TEE"
+      },
+      "height": 100,
+      "cp_height": 0,
+      "epochs": [
+       {
+        "e": 0,
+        "n": 9,
+        "f": 2
+       }
+      ],
+      "host_med": [],
+      "requests": [
+       {
+        "eid": 1,
+        "epoch": 0,
+        "exp": 5000,
+        "type": "SPEND",
+        "profile": "P1",
+        "order_pos": null,
+        "exp_c": null,
+        "phase": "POSTED",
+        "reason": "NONE",
+        "collecting": false,
+        "K": 0,
+        "L": 0,
+        "G": 0,
+        "anchor": [],
+        "released": [],
+        "any_release": false,
+        "restart_end": false,
+        "outcome": "NONE",
+        "rates": [],
+        "positions": [],
+        "held": [],
+        "opened_votes": [],
+        "admit_votes": [],
+        "early_complaint": false,
+        "dealer_fault": false,
+        "final_posts": [],
+        "void_posts": [],
+        "end_height": null,
+        "confirmed": false,
+        "carried": false
+       }
+      ]
+     },
+     "eid": 1,
+     "view": {
+      "share_ok": true,
+      "sent_header": false,
+      "hdr": "OK",
+      "auth": "IN_FORCE",
+      "revoked_at": null,
+      "mid_final": 100,
+      "obs_mid": [
+       90,
+       90
+      ],
+      "hold_age": 100,
+      "slots": "OK",
+      "admission_ok": true,
+      "voted_opened": false,
+      "voted_admit": false,
+      "rel_check": true,
+      "acks": [
+       6,
+       6
+      ],
+      "bound": true,
+      "sent_gens": [],
+      "contrib_fail": false,
+      "sees_confirm": false,
+      "posted_final": false,
+      "pin_spent": false,
+      "settled": false,
+      "signed_leaf": null
+     }
+    }
+   },
+   "not json"
+  ],
+  "expect": [
+   {
+    "state": 0,
+    "obs": 0
+   },
+   {
+    "refused": 0
+   },
+   {
+    "refused": 0
+   },
+   {
+    "acts": 0
+   },
+   {
+    "error": 0
+   }
+  ]
+ },
+ {
+  "name": "step answers",
+  "args": [
+   "--step"
+  ],
+  "input": [
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "delta_c": 600,
+      "delta_hold": 10,
+      "mode": "TEE"
+     },
+     "height": 100,
+     "cp_height": 0,
+     "epochs": [
+      {
+       "e": 0,
+       "n": 9,
+       "f": 2
+      }
+     ],
+     "host_med": [],
+     "requests": [
+      {
+       "eid": 1,
+       "epoch": 0,
+       "exp": 5000,
+       "type": "SPEND",
+       "profile": "P1",
+       "order_pos": null,
+       "exp_c": null,
+       "phase": "POSTED",
+       "reason": "NONE",
+       "collecting": false,
+       "K": 0,
+       "L": 0,
+       "G": 0,
+       "anchor": [],
+       "released": [],
+       "any_release": false,
+       "restart_end": false,
+       "outcome": "NONE",
+       "rates": [],
+       "positions": [],
+       "held": [],
+       "opened_votes": [],
+       "admit_votes": [],
+       "early_complaint": false,
+       "dealer_fault": false,
+       "final_posts": [],
+       "void_posts": [],
+       "end_height": null,
+       "confirmed": false,
+       "carried": false
+      }
+     ]
+    },
+    "op": {
+     "op": "order",
+     "eid": 1,
+     "qc": true,
+     "p": 0
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "delta_c": 600,
+      "delta_hold": 10,
+      "mode": "TEE"
+     },
+     "height": 100,
+     "cp_height": 0,
+     "epochs": [
+      {
+       "e": 0,
+       "n": 9,
+       "f": 2
+      }
+     ],
+     "host_med": [],
+     "requests": [
+      {
+       "eid": 1,
+       "epoch": 0,
+       "exp": 5000,
+       "type": "SPEND",
+       "profile": "P1",
+       "order_pos": null,
+       "exp_c": null,
+       "phase": "POSTED",
+       "reason": "NONE",
+       "collecting": false,
+       "K": 0,
+       "L": 0,
+       "G": 0,
+       "anchor": [],
+       "released": [],
+       "any_release": false,
+       "restart_end": false,
+       "outcome": "NONE",
+       "rates": [],
+       "positions": [],
+       "held": [],
+       "opened_votes": [],
+       "admit_votes": [],
+       "early_complaint": false,
+       "dealer_fault": false,
+       "final_posts": [],
+       "void_posts": [],
+       "end_height": null,
+       "confirmed": false,
+       "carried": false
+      }
+     ]
+    },
+    "op": {
+     "op": "complaint",
+     "eid": 9
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "delta_c": 600,
+      "delta_hold": 10,
+      "mode": "TEE"
+     },
+     "height": 100,
+     "cp_height": 0,
+     "epochs": [
+      {
+       "e": 0,
+       "n": 9,
+       "f": 2
+      }
+     ],
+     "host_med": [],
+     "requests": [
+      {
+       "eid": 1,
+       "epoch": 0,
+       "exp": 5000,
+       "type": "SPEND",
+       "profile": "P1",
+       "order_pos": null,
+       "exp_c": null,
+       "phase": "POSTED",
+       "reason": "NONE",
+       "collecting": false,
+       "K": 0,
+       "L": 0,
+       "G": 0,
+       "anchor": [],
+       "released": [],
+       "any_release": false,
+       "restart_end": false,
+       "outcome": "VOID",
+       "rates": [],
+       "positions": [],
+       "held": [],
+       "opened_votes": [],
+       "admit_votes": [],
+       "early_complaint": false,
+       "dealer_fault": false,
+       "final_posts": [],
+       "void_posts": [],
+       "end_height": null,
+       "confirmed": false,
+       "carried": false
+      }
+     ]
+    },
+    "op": {
+     "op": "order",
+     "eid": 1,
+     "qc": true,
+     "p": 0
+    }
+   },
+   {
+    "node": {
+     "state": {
+      "params": {
+       "n": 9,
+       "f": 2,
+       "delta_c": 600,
+       "delta_hold": 10,
+       "mode": "TEE"
+      },
+      "height": 100,
+      "cp_height": 0,
+      "epochs": [
+       {
+        "e": 0,
+        "n": 9,
+        "f": 2
+       }
+      ],
+      "host_med": [],
+      "requests": [
+       {
+        "eid": 1,
+        "epoch": 0,
+        "exp": 5000,
+        "type": "SPEND",
+        "profile": "P1",
+        "order_pos": null,
+        "exp_c": null,
+        "phase": "POSTED",
+        "reason": "NONE",
+        "collecting": false,
+        "K": 0,
+        "L": 0,
+        "G": 0,
+        "anchor": [],
+        "released": [],
+        "any_release": false,
+        "restart_end": false,
+        "outcome": "NONE",
+        "rates": [],
+        "positions": [],
+        "held": [],
+        "opened_votes": [],
+        "admit_votes": [],
+        "early_complaint": false,
+        "dealer_fault": false,
+        "final_posts": [],
+        "void_posts": [],
+        "end_height": null,
+        "confirmed": false,
+        "carried": false
+       }
+      ]
+     },
+     "eid": 1,
+     "view": {
+      "share_ok": true,
+      "sent_header": false,
+      "hdr": "OK",
+      "auth": "IN_FORCE",
+      "revoked_at": null,
+      "mid_final": 100,
+      "obs_mid": [
+       90,
+       90
+      ],
+      "hold_age": 100,
+      "slots": "OK",
+      "admission_ok": true,
+      "voted_opened": false,
+      "voted_admit": false,
+      "rel_check": true,
+      "acks": [
+       6,
+       6
+      ],
+      "bound": true,
+      "sent_gens": [],
+      "contrib_fail": false,
+      "sees_confirm": false,
+      "posted_final": false,
+      "pin_spent": false,
+      "settled": false,
+      "signed_leaf": null
+     }
+    }
+   },
+   {
+    "node": {
+     "state": {
+      "params": {
+       "n": 9,
+       "f": 2,
+       "delta_c": 600,
+       "delta_hold": 10,
+       "mode": "TEE"
+      },
+      "height": 100,
+      "cp_height": 0,
+      "epochs": [
+       {
+        "e": 0,
+        "n": 9,
+        "f": 2
+       }
+      ],
+      "host_med": [],
+      "requests": [
+       {
+        "eid": 1,
+        "epoch": 0,
+        "exp": 5000,
+        "type": "SPEND",
+        "profile": "P1",
+        "order_pos": 0,
+        "exp_c": 700,
+        "phase": "ORDERED",
+        "reason": "NONE",
+        "collecting": false,
+        "K": 0,
+        "L": 0,
+        "G": 0,
+        "anchor": [],
+        "released": [],
+        "any_release": false,
+        "restart_end": false,
+        "outcome": "NONE",
+        "rates": [],
+        "positions": [],
+        "held": [],
+        "opened_votes": [],
+        "admit_votes": [],
+        "early_complaint": false,
+        "dealer_fault": false,
+        "final_posts": [],
+        "void_posts": [],
+        "end_height": null,
+        "confirmed": false,
+        "carried": false
+       }
+      ]
+     },
+     "eid": 1,
+     "view": {
+      "share_ok": true,
+      "sent_header": false,
+      "hdr": "OK",
+      "auth": "IN_FORCE",
+      "revoked_at": null,
+      "mid_final": 100,
+      "obs_mid": [
+       90,
+       90
+      ],
+      "hold_age": 100,
+      "slots": "OK",
+      "admission_ok": true,
+      "voted_opened": false,
+      "voted_admit": false,
+      "rel_check": true,
+      "acks": [
+       6,
+       6
+      ],
+      "bound": true,
+      "sent_gens": [],
+      "contrib_fail": false,
+      "sees_confirm": false,
+      "posted_final": false,
+      "pin_spent": false,
+      "settled": false,
+      "signed_leaf": null
+     }
+    }
+   },
+   {
+    "node": {
+     "state": {
+      "params": {
+       "n": 9,
+       "f": 2,
+       "delta_c": 600,
+       "delta_hold": 10,
+       "mode": "TEE"
+      },
+      "height": 100,
+      "cp_height": 0,
+      "epochs": [
+       {
+        "e": 0,
+        "n": 9,
+        "f": 2
+       }
+      ],
+      "host_med": [],
+      "requests": [
+       {
+        "eid": 1,
+        "epoch": 0,
+        "exp": 5000,
+        "type": "SPEND",
+        "profile": "P1",
+        "order_pos": 0,
+        "exp_c": 700,
+        "phase": "ORDERED",
+        "reason": "NONE",
+        "collecting": false,
+        "K": 0,
+        "L": 0,
+        "G": 0,
+        "anchor": [],
+        "released": [],
+        "any_release": false,
+        "restart_end": false,
+        "outcome": "NONE",
+        "rates": [],
+        "positions": [],
+        "held": [],
+        "opened_votes": [],
+        "admit_votes": [],
+        "early_complaint": false,
+        "dealer_fault": false,
+        "final_posts": [],
+        "void_posts": [],
+        "end_height": null,
+        "confirmed": false,
+        "carried": false
+       }
+      ]
+     },
+     "eid": 1,
+     "view": {
+      "share_ok": false,
+      "sent_header": false,
+      "hdr": "OK",
+      "auth": "IN_FORCE",
+      "revoked_at": null,
+      "mid_final": 100,
+      "obs_mid": [
+       90,
+       90
+      ],
+      "hold_age": 100,
+      "slots": "OK",
+      "admission_ok": true,
+      "voted_opened": false,
+      "voted_admit": false,
+      "rel_check": true,
+      "acks": [
+       6,
+       6
+      ],
+      "bound": true,
+      "sent_gens": [],
+      "contrib_fail": false,
+      "sees_confirm": false,
+      "posted_final": false,
+      "pin_spent": false,
+      "settled": false,
+      "signed_leaf": null
+     }
+    }
+   }
+  ],
+  "expect": [
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "delta_c": 600,
+      "delta_hold": 10,
+      "mode": "TEE"
+     },
+     "height": 100,
+     "cp_height": 0,
+     "epochs": [
+      {
+       "e": 0,
+       "n": 9,
+       "f": 2
+      }
+     ],
+     "host_med": [],
+     "requests": [
+      {
+       "eid": 1,
+       "epoch": 0,
+       "exp": 5000,
+       "type": "SPEND",
+       "profile": "P1",
+       "order_pos": 0,
+       "exp_c": 700,
+       "phase": "ORDERED",
+       "reason": "NONE",
+       "collecting": false,
+       "K": 0,
+       "L": 0,
+       "G": 0,
+       "anchor": [],
+       "released": [],
+       "any_release": false,
+       "restart_end": false,
+       "outcome": "NONE",
+       "rates": [],
+       "positions": [],
+       "held": [],
+       "opened_votes": [],
+       "admit_votes": [],
+       "early_complaint": false,
+       "dealer_fault": false,
+       "final_posts": [],
+       "void_posts": [],
+       "end_height": null,
+       "confirmed": false,
+       "carried": false
+      }
+     ]
+    },
+    "obs": {
+     "phase": "ORDERED"
+    }
+   },
+   {
+    "refused": [
+     "unknown_request"
+    ]
+   },
+   {
+    "refused": [
+     "outside-state-domain"
+    ]
+   },
+   {
+    "acts": []
+   },
+   {
+    "acts": [
+     {
+      "act": "header_partial"
+     },
+     {
+      "act": "ack"
+     }
+    ]
+   },
+   {
+    "acts": [
+     {
+      "act": "complaint"
+     }
+    ]
+   }
+  ]
+ }
+]

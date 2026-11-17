@@ -6,7 +6,7 @@ autoImplicit = false
 
 [[require]]
 name = "mathlib"
-path = "~/Projects/Moriarty-wt/mca-lean/formal/mca-lean/.lake/packages/mathlib"
+path = "/home/hoskinson/Projects/Moriarty-wt/mca-lean/formal/mca-lean/.lake/packages/mathlib"
 
 [[require]]
 name = "natural"

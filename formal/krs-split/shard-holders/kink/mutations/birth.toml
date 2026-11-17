@@ -1,0 +1,218 @@
+# Plausible misreadings of SH-007 to SH-010 (the birth checks at a node), ledger 4 (a
+# node index outside n) and ledger 13 (BIRTH_OK recorded once), as K patches.
+
+[[mutation]]
+id = "sh007-validity-unchecked"
+expect = "kill"
+misunderstanding = "SH-007: pop_a is accepted when it was made for the right statement, valid or not"
+  [[mutation.edit]]
+  rule = "split_shard_holders--proof_ok_1"
+  find = "(Valid:Bool andThenBool (Ctx:Ctx"
+  replace = "(true andThenBool (Ctx:Ctx"
+
+[[mutation]]
+id = "sh007-statement-unchecked"
+expect = "kill"
+misunderstanding = "SH-007: a valid pop_a for any statement is accepted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--proof_ok_1"
+  find = "(Ctx:Ctx ==K ctx ( XF:Int , XA:Int , Slot:Int , CharterId:Int , ChainId:Int ))"
+  replace = "true"
+
+[[mutation]]
+id = "sh007-statement-no-chain"
+expect = "kill"
+misunderstanding = "SH-007: pop_a binds X_f, X_a, the slot and the charter but not the chain"
+  [[mutation.edit]]
+  rule = "split_shard_holders--proof_ok_1"
+  find = "(Ctx:Ctx ==K ctx ( XF:Int , XA:Int , Slot:Int , CharterId:Int , ChainId:Int ))"
+  replace = "(Ctx:Ctx ==K ctx ( XF:Int , XA:Int , Slot:Int , CharterId:Int , ChainId:Int ) orBool Ctx:Ctx ==K ctx ( XF:Int , XA:Int , Slot:Int , CharterId:Int , ChainId:Int +Int 1 ))"
+
+[[mutation]]
+id = "sh007-statement-no-xf"
+expect = "kill"
+misunderstanding = "SH-007: pop_a need not bind X_f"
+  [[mutation.edit]]
+  rule = "split_shard_holders--proof_ok_1"
+  find = "(Ctx:Ctx ==K ctx ( XF:Int , XA:Int , Slot:Int , CharterId:Int , ChainId:Int ))"
+  replace = "(Ctx:Ctx ==K ctx ( XF:Int , XA:Int , Slot:Int , CharterId:Int , ChainId:Int ) orBool Ctx:Ctx ==K ctx ( XF:Int +Int 1 , XA:Int , Slot:Int , CharterId:Int , ChainId:Int ))"
+
+[[mutation]]
+id = "sh008-network-unchecked"
+expect = "kill"
+misunderstanding = "SH-008: a network-created shard needs no proof beyond pop_a"
+  [[mutation.edit]]
+  rule = "split_shard_holders--proof_ok_1"
+  find = "((notBool NetworkCreated:Bool) orElseBool (PopU:Bool andThenBool Delta:Bool))"
+  replace = "true"
+
+[[mutation]]
+id = "sh008-popu-only"
+expect = "kill"
+misunderstanding = "SH-008: a network-created shard needs pop_U but not the proof of delta"
+  [[mutation.edit]]
+  rule = "split_shard_holders--proof_ok_1"
+  find = "(PopU:Bool andThenBool Delta:Bool)"
+  replace = "PopU:Bool"
+
+[[mutation]]
+id = "sh008-delta-only"
+expect = "kill"
+misunderstanding = "SH-008: a network-created shard needs the proof of delta but not pop_U"
+  [[mutation.edit]]
+  rule = "split_shard_holders--proof_ok_1"
+  find = "(PopU:Bool andThenBool Delta:Bool)"
+  replace = "Delta:Bool"
+
+[[mutation]]
+id = "sh008-every-shard"
+expect = "kill"
+misunderstanding = "SH-008: every shard, network-created or not, needs pop_U and the proof of delta"
+  [[mutation.edit]]
+  rule = "split_shard_holders--proof_ok_1"
+  find = "((notBool NetworkCreated:Bool) orElseBool (PopU:Bool andThenBool Delta:Bool))"
+  replace = "(PopU:Bool andThenBool Delta:Bool)"
+
+[[mutation]]
+id = "sh009-first-actor-only"
+expect = "kill"
+misunderstanding = "SH-009: only the first actor's proof of possession is checked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--all_proof_ok_2_1"
+  find = "=> allProofOk ( XF:Int , CharterId:Int , ChainId:Int , Rest:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh009-bad-proof-skipped"
+expect = "kill"
+misunderstanding = "SH-009: a failed proof of possession is skipped"
+  [[mutation.edit]]
+  rule = "split_shard_holders--all_proof_ok_2_2"
+  find = "=> false"
+  replace = "=> allProofOk ( XF:Int , CharterId:Int , ChainId:Int , Rest:List )"
+
+[[mutation]]
+id = "sh009-no-actors-bad"
+expect = "kill"
+misunderstanding = "SH-009: the actor proof check fails at the end of the actor list"
+  [[mutation.edit]]
+  rule = "split_shard_holders--all_proof_ok_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh009-dealer-unchecked"
+expect = "kill"
+misunderstanding = "SH-009: the dealer proofs are not checked at birth"
+  [[mutation.edit]]
+  rule = "split_shard_holders--birth_passes_1"
+  find = "andThenBool DealerOk:Bool)"
+  replace = "andThenBool true)"
+
+[[mutation]]
+id = "sh009-x-unchecked"
+expect = "kill"
+misunderstanding = "SH-009: the node does not recompute X_gamma and X"
+  [[mutation.edit]]
+  rule = "split_shard_holders--birth_passes_1"
+  find = "andThenBool XRecomputed:Bool)"
+  replace = "andThenBool true)"
+
+[[mutation]]
+id = "sh009-encoding-unchecked"
+expect = "kill"
+misunderstanding = "SH-009: the chain's address encoding is not checked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--birth_passes_1"
+  find = "andThenBool EncodingOk:Bool)"
+  replace = "andThenBool true)"
+
+[[mutation]]
+id = "sh009-opening-unchecked"
+expect = "kill"
+misunderstanding = "SH-009: the opening of cm_addr is not checked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--birth_passes_1"
+  find = "andThenBool OpeningOk:Bool"
+  replace = "andThenBool true"
+
+[[mutation]]
+id = "sh009-pops-unchecked"
+expect = "kill"
+misunderstanding = "SH-009: the proofs of possession are checked by the coordinator, not the node"
+  [[mutation.edit]]
+  rule = "split_shard_holders--birth_passes_1"
+  find = "allProofOk ( XF:Int , CharterId:Int , ChainId:Int , Actors:List ) andThenBool"
+  replace = "true andThenBool"
+
+[[mutation]]
+id = "sh010-node-range-off-by-one"
+expect = "kill"
+misunderstanding = "SH-010 (ledger 4): node index n is a committee node"
+  [[mutation.edit]]
+  rule = "split_shard_holders--birth_refusals"
+  find = "nOf ( P:Params ) <=Int Node:Int"
+  replace = "nOf ( P:Params ) <Int Node:Int"
+
+[[mutation]]
+id = "sh010-code-order"
+expect = "kill"
+misunderstanding = "SH-010 (ledger 2): outside-capability is listed before birth_refused"
+  [[mutation.edit]]
+  rule = "split_shard_holders--birth_refusals"
+  find = "opt ( notBool birthPasses ( B:BirthCheck ) , rBirthRefused ) opt ( nOf ( P:Params ) <=Int Node:Int , rOutsideCapability )"
+  replace = "opt ( nOf ( P:Params ) <=Int Node:Int , rOutsideCapability ) opt ( notBool birthPasses ( B:BirthCheck ) , rBirthRefused )"
+
+[[mutation]]
+id = "sh010-n-is-f"
+expect = "kill"
+misunderstanding = "RQ-001, SH-010: the node range is read from f, not n"
+  [[mutation.edit]]
+  rule = "split_shard_holders--n_of_1"
+  find = "params ( N:Int , _ , _ , _ ) ) => N:Int"
+  replace = "params ( _ , F:Int , _ , _ ) ) => F:Int"
+
+[[mutation]]
+id = "sh009-birth-twice"
+expect = "kill"
+misunderstanding = "SH-009 (ledger 13): a second BIRTH_OK from one node on one cm_addr is recorded again"
+  [[mutation.edit]]
+  rule = "split_shard_holders--add_once_1"
+  find = "=> Xs:List"
+  replace = "=> ListItem(X:NN) Xs:List"
+
+[[mutation]]
+id = "sh009-birth-appended"
+expect = "kill"
+misunderstanding = "SH-009: a new BIRTH_OK goes last in the list"
+  [[mutation.edit]]
+  rule = "split_shard_holders--add_once_2"
+  find = "=> ListItem(X:NN) Xs:List"
+  replace = "=> Xs:List ListItem(X:NN)"
+
+[[mutation]]
+id = "sh009-birth-wrong-pair"
+expect = "kill"
+misunderstanding = "SH-009: BIRTH_OK is recorded as (cm_addr, node)"
+  [[mutation.edit]]
+  rule = "birth-check"
+  find = "addOnce ( pr ( Node:Int , CmAddr:Int ) , Births:List )"
+  replace = "addOnce ( pr ( CmAddr:Int , Node:Int ) , Births:List )"
+
+[[mutation]]
+id = "sh009-birth-obs-ok"
+expect = "kill"
+misunderstanding = "SH-009: a node that signs BIRTH_OK answers a plain ok"
+  [[mutation.edit]]
+  rule = "birth-check"
+  find = "Obs:List ListItem(oBirthOk)"
+  replace = "Obs:List ListItem(oOk)"
+
+[[mutation]]
+id = "sh010-refused-recorded"
+expect = "kill"
+misunderstanding = "SH-010: a node whose check fails reports only the first failed check"
+  [[mutation.edit]]
+  rule = "birth-check-refused"
+  find = "ListItem(oRefused ( birthRefusals ( Params:Params , Node:Int , Birth:BirthCheck ) ))"
+  replace = "ListItem(oRefused ( ListItem(rBirthRefused) ))"

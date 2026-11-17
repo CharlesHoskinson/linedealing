@@ -1,0 +1,9 @@
+# CP-030, ledger 7: a cold start needs fewer than t intact nodes and q signatures, once
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { ColdStart = { intact = 3, signers = 3 } },
+  { ColdStart = { intact = 2, signers = 2 } },
+  { ColdStart = { intact = 2, signers = 3 } },
+  { ColdStart = { intact = 0, signers = 4 } },
+]

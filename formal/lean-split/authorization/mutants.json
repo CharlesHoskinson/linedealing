@@ -1,0 +1,20 @@
+[
+  {"name": "AU-008 nf_used dropped", "file": "SplitAuthorization/Spec.lean", "old": "opt ((s1.used.map (·.1)).contains c.nf) .nfUsed", "new": "opt false .nfUsed"},
+  {"name": "AU-009 pin unchecked", "file": "SplitAuthorization/Spec.lean", "old": "r.rstate == .LOCKED && r.pin != some c.pin", "new": "false && r.pin != some c.pin"},
+  {"name": "AU-010 in force at inclusion", "file": "SplitAuthorization/Spec.lean", "old": "| some f => decide (f ≤ h)", "new": "| some _ => true"},
+  {"name": "AU-020 FINAL leaves the record unspent", "file": "SplitAuthorization/Spec.lean", "old": "| .FINAL => { r1 with spent := true }", "new": "| .FINAL => { r1 with spent := false }"},
+  {"name": "AU-023 VOID keeps the old nullifier", "file": "SplitAuthorization/Spec.lean", "old": "| .VOID => { r1 with nf := .ofSettle a .VOID, rstate :=", "new": "| .VOID => { r1 with rstate :="},
+  {"name": "AU-025 RELEASED does not lock", "file": "SplitAuthorization/Spec.lean", "old": "rstate := .LOCKED, pin := pinOf", "new": "rstate := .UNSPENT, pin := pinOf"},
+  {"name": "AU-011 P2 may set board_first", "file": "SplitAuthorization/Spec.lean", "old": "opt (bf && (p == .P2 || stateful))", "new": "opt (bf && stateful)"},
+  {"name": "AU-012 direct call on board-first record", "file": "SplitAuthorization/Spec.lean", "old": "opt (rs.any (·.boardFirst)) .boardFirstRecord", "new": "opt false .boardFirstRecord"},
+  {"name": "AU-006 seizure on every profile", "file": "SplitAuthorization/Spec.lean", "old": "| .P2, .SEIZURE => true", "new": "| _, .SEIZURE => true"},
+  {"name": "AU-007 hold not read", "file": "SplitAuthorization/Spec.lean", "old": "| .OWNER, .P2 => c.predOk && c.inGamma && !c.blacklisted && !held", "new": "| .OWNER, .P2 => c.predOk && c.inGamma && !c.blacklisted"},
+  {"name": "AU-013 bound without interval and F_M", "file": "SplitAuthorization/Spec.lean", "old": "decide (c.rootAge + c.interval + c.fM ≤ c.bound)", "new": "decide (c.rootAge ≤ c.bound)"},
+  {"name": "AU-015 nf_pending dropped", "file": "SplitAuthorization/Spec.lean", "old": "opt (bfChecks s c && s.node.pending.contains c.nf) .nfPending", "new": "opt false .nfPending"},
+  {"name": "AU-019 revoke on P1", "file": "SplitAuthorization/Spec.lean", "old": "opt (hits.any (fun r => r.profile != .P2) || bs.any (fun b => !b.settled.isNone)) .notRevocable", "new": "opt (bs.any (fun b => !b.settled.isNone)) .notRevocable"},
+  {"name": "AU-021 carry without quorum", "file": "SplitAuthorization/Spec.lean", "old": "k.outcome == .VOID && decide (q ≤ k.sigs)", "new": "k.outcome == .VOID"},
+  {"name": "AU-027 recovery before the transition", "file": "SplitAuthorization/Spec.lean", "old": "(!s1.recovered || !c.toExit)", "new": "(!c.toExit)"},
+  {"name": "AU-029 VOID on a LOCKED record unlocks (revision 2 AU-023, F5)", "file": "SplitAuthorization/Spec.lean", "old": "rstate := if lockedAtAccept r then .LOCKED else .UNSPENT", "new": "rstate := .UNSPENT"},
+  {"name": "AU-023 VOID on an UNSPENT record locks", "file": "SplitAuthorization/Spec.lean", "old": "rstate := if lockedAtAccept r then .LOCKED else .UNSPENT", "new": "rstate := .LOCKED"},
+  {"name": "AU-029 VOID on a LOCKED record drops the pin", "file": "SplitAuthorization/Spec.lean", "old": "| .VOID => { r1 with nf := .ofSettle a .VOID,", "new": "| .VOID => { r1 with pin := none, nf := .ofSettle a .VOID,"}
+]

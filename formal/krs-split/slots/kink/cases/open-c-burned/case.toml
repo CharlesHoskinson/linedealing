@@ -1,0 +1,11 @@
+# SL-017: a BURNED slot gets no precedence; the open is not VOID. Ledger 9, SL-016: request 2,
+# in force, names a BURNED slot with no precedence: not SLOT_TAKEN.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealC = { suite = "Bip340", epoch = 3, kcount = 3 } },
+  { BurnRange = { suite = "Bip340", epoch = 3, lo = 1, hi = 2 } },
+  { OpenC = { eid = 1, pos = 10, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 1 } }, { Ck = { suite = "Bip340", epoch = 3, idx = 3 } }] } },
+  { InForce = { eid = 2, root = "Own" } },
+  { OpenC = { eid = 2, pos = 20, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 2 } }] } },
+]

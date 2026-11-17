@@ -1,0 +1,9 @@
+# SH-031 (ledger 17): every check passes: ACK_OK recorded once, newest first; no record needed
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { AckCheckOp = { node = 3, cm_addr = 777, ack = { Ac = { x_recomputed = true, opening_ok = true, pop_u = true } } } },
+  { AckCheckOp = { node = 3, cm_addr = 777, ack = { Ac = { x_recomputed = true, opening_ok = true, pop_u = true } } } },
+  { AckCheckOp = { node = 2, cm_addr = 777, ack = { Ac = { x_recomputed = true, opening_ok = true, pop_u = true } } } },
+  { AckCheckOp = { node = 2, cm_addr = 778, ack = { Ac = { x_recomputed = true, opening_ok = true, pop_u = true } } } },
+]

@@ -1,0 +1,24 @@
+# EARS IDs of split-envelope that no rule of the KRS definition stands for, so no
+# mutation can name them, and the check that covers each instead. The `mutations` gate
+# (scripts/check_mutations.py) fails on an ID that is neither here nor named by a mutation.
+
+[[gap]]
+id = "EN-002"
+covered_by = "Lean SplitEnvelope.C10_public_checks_blind and C21_run_blind: the public part is an input; the port reads only the fields the checks read (cases submit-contrib-blind, submit-accept)"
+
+[[gap]]
+id = "EN-015"
+covered_by = "exception in the oracle README: the wallet's 32 random bytes of auth_ref are outside the state"
+
+[[gap]]
+id = "EN-017"
+covered_by = "Lean SplitEnvelope.en017_labels_distinct (proved by decide for K <= 8 and every suite)"
+
+[[gap]]
+id = "EN-018"
+covered_by = "Lean SplitEnvelope.C21_run_blind; case submit-contrib-blind runs a CONTRIB envelope through the same public checks; the contribution layout is a wallet rule outside the operations"
+
+[[gap]]
+id = "EN-019"
+covered_by = "exception in the oracle README: the sealing of contributions (AEAD, KDF, ephemeral scalars) is outside the state"
+

@@ -1,0 +1,259 @@
+# Plausible misreadings of AU-010 and AU-013 to AU-016 (the committee node), and AU-026 (bf_root), ledgers 5 and 8.
+
+[[mutation]]
+id = "au010-midnight-ignored"
+expect = "kill"
+misunderstanding = "AU-010: a Midnight-first authorization is never in force"
+  [[mutation.edit]]
+  rule = "query"
+  find = "inForceMidnight ( allAuths ( Records:List ) , A:Int , H:Int ) orElseBool "
+  replace = ""
+
+[[mutation]]
+id = "au016-board-ignored"
+expect = "kill"
+misunderstanding = "AU-016: a board-first authorization is never in force"
+  [[mutation.edit]]
+  rule = "query"
+  find = " orElseBool anyAn ( Inforce:List , A:Int )"
+  replace = ""
+
+[[mutation]]
+id = "au010-strictly-after"
+expect = "kill"
+misunderstanding = "AU-010: in force only after the block at which the transaction is final"
+  [[mutation.edit]]
+  rule = "split_authorization--final_at_2"
+  find = "F:Int <=Int H:Int"
+  replace = "F:Int <Int H:Int"
+
+[[mutation]]
+id = "au010-at-inclusion"
+expect = "kill"
+misunderstanding = "AU-010: an authorization is in force at inclusion, without finality"
+  [[mutation.edit]]
+  rule = "split_authorization--final_at_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "au013-no-proof"
+expect = "kill"
+misunderstanding = "AU-013: the node does not verify the call's proof"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_checks_1"
+  find = "ProofOk:Bool andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "au013-root-not-final"
+expect = "kill"
+misunderstanding = "AU-013: the state root need not be a finalized Midnight root"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_checks_1"
+  find = "andThenBool RootFinal:Bool)"
+  replace = "andThenBool true)"
+
+[[mutation]]
+id = "au013-bound-strict"
+expect = "kill"
+misunderstanding = "AU-013: the root must be strictly younger than the bound minus one interval and F_M"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_checks_1"
+  find = "<=Int Bound:Int"
+  replace = "<Int Bound:Int"
+
+[[mutation]]
+id = "au013-no-fm"
+expect = "kill"
+misunderstanding = "AU-013: the age bound subtracts one checkpoint interval but not F_M"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_checks_1"
+  find = "((RootAge:Int +Int Interval:Int) +Int FM:Int)"
+  replace = "(RootAge:Int +Int Interval:Int)"
+
+[[mutation]]
+id = "au013-landed-unchecked"
+expect = "kill"
+misunderstanding = "AU-013: a call whose nf a landed bf_root holds passes"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_checks_1"
+  find = "(notBool Nf:Nf in Landed:List)"
+  replace = "true"
+
+[[mutation]]
+id = "au013-carry-unchecked"
+expect = "kill"
+misunderstanding = "AU-013: a reissue's carried VOID leaf needs no signatures at the node"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_checks_1"
+  find = "carrySigsOk ( Q:Int , CarrySigs:List )"
+  replace = "true"
+
+[[mutation]]
+id = "au013-more-than-q"
+expect = "kill"
+misunderstanding = "AU-013: a carried VOID leaf needs more than q signatures"
+  [[mutation.edit]]
+  rule = "split_authorization--carry_sigs_ok_2"
+  find = "Q:Int <=Int K:Int"
+  replace = "Q:Int <Int K:Int"
+
+[[mutation]]
+id = "au015-unchecked"
+expect = "kill"
+misunderstanding = "AU-015: a verified call whose nf is pending is accepted"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_call_refusals_2"
+  find = "Nf:Nf in Pending:List"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_call_refusals_3"
+  find = "Nf:Nf in Pending:List"
+  replace = "false"
+
+[[mutation]]
+id = "au014-not-pending"
+expect = "kill"
+misunderstanding = "AU-014: an accepted board-first call does not add its nf to the pending set"
+  [[mutation.edit]]
+  rule = "bf-call"
+  find = "ListItem(callNf ( C:BfCall )) Pending:List"
+  replace = "Pending:List"
+
+[[mutation]]
+id = "au016-not-in-force"
+expect = "kill"
+misunderstanding = "AU-016: an accepted board-first call is not in force"
+  [[mutation.edit]]
+  rule = "bf-call"
+  find = "ListItem(callAn ( C:BfCall )) Inforce:List"
+  replace = "Inforce:List"
+
+[[mutation]]
+id = "au013-refuse-accepts"
+expect = "kill"
+misunderstanding = "AU-013, AU-015: a refused board-first call is reported accepted"
+  [[mutation.edit]]
+  rule = "bf-call-refuse"
+  find = "ListItem(refused ( bfCallRefusals ( qOf ( Params:Params ) , Pending:List , Landed:List , C:BfCall ) ))"
+  replace = "ListItem(accepted)"
+
+[[mutation]]
+id = "au026-records-unchanged"
+expect = "kill"
+misunderstanding = "AU-026: a landed bf_root leaves the board-first records"
+  [[mutation.edit]]
+  rule = "bf-root"
+  find = "bfRecs ( Ts:List , Records:List )"
+  replace = "Records:List"
+
+[[mutation]]
+id = "au026-pending-kept"
+expect = "kill"
+misunderstanding = "AU-026: a landed bf_root leaves its nfs in the pending set"
+  [[mutation.edit]]
+  rule = "bf-root"
+  find = "dropNfs ( Pending:List , tupleNfs ( Ts:List ) )"
+  replace = "Pending:List"
+
+[[mutation]]
+id = "au026-not-landed"
+expect = "kill"
+misunderstanding = "AU-026, AU-013: a landed bf_root's nfs do not join the landed set"
+  [[mutation.edit]]
+  rule = "bf-root"
+  find = "Landed:List tupleNfs ( Ts:List )"
+  replace = "Landed:List"
+
+[[mutation]]
+id = "au026-refuse-ok"
+expect = "kill"
+misunderstanding = "AU-026: a refused bf_root is reported ok"
+  [[mutation.edit]]
+  rule = "bf-root-refuse"
+  find = "ListItem(refused ( bfRootRefusals ( Ts:List , Records:List ) ))"
+  replace = "ListItem(ok)"
+
+[[mutation]]
+id = "au026-stays-unspent"
+expect = "kill"
+misunderstanding = "AU-026: a board-first record named by a bf_root stays UNSPENT"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_in_1"
+  find = "rsPENDING"
+  replace = "rsUNSPENT"
+
+[[mutation]]
+id = "au026-direct"
+expect = "kill"
+misunderstanding = "AU-026, AU-002: a board-first authorization is marked direct"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_in_1"
+  find = ", .List , .List , false )) Auths:List"
+  replace = ", .List , .List , true )) Auths:List"
+
+[[mutation]]
+id = "au026-any-board-first"
+expect = "kill"
+misunderstanding = "AU-026: a bf_root moves every board-first record to PENDING, not only the one whose nf a tuple names"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_in_1"
+  find = "BoardFirst:Bool andThenBool (Nf:Nf ==K Tnf:Nf)"
+  replace = "BoardFirst:Bool"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_in_2"
+  find = "BoardFirst:Bool andThenBool (Nf:Nf ==K Tnf:Nf)"
+  replace = "BoardFirst:Bool"
+
+[[mutation]]
+id = "au026-unnamed-nf"
+expect = "kill"
+misunderstanding = "AU-026, ledger 8: a tuple may name an nf that no board-first record holds"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_root_no_rule_code_1"
+  find = "notBool allTuplesNamed ( Ts:List , Rs:List )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_root_no_rule_code_2"
+  find = "notBool allTuplesNamed ( Ts:List , Rs:List )"
+  replace = "false"
+
+[[mutation]]
+id = "au026-any-record-nf"
+expect = "kill"
+misunderstanding = "AU-026, ledger 8: a tuple may name the nf of a record that is not board-first"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_rec_has_nf_2"
+  find = "BoardFirst:Bool andThenBool "
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_authorization--bf_rec_has_nf_3"
+  find = "BoardFirst:Bool andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "au026-auth-exists"
+expect = "kill"
+misunderstanding = "AU-026, ledger 5: a tuple may name an existing auth"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_root_outside_code_1"
+  find = "anyTupleAuthExists ( Ts:List , allAuths ( Rs:List ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_root_outside_code_2"
+  find = "anyTupleAuthExists ( Ts:List , allAuths ( Rs:List ) )"
+  replace = "false"
+
+[[mutation]]
+id = "au026-auth-repeated"
+expect = "kill"
+misunderstanding = "AU-026, ledger 5: two tuples may name the same auth"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_root_outside_code_1"
+  find = "notBool nodupB ( tupleAuths ( Ts:List ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_root_outside_code_2"
+  find = "notBool nodupB ( tupleAuths ( Ts:List ) )"
+  replace = "false"

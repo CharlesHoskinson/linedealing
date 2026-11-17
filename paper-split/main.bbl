@@ -1,9 +1,24 @@
-\begin{thebibliography}{19}
+\begin{thebibliography}{35}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bellare et~al.(2022)Bellare, Crites, Komlo, Maller, Tessaro, and
+  Zhu]{BTA22}
+Mihir Bellare, Elizabeth Crites, Chelsea Komlo, Mary Maller, Stefano Tessaro,
+  and Chenzhi Zhu.
+\newblock Better than advertised security for non-interactive threshold
+  signatures.
+\newblock In \emph{CRYPTO 2022}, volume 13510 of \emph{LNCS}, pages 517--550,
+  2022.
+
+\bibitem[Bormet et~al.(2025)Bormet, Faust, Othman, and Qu]{BEATMEV}
+Jan Bormet, Sebastian Faust, Hussien Othman, and Ziyan Qu.
+\newblock {BEAT-MEV}: Epochless approach to batched threshold encryption for
+  {MEV} prevention.
+\newblock In \emph{34th USENIX Security Symposium}, pages 3457--3476, 2025.
 
 \bibitem[Canetti et~al.(2021)Canetti, Gennaro, Goldfeder, Makriyannis, and
   Peled]{CGGMP21}
@@ -19,6 +34,12 @@ Huaifeng Chen, Yuchang Zhang, and Yu~Cheng.
   zero on-chain footprint.
 \newblock Cryptology ePrint Archive, Paper 2026/2176, 2026.
 
+\bibitem[Chen(2025)]{Chen25}
+Yanbo Chen.
+\newblock Round-efficient adaptively secure threshold signatures with
+  rewinding.
+\newblock \emph{IACR Communications in Cryptology}, 2\penalty0 (2), 2025.
+
 \bibitem[Connolly et~al.(2024)Connolly, Komlo, Goldberg, and Wood]{RFC9591}
 Deirdre Connolly, Chelsea Komlo, Ian Goldberg, and Christopher~A. Wood.
 \newblock The flexible round-optimized {Schnorr} threshold ({FROST}) protocol
@@ -30,6 +51,19 @@ Elizabeth Crites, Chelsea Komlo, and Mary Maller.
 \newblock Fully adaptive {Schnorr} threshold signatures.
 \newblock Cryptology ePrint Archive, Paper 2023/445, 2023.
 
+\bibitem[Das et~al.(2023)Das, Xiang, Kokoris-Kogias, and Ren]{DXKR23}
+Sourav Das, Zhuolun Xiang, Lefteris Kokoris-Kogias, and Ling Ren.
+\newblock Practical asynchronous high-threshold distributed key generation and
+  distributed polynomial sampling.
+\newblock In \emph{32nd USENIX Security Symposium}, pages 5359--5376, 2023.
+
+\bibitem[Dauterman et~al.(2024)Dauterman, Lin, Corrigan-Gibbs, and
+  Mazi{\`e}res]{Larch}
+Emma Dauterman, Danny Lin, Henry Corrigan-Gibbs, and David Mazi{\`e}res.
+\newblock Accountable authentication with privacy protection: The {Larch}
+  system for universal login.
+\newblock arXiv:2305.19241v8, 2024.
+
 \bibitem[DFINITY ckBTC()]{ckBTC}
 DFINITY ckBTC.
 \newblock Internet computer documentation: {Bitcoin} integration and the
@@ -38,6 +72,11 @@ DFINITY ckBTC.
   \url{https://internetcomputer.org/docs/current/concepts/chain-fusion/bitcoin-architecture},
   2026.
 \newblock Accessed November 2026.
+
+\bibitem[Doerner et~al.(2023)Doerner, Kondi, Lee, and abhi shelat]{DKLs23}
+Jack Doerner, Yashvanth Kondi, Eysa Lee, and abhi shelat.
+\newblock Threshold {ECDSA} in three rounds.
+\newblock Cryptology ePrint Archive, Paper 2023/765, 2023.
 
 \bibitem[Friedman et~al.(2024)Friedman, Marmor, Mutzari, Sadika, Scaly,
   Spiizer, and Yanai]{TwoPCMPC}
@@ -54,10 +93,22 @@ Offir Friedman, Avichai Marmor, Dolev Mutzari, Yehonatan~C. Scaly, and Yuval
   networks.
 \newblock Cryptology ePrint Archive, Paper 2025/297, 2025.
 
+\bibitem[Fuchsbauer and Wolf(2024)]{FW24}
+Georg Fuchsbauer and Mathias Wolf.
+\newblock Concurrently secure blind {Schnorr} signatures.
+\newblock In \emph{EUROCRYPT 2024}, volume 14652 of \emph{LNCS}, pages
+  124--160, 2024.
+
 \bibitem[Gennaro and Goldfeder(2020)]{GG20}
 Rosario Gennaro and Steven Goldfeder.
 \newblock One round threshold {ECDSA} with identifiable abort.
 \newblock Cryptology ePrint Archive, Paper 2020/540, 2020.
+
+\bibitem[Gerhart et~al.(2026)Gerhart, Kohen, Posner, and Furszyfer]{Iceberg}
+Paul Gerhart, Nadav Kohen, Jesse Posner, and Matias Furszyfer.
+\newblock Enabling threshold custody for the {Lightning Network} with nested
+  threshold multi-signatures.
+\newblock arXiv:2608.20705, 2026.
 
 \bibitem[Groth(2021)]{Groth21}
 Jens Groth.
@@ -76,6 +127,11 @@ Jens Groth and Victor Shoup.
 \newblock Design and analysis of a distributed {ECDSA} signing service.
 \newblock Cryptology ePrint Archive, Paper 2022/506, 2022.
 \newblock Version of 16 February 2023.
+
+\bibitem[halseth(2025)]{BlindVault}
+halseth.
+\newblock Building a vault using blinded co-signers.
+\newblock Delving Bitcoin, topic 2141, 2025.
 
 \bibitem[Hoskinson(2026)]{LD}
 Charles Hoskinson.
@@ -106,6 +162,45 @@ Susan~K. Langford.
 \newblock In \emph{CRYPTO '95}, volume 963 of \emph{LNCS}, pages 397--409.
   Springer, 1995.
 
+\bibitem[Lyu et~al.(2025)Lyu, Li, Zhou, and Deng]{LLZD25}
+Yingjie Lyu, Zengpeng Li, Hong-Sheng Zhou, and Xudong Deng.
+\newblock Threshold {ECDSA} in two rounds.
+\newblock In \emph{ACM CCS 2025}, 2025.
+\newblock Cryptology ePrint Archive, Paper 2025/1696.
+
+\bibitem[Mercury()]{MercuryLayer}
+Mercury.
+\newblock Mercury layer documentation: Main protocol.
+\newblock \url{https://docs.mercurylayer.com/}, 2026.
+\newblock Accessed November 2026.
+
+\bibitem[Nof and Parker(2026)]{TroutPP}
+Ariel Nof and Luke Parker.
+\newblock {Trout++}: Robust asynchronous two-round {ECDSA} for arbitrary
+  thresholds.
+\newblock Cryptology ePrint Archive, Paper 2026/1455, 2026.
+
+\bibitem[Sigbash()]{Sigbash}
+Sigbash.
+\newblock Sigbash documentation: Signing and transaction authorization.
+\newblock \url{https://www.sigbash.com/}, 2026.
+\newblock Accessed November 2026.
+
+\bibitem[Spark()]{Spark}
+Spark.
+\newblock Spark documentation and protocol definitions: {FROST} signing,
+  sub-user groups and delegation grants.
+\newblock \url{https://docs.spark.money/learn}, 2026.
+\newblock Accessed November 2026.
+
+\bibitem[Tang et~al.(2026)Tang, Qiu, Jiang, Xue, Hao, Yang, and Deng]{ARES}
+Guofeng Tang, Tian Qiu, Bowen Jiang, Haiyang Xue, Meng Hao, Guomin Yang, and
+  Robert~H. Deng.
+\newblock Online-friendly robust threshold {ECDSA} with constant amortized
+  communication.
+\newblock Author-hosted manuscript, 2026.
+\newblock An earlier version of Cryptology ePrint Archive, Paper 2026/130.
+
 \bibitem[THORChain()]{THORChain}
 THORChain.
 \newblock {THORChain} documentation: Bifrost, chain clients and vault
@@ -123,5 +218,11 @@ Threshold tBTC.
 Peter Volnov, Georgii Kuksa, and Andrey Zhevlakov.
 \newblock {HOT} protocol.
 \newblock arXiv:2512.02287, 2025.
+
+\bibitem[Yurek et~al.(2023)Yurek, Xiang, Xia, and Miller]{YXXM23}
+Thomas Yurek, Zhuolun Xiang, Yu~Xia, and Andrew Miller.
+\newblock Long live the {Honey Badger}: Robust asynchronous {DPSS} and its
+  applications.
+\newblock In \emph{32nd USENIX Security Symposium}, 2023.
 
 \end{thebibliography}

@@ -1,0 +1,8 @@
+# SH-016: keep slots whose check passes, complain about the others
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { Session = { slots = [{ Cs = { slot = 1, check_ok = true } }, { Cs = { slot = 2, check_ok = false } }, { Cs = { slot = 3, check_ok = true } }] } },
+  { Session = { slots = [] } },
+  { Session = { slots = [{ Cs = { slot = 4, check_ok = false } }] } },
+]

@@ -1,0 +1,7 @@
+# RQ-004: an event before any post is refused with unknown_request.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Complaint = { eid = 1 } },
+]

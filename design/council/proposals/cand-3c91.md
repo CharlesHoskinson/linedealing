@@ -395,14 +395,14 @@ What would prove the design wrong.
 
 Read in full:
 
-- **BRIEF.md**: read in full (`design/BRIEF.md`).
-- **REPORT.md**: read in full (`research/REPORT.md`).
-- **Lane file `oneshot-bootstrap-primitives.md`**: read in full (`research/lanes/oneshot-bootstrap-primitives.md`).
+- **BRIEF.md**: read in full (`/home/hoskinson/Projects/mpcexperiments/design/BRIEF.md`).
+- **REPORT.md**: read in full (`/home/hoskinson/Projects/mpcexperiments/research/REPORT.md`).
+- **Lane file `oneshot-bootstrap-primitives.md`**: read in full (`/home/hoskinson/Projects/mpcexperiments/research/lanes/oneshot-bootstrap-primitives.md`).
 
 Not read in full. Under the brief's rule each of these counts as "from memory, not checked", and I list what I did read from the local copy:
 
-- **[GS22]** J. Groth, V. Shoup. *On the security of ECDSA with additive key derivation and presignatures.* Version of 27 April 2022. From memory, not checked, except these passages read from `research/sources/groth-shoup-2021-1330.txt`: abstract, section 1.1 (contributions, both attacks, mitigations, Table 1 and its legend), the opening of section 7, section 7.3 (Definition 7, Theorem 3, its proof and notes), the opening of section 8 and section 8.3 (Theorem 5, its proof and notes). Not read: the EC generic group model, the game definition, Theorem 1 and its proof, sections 9 onward and the appendices. Every use of [GS22] above is limited to the passages read.
-- **Chen, Zhang, Cheng.** *Budgeted Threshold Signatures.* ePrint 2026/2176. From memory, not checked, except the abstract and introduction read from `research/sources/eprint/2026-2176.pdf`. Not used for any claim.
+- **[GS22]** J. Groth, V. Shoup. *On the security of ECDSA with additive key derivation and presignatures.* Version of 27 April 2022. From memory, not checked, except these passages read from `/home/hoskinson/Projects/mpcexperiments/research/sources/groth-shoup-2021-1330.txt`: abstract, section 1.1 (contributions, both attacks, mitigations, Table 1 and its legend), the opening of section 7, section 7.3 (Definition 7, Theorem 3, its proof and notes), the opening of section 8 and section 8.3 (Theorem 5, its proof and notes). Not read: the EC generic group model, the game definition, Theorem 1 and its proof, sections 9 onward and the appendices. Every use of [GS22] above is limited to the passages read.
+- **Chen, Zhang, Cheng.** *Budgeted Threshold Signatures.* ePrint 2026/2176. From memory, not checked, except the abstract and introduction read from `/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2026-2176.pdf`. Not used for any claim.
 - **Other lane files** (`committee-lifecycle-frontier.md` Q3, `owner-authorization.md` Q2 to Q5, `deployed-systems.md` closing sections, `owner-share-and-key-import.md` sections 7 and 8): those passages read, the rest not read. The `terra-*` lane directories were not read.
 - **Groth-Shoup signing service paper, cgVSS, Groth NI-DKG, RFC 9591, Ika documents and source, Internet Computer IDKG spec**: from memory, not checked. Every statement about them above is taken from REPORT.md and says so.
 - **Other ePrint PDFs in `sources/eprint/`** (including 2026/814, 2025/1475, 2024/253, 2025/297, 2023/451, 2025/1924): not opened. Not cited.

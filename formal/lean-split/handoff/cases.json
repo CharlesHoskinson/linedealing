@@ -1,0 +1,4960 @@
+[
+ {
+  "name": "HO-012 to HO-064, HO-032: rotation to activation",
+  "match": "subset",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "handoff",
+   "inputs": {
+    "params": {
+     "delta_rot": 100,
+     "delta_grace": 50,
+     "delta_sweep": 5,
+     "delta_cw": 3
+    },
+    "genesis": {
+     "roster": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "n": 9,
+     "f": 2,
+     "q": 6,
+     "t": 7,
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ]
+    },
+    "ops": [
+     {
+      "op": "midnight_tick",
+      "actor": "time",
+      "m": 20
+     },
+     {
+      "op": "rotate",
+      "actor": "governance",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      }
+     },
+     {
+      "op": "admit_boot",
+      "actor": "seat",
+      "seat": 10,
+      "with_rotate": true
+     },
+     {
+      "op": "eks",
+      "actor": "target"
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 1,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 2,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 3,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 4,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 5,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 6,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 7,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 8,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 9,
+      "ok": true
+     },
+     {
+      "op": "complaint",
+      "actor": "target",
+      "dealer": 3
+     },
+     {
+      "op": "midnight_tick",
+      "actor": "time",
+      "m": 30
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 1,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 2,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 3,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 4,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 5,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 6,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 10,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "arm",
+      "actor": "board",
+      "sigs": 7
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "activate",
+      "actor": "contract",
+      "gov": true,
+      "sigs": 7,
+      "heartbeat": true,
+      "boots": true,
+      "disjoint": true
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     }
+    ]
+   }
+  },
+  "expect": {
+   "end": "final",
+   "cells": {
+    "obs": [
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     }
+    ],
+    "state": {
+     "cur": 1,
+     "landed": 1,
+     "pos": 13,
+     "mh": 30,
+     "handovers": [
+      [
+       12,
+       1
+      ]
+     ],
+     "pending": [
+      10
+     ],
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "ho": {
+      "phase": "HANDED_OVER",
+      "H": 12,
+      "m_r": 20,
+      "m_d": 120,
+      "disq": [
+       3
+      ]
+     }
+    }
+   }
+  }
+ },
+ {
+  "name": "refusal codes of ROTATE, boot, carry, entry, header, checkpoint, activation",
+  "match": "subset",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "handoff",
+   "inputs": {
+    "params": {
+     "delta_rot": 100,
+     "delta_grace": 50,
+     "delta_sweep": 5,
+     "delta_cw": 3
+    },
+    "genesis": {
+     "roster": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "n": 9,
+     "f": 2,
+     "q": 6,
+     "t": 7,
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ]
+    },
+    "ops": [
+     {
+      "op": "rotate",
+      "actor": "governance",
+      "rotate": {
+       "target": 2,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      }
+     },
+     {
+      "op": "rotate",
+      "actor": "governance",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 6,
+       "emergency": false,
+       "sigs": 6
+      }
+     },
+     {
+      "op": "rotate",
+      "actor": "governance",
+      "rotate": {
+       "target": 1,
+       "source": 7,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      }
+     },
+     {
+      "op": "rotate",
+      "actor": "governance",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 5
+      }
+     },
+     {
+      "op": "rotate",
+      "actor": "governance",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      }
+     },
+     {
+      "op": "rotate",
+      "actor": "user",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      }
+     },
+     {
+      "op": "user_ack",
+      "actor": "user",
+      "u": 1
+     },
+     {
+      "op": "submit_checkpoint",
+      "actor": "contract",
+      "e": 0,
+      "sigs": 6
+     },
+     {
+      "op": "rotate",
+      "actor": "governance",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      }
+     },
+     {
+      "op": "rotate",
+      "actor": "governance",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      }
+     },
+     {
+      "op": "admit_boot",
+      "actor": "seat",
+      "seat": 12,
+      "with_rotate": true
+     },
+     {
+      "op": "eks",
+      "actor": "target"
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 3,
+      "ok": false
+     },
+     {
+      "op": "order",
+      "actor": "board",
+      "rid": 41,
+      "bind": 0,
+      "slots": [
+       [
+        10,
+        1
+       ]
+      ]
+     },
+     {
+      "op": "entry",
+      "actor": "seat",
+      "rid": 41,
+      "e": 1
+     },
+     {
+      "op": "header",
+      "actor": "seat",
+      "rid": 41,
+      "pool_epoch": 1
+     },
+     {
+      "op": "midnight_tick",
+      "actor": "time",
+      "m": 121
+     },
+     {
+      "op": "activate",
+      "actor": "contract",
+      "gov": true,
+      "sigs": 7,
+      "heartbeat": true,
+      "boots": true,
+      "disjoint": true
+     },
+     {
+      "op": "cert",
+      "actor": "contract",
+      "e": 5
+     }
+    ]
+   }
+  },
+  "expect": {
+   "end": "final",
+   "cells": {
+    "obs": [
+     {
+      "refused": [
+       "bad_epoch"
+      ]
+     },
+     {
+      "refused": [
+       "bad_params"
+      ]
+     },
+     {
+      "refused": [
+       "bad_source"
+      ]
+     },
+     {
+      "refused": [
+       "rotate_unauthorized"
+      ]
+     },
+     {
+      "refused": [
+       "too_many_seats"
+      ]
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     },
+     {
+      "refused": [
+       "too_few_signers"
+      ]
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "rotation_open"
+      ]
+     },
+     {
+      "refused": [
+       "seat_unknown"
+      ]
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "carry_mismatch"
+      ]
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "not_owner"
+      ]
+     },
+     {
+      "refused": [
+       "pool_epoch_mismatch"
+      ]
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "activation_late"
+      ]
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     }
+    ],
+    "state": {
+     "cur": 0,
+     "ho": {
+      "phase": "ABORTED"
+     }
+    }
+   }
+  }
+ },
+ {
+  "name": "HO-046 to HO-051, HO-011, HO-012, HO-045, HO-053: activation checks, queue and grace end",
+  "match": "subset",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "handoff",
+   "inputs": {
+    "params": {
+     "delta_rot": 100,
+     "delta_grace": 50,
+     "delta_sweep": 5,
+     "delta_cw": 3
+    },
+    "genesis": {
+     "roster": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "n": 9,
+     "f": 2,
+     "q": 6,
+     "t": 7,
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ]
+    },
+    "ops": [
+     {
+      "op": "midnight_tick",
+      "actor": "time",
+      "m": 20
+     },
+     {
+      "op": "rotate",
+      "actor": "governance",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      }
+     },
+     {
+      "op": "admit_boot",
+      "actor": "seat",
+      "seat": 10,
+      "with_rotate": true
+     },
+     {
+      "op": "eks",
+      "actor": "target"
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 1,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 2,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 3,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 4,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 5,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 6,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 7,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 8,
+      "ok": true
+     },
+     {
+      "op": "carry",
+      "actor": "source",
+      "dealer": 9,
+      "ok": true
+     },
+     {
+      "op": "complaint",
+      "actor": "target",
+      "dealer": 3
+     },
+     {
+      "op": "midnight_tick",
+      "actor": "time",
+      "m": 30
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 1,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 2,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 3,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 4,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 5,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 6,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "ready",
+      "actor": "target",
+      "seat": 10,
+      "q": [
+       1,
+       2,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "h_s": 50
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "arm",
+      "actor": "board",
+      "sigs": 7
+     },
+     {
+      "op": "activate",
+      "actor": "contract",
+      "gov": true,
+      "sigs": 6,
+      "heartbeat": true,
+      "boots": true,
+      "disjoint": true
+     },
+     {
+      "op": "activate",
+      "actor": "contract",
+      "gov": true,
+      "sigs": 7,
+      "heartbeat": true,
+      "boots": true,
+      "disjoint": false
+     },
+     {
+      "op": "sign_checkpoint",
+      "actor": "seat",
+      "e": 0,
+      "board_height": 13
+     },
+     {
+      "op": "block",
+      "actor": "board"
+     },
+     {
+      "op": "activate",
+      "actor": "contract",
+      "gov": true,
+      "sigs": 7,
+      "heartbeat": true,
+      "boots": true,
+      "disjoint": true
+     },
+     {
+      "op": "submit_checkpoint",
+      "actor": "contract",
+      "e": 0,
+      "sigs": 9
+     },
+     {
+      "op": "rotate",
+      "actor": "governance",
+      "rotate": {
+       "target": 2,
+       "source": 1,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      }
+     },
+     {
+      "op": "midnight_tick",
+      "actor": "time",
+      "m": 80
+     },
+     {
+      "op": "cert",
+      "actor": "contract",
+      "e": 0
+     },
+     {
+      "op": "envelope",
+      "actor": "seat",
+      "e": 0
+     }
+    ]
+   }
+  },
+  "expect": {
+   "end": "final",
+   "cells": {
+    "obs": [
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "bad_activation"
+      ]
+     },
+     {
+      "refused": [
+       "operator_not_disjoint"
+      ]
+     },
+     {
+      "refused": [
+       "epoch_superseded"
+      ]
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "epoch_superseded"
+      ]
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "epoch_closed"
+      ]
+     },
+     {
+      "refused": [
+       "epoch_closed"
+      ]
+     }
+    ],
+    "state": {
+     "cur": 1,
+     "ho": {
+      "phase": "ROTATING",
+      "m_r": 80,
+      "m_d": 180
+     }
+    }
+   }
+  }
+ },
+ {
+  "name": "genesis outside the domain",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "handoff",
+   "inputs": {
+    "params": {
+     "delta_rot": 100,
+     "delta_grace": 50,
+     "delta_sweep": 5,
+     "delta_cw": 3
+    },
+    "genesis": {
+     "roster": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "n": 6,
+     "f": 2,
+     "q": 6,
+     "t": 7,
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ]
+    },
+    "ops": []
+   }
+  },
+  "expect": {
+   "end": "could-not-apply",
+   "reason": "outside-capability"
+  }
+ },
+ {
+  "name": "exponent",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"handoff\", \"inputs\": {\"params\": {\"delta_rot\": 100, \"delta_grace\": 50, \"delta_sweep\": 5, \"delta_cw\": 3}, \"genesis\": {\"roster\": [1, 2, 3, 4, 5, 6, 7, 8, 9], \"n\": 9, \"f\": 2, \"q\": 6, \"t\": 7, \"xf\": {\"secp\": 1001, \"ed\": 2002}, \"users\": [{\"id\": 1, \"shard\": 77, \"tweak\": 3, \"pool\": 4, \"sealed\": 5, \"slot_root\": 6, \"asset\": 7}], \"addrs\": [{\"id\": 10, \"curve\": \"secp\", \"user\": 1, \"shard\": 77, \"ecdsa\": true, \"slots\": [0, 1]}]}, \"ops\": [{\"op\": \"midnight_tick\", \"actor\": \"time\", \"m\": 2e1}]}}",
+  "rc": 2,
+  "expect": null
+ },
+ {
+  "name": "fraction",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"handoff\", \"inputs\": {\"params\": {\"delta_rot\": 100, \"delta_grace\": 50, \"delta_sweep\": 5, \"delta_cw\": 3}, \"genesis\": {\"roster\": [1, 2, 3, 4, 5, 6, 7, 8, 9], \"n\": 9, \"f\": 2, \"q\": 6, \"t\": 7, \"xf\": {\"secp\": 1001, \"ed\": 2002}, \"users\": [{\"id\": 1, \"shard\": 77, \"tweak\": 3, \"pool\": 4, \"sealed\": 5, \"slot_root\": 6, \"asset\": 7}], \"addrs\": [{\"id\": 10, \"curve\": \"secp\", \"user\": 1, \"shard\": 77, \"ecdsa\": true, \"slots\": [0, 1]}]}, \"ops\": [{\"op\": \"midnight_tick\", \"actor\": \"time\", \"m\": 20.0}]}}",
+  "rc": 2,
+  "expect": null
+ },
+ {
+  "name": "leading zero",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"handoff\", \"inputs\": {\"params\": {\"delta_rot\": 100, \"delta_grace\": 50, \"delta_sweep\": 5, \"delta_cw\": 3}, \"genesis\": {\"roster\": [1, 2, 3, 4, 5, 6, 7, 8, 9], \"n\": 9, \"f\": 2, \"q\": 6, \"t\": 7, \"xf\": {\"secp\": 1001, \"ed\": 2002}, \"users\": [{\"id\": 1, \"shard\": 77, \"tweak\": 3, \"pool\": 4, \"sealed\": 5, \"slot_root\": 6, \"asset\": 7}], \"addrs\": [{\"id\": 10, \"curve\": \"secp\", \"user\": 1, \"shard\": 77, \"ecdsa\": true, \"slots\": [0, 1]}]}, \"ops\": [{\"op\": \"midnight_tick\", \"actor\": \"time\", \"m\": \"020\"}]}}",
+  "rc": 2,
+  "expect": null
+ },
+ {
+  "name": "underscore",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"handoff\", \"inputs\": {\"params\": {\"delta_rot\": 100, \"delta_grace\": 50, \"delta_sweep\": 5, \"delta_cw\": 3}, \"genesis\": {\"roster\": [1, 2, 3, 4, 5, 6, 7, 8, 9], \"n\": 9, \"f\": 2, \"q\": 6, \"t\": 7, \"xf\": {\"secp\": 1001, \"ed\": 2002}, \"users\": [{\"id\": 1, \"shard\": 77, \"tweak\": 3, \"pool\": 4, \"sealed\": 5, \"slot_root\": 6, \"asset\": 7}], \"addrs\": [{\"id\": 10, \"curve\": \"secp\", \"user\": 1, \"shard\": 77, \"ecdsa\": true, \"slots\": [0, 1]}]}, \"ops\": [{\"op\": \"midnight_tick\", \"actor\": \"time\", \"m\": \"2_0\"}]}}",
+  "rc": 2,
+  "expect": null
+ },
+ {
+  "name": "extra key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"handoff\", \"inputs\": {\"params\": {\"delta_rot\": 100, \"delta_grace\": 50, \"delta_sweep\": 5, \"delta_cw\": 3, \"extra\": 1}, \"genesis\": {\"roster\": [1, 2, 3, 4, 5, 6, 7, 8, 9], \"n\": 9, \"f\": 2, \"q\": 6, \"t\": 7, \"xf\": {\"secp\": 1001, \"ed\": 2002}, \"users\": [{\"id\": 1, \"shard\": 77, \"tweak\": 3, \"pool\": 4, \"sealed\": 5, \"slot_root\": 6, \"asset\": 7}], \"addrs\": [{\"id\": 10, \"curve\": \"secp\", \"user\": 1, \"shard\": 77, \"ecdsa\": true, \"slots\": [0, 1]}]}, \"ops\": [{\"op\": \"midnight_tick\", \"actor\": \"time\", \"m\": 20}]}}",
+  "rc": 2,
+  "expect": null
+ },
+ {
+  "name": "missing key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"handoff\", \"inputs\": {\"params\": {\"delta_rot\": 100, \"delta_grace\": 50, \"delta_sweep\": 5}, \"genesis\": {\"roster\": [1, 2, 3, 4, 5, 6, 7, 8, 9], \"n\": 9, \"f\": 2, \"q\": 6, \"t\": 7, \"xf\": {\"secp\": 1001, \"ed\": 2002}, \"users\": [{\"id\": 1, \"shard\": 77, \"tweak\": 3, \"pool\": 4, \"sealed\": 5, \"slot_root\": 6, \"asset\": 7}], \"addrs\": [{\"id\": 10, \"curve\": \"secp\", \"user\": 1, \"shard\": 77, \"ecdsa\": true, \"slots\": [0, 1]}]}, \"ops\": [{\"op\": \"midnight_tick\", \"actor\": \"time\", \"m\": 20}]}}",
+  "rc": 2,
+  "expect": null
+ },
+ {
+  "name": "duplicate key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"handoff\", \"inputs\": {\"params\": {\"delta_rot\": 100, \"delta_grace\": 50, \"delta_sweep\": 5, \"delta_cw\": 3, \"delta_cw\": 3}, \"genesis\": {\"roster\": [1, 2, 3, 4, 5, 6, 7, 8, 9], \"n\": 9, \"f\": 2, \"q\": 6, \"t\": 7, \"xf\": {\"secp\": 1001, \"ed\": 2002}, \"users\": [{\"id\": 1, \"shard\": 77, \"tweak\": 3, \"pool\": 4, \"sealed\": 5, \"slot_root\": 6, \"asset\": 7}], \"addrs\": [{\"id\": 10, \"curve\": \"secp\", \"user\": 1, \"shard\": 77, \"ecdsa\": true, \"slots\": [0, 1]}]}, \"ops\": [{\"op\": \"midnight_tick\", \"actor\": \"time\", \"m\": 20}]}}",
+  "rc": 2,
+  "expect": null
+ },
+ {
+  "name": "unknown op",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"handoff\", \"inputs\": {\"params\": {\"delta_rot\": 100, \"delta_grace\": 50, \"delta_sweep\": 5, \"delta_cw\": 3}, \"genesis\": {\"roster\": [1, 2, 3, 4, 5, 6, 7, 8, 9], \"n\": 9, \"f\": 2, \"q\": 6, \"t\": 7, \"xf\": {\"secp\": 1001, \"ed\": 2002}, \"users\": [{\"id\": 1, \"shard\": 77, \"tweak\": 3, \"pool\": 4, \"sealed\": 5, \"slot_root\": 6, \"asset\": 7}], \"addrs\": [{\"id\": 10, \"curve\": \"secp\", \"user\": 1, \"shard\": 77, \"ecdsa\": true, \"slots\": [0, 1]}]}, \"ops\": [{\"op\": \"nope\", \"actor\": \"time\", \"m\": 20}]}}",
+  "rc": 2,
+  "expect": null
+ },
+ {
+  "name": "unknown actor",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"handoff\", \"inputs\": {\"params\": {\"delta_rot\": 100, \"delta_grace\": 50, \"delta_sweep\": 5, \"delta_cw\": 3}, \"genesis\": {\"roster\": [1, 2, 3, 4, 5, 6, 7, 8, 9], \"n\": 9, \"f\": 2, \"q\": 6, \"t\": 7, \"xf\": {\"secp\": 1001, \"ed\": 2002}, \"users\": [{\"id\": 1, \"shard\": 77, \"tweak\": 3, \"pool\": 4, \"sealed\": 5, \"slot_root\": 6, \"asset\": 7}], \"addrs\": [{\"id\": 10, \"curve\": \"secp\", \"user\": 1, \"shard\": 77, \"ecdsa\": true, \"slots\": [0, 1]}]}, \"ops\": [{\"op\": \"midnight_tick\", \"actor\": \"owner\", \"m\": 20}]}}",
+  "rc": 2,
+  "expect": null
+ },
+ {
+  "name": "wrong type",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"handoff\", \"inputs\": {\"params\": {\"delta_rot\": 100, \"delta_grace\": 50, \"delta_sweep\": 5, \"delta_cw\": 3}, \"genesis\": {\"roster\": [1, 2, 3, 4, 5, 6, 7, 8, 9], \"n\": 9, \"f\": 2, \"q\": 6, \"t\": 7, \"xf\": {\"secp\": 1001, \"ed\": 2002}, \"users\": [{\"id\": 1, \"shard\": 77, \"tweak\": 3, \"pool\": 4, \"sealed\": 5, \"slot_root\": 6, \"asset\": 7}], \"addrs\": [{\"id\": 10, \"curve\": \"secp\", \"user\": 1, \"shard\": 77, \"ecdsa\": true, \"slots\": [0, 1]}]}, \"ops\": [{\"op\": \"midnight_tick\", \"actor\": \"time\", \"m\": true}]}}",
+  "rc": 2,
+  "expect": null
+ },
+ {
+  "name": "protocol 2",
+  "input": "{\"protocol\": \"kink-implementation/2\", \"program\": \"handoff\", \"inputs\": {\"params\": {\"delta_rot\": 100, \"delta_grace\": 50, \"delta_sweep\": 5, \"delta_cw\": 3}, \"genesis\": {\"roster\": [1, 2, 3, 4, 5, 6, 7, 8, 9], \"n\": 9, \"f\": 2, \"q\": 6, \"t\": 7, \"xf\": {\"secp\": 1001, \"ed\": 2002}, \"users\": [{\"id\": 1, \"shard\": 77, \"tweak\": 3, \"pool\": 4, \"sealed\": 5, \"slot_root\": 6, \"asset\": 7}], \"addrs\": [{\"id\": 10, \"curve\": \"secp\", \"user\": 1, \"shard\": 77, \"ecdsa\": true, \"slots\": [0, 1]}]}, \"ops\": [{\"op\": \"midnight_tick\", \"actor\": \"time\", \"m\": 20}]}}",
+  "rc": 2,
+  "expect": null
+ },
+ {
+  "name": "string integer accepted",
+  "match": "subset",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"handoff\", \"inputs\": {\"params\": {\"delta_rot\": 100, \"delta_grace\": 50, \"delta_sweep\": 5, \"delta_cw\": 3}, \"genesis\": {\"roster\": [1, 2, 3, 4, 5, 6, 7, 8, 9], \"n\": 9, \"f\": 2, \"q\": 6, \"t\": 7, \"xf\": {\"secp\": 1001, \"ed\": 2002}, \"users\": [{\"id\": 1, \"shard\": 77, \"tweak\": 3, \"pool\": 4, \"sealed\": 5, \"slot_root\": 6, \"asset\": 7}], \"addrs\": [{\"id\": 10, \"curve\": \"secp\", \"user\": 1, \"shard\": 77, \"ecdsa\": true, \"slots\": [0, 1]}]}, \"ops\": [{\"op\": \"midnight_tick\", \"actor\": \"time\", \"m\": \"20\"}]}}",
+  "expect": {
+   "end": "final",
+   "cells": {
+    "obs": [
+     {
+      "ok": true
+     }
+    ],
+    "state": {
+     "mh": 20
+    }
+   }
+  }
+ },
+ {
+  "name": "step: every field kind round trips; HO-043, HO-044 sweep; refusals",
+  "args": [
+   "--step"
+  ],
+  "input": [
+   {
+    "state": {
+     "params": {
+      "delta_rot": 100,
+      "delta_grace": 50,
+      "delta_sweep": 5,
+      "delta_cw": 3
+     },
+     "mh": 75,
+     "pos": 13,
+     "cur": 1,
+     "epochs": [
+      {
+       "id": 1,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "current",
+       "grace_end": 0,
+       "swept": false
+      },
+      {
+       "id": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "grace",
+       "grace_end": 80,
+       "swept": false
+      }
+     ],
+     "sharings": [
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 1
+       },
+       "const": 0,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      },
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 0
+       },
+       "const": 0,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "burned"
+       }
+      }
+     ],
+     "ho": {
+      "phase": "HANDED_OVER",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      },
+      "src_roster": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9
+      ],
+      "t_q": 7,
+      "m_r": 20,
+      "m_d": 120,
+      "eks": true,
+      "dealt": [
+       [
+        1,
+        20
+       ],
+       [
+        2,
+        20
+       ]
+      ],
+      "disq": [
+       3
+      ],
+      "readys": [
+       {
+        "seat": 1,
+        "q": [
+         1,
+         2,
+         4,
+         5,
+         6,
+         7,
+         8
+        ],
+        "h_s": 50
+       }
+      ],
+      "last_batch": 20,
+      "H": 12
+     },
+     "requests": [
+      {
+       "id": 41,
+       "bind": 0,
+       "sweep": null,
+       "live": true,
+       "slots": [
+        [
+         10,
+         1
+        ]
+       ]
+      },
+      {
+       "id": 42,
+       "bind": 0,
+       "sweep": 9,
+       "live": false,
+       "slots": []
+      }
+     ],
+     "board": [
+      {
+       "slot": [
+        10,
+        1
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      }
+     ],
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ],
+     "handovers": [
+      [
+       12,
+       1
+      ]
+     ],
+     "landed": 1,
+     "restart": false,
+     "pending": [
+      10
+     ]
+    },
+    "op": {
+     "op": "block",
+     "actor": "board"
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "delta_rot": 100,
+      "delta_grace": 50,
+      "delta_sweep": 5,
+      "delta_cw": 3
+     },
+     "mh": 75,
+     "pos": 13,
+     "cur": 1,
+     "epochs": [
+      {
+       "id": 1,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "current",
+       "grace_end": 0,
+       "swept": false
+      },
+      {
+       "id": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "grace",
+       "grace_end": 80,
+       "swept": false
+      }
+     ],
+     "sharings": [
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 1
+       },
+       "const": 0,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      },
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 0
+       },
+       "const": 0,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "burned"
+       }
+      }
+     ],
+     "ho": {
+      "phase": "HANDED_OVER",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      },
+      "src_roster": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9
+      ],
+      "t_q": 7,
+      "m_r": 20,
+      "m_d": 120,
+      "eks": true,
+      "dealt": [
+       [
+        1,
+        20
+       ],
+       [
+        2,
+        20
+       ]
+      ],
+      "disq": [
+       3
+      ],
+      "readys": [
+       {
+        "seat": 1,
+        "q": [
+         1,
+         2,
+         4,
+         5,
+         6,
+         7,
+         8
+        ],
+        "h_s": 50
+       }
+      ],
+      "last_batch": 20,
+      "H": 12
+     },
+     "requests": [
+      {
+       "id": 41,
+       "bind": 0,
+       "sweep": null,
+       "live": true,
+       "slots": [
+        [
+         10,
+         1
+        ]
+       ]
+      },
+      {
+       "id": 42,
+       "bind": 0,
+       "sweep": 9,
+       "live": false,
+       "slots": []
+      }
+     ],
+     "board": [
+      {
+       "slot": [
+        10,
+        1
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      }
+     ],
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ],
+     "handovers": [
+      [
+       12,
+       1
+      ]
+     ],
+     "landed": 1,
+     "restart": false,
+     "pending": [
+      10
+     ]
+    },
+    "op": {
+     "op": "sweep_ready",
+     "actor": "board",
+     "e": 0
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "delta_rot": 100,
+      "delta_grace": 50,
+      "delta_sweep": 5,
+      "delta_cw": 3
+     },
+     "mh": 75,
+     "pos": 13,
+     "cur": 1,
+     "epochs": [
+      {
+       "id": 1,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "current",
+       "grace_end": 0,
+       "swept": false
+      },
+      {
+       "id": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "grace",
+       "grace_end": 80,
+       "swept": false
+      }
+     ],
+     "sharings": [
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 1
+       },
+       "const": 0,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      },
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 0
+       },
+       "const": 0,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "burned"
+       }
+      }
+     ],
+     "ho": {
+      "phase": "HANDED_OVER",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      },
+      "src_roster": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9
+      ],
+      "t_q": 7,
+      "m_r": 20,
+      "m_d": 120,
+      "eks": true,
+      "dealt": [
+       [
+        1,
+        20
+       ],
+       [
+        2,
+        20
+       ]
+      ],
+      "disq": [
+       3
+      ],
+      "readys": [
+       {
+        "seat": 1,
+        "q": [
+         1,
+         2,
+         4,
+         5,
+         6,
+         7,
+         8
+        ],
+        "h_s": 50
+       }
+      ],
+      "last_batch": 20,
+      "H": 12
+     },
+     "requests": [
+      {
+       "id": 41,
+       "bind": 0,
+       "sweep": null,
+       "live": true,
+       "slots": [
+        [
+         10,
+         1
+        ]
+       ]
+      },
+      {
+       "id": 42,
+       "bind": 0,
+       "sweep": 9,
+       "live": false,
+       "slots": []
+      }
+     ],
+     "board": [
+      {
+       "slot": [
+        10,
+        1
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      }
+     ],
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ],
+     "handovers": [
+      [
+       12,
+       1
+      ]
+     ],
+     "landed": 1,
+     "restart": false,
+     "pending": [
+      10
+     ]
+    },
+    "op": {
+     "op": "entry",
+     "actor": "seat",
+     "rid": 41,
+     "e": 1
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "delta_rot": 100,
+      "delta_grace": 50,
+      "delta_sweep": 5,
+      "delta_cw": 3
+     },
+     "mh": 75,
+     "pos": 13,
+     "cur": 1,
+     "epochs": [
+      {
+       "id": 1,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "current",
+       "grace_end": 0,
+       "swept": false
+      },
+      {
+       "id": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "grace",
+       "grace_end": 80,
+       "swept": false
+      }
+     ],
+     "sharings": [
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 1
+       },
+       "const": 0,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      },
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 0
+       },
+       "const": 0,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "burned"
+       }
+      }
+     ],
+     "ho": {
+      "phase": "HANDED_OVER",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      },
+      "src_roster": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9
+      ],
+      "t_q": 7,
+      "m_r": 20,
+      "m_d": 120,
+      "eks": true,
+      "dealt": [
+       [
+        1,
+        20
+       ],
+       [
+        2,
+        20
+       ]
+      ],
+      "disq": [
+       3
+      ],
+      "readys": [
+       {
+        "seat": 1,
+        "q": [
+         1,
+         2,
+         4,
+         5,
+         6,
+         7,
+         8
+        ],
+        "h_s": 50
+       }
+      ],
+      "last_batch": 20,
+      "H": 12
+     },
+     "requests": [
+      {
+       "id": 41,
+       "bind": 0,
+       "sweep": null,
+       "live": true,
+       "slots": [
+        [
+         10,
+         1
+        ]
+       ]
+      },
+      {
+       "id": 42,
+       "bind": 0,
+       "sweep": 9,
+       "live": false,
+       "slots": []
+      }
+     ],
+     "board": [
+      {
+       "slot": [
+        10,
+        1
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      }
+     ],
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ],
+     "handovers": [
+      [
+       12,
+       1
+      ]
+     ],
+     "landed": 1,
+     "restart": false,
+     "pending": [
+      10
+     ]
+    },
+    "op": {
+     "op": "envelope",
+     "actor": "seat",
+     "e": 0
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "delta_rot": 100,
+      "delta_grace": 50,
+      "delta_sweep": 5,
+      "delta_cw": 3
+     },
+     "mh": 75,
+     "pos": 13,
+     "cur": 0,
+     "epochs": [
+      {
+       "id": 1,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "current",
+       "grace_end": 0,
+       "swept": false
+      },
+      {
+       "id": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "grace",
+       "grace_end": 80,
+       "swept": false
+      }
+     ],
+     "sharings": [
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 1
+       },
+       "const": 0,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      },
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 0
+       },
+       "const": 0,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "burned"
+       }
+      }
+     ],
+     "ho": {
+      "phase": "HANDED_OVER",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      },
+      "src_roster": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9
+      ],
+      "t_q": 7,
+      "m_r": 20,
+      "m_d": 120,
+      "eks": true,
+      "dealt": [
+       [
+        1,
+        20
+       ],
+       [
+        2,
+        20
+       ]
+      ],
+      "disq": [
+       3
+      ],
+      "readys": [
+       {
+        "seat": 1,
+        "q": [
+         1,
+         2,
+         4,
+         5,
+         6,
+         7,
+         8
+        ],
+        "h_s": 50
+       }
+      ],
+      "last_batch": 20,
+      "H": 12
+     },
+     "requests": [
+      {
+       "id": 41,
+       "bind": 0,
+       "sweep": null,
+       "live": true,
+       "slots": [
+        [
+         10,
+         1
+        ]
+       ]
+      },
+      {
+       "id": 42,
+       "bind": 0,
+       "sweep": 9,
+       "live": false,
+       "slots": []
+      }
+     ],
+     "board": [
+      {
+       "slot": [
+        10,
+        1
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      }
+     ],
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ],
+     "handovers": [
+      [
+       12,
+       1
+      ]
+     ],
+     "landed": 1,
+     "restart": false,
+     "pending": [
+      10
+     ]
+    },
+    "op": {
+     "op": "block",
+     "actor": "board"
+    }
+   }
+  ],
+  "expect": [
+   {
+    "state": {
+     "params": {
+      "delta_rot": 100,
+      "delta_grace": 50,
+      "delta_sweep": 5,
+      "delta_cw": 3
+     },
+     "mh": 75,
+     "pos": 14,
+     "cur": 1,
+     "epochs": [
+      {
+       "id": 1,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "current",
+       "grace_end": 0,
+       "swept": false
+      },
+      {
+       "id": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "grace",
+       "grace_end": 80,
+       "swept": false
+      }
+     ],
+     "sharings": [
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 1
+       },
+       "const": 0,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      },
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 0
+       },
+       "const": 0,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "burned"
+       }
+      }
+     ],
+     "ho": {
+      "phase": "HANDED_OVER",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      },
+      "src_roster": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9
+      ],
+      "t_q": 7,
+      "m_r": 20,
+      "m_d": 120,
+      "eks": true,
+      "dealt": [
+       [
+        1,
+        20
+       ],
+       [
+        2,
+        20
+       ]
+      ],
+      "disq": [
+       3
+      ],
+      "readys": [
+       {
+        "seat": 1,
+        "q": [
+         1,
+         2,
+         4,
+         5,
+         6,
+         7,
+         8
+        ],
+        "h_s": 50
+       }
+      ],
+      "last_batch": 20,
+      "H": 12
+     },
+     "requests": [
+      {
+       "id": 41,
+       "bind": 0,
+       "sweep": null,
+       "live": true,
+       "slots": [
+        [
+         10,
+         1
+        ]
+       ]
+      },
+      {
+       "id": 42,
+       "bind": 0,
+       "sweep": 9,
+       "live": false,
+       "slots": []
+      }
+     ],
+     "board": [
+      {
+       "slot": [
+        10,
+        1
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      }
+     ],
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ],
+     "handovers": [
+      [
+       12,
+       1
+      ]
+     ],
+     "landed": 1,
+     "restart": false,
+     "pending": [
+      10
+     ]
+    },
+    "obs": {
+     "ok": true
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "delta_rot": 100,
+      "delta_grace": 50,
+      "delta_sweep": 5,
+      "delta_cw": 3
+     },
+     "mh": 75,
+     "pos": 13,
+     "cur": 1,
+     "epochs": [
+      {
+       "id": 1,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "current",
+       "grace_end": 0,
+       "swept": false
+      },
+      {
+       "id": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "grace",
+       "grace_end": 80,
+       "swept": true
+      }
+     ],
+     "sharings": [
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 1
+       },
+       "const": 0,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      },
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 0
+       },
+       "const": 0,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "burned"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 1
+       },
+       "const": 0,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      }
+     ],
+     "ho": {
+      "phase": "HANDED_OVER",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      },
+      "src_roster": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9
+      ],
+      "t_q": 7,
+      "m_r": 20,
+      "m_d": 120,
+      "eks": true,
+      "dealt": [
+       [
+        1,
+        20
+       ],
+       [
+        2,
+        20
+       ]
+      ],
+      "disq": [
+       3
+      ],
+      "readys": [
+       {
+        "seat": 1,
+        "q": [
+         1,
+         2,
+         4,
+         5,
+         6,
+         7,
+         8
+        ],
+        "h_s": 50
+       }
+      ],
+      "last_batch": 20,
+      "H": 12
+     },
+     "requests": [
+      {
+       "id": 41,
+       "bind": 0,
+       "sweep": 13,
+       "live": true,
+       "slots": [
+        [
+         10,
+         1
+        ]
+       ]
+      },
+      {
+       "id": 42,
+       "bind": 0,
+       "sweep": 9,
+       "live": false,
+       "slots": []
+      }
+     ],
+     "board": [
+      {
+       "slot": [
+        10,
+        1
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      }
+     ],
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ],
+     "handovers": [
+      [
+       12,
+       1
+      ]
+     ],
+     "landed": 1,
+     "restart": false,
+     "pending": [
+      10
+     ]
+    },
+    "obs": {
+     "ok": true
+    }
+   },
+   {
+    "refused": [
+     "not_owner"
+    ]
+   },
+   {
+    "state": {
+     "params": {
+      "delta_rot": 100,
+      "delta_grace": 50,
+      "delta_sweep": 5,
+      "delta_cw": 3
+     },
+     "mh": 75,
+     "pos": 13,
+     "cur": 1,
+     "epochs": [
+      {
+       "id": 1,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "current",
+       "grace_end": 0,
+       "swept": false
+      },
+      {
+       "id": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "grace",
+       "grace_end": 80,
+       "swept": false
+      }
+     ],
+     "sharings": [
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 1
+       },
+       "const": 0,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      },
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 0
+       },
+       "const": 0,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "burned"
+       }
+      }
+     ],
+     "ho": {
+      "phase": "HANDED_OVER",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      },
+      "src_roster": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9
+      ],
+      "t_q": 7,
+      "m_r": 20,
+      "m_d": 120,
+      "eks": true,
+      "dealt": [
+       [
+        1,
+        20
+       ],
+       [
+        2,
+        20
+       ]
+      ],
+      "disq": [
+       3
+      ],
+      "readys": [
+       {
+        "seat": 1,
+        "q": [
+         1,
+         2,
+         4,
+         5,
+         6,
+         7,
+         8
+        ],
+        "h_s": 50
+       }
+      ],
+      "last_batch": 20,
+      "H": 12
+     },
+     "requests": [
+      {
+       "id": 41,
+       "bind": 0,
+       "sweep": null,
+       "live": true,
+       "slots": [
+        [
+         10,
+         1
+        ]
+       ]
+      },
+      {
+       "id": 42,
+       "bind": 0,
+       "sweep": 9,
+       "live": false,
+       "slots": []
+      }
+     ],
+     "board": [
+      {
+       "slot": [
+        10,
+        1
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      }
+     ],
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ],
+     "handovers": [
+      [
+       12,
+       1
+      ]
+     ],
+     "landed": 1,
+     "restart": false,
+     "pending": [
+      10
+     ]
+    },
+    "obs": {
+     "ok": true
+    }
+   },
+   {
+    "refused": [
+     "outside-state-domain"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "step: dropped field, wrong type, unknown op, cut line",
+  "args": [
+   "--step"
+  ],
+  "match": "keys",
+  "input": [
+   {
+    "state": {
+     "params": {
+      "delta_rot": 100,
+      "delta_grace": 50,
+      "delta_sweep": 5,
+      "delta_cw": 3
+     },
+     "mh": 75,
+     "pos": 13,
+     "cur": 1,
+     "epochs": [
+      {
+       "id": 1,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "current",
+       "grace_end": 0,
+       "swept": false
+      },
+      {
+       "id": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "grace",
+       "grace_end": 80,
+       "swept": false
+      }
+     ],
+     "sharings": [
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 1
+       },
+       "const": 0,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      },
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 0
+       },
+       "const": 0,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "burned"
+       }
+      }
+     ],
+     "ho": {
+      "phase": "HANDED_OVER",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      },
+      "src_roster": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9
+      ],
+      "t_q": 7,
+      "m_r": 20,
+      "m_d": 120,
+      "eks": true,
+      "dealt": [
+       [
+        1,
+        20
+       ],
+       [
+        2,
+        20
+       ]
+      ],
+      "disq": [
+       3
+      ],
+      "readys": [
+       {
+        "seat": 1,
+        "q": [
+         1,
+         2,
+         4,
+         5,
+         6,
+         7,
+         8
+        ],
+        "h_s": 50
+       }
+      ],
+      "last_batch": 20,
+      "H": 12
+     },
+     "requests": [
+      {
+       "id": 41,
+       "bind": 0,
+       "sweep": null,
+       "live": true,
+       "slots": [
+        [
+         10,
+         1
+        ]
+       ]
+      },
+      {
+       "id": 42,
+       "bind": 0,
+       "sweep": 9,
+       "live": false,
+       "slots": []
+      }
+     ],
+     "board": [
+      {
+       "slot": [
+        10,
+        1
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      }
+     ],
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ],
+     "handovers": [
+      [
+       12,
+       1
+      ]
+     ],
+     "landed": 1,
+     "restart": false
+    },
+    "op": {
+     "op": "block",
+     "actor": "board"
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "delta_rot": 100,
+      "delta_grace": 50,
+      "delta_sweep": 5,
+      "delta_cw": 3
+     },
+     "mh": 75,
+     "pos": 13,
+     "cur": 1,
+     "epochs": [
+      {
+       "id": 1,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "current",
+       "grace_end": 0,
+       "swept": false
+      },
+      {
+       "id": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "grace",
+       "grace_end": 80,
+       "swept": false
+      }
+     ],
+     "sharings": [
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 1
+       },
+       "const": 0,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      },
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 0
+       },
+       "const": 0,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "burned"
+       }
+      }
+     ],
+     "ho": {
+      "phase": "HANDED_OVER",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      },
+      "src_roster": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9
+      ],
+      "t_q": 7,
+      "m_r": 20,
+      "m_d": 120,
+      "eks": true,
+      "dealt": [
+       [
+        1,
+        20
+       ],
+       [
+        2,
+        20
+       ]
+      ],
+      "disq": [
+       3
+      ],
+      "readys": [
+       {
+        "seat": 1,
+        "q": [
+         1,
+         2,
+         4,
+         5,
+         6,
+         7,
+         8
+        ],
+        "h_s": 50
+       }
+      ],
+      "last_batch": 20,
+      "H": 12
+     },
+     "requests": [
+      {
+       "id": 41,
+       "bind": 0,
+       "sweep": null,
+       "live": true,
+       "slots": [
+        [
+         10,
+         1
+        ]
+       ]
+      },
+      {
+       "id": 42,
+       "bind": 0,
+       "sweep": 9,
+       "live": false,
+       "slots": []
+      }
+     ],
+     "board": [
+      {
+       "slot": [
+        10,
+        1
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      }
+     ],
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ],
+     "handovers": [
+      [
+       12,
+       1
+      ]
+     ],
+     "landed": 1,
+     "restart": 0,
+     "pending": [
+      10
+     ]
+    },
+    "op": {
+     "op": "block",
+     "actor": "board"
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "delta_rot": 100,
+      "delta_grace": 50,
+      "delta_sweep": 5,
+      "delta_cw": 3
+     },
+     "mh": 75,
+     "pos": 13,
+     "cur": 1,
+     "epochs": [
+      {
+       "id": 1,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "current",
+       "grace_end": 0,
+       "swept": false
+      },
+      {
+       "id": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "status": "grace",
+       "grace_end": 80,
+       "swept": false
+      }
+     ],
+     "sharings": [
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 1
+       },
+       "const": 0,
+       "epoch": 0,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      },
+      {
+       "secret": {
+        "kind": "xf",
+        "curve": "secp"
+       },
+       "const": 1001,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "free"
+       }
+      },
+      {
+       "secret": {
+        "kind": "slot",
+        "a": 10,
+        "i": 0
+       },
+       "const": 0,
+       "epoch": 1,
+       "holders": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "st": {
+        "kind": "burned"
+       }
+      }
+     ],
+     "ho": {
+      "phase": "HANDED_OVER",
+      "rotate": {
+       "target": 1,
+       "source": 0,
+       "roster": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10
+       ],
+       "n": 9,
+       "f": 2,
+       "q": 6,
+       "t": 7,
+       "emergency": false,
+       "sigs": 6
+      },
+      "src_roster": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9
+      ],
+      "t_q": 7,
+      "m_r": 20,
+      "m_d": 120,
+      "eks": true,
+      "dealt": [
+       [
+        1,
+        20
+       ],
+       [
+        2,
+        20
+       ]
+      ],
+      "disq": [
+       3
+      ],
+      "readys": [
+       {
+        "seat": 1,
+        "q": [
+         1,
+         2,
+         4,
+         5,
+         6,
+         7,
+         8
+        ],
+        "h_s": 50
+       }
+      ],
+      "last_batch": 20,
+      "H": 12
+     },
+     "requests": [
+      {
+       "id": 41,
+       "bind": 0,
+       "sweep": null,
+       "live": true,
+       "slots": [
+        [
+         10,
+         1
+        ]
+       ]
+      },
+      {
+       "id": 42,
+       "bind": 0,
+       "sweep": 9,
+       "live": false,
+       "slots": []
+      }
+     ],
+     "board": [
+      {
+       "slot": [
+        10,
+        1
+       ],
+       "st": {
+        "kind": "bound",
+        "tk": 99
+       }
+      }
+     ],
+     "xf": {
+      "secp": 1001,
+      "ed": 2002
+     },
+     "users": [
+      {
+       "id": 1,
+       "shard": 77,
+       "tweak": 3,
+       "pool": 4,
+       "sealed": 5,
+       "slot_root": 6,
+       "asset": 7
+      }
+     ],
+     "addrs": [
+      {
+       "id": 10,
+       "curve": "secp",
+       "user": 1,
+       "shard": 77,
+       "ecdsa": true,
+       "slots": [
+        0,
+        1
+       ]
+      }
+     ],
+     "handovers": [
+      [
+       12,
+       1
+      ]
+     ],
+     "landed": 1,
+     "restart": false,
+     "pending": [
+      10
+     ]
+    },
+    "op": {
+     "op": "nope",
+     "actor": "board"
+    }
+   },
+   "{\"state\": 1"
+  ],
+  "expect": [
+   {
+    "error": ""
+   },
+   {
+    "error": ""
+   },
+   {
+    "error": ""
+   },
+   {
+    "error": ""
+   }
+  ]
+ }
+]

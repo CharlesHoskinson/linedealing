@@ -1,0 +1,43 @@
+# EARS IDs of split-shard-holders that no rule of the KRS definition stands for, so no
+# mutation can name them, and the check that covers each instead. The `mutations` gate
+# (scripts/check_mutations.py) fails on an ID that is neither here nor named by a mutation.
+
+[[gap]]
+id = "SH-005"
+covered_by = "exception in the oracle README: a fresh uniformly random shard is randomness outside the state"
+
+[[gap]]
+id = "SH-006"
+covered_by = "exception in the oracle README: the tweak hash and the sealed seed are cryptography outside the state"
+
+[[gap]]
+id = "SH-020"
+covered_by = "Lean SplitShardHolders.guardianSlots and pin_guardian_slots: a coordinator count with no operation in the oracle, so no step reads it"
+
+[[gap]]
+id = "SH-024"
+covered_by = "exception in the oracle README: the OS generator and the hedged nonce draw are randomness outside the state"
+
+[[gap]]
+id = "SH-025"
+covered_by = "exception in the oracle README: the place of the tweak term is signature arithmetic outside the state"
+
+[[gap]]
+id = "SH-027"
+covered_by = "exception in the oracle README (claim C17 with C3, C4); its structural part is SH-003 admission, which mutations of Adm, AdmOr, AdmUsed and Admitted name"
+
+[[gap]]
+id = "SH-028"
+covered_by = "exception in the oracle README: claim C5 is a property of the signature scheme (open item O6)"
+
+[[gap]]
+id = "SH-029"
+covered_by = "exception in the oracle README: claims C18 and C19 are properties of the signature scheme (C19 is open item O20)"
+
+[[gap]]
+id = "SH-038"
+covered_by = "Lean SplitShardHolders.sh038_cl_fixes_weight and pin_two_initiators: clActors puts the initiator's leaf id first in CL, but no operation of the oracle reads clActors, so no rule of the KRS definition stands for it"
+
+# RQ-001 parameters outside the domain (f >= 1, n >= 3f + 1) make the oracle answer
+# could-not-apply; the corpus holds only parameters inside the domain, and the KRS
+# definition has no rule for them (envelope practice: domain refusals with no state).

@@ -1,0 +1,10 @@
+# CP-029: with slot anchors nothing burns; free slots with a covered binding become bound
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = true, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { ReadLedger = { ok = true, tickets = [], cov = [] } },
+  { OpenAcct = { a = { AcctOf = { id = 1, slots = ["Free", "Free", { Bound = { d = 4 } }, "Burned"], mark = 0, refill = false } } } },
+  { OpenAcct = { a = { AcctOf = { id = 2, slots = ["Free", "Free"], mark = 0, refill = false } } } },
+  { ReadLedger = { ok = true, tickets = [{ P = [0, 1] }, { P = [1, 1] }, { P = [2, 1] }, { P = [3, 1] }], cov = [{ CovOf = { account = 2, slot = 0, d = 8 } }, { CovOf = { account = 1, slot = 1, d = 7 } }, { CovOf = { account = 1, slot = 2, d = 9 } }, { CovOf = { account = 1, slot = 0, d = 6 } }, { CovOf = { account = 3, slot = 0, d = 1 } }] } },
+]

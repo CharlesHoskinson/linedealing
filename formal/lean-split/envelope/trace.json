@@ -1,0 +1,50 @@
+{
+  "prefix": "EN",
+  "namespace": "SplitEnvelope",
+  "spec": "openspec/changes/add-split-line-dealing/specs/split-envelope/spec.md",
+  "count": 23,
+  "proved": {
+    "EN-007": [
+      "en007_rewrite_refused"
+    ],
+    "EN-008": [
+      "C9_run_dd_unique",
+      "accepted_passed",
+      "apply_seen_nodup"
+    ],
+    "EN-014": [
+      "en014_fault_needs_bad_dealing",
+      "en014_opens_good_dealing"
+    ],
+    "EN-017": [
+      "en017_labels_distinct"
+    ],
+    "EN-018": [
+      "C21_run_blind",
+      "C10_public_checks_blind"
+    ],
+    "EN-022": [
+      "C10_public_checks_blind",
+      "C21_run_blind"
+    ],
+    "EN-023": [
+      "en023_accepted_window"
+    ]
+  },
+  "exceptions": {
+    "EN-015": "the wallet's 32 random bytes are outside the state; `auth_ref` is an input number",
+    "EN-019": "the sealing of contributions (ECDH, KDF, AEAD) is cryptography outside the state"
+  },
+  "ledger": {
+    "EN-002": "3",
+    "EN-004": "1",
+    "EN-005": "1",
+    "EN-006": "1",
+    "EN-007": "1",
+    "EN-008": "1, 2",
+    "EN-009": "5, 7",
+    "EN-010": "5, 6",
+    "EN-014": "5, 8",
+    "EN-023": "10"
+  }
+}

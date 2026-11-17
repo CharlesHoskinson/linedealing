@@ -1,11 +1,11 @@
 # Council review: one owner move, then a committee spends
 
-You are an independent cryptographic reviewer. Two candidate protocol designs answer the brief at design/BRIEF.md (read it first; its acceptance criteria are the bar). The candidates:
+You are an independent cryptographic reviewer. Two candidate protocol designs answer the brief at /home/hoskinson/Projects/mpcexperiments/design/BRIEF.md (read it first; its acceptance criteria are the bar). The candidates:
 
-- cand-3c91: ~/.cache/council-mpc/blind/cand-3c91.md
-- cand-5d08: ~/.cache/council-mpc/blind/cand-5d08.md
+- cand-3c91: /home/hoskinson/.cache/council-mpc/blind/cand-3c91.md
+- cand-5d08: /home/hoskinson/.cache/council-mpc/blind/cand-5d08.md
 
-Background the candidates were given: research/REPORT.md and the papers under research/sources/ (more ePrint PDFs may have arrived in sources/oneshot/ and sources/eprint/). Check claims against the local papers where you can. Do not read anything else under ~/.cache/council-mpc/ or design/ except the files named here. Do not edit any file except your output.
+Background the candidates were given: /home/hoskinson/Projects/mpcexperiments/research/REPORT.md and the papers under /home/hoskinson/Projects/mpcexperiments/research/sources/ (more ePrint PDFs may have arrived in sources/oneshot/ and sources/eprint/). Check claims against the local papers where you can. Do not read anything else under /home/hoskinson/.cache/council-mpc/ or /home/hoskinson/Projects/mpcexperiments/design/ except the files named here. Do not edit any file except your output.
 
 Try hard to BREAK each candidate. In order of importance:
 1. Soundness: can a coalition below the stated threshold learn the key, or get a signature on anything the owner did not authorize? Nonce reuse, ROS/Wagner, related-key, replay, rollback, malleability, rogue dealing.
@@ -29,4 +29,4 @@ Then a final section:
 ## Head-to-head
 Which candidate is the better base design and why, in under 200 words.
 
-Write the complete review to ~/.cache/council-mpc/reviews/review-carbon.md and nothing else anywhere.
+Write the complete review to /home/hoskinson/.cache/council-mpc/reviews/review-carbon.md and nothing else anywhere.

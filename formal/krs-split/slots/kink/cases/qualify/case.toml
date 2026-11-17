@@ -1,0 +1,10 @@
+# SL-025: the first t dealers without a complaint; none while fewer exist.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { Qualify = { t = 2, dealers = [{ Dlr = { dealer = 1, complained = false } }, { Dlr = { dealer = 2, complained = true } }, { Dlr = { dealer = 3, complained = false } }, { Dlr = { dealer = 4, complained = false } }] } },
+  { Qualify = { t = 3, dealers = [{ Dlr = { dealer = 1, complained = false } }, { Dlr = { dealer = 2, complained = true } }, { Dlr = { dealer = 3, complained = false } }] } },
+  { Qualify = { t = 1, dealers = [] } },
+  { Qualify = { t = 0, dealers = [{ Dlr = { dealer = 1, complained = false } }] } },
+  { Qualify = { t = 2, dealers = [{ Dlr = { dealer = 1, complained = false } }, { Dlr = { dealer = 2, complained = false } }] } },
+]

@@ -1,0 +1,7 @@
+# AU-027, ledger 12: a recovery transition is recorded, idempotently
+[inputs]
+params = { Params = { mode = "Tee", q = 3 } }
+ops = [
+  { RecoverOp = {} },
+  { RecoverOp = {} },
+]

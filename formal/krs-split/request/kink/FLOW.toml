@@ -1,0 +1,46 @@
+# Reference suite for split-request. The programs are typed cases: cases/*/case.toml.
+# `krs kink coverage` must leave no obligation open, `krs kink run` must kill every
+# mutation or carry an argued survivor, and `krs kink compare` checks the reference
+# definition against the Lean oracle (corpus end equivalence: equal ends on every program).
+
+[spec]
+krs = { package = "split-request-reference", definition = "main" }
+
+# Unique-cause MC/DC on every guard.
+[coverage]
+mcdc = true
+
+# The node rules read the mode (RQ-035 release acks, RQ-036 combiner count, RQ-039 and
+# RQ-041 node actions); gaps.toml records them. The board steps never read it.
+[[coverage.argued]]
+item = "syntax:crate::ModeC::Tee"
+argument = "RQ-035, RQ-036, RQ-039, RQ-041: only the node rules read the mode (gaps.toml); no board step reads Params.mode, so no step takes it as an operand"
+
+[[coverage.argued]]
+item = "syntax:crate::ModeC::NonTee"
+argument = "RQ-035, RQ-036, RQ-039, RQ-041: only the node rules read the mode (gaps.toml); no board step reads Params.mode, so no step takes it as an operand"
+
+# The flip of the ADMIT count guard sends fewer than q votes to anchorHeight, which reads
+# the (f+1)-th highest OBS height with list::get; with fewer than f + 1 heights that step
+# is undefined in the mutant, so kink records contradicted-claim and gives no verdict.
+[[coverage.argued]]
+item = "flip--admit_count_1+admit_count_2--QOf"
+argument = "RQ-026, RQ-027: the negated guard takes the anchor height from fewer than q = 2f + 1 ADMIT votes; on the first vote it reads index f of a list of one height, an undefined step of the mutant (contradicted-claim), so the flip has no comparable run. The misreadings of the count are killed by events/admit-any-hash and events/admit-all-heights"
+
+[budget]
+time_ms = 600000
+
+[[program]]
+cases = "cases/*/case.toml"
+
+# Spec anchor: the Lean oracle (formal/lean-split/request, `lake build oracle`), through
+# the schema-driven adapter that translates the KRS typed encoding to the oracle's JSON
+# and back. No identity: the answers depend on the adapter, the schema and the binary,
+# and one identity file cannot cover all three, so kink caches none (practice 26).
+[[implementation]]
+name = "lean-oracle"
+command = ["python3", "-I", "../../scripts/oracle_adapter.py", "../schema.json",
+           "../../../lean-split/request/.lake/build/bin/oracle"]
+given = "inputs"
+omits = ["k", "ops"]
+views = [{ name = "end", required = true }]

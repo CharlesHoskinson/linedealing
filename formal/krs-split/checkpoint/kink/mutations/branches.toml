@@ -1,0 +1,186 @@
+# Mutations of the branch helpers that keep each guard a plain branch (no short-circuit
+# operand over a function call), for CP-012, CP-013, CP-017 and ledger 5.
+
+[[mutation]]
+id = "cp012-repeat-nf"
+expect = "kill"
+misunderstanding = "CP-012: two leaves may hold one nf"
+  [[mutation.edit]]
+  rule = "split_checkpoint--sign_bf_ok_2"
+  find = "=> false"
+  replace = "=> noneIn ( seconds ( Leaves:List ) , .List )"
+
+[[mutation]]
+id = "cp012-landed-nf"
+expect = "kill"
+misunderstanding = "CP-012: a leaf may hold an nf of an earlier landed bf_root"
+  [[mutation.edit]]
+  rule = "split_checkpoint--sign_bf_ok_1"
+  find = "=> noneIn ( seconds ( Leaves:List ) , landedNfs ( Chain:List ) )"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp012-auth-distinct"
+expect = "kill"
+misunderstanding = "CP-012: the leaves must differ in auth, not in nf"
+  [[mutation.edit]]
+  rule = "split_checkpoint--sign_bf_ok_1"
+  find = "nodupB ( seconds ( Leaves:List ) )"
+  replace = "nodupB ( firsts ( Leaves:List ) )"
+  [[mutation.edit]]
+  rule = "split_checkpoint--sign_bf_ok_2"
+  find = "nodupB ( seconds ( Leaves:List ) )"
+  replace = "nodupB ( firsts ( Leaves:List ) )"
+
+[[mutation]]
+id = "cp013-repeat-leaf"
+expect = "kill"
+misunderstanding = "CP-013: a leaf may be listed twice"
+  [[mutation.edit]]
+  rule = "split_checkpoint--sign_settle_ok_2"
+  find = "signSettleOk ( Leaves:List , _ , _ ) => false"
+  replace = "signSettleOk ( Leaves:List , Ended:List , Mv:List ) => settleSized ( Leaves:List , Ended:List , Mv:List )"
+
+[[mutation]]
+id = "cp013-distinct-enough"
+expect = "kill"
+misunderstanding = "CP-013: any settle_root without a repeated leaf is signed"
+  [[mutation.edit]]
+  rule = "split_checkpoint--sign_settle_ok_1"
+  find = "=> settleSized ( Leaves:List , Ended:List , Mv:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp013-subset"
+expect = "kill"
+misunderstanding = "CP-013: the leaves may be a subset of the requests that ended"
+  [[mutation.edit]]
+  rule = "split_checkpoint--settle_sized_2"
+  find = "settleSized ( Leaves:List , Ended:List , _ ) => false"
+  replace = "settleSized ( Leaves:List , Ended:List , Mv:List ) => settleLeavesOk ( Leaves:List , Ended:List , Mv:List )"
+
+[[mutation]]
+id = "cp013-size-enough"
+expect = "kill"
+misunderstanding = "CP-013: as many distinct leaves as ended requests is enough"
+  [[mutation.edit]]
+  rule = "split_checkpoint--settle_sized_1"
+  find = "=> settleLeavesOk ( Leaves:List , Ended:List , Mv:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp013-other-requests"
+expect = "kill"
+misunderstanding = "CP-013: a leaf need not be a request that ended, or need not carry its board outcome"
+  [[mutation.edit]]
+  rule = "split_checkpoint--settle_leaves_ok_2"
+  find = "settleLeavesOk ( Leaves:List , Ended:List , _ ) => false"
+  replace = "settleLeavesOk ( Leaves:List , Ended:List , Mv:List ) => voidKept ( Leaves:List , Mv:List )"
+
+[[mutation]]
+id = "cp013-void-overridden"
+expect = "kill"
+misunderstanding = "CP-013: a leaf may give an auth that Midnight records as VOID another outcome"
+  [[mutation.edit]]
+  rule = "split_checkpoint--settle_leaves_ok_1"
+  find = "=> voidKept ( Leaves:List , Mv:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp013-void-auth-excluded"
+expect = "kill"
+misunderstanding = "CP-013: an auth that Midnight records as VOID has no leaf at all"
+  [[mutation.edit]]
+  rule = "split_checkpoint--void_leaf_kept_2"
+  find = "=> voidKept ( Rest:List , Mv:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp013-void-other-outcome"
+expect = "kill"
+misunderstanding = "CP-013: a leaf with a Midnight-VOID auth and another outcome ends the check as signed"
+  [[mutation.edit]]
+  rule = "split_checkpoint--void_leaf_kept_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp013-first-void-only"
+expect = "kill"
+misunderstanding = "CP-013: only the first leaf is checked against the Midnight VOID list"
+  [[mutation.edit]]
+  rule = "split_checkpoint--void_kept_2_2"
+  find = "=> voidKept ( Rest:List , Mv:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp013-midnight-void-skipped"
+expect = "kill"
+misunderstanding = "CP-013: a leaf whose auth Midnight records as VOID is not checked"
+  [[mutation.edit]]
+  rule = "split_checkpoint--void_kept_2_1"
+  find = "=> voidLeafKept ( Out:Outcome , Rest:List , Mv:List )"
+  replace = "=> voidKept ( Rest:List , Mv:List )"
+
+[[mutation]]
+id = "ledger5-any-account"
+expect = "kill"
+misunderstanding = "ledger 5 (CP-025): a free slot of any account pool allows the bind"
+  [[mutation.edit]]
+  rule = "split_checkpoint--slot_free_2_2"
+  find = "=> slotFree ( Rest:List , Aid:Int , I:Int )"
+  replace = "=> slotFreeIn ( Slots:List , Rest:List , Aid:Int , I:Int )"
+
+[[mutation]]
+id = "ledger5-taken-slot-bound"
+expect = "kill"
+misunderstanding = "ledger 5 (CP-025): a slot that is not free in its pool is bound anyway"
+  [[mutation.edit]]
+  rule = "split_checkpoint--slot_free_in_2"
+  find = "=> slotFree ( Rest:List , Aid:Int , I:Int )"
+  replace = "=> true"
+
+[[mutation]]
+id = "ledger5-free-slot-refused"
+expect = "kill"
+misunderstanding = "ledger 5 (CP-025): a free slot is refused"
+  [[mutation.edit]]
+  rule = "split_checkpoint--slot_free_in_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp017-first-seat-only"
+expect = "kill"
+misunderstanding = "CP-017: a seat whose counter differs ends the count of continuous seats"
+  [[mutation.edit]]
+  rule = "split_checkpoint--count_at_2"
+  find = "=> countEq ( From:Int +Int 1 , N:Int , Xs:List , Ys:List )"
+  replace = "=> 0"
+
+[[mutation]]
+id = "cp017-count-nothing"
+expect = "kill"
+misunderstanding = "CP-017: a continuous seat is not counted"
+  [[mutation.edit]]
+  rule = "split_checkpoint--count_at_1"
+  find = "=> 1 +Int countEq"
+  replace = "=> countEq"
+
+[[mutation]]
+id = "cp017-count-zero"
+expect = "kill"
+misunderstanding = "CP-017, CP-018: no seat is ever continuous"
+  [[mutation.edit]]
+  rule = "split_checkpoint--count_eq_2"
+  find = "=> countAt ( From:Int , N:Int , Xs:List , Ys:List )"
+  replace = "=> 0"
+[[mutation]]
+id = "ledger5-named-pool-skipped"
+expect = "kill"
+misunderstanding = "ledger 5 (CP-025): the slot is looked up in the pools after the one named"
+  [[mutation.edit]]
+  rule = "split_checkpoint--slot_free_2_1"
+  find = "=> slotFreeIn ( Slots:List , Rest:List , Aid:Int , I:Int )"
+  replace = "=> slotFree ( Rest:List , Aid:Int , I:Int )"
+

@@ -1,0 +1,8 @@
+# EN-005: the current epochs change.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { SetEpochs = { es = [{ P = [4, 44] }, { P = [5, 55] }] } },
+]

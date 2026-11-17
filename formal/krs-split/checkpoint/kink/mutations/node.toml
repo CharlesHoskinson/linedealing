@@ -1,0 +1,723 @@
+# Plausible misreadings of the committee node's restart rules (CP-016 to CP-029, CP-033,
+# ledger 3, 5, 6, 10), as K patches of kink/definition.k.
+
+[[mutation]]
+id = "cp019-boot-stays-ready"
+expect = "kill"
+misunderstanding = "CP-019: a node that boots stays ready until it reads the ledger"
+  [[mutation.edit]]
+  rule = "boot"
+  find = "<ready> _ => false </ready>"
+  replace = "<ready> _ => true </ready>"
+
+[[mutation]]
+id = "cp019-unverified-read"
+expect = "kill"
+misunderstanding = "CP-019: a snapshot that does not verify on a node that is not ready is no refusal"
+  [[mutation.edit]]
+  rule = "split_checkpoint--read_refusals"
+  find = "opt ( (notBool Ok:Bool) andThenBool (notBool Ready:Bool) , ledgerUnverified ) "
+  replace = ""
+
+[[mutation]]
+id = "cp018-non-tee-read"
+expect = "kill"
+misunderstanding = "CP-018, ledger 3: a non-TEE node classifies its boot from the ledger too"
+  [[mutation.edit]]
+  rule = "split_checkpoint--read_refusals"
+  find = "nonTeeOf ( P:Params ) orElseBool "
+  replace = ""
+
+[[mutation]]
+id = "cp018-empty-chain-read"
+expect = "kill"
+misunderstanding = "CP-018, ledger 3: a ledger with no landed checkpoint can be read"
+  [[mutation.edit]]
+  rule = "split_checkpoint--read_refusals"
+  find = " orElseBool (size(Chain:List) ==Int 0)"
+  replace = ""
+
+[[mutation]]
+id = "cp017-ticket-seat-any"
+expect = "kill"
+misunderstanding = "CP-017: a boot ticket may name a seat outside the committee"
+  [[mutation.edit]]
+  rule = "split_checkpoint--read_refusals"
+  find = "seatOutside ( Tickets:List , nOf ( P:Params ) ) orElseBool "
+  replace = ""
+
+[[mutation]]
+id = "cp017-ticket-seat-twice"
+expect = "kill"
+misunderstanding = "CP-017: one seat may have two latest boot tickets"
+  [[mutation.edit]]
+  rule = "split_checkpoint--read_refusals"
+  find = " orElseBool (notBool nodupB ( firsts ( Tickets:List ) ))"
+  replace = ""
+
+[[mutation]]
+id = "cp017-seat-n-inside"
+expect = "kill"
+misunderstanding = "CP-017: seat n is a committee seat (seats count from 1)"
+  [[mutation.edit]]
+  rule = "split_checkpoint--seat_outside_2_1"
+  find = "N:Int <=Int A:Int"
+  replace = "N:Int <Int A:Int"
+  [[mutation.edit]]
+  rule = "split_checkpoint--seat_outside_2_2"
+  find = "N:Int <=Int A:Int"
+  replace = "N:Int <Int A:Int"
+
+[[mutation]]
+id = "cp019-read-refuse-one-code"
+expect = "kill"
+misunderstanding = "CP-019: every refused ledger read is ledger_unverified"
+  [[mutation.edit]]
+  rule = "read-refuse"
+  find = "ListItem(refused ( readRefusals ( Params:Params , Chain:List , Ok:Bool , Tk:List , Ready:Bool ) ))"
+  replace = "ListItem(refused ( ListItem(ledgerUnverified) ))"
+
+[[mutation]]
+id = "cp029-covered-not-read"
+expect = "kill"
+misunderstanding = "CP-029: the node does not read the covered bindings of the seat logs"
+  [[mutation.edit]]
+  rule = "read-ledger"
+  find = "# readNode ( Tk:List , Cov:List )"
+  replace = "# readNode ( Tk:List , .List )"
+
+[[mutation]]
+id = "cp018-whole-at-w"
+expect = "kill"
+misunderstanding = "CP-018: a whole-committee restart is fewer than w continuous seats, not fewer than w + 1"
+  [[mutation.edit]]
+  rule = "split_checkpoint--whole_restart"
+  find = "<Int (wOf ( P:Params ) +Int 1)"
+  replace = "<Int wOf ( P:Params )"
+
+[[mutation]]
+id = "cp017-missing-counter-one"
+expect = "kill"
+misunderstanding = "CP-017, ledger 10: a seat without a recorded counter has counter 1, not 0"
+  [[mutation.edit]]
+  rule = "split_checkpoint--lookup_1"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "cp017-latest-ticket-last"
+expect = "kill"
+misunderstanding = "CP-017: the last ticket of a seat in the list is its latest, not the first"
+  [[mutation.edit]]
+  rule = "split_checkpoint--lookup_2_1"
+  find = "=> B:Int"
+  replace = "=> lookup ( Rest:List , Key:Int )"
+
+[[mutation]]
+id = "cp027-restart-not-open"
+expect = "kill"
+misunderstanding = "CP-027: a whole-committee restart does not stay open until a marker lands"
+  [[mutation.edit]]
+  rule = "read-whole"
+  find = "<restarting> Restarting:Bool => true </restarting>"
+  replace = "<restarting> Restarting:Bool </restarting>"
+
+[[mutation]]
+id = "cp022-survivor-no-burn"
+expect = "kill"
+misunderstanding = "CP-020, CP-022: a node reading a whole restart burns no committee-pool ranges"
+  [[mutation.edit]]
+  rule = "read-whole"
+  find = "newBurn ( Params:Params , C:Cp , Burn:List )"
+  replace = "Burn:List"
+
+[[mutation]]
+id = "cp025-marker-reset"
+expect = "kill"
+misunderstanding = "CP-023, CP-025: a second read during the open restart takes the latest restart_seq as the marker"
+  [[mutation.edit]]
+  rule = "read-whole"
+  find = "keepInt ( Restarting:Bool , Marker:Int , cpRestartSeq ( C:Cp ) )"
+  replace = "cpRestartSeq ( C:Cp )"
+
+[[mutation]]
+id = "cp025-landed-forgotten"
+expect = "kill"
+misunderstanding = "CP-025: a second read during the open restart forgets that the marker landed"
+  [[mutation.edit]]
+  rule = "read-whole"
+  find = "keepLanded ( Restarting:Bool , Landed:Bool )"
+  replace = "false"
+
+[[mutation]]
+id = "cp025-marker-first-read-kept"
+expect = "kill"
+misunderstanding = "CP-025: a new restart keeps the marker of the earlier restart"
+  [[mutation.edit]]
+  rule = "split_checkpoint--keep_int_2"
+  find = "Open:Bool , _ , New:Int ) => New:Int"
+  replace = "Open:Bool , _ , _ ) => 0"
+
+[[mutation]]
+id = "cp025-landed-kept-new-restart"
+expect = "kill"
+misunderstanding = "CP-025: a new restart keeps the landed flag of the earlier restart"
+  [[mutation.edit]]
+  rule = "split_checkpoint--keep_landed_2"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp028-partial-not-ready"
+expect = "kill"
+misunderstanding = "CP-028: a partial restart leaves the node not ready"
+  [[mutation.edit]]
+  rule = "read-partial"
+  find = "<ready> _ => true </ready>"
+  replace = "<ready> _ => false </ready>"
+
+[[mutation]]
+id = "cp017-partial-tickets-dropped"
+expect = "kill"
+misunderstanding = "CP-017: a partial restart does not keep the boot tickets it read"
+  [[mutation.edit]]
+  rule = "read-partial"
+  find = "<tickets> _ => Tk:List </tickets>"
+  replace = "<tickets> _ => .List </tickets>"
+
+[[mutation]]
+id = "cp023-no-union"
+expect = "kill"
+misunderstanding = "CP-023: the burns of a second read replace the earlier burns"
+  [[mutation.edit]]
+  rule = "split_checkpoint--new_burn_2"
+  find = "burnRanges ( bOf ( P:Params ) , cpPools ( C:Cp ) ) Burn:List"
+  replace = "burnRanges ( bOf ( P:Params ) , cpPools ( C:Cp ) )"
+
+[[mutation]]
+id = "cp029-anchor-burns-ranges"
+expect = "kill"
+misunderstanding = "CP-029: with slot anchors the committee-pool ranges still burn"
+  [[mutation.edit]]
+  rule = "split_checkpoint--new_burn_1"
+  find = "requires anchorOf ( P:Params )"
+  replace = "requires false"
+  [[mutation.edit]]
+  rule = "split_checkpoint--new_burn_2"
+  find = "requires notBool anchorOf ( P:Params )"
+  replace = "requires true"
+
+[[mutation]]
+id = "cp020-window-end-exclusive"
+expect = "kill"
+misunderstanding = "CP-020, CP-039: the burn range ends below h + B"
+  [[mutation.edit]]
+  rule = "split_checkpoint--burn_ranges_2"
+  find = "H:Int +Int Bb:Int"
+  replace = "(H:Int +Int Bb:Int) -Int 1"
+
+[[mutation]]
+id = "cp020-pending-not-burned"
+expect = "kill"
+misunderstanding = "CP-020, CP-039: the burn range starts above h, so pending indices do not burn"
+  [[mutation.edit]]
+  rule = "split_checkpoint--burn_ranges_2"
+  find = "rg ( Pool:Int , PendingMin:Int ,"
+  replace = "rg ( Pool:Int , H:Int +Int 1 ,"
+
+[[mutation]]
+id = "cp020-first-pool-only"
+expect = "kill"
+misunderstanding = "CP-020: only the first committee pool of the checkpoint burns"
+  [[mutation.edit]]
+  rule = "split_checkpoint--burn_ranges_2"
+  find = "burnRanges ( Bb:Int , Rest:List )"
+  replace = ".List"
+
+[[mutation]]
+id = "cp021-accounts-kept"
+expect = "kill"
+misunderstanding = "CP-021, CP-022: a whole restart leaves the account pools as they are"
+  [[mutation.edit]]
+  rule = "split_checkpoint--gen_burn_2"
+  find = "=> burnAccts ( Accts:List )"
+  replace = "=> Accts:List"
+
+[[mutation]]
+id = "cp021-first-account-only"
+expect = "kill"
+misunderstanding = "CP-021: only the first account pool burns"
+  [[mutation.edit]]
+  rule = "split_checkpoint--burn_accts_2"
+  find = "burnAccts ( Rest:List )"
+  replace = "Rest:List"
+
+[[mutation]]
+id = "cp021-slots-kept"
+expect = "kill"
+misunderstanding = "CP-021: burning an account pool leaves its slots as they are"
+  [[mutation.edit]]
+  rule = "split_checkpoint--burn_slots_2"
+  find = "ListItem(_X:ASlot) Rest:List ) => ListItem(burnedSlot)"
+  replace = "ListItem(X:ASlot) Rest:List ) => ListItem(X:ASlot)"
+
+[[mutation]]
+id = "cp029-anchor-burns-accounts"
+expect = "kill"
+misunderstanding = "CP-029: with slot anchors the account pools still burn"
+  [[mutation.edit]]
+  rule = "split_checkpoint--restart_accts_1"
+  find = "=> anchorAccts ( Cov:List , Accts:List )"
+  replace = "=> burnAccts ( Accts:List )"
+
+[[mutation]]
+id = "cp029-other-account-binding"
+expect = "kill"
+misunderstanding = "CP-029: a covered binding of the slot index binds it in every account pool"
+  [[mutation.edit]]
+  rule = "split_checkpoint--covered_slot_2_1"
+  find = "(Account:Int ==Int Aid:Int) andThenBool (Slot:Int ==Int I:Int)"
+  replace = "Slot:Int ==Int I:Int"
+  [[mutation.edit]]
+  rule = "split_checkpoint--covered_slot_2_2"
+  find = "(Account:Int ==Int Aid:Int) andThenBool (Slot:Int ==Int I:Int)"
+  replace = "Slot:Int ==Int I:Int"
+
+[[mutation]]
+id = "cp029-other-slot-binding"
+expect = "kill"
+misunderstanding = "CP-029: a covered binding of the account binds every free slot of it"
+  [[mutation.edit]]
+  rule = "split_checkpoint--covered_slot_2_1"
+  find = "(Account:Int ==Int Aid:Int) andThenBool (Slot:Int ==Int I:Int)"
+  replace = "Account:Int ==Int Aid:Int"
+  [[mutation.edit]]
+  rule = "split_checkpoint--covered_slot_2_2"
+  find = "(Account:Int ==Int Aid:Int) andThenBool (Slot:Int ==Int I:Int)"
+  replace = "Account:Int ==Int Aid:Int"
+
+[[mutation]]
+id = "cp029-first-binding-only"
+expect = "kill"
+misunderstanding = "CP-029: only the first covered binding is read"
+  [[mutation.edit]]
+  rule = "split_checkpoint--covered_slot_2_2"
+  find = "=> coveredSlot ( Rest:List , Aid:Int , I:Int )"
+  replace = "=> free"
+
+[[mutation]]
+id = "cp029-slots-from-one"
+expect = "kill"
+misunderstanding = "CP-029: slot indices count from 1"
+  [[mutation.edit]]
+  rule = "split_checkpoint--anchor_slots_2"
+  find = "ListItem(coveredSlot ( Cov:List , Aid:Int , I:Int ))"
+  replace = "ListItem(coveredSlot ( Cov:List , Aid:Int , I:Int +Int 1 ))"
+
+[[mutation]]
+id = "cp029-bound-rebound"
+expect = "kill"
+misunderstanding = "CP-029: a bound slot takes the covered binding's digest"
+  [[mutation.edit]]
+  rule = "split_checkpoint--anchor_slots_3"
+  find = "ListItem(bound ( D:Int )) Rest:List ) => ListItem(bound ( D:Int ))"
+  replace = "ListItem(bound ( _ )) Rest:List ) => ListItem(coveredSlot ( Cov:List , Aid:Int , I:Int ))"
+
+[[mutation]]
+id = "cp029-burned-released"
+expect = "kill"
+misunderstanding = "CP-029: a burned slot is released as free"
+  [[mutation.edit]]
+  rule = "split_checkpoint--anchor_slots_4"
+  find = "=> ListItem(burnedSlot)"
+  replace = "=> ListItem(free)"
+
+[[mutation]]
+id = "cp029-first-account-only"
+expect = "kill"
+misunderstanding = "CP-029: only the first account pool is anchored"
+  [[mutation.edit]]
+  rule = "split_checkpoint--anchor_accts_2"
+  find = "anchorAccts ( Cov:List , Rest:List )"
+  replace = "Rest:List"
+
+[[mutation]]
+id = "cp024-all-pools"
+expect = "kill"
+misunderstanding = "CP-024: a new session opens with the burns of every pool, not only its own"
+  [[mutation.edit]]
+  rule = "split_checkpoint--session_burns_1"
+  find = "=> poolBurns ( Burn:List , Pid:Int )"
+  replace = "=> Burn:List"
+
+[[mutation]]
+id = "cp024-first-range-only"
+expect = "kill"
+misunderstanding = "CP-024: a session opens with the first burn range of its pool only"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pool_burns_2_1"
+  find = "=> ListItem(R:Range) poolBurns ( Rest:List , Pid:Int )"
+  replace = "=> ListItem(R:Range)"
+
+[[mutation]]
+id = "cp024-after-restart"
+expect = "kill"
+misunderstanding = "CP-024, CP-027: a session opened after the restart ended still opens with the burns"
+  [[mutation.edit]]
+  rule = "open-session"
+  find = "sessionBurns ( Restarting:Bool , Burn:List , Pool:Int )"
+  replace = "poolBurns ( Burn:List , Pool:Int )"
+
+[[mutation]]
+id = "ledger6-session-not-ready"
+expect = "kill"
+misunderstanding = "CP-019, ledger 6: a node that is not ready creates pool sessions"
+  [[mutation.edit]]
+  rule = "split_checkpoint--session_refusals"
+  find = "opt ( notBool Ready:Bool , ledgerUnverified ) "
+  replace = ""
+
+[[mutation]]
+id = "cp024-session-twice"
+expect = "kill"
+misunderstanding = "CP-024: a node may create a second session for one pool"
+  [[mutation.edit]]
+  rule = "split_checkpoint--session_refusals"
+  find = "opt ( hasSession ( Sessions:List , Pid:Int ) , noRule )"
+  replace = ".List"
+
+[[mutation]]
+id = "cp024-first-session-only"
+expect = "kill"
+misunderstanding = "CP-024: only the latest session counts when a second one is created"
+  [[mutation.edit]]
+  rule = "split_checkpoint--has_session_2_2"
+  find = "=> hasSession ( Rest:List , Pid:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "ledger6-session-refuse-code"
+expect = "kill"
+misunderstanding = "CP-019, ledger 6: every refused session is no-rule"
+  [[mutation.edit]]
+  rule = "open-session-refuse"
+  find = "ListItem(refused ( sessionRefusals ( Ready:Bool , Sessions:List , Pool:Int ) ))"
+  replace = "ListItem(refused ( ListItem(noRule) ))"
+
+[[mutation]]
+id = "cp026-no-burn-on-open"
+expect = "kill"
+misunderstanding = "CP-026: an account pool opens as restored, whatever its mark"
+  [[mutation.edit]]
+  rule = "open-acct"
+  find = "openedAcct ( A:Acct , latestRestartSeq ( Chain:List ) , preMarker ( Restarting:Bool , Landed:Bool , Params:Params ) )"
+  replace = "A:Acct"
+
+[[mutation]]
+id = "cp026-mark-equal-burns"
+expect = "kill"
+misunderstanding = "CP-026: a mark equal to restart_seq also burns"
+  [[mutation.edit]]
+  rule = "split_checkpoint--opened_acct_1_1"
+  find = "Mark:Int <Int Rsq:Int"
+  replace = "Mark:Int <=Int Rsq:Int"
+  [[mutation.edit]]
+  rule = "split_checkpoint--opened_acct_1_2"
+  find = "Mark:Int <Int Rsq:Int"
+  replace = "Mark:Int <=Int Rsq:Int"
+
+[[mutation]]
+id = "cp026-mark-not-updated"
+expect = "kill"
+misunderstanding = "CP-026: the burned pool keeps its old mark"
+  [[mutation.edit]]
+  rule = "split_checkpoint--opened_acct_1_1"
+  find = "burnSlots ( Slots:List ) , Rsq:Int ,"
+  replace = "burnSlots ( Slots:List ) , Mark:Int ,"
+
+[[mutation]]
+id = "cp026-oldest-restart-seq"
+expect = "kill"
+misunderstanding = "CP-011, CP-026: the node reads restart_seq as its initial value 0, not the latest landed one"
+  [[mutation.edit]]
+  rule = "split_checkpoint--latest_restart_seq_2"
+  find = "ListItem(C:Cp) _ ) => cpRestartSeq ( C:Cp )"
+  replace = "ListItem(_C:Cp) _ ) => 0"
+
+[[mutation]]
+id = "ledger6-acct-not-ready"
+expect = "kill"
+misunderstanding = "CP-019, ledger 6: a node that is not ready opens account pools"
+  [[mutation.edit]]
+  rule = "split_checkpoint--acct_refusals"
+  find = "opt ( notBool Ready:Bool , ledgerUnverified ) "
+  replace = ""
+
+[[mutation]]
+id = "cp026-acct-twice"
+expect = "kill"
+misunderstanding = "CP-026: one account pool may be opened twice"
+  [[mutation.edit]]
+  rule = "split_checkpoint--acct_refusals"
+  find = "opt ( hasAcct ( Accts:List , acctId ( A:Acct ) ) , noRule )"
+  replace = ".List"
+
+[[mutation]]
+id = "cp026-first-acct-only"
+expect = "kill"
+misunderstanding = "CP-026: a second open is caught only against the latest opened pool"
+  [[mutation.edit]]
+  rule = "split_checkpoint--has_acct_2_2"
+  find = "=> hasAcct ( Rest:List , Aid:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "ledger6-acct-refuse-code"
+expect = "kill"
+misunderstanding = "CP-019, ledger 6: every refused account open is no-rule"
+  [[mutation.edit]]
+  rule = "open-acct-refuse"
+  find = "ListItem(refused ( acctRefusals ( Ready:Bool , Accounts:List , A:Acct ) ))"
+  replace = "ListItem(refused ( ListItem(noRule) ))"
+
+[[mutation]]
+id = "ledger6-bind-not-ready"
+expect = "kill"
+misunderstanding = "CP-019, ledger 6: a node that is not ready binds slots"
+  [[mutation.edit]]
+  rule = "split_checkpoint--bind_refusals"
+  find = "opt ( notBool Ready:Bool , ledgerUnverified ) "
+  replace = ""
+
+[[mutation]]
+id = "cp025-bind-in-restart"
+expect = "kill"
+misunderstanding = "CP-025: the node binds account-pool slots while the restart is open"
+  [[mutation.edit]]
+  rule = "split_checkpoint--bind_refusals"
+  find = "(Open:Bool andThenBool (notBool Landed:Bool)) orElseBool "
+  replace = ""
+
+[[mutation]]
+id = "cp025-bind-until-end"
+expect = "kill"
+misunderstanding = "CP-025, CP-027: no bind until the restart ends, even after the marker lands"
+  [[mutation.edit]]
+  rule = "split_checkpoint--bind_refusals"
+  find = "(Open:Bool andThenBool (notBool Landed:Bool))"
+  replace = "Open:Bool"
+
+[[mutation]]
+id = "ledger5-bind-any-slot"
+expect = "kill"
+misunderstanding = "ledger 5 (CP-025): a slot that is not free, or not there, may be bound"
+  [[mutation.edit]]
+  rule = "split_checkpoint--bind_refusals"
+  find = " orElseBool (notBool slotFree ( Accts:List , Aid:Int , I:Int ))"
+  replace = ""
+
+[[mutation]]
+id = "ledger5-rebind-bound"
+expect = "kill"
+misunderstanding = "ledger 5 (CP-025): a bound slot may be bound again; only burned slots are refused"
+  [[mutation.edit]]
+  rule = "split_checkpoint--free_at_2_1"
+  find = "X:ASlot ==K free"
+  replace = "X:ASlot =/=K burnedSlot"
+
+[[mutation]]
+id = "ledger5-slot-index-from-one"
+expect = "kill"
+misunderstanding = "ledger 5 (CP-025): slot indices count from 1"
+  [[mutation.edit]]
+  rule = "split_checkpoint--free_at_2_2"
+  find = "freeAt ( Rest:List , I:Int -Int 1 )"
+  replace = "freeAt ( Rest:List , I:Int )"
+
+[[mutation]]
+id = "cp025-bind-no-change"
+expect = "kill"
+misunderstanding = "CP-025: an accepted bind leaves the account pools as they are"
+  [[mutation.edit]]
+  rule = "bind-acct"
+  find = "bindAccts ( Accounts:List , Aid:Int , I:Int , D:Int )"
+  replace = "Accounts:List"
+
+[[mutation]]
+id = "cp025-bind-next-slot"
+expect = "kill"
+misunderstanding = "CP-025: the bind sets the slot after the one named"
+  [[mutation.edit]]
+  rule = "split_checkpoint--bind_accts_2_1"
+  find = "setBound ( Slots:List , I:Int , D:Int )"
+  replace = "setBound ( Slots:List , I:Int +Int 1 , D:Int )"
+
+[[mutation]]
+id = "cp025-bind-first-account"
+expect = "kill"
+misunderstanding = "CP-025: the bind goes to the latest opened account pool, whatever its id"
+  [[mutation.edit]]
+  rule = "split_checkpoint--bind_accts_2_2"
+  find = "=> ListItem(acct ( Id:Int , Slots:List , Mark:Int , Refill:Bool )) bindAccts ( Rest:List , Aid:Int , I:Int , D:Int )"
+  replace = "=> ListItem(acct ( Id:Int , setBound ( Slots:List , I:Int , D:Int ) , Mark:Int , Refill:Bool )) Rest:List"
+
+[[mutation]]
+id = "cp025-set-first-slot"
+expect = "kill"
+misunderstanding = "CP-025: the bind always sets slot 0"
+  [[mutation.edit]]
+  rule = "split_checkpoint--set_bound_2_2"
+  find = "ListItem(X:ASlot) setBound ( Rest:List , I:Int -Int 1 , D:Int )"
+  replace = "ListItem(X:ASlot) Rest:List"
+
+[[mutation]]
+id = "ledger5-bind-refuse-code"
+expect = "kill"
+misunderstanding = "CP-019, ledger 5, ledger 6: every refused bind is no-rule"
+  [[mutation.edit]]
+  rule = "bind-acct-refuse"
+  find = "ListItem(refused ( bindRefusals ( Ready:Bool , Restarting:Bool , Landed:Bool , Accounts:List , Aid:Int , I:Int ) ))"
+  replace = "ListItem(refused ( ListItem(noRule) ))"
+
+[[mutation]]
+id = "cp025-marker-not-landed"
+expect = "kill"
+misunderstanding = "CP-025: the marker checkpoint does not lift the bind ban"
+  [[mutation.edit]]
+  rule = "land-marker"
+  find = "<landed> _ => true </landed>"
+  replace = "<landed> _ => false </landed>"
+
+[[mutation]]
+id = "cp025-marks-not-written"
+expect = "kill"
+misunderstanding = "CP-025: the marker checkpoint does not write its restart_seq into the account pools"
+  [[mutation.edit]]
+  rule = "land-marker"
+  find = "markAccts ( Accounts:List , cpRestartSeq ( C:Cp ) )"
+  replace = "Accounts:List"
+
+[[mutation]]
+id = "cp025-marks-first-only"
+expect = "kill"
+misunderstanding = "CP-025: the marker is written into the latest opened account pool only"
+  [[mutation.edit]]
+  rule = "split_checkpoint--mark_accts_2"
+  find = "markAccts ( Rest:List , M:Int )"
+  replace = "Rest:List"
+
+[[mutation]]
+id = "cp027-marker-ends-restart"
+expect = "kill"
+misunderstanding = "CP-027: the marker checkpoint ends the restart, whatever seats are continuous"
+  [[mutation.edit]]
+  rule = "land-marker"
+  find = "stillOpen ( Params:Params , Tickets:List , C:Cp )"
+  replace = "false"
+
+[[mutation]]
+id = "cp027-end-at-w"
+expect = "kill"
+misunderstanding = "CP-027: w continuous seats end the restart"
+  [[mutation.edit]]
+  rule = "split_checkpoint--still_open"
+  find = "(wOf ( P:Params ) +Int 1) <=Int"
+  replace = "wOf ( P:Params ) <=Int"
+
+[[mutation]]
+id = "cp025-marker-at-prev"
+expect = "kill"
+misunderstanding = "CP-025: a landing with restart_seq equal to the marker is the marker checkpoint"
+  [[mutation.edit]]
+  rule = "split_checkpoint--is_marker"
+  find = "(Prev:Int <Int cpRestartSeq ( C:Cp ))"
+  replace = "(Prev:Int <=Int cpRestartSeq ( C:Cp ))"
+
+[[mutation]]
+id = "cp025-marker-without-restart"
+expect = "kill"
+misunderstanding = "CP-025: a landing that raises restart_seq is a marker even with no restart open"
+  [[mutation.edit]]
+  rule = "split_checkpoint--is_marker"
+  find = "Open:Bool andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "cp027-plain-landing-ends"
+expect = "kill"
+misunderstanding = "CP-025, CP-027: a landing during an open restart is always its marker"
+  [[mutation.edit]]
+  rule = "land-plain"
+  find = "requires notBool isMarker ( Restarting:Bool , Marker:Int , C:Cp )"
+  replace = "requires notBool Restarting:Bool"
+  [[mutation.edit]]
+  rule = "land-marker"
+  find = "requires isMarker ( Restarting:Bool , Marker:Int , C:Cp )"
+  replace = "requires Restarting:Bool"
+
+[[mutation]]
+id = "cp016-restore-not-pending"
+expect = "kill"
+misunderstanding = "CP-004, CP-016: an appended RestoreDone is not kept for the next checkpoint"
+  [[mutation.edit]]
+  rule = "restore-done"
+  find = "ListItem(R:Restore) Waiting:List"
+  replace = "Waiting:List"
+
+[[mutation]]
+id = "cp016-seat-n-inside"
+expect = "kill"
+misunderstanding = "CP-016: seat n appends RestoreDone statements (seats count from 1)"
+  [[mutation.edit]]
+  rule = "restore-done"
+  find = "requires Seat:Int <Int nOf ( Params:Params )"
+  replace = "requires Seat:Int <=Int nOf ( Params:Params )"
+  [[mutation.edit]]
+  rule = "restore-done-outside"
+  find = "requires nOf ( Params:Params ) <=Int Seat:Int"
+  replace = "requires nOf ( Params:Params ) <Int Seat:Int"
+
+[[mutation]]
+id = "cp016-outside-code"
+expect = "kill"
+misunderstanding = "CP-016: a RestoreDone of an unknown seat is no-rule"
+  [[mutation.edit]]
+  rule = "restore-done-outside"
+  find = "ListItem(outsideCapability)"
+  replace = "ListItem(noRule)"
+
+[[mutation]]
+id = "cp004-may-reboot-always"
+expect = "kill"
+misunderstanding = "CP-004: a seat may reboot before its RestoreDone is carried"
+  [[mutation.edit]]
+  rule = "may-reboot"
+  find = "size(Waiting:List) ==Int 0"
+  replace = "true"
+
+[[mutation]]
+id = "cp033-no-new-pool"
+expect = "kill"
+misunderstanding = "CP-033: a non-TEE restart deals no new nonce pool"
+  [[mutation.edit]]
+  rule = "non-tee-restart"
+  find = "<newpool> _ => true </newpool>"
+  replace = "<newpool> _ => false </newpool>"
+
+[[mutation]]
+id = "cp033-tee-code"
+expect = "kill"
+misunderstanding = "CP-033: a TEE committee's all-at-once restart is outside the capability, not no-rule"
+  [[mutation.edit]]
+  rule = "non-tee-restart-refuse"
+  find = "ListItem(noRule)"
+  replace = "ListItem(outsideCapability)"
+
+[[mutation]]
+id = "cp033-mode-swapped"
+expect = "kill"
+misunderstanding = "CP-018, CP-033: the TEE rules apply to the NON_TEE mode and the other way round"
+  [[mutation.edit]]
+  rule = "split_checkpoint--non_tee_of_1"
+  find = "Mode:Mode ==K NON_TEE"
+  replace = "Mode:Mode ==K TEE"

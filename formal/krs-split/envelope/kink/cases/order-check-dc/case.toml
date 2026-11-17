@@ -1,0 +1,8 @@
+# EN-023: the check adds delta_c: b = 890, delta_c 9 gives exp_c = 899 below exp = 900 (ok), where b alone or delta_c 10 would differ.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 9 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { OrderCheck = { exp = 900, b = 890 } },
+]

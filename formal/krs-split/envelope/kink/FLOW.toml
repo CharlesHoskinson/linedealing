@@ -1,0 +1,64 @@
+# Reference suite for split-envelope. The programs are typed cases: cases/*/case.toml.
+# `krs kink coverage` must leave no obligation open, `krs kink run` must kill every
+# mutation or carry an argued survivor, and `krs kink compare` checks the reference
+# definition against the Lean oracle (corpus end equivalence: equal ends on every program).
+
+[spec]
+krs = { package = "split-envelope-reference", definition = "main" }
+
+# Unique-cause MC/DC on every guard.
+[coverage]
+mcdc = true
+
+# EN-022 (C10, C21): no check before order reads the request type in body_0, so no
+# step takes an RType constructor as an operand. The cases carry SPEND and CONTRIB
+# (cases/submit-accept, cases/submit-contrib-blind) and the oracle's answer is the same.
+[[coverage.argued]]
+item = "syntax:crate::RTypeC::Spend"
+argument = "EN-022: no rule reads the request type before order, so no step takes it as an operand"
+
+[[coverage.argued]]
+item = "syntax:crate::RTypeC::Exit"
+argument = "EN-022: no rule reads the request type before order, so no step takes it as an operand"
+
+[[coverage.argued]]
+item = "syntax:crate::RTypeC::Seizure"
+argument = "EN-022: no rule reads the request type before order, so no step takes it as an operand"
+
+[[coverage.argued]]
+item = "syntax:crate::RTypeC::Birth"
+argument = "EN-022: no rule reads the request type before order, so no step takes it as an operand"
+
+[[coverage.argued]]
+item = "syntax:crate::RTypeC::Refill"
+argument = "EN-022: no rule reads the request type before order, so no step takes it as an operand"
+
+[[coverage.argued]]
+item = "syntax:crate::RTypeC::P0"
+argument = "EN-022: no rule reads the request type before order, so no step takes it as an operand"
+
+[[coverage.argued]]
+item = "syntax:crate::RTypeC::Contrib"
+argument = "EN-022: no rule reads the request type before order, so no step takes it as an operand"
+
+[[coverage.argued]]
+item = "requirement:crate::grid_all_2:g <= 0:mcdc"
+argument = "EN-010: GridAll reaches g = 0 only after rows G down to 1 are each covered, which takes G·L slots on distinct cells (g, j) with g >= 1; CountBad reads GridAll only when there are exactly G·L slots, so no slot is left for generation 0 and GridRow(0, L, slots) is false whenever g <= 0 holds"
+
+[budget]
+time_ms = 600000
+
+[[program]]
+cases = "cases/*/case.toml"
+
+# Spec anchor: the Lean oracle (formal/lean-split/envelope, `lake build oracle`), through
+# the schema-driven adapter that translates the KRS typed encoding to the oracle's JSON
+# and back. No identity: the answers depend on the adapter, the schema and the binary,
+# and one identity file cannot cover all three, so kink caches none (practice 26).
+[[implementation]]
+name = "lean-oracle"
+command = ["python3", "-I", "../../scripts/oracle_adapter.py", "../schema.json",
+           "../../../lean-split/envelope/.lake/build/bin/oracle"]
+given = "inputs"
+omits = ["k", "ops"]
+views = [{ name = "end", required = true }]

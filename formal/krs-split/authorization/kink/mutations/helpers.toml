@@ -1,0 +1,1142 @@
+# Misreadings of the helper functions: every equation of the definition is a mutation target,
+# so each helper equation no other file edits has one here, named for the requirement it serves.
+
+[[mutation]]
+id = "h-add-auth-2"
+expect = "kill"
+misunderstanding = "AU-004: an authorize moves every record to PENDING with the new authorization, not only the named one"
+  [[mutation.edit]]
+  rule = "split_authorization--add_auth_1"
+  find = "Rid:Int ==Int Crid:Int"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_authorization--add_auth_2"
+  find = "Rid:Int =/=Int Crid:Int"
+  replace = "false"
+
+[[mutation]]
+id = "h-add-auth-all-1"
+expect = "kill"
+misunderstanding = "AU-004: an authorize adds a record"
+  [[mutation.edit]]
+  rule = "split_authorization--add_auth_all_1"
+  find = "=> .List"
+  replace = "=> ListItem(rec ( 77 , 0 , profP0 , false , rsUNSPENT , fresh ( 77 ) , .List , 0 , .List , .List , false , .List ))"
+
+[[mutation]]
+id = "h-add-auth-all-2"
+expect = "kill"
+misunderstanding = "AU-005: add_auth_all_2 drops each element instead of keeping it"
+  [[mutation.edit]]
+  rule = "split_authorization--add_auth_all_2"
+  find = "=> ListItem(addAuth ( C:Call , R:Rec )) addAuthAll ( C:Call , Rest:List )"
+  replace = "=> addAuthAll ( C:Call , Rest:List )"
+
+[[mutation]]
+id = "h-after-carry-1"
+expect = "kill"
+misunderstanding = "AU-021: a call without a carry sees no records"
+  [[mutation.edit]]
+  rule = "split_authorization--after_carry_1"
+  find = "=> Rs:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-after-carry-3"
+expect = "kill"
+misunderstanding = "AU-021, AU-022: a carried leaf settles auth_0 VOID even when it is not valid"
+  [[mutation.edit]]
+  rule = "split_authorization--after_carry_2"
+  find = "carryOk ( Q:Int , K:Carry )"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_authorization--after_carry_3"
+  find = "carryOk ( Q:Int , K:Carry )"
+  replace = "true"
+
+[[mutation]]
+id = "h-all-auths-1"
+expect = "kill"
+misunderstanding = "AU-028: the authorizations hold a seizure-source authorization 99 that no record holds"
+  [[mutation.edit]]
+  rule = "split_authorization--all_auths_1"
+  find = "=> .List"
+  replace = "=> ListItem(auth ( 99 , fresh ( 99 ) , 0 , stSUBMITTED , ListItem(0) , setNONE , ListItem(srcSEIZURE) , .List , true ))"
+
+[[mutation]]
+id = "h-all-auths-2"
+expect = "kill"
+misunderstanding = "AU-018, AU-028: only the first record's authorizations are read"
+  [[mutation.edit]]
+  rule = "split_authorization--all_auths_2"
+  find = "=> Auths:List allAuths ( Rest:List )"
+  replace = "=> Auths:List"
+
+[[mutation]]
+id = "h-all-tuples-named-1"
+expect = "kill"
+misunderstanding = "AU-026: all_tuples_named gives false where the definition gives true (found case)"
+  [[mutation.edit]]
+  rule = "split_authorization--all_tuples_named_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-all-tuples-named-2"
+expect = "kill"
+misunderstanding = "AU-026: all_tuples_named gives true where the definition gives false (mismatch case)"
+  [[mutation.edit]]
+  rule = "split_authorization--all_tuples_named_2"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-all-tuples-named-3"
+expect = "kill"
+misunderstanding = "AU-026: all_tuples_named reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--all_tuples_named_3"
+  find = "=> allTuplesNamed ( Rest:List , Rs:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any3-1"
+expect = "kill"
+misunderstanding = "AU-018, ledger 9: a revoke of an authorization no record holds is not no-rule"
+  [[mutation.edit]]
+  rule = "split_authorization--any3_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any3-2"
+expect = "kill"
+misunderstanding = "AU-018, ledger 9: a revoke with another tag than the record's is not no-rule"
+  [[mutation.edit]]
+  rule = "split_authorization--any3_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any3-3"
+expect = "kill"
+misunderstanding = "AU-018, ledger 9: a revoke of a REVOKED authorization is not no-rule"
+  [[mutation.edit]]
+  rule = "split_authorization--any3_3"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any3-4"
+expect = "kill"
+misunderstanding = "AU-018, ledger 9: every revoke is no-rule"
+  [[mutation.edit]]
+  rule = "split_authorization--any3_4"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-an-1"
+expect = "kill"
+misunderstanding = "AU-016: any_an gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_an_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-an-2"
+expect = "kill"
+misunderstanding = "AU-016: any_an gives false where the definition gives true (match case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_an_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-an-3"
+expect = "kill"
+misunderstanding = "AU-016: any_an reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--any_an_3"
+  find = "=> anyAn ( Rest:List , A:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-bad-statement-1"
+expect = "kill"
+misunderstanding = "AU-005: any_bad_statement gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_bad_statement_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-bf-rec-1"
+expect = "kill"
+misunderstanding = "AU-012: any_bf_rec gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_bf_rec_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-hit-1"
+expect = "kill"
+misunderstanding = "AU-018: any_hit gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_hit_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-hit-2"
+expect = "kill"
+misunderstanding = "AU-018: any_hit gives false where the definition gives true (match case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_hit_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-hit-3"
+expect = "kill"
+misunderstanding = "AU-018: any_hit reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--any_hit_3"
+  find = "=> anyHit ( Rest:List , A:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-hit-not-p2-1"
+expect = "kill"
+misunderstanding = "AU-019: any_hit_not_p2 gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_hit_not_p2_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-hit-not-p2-2"
+expect = "kill"
+misunderstanding = "AU-019: any_hit_not_p2 gives false where the definition gives true (match case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_hit_not_p2_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-hit-not-p2-3"
+expect = "kill"
+misunderstanding = "AU-019: any_hit_not_p2 reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--any_hit_not_p2_3"
+  find = "=> anyHitNotP2 ( Rest:List , A:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-hit-other-tag-1"
+expect = "kill"
+misunderstanding = "AU-018: any_hit_other_tag gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_hit_other_tag_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-none-leaf-1"
+expect = "kill"
+misunderstanding = "AU-020: any_none_leaf gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_none_leaf_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-none-leaf-3"
+expect = "kill"
+misunderstanding = "AU-020: any_none_leaf reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--any_none_leaf_3"
+  find = "=> anyNoneLeaf ( Rest:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-pin-mismatch-1"
+expect = "kill"
+misunderstanding = "AU-009: any_pin_mismatch gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_pin_mismatch_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-rec-nf-1"
+expect = "kill"
+misunderstanding = "AU-001: any_rec_nf gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_rec_nf_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-rec-nf-2"
+expect = "kill"
+misunderstanding = "AU-001: any_rec_nf gives false where the definition gives true (match case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_rec_nf_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-rec-nf-3"
+expect = "kill"
+misunderstanding = "AU-001: any_rec_nf reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--any_rec_nf_3"
+  find = "=> anyRecNf ( Rest:List , Nf:Nf )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-revoked-1"
+expect = "kill"
+misunderstanding = "AU-018: any_revoked gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_revoked_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-revoked-2"
+expect = "kill"
+misunderstanding = "AU-018: any_revoked gives false where the definition gives true (match case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_revoked_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-revoked-3"
+expect = "kill"
+misunderstanding = "AU-018: any_revoked reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--any_revoked_3"
+  find = "=> anyRevoked ( Rest:List , A:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-rid"
+expect = "kill"
+misunderstanding = "AU-001: a record id may land twice"
+  [[mutation.edit]]
+  rule = "split_authorization--any_rid"
+  find = "=> hasRid ( Rs:List , Rid:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-seizure-auth-1"
+expect = "kill"
+misunderstanding = "AU-028: any_seizure_auth gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_seizure_auth_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-sel-1"
+expect = "kill"
+misunderstanding = "AU-020: any_sel gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_sel_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-sel-2"
+expect = "kill"
+misunderstanding = "AU-020: any_sel gives false where the definition gives true (match case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_sel_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-sel-3"
+expect = "kill"
+misunderstanding = "AU-020: any_sel reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--any_sel_3"
+  find = "=> anySel ( Rest:List , A:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-settled-1"
+expect = "kill"
+misunderstanding = "AU-019: any_settled gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_settled_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-settled-2"
+expect = "kill"
+misunderstanding = "AU-019: any_settled gives false where the definition gives true (match case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_settled_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-settled-3"
+expect = "kill"
+misunderstanding = "AU-019: any_settled reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--any_settled_3"
+  find = "=> anySettled ( Rest:List , A:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-submitted-1"
+expect = "kill"
+misunderstanding = "AU-002: any_submitted gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_submitted_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-tuple-auth-exists-1"
+expect = "kill"
+misunderstanding = "AU-026: any_tuple_auth_exists gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_tuple_auth_exists_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-tuple-auth-exists-2"
+expect = "kill"
+misunderstanding = "AU-026: any_tuple_auth_exists gives false where the definition gives true (match case)"
+  [[mutation.edit]]
+  rule = "split_authorization--any_tuple_auth_exists_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-tuple-auth-exists-3"
+expect = "kill"
+misunderstanding = "AU-026: any_tuple_auth_exists reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--any_tuple_auth_exists_3"
+  find = "=> anyTupleAuthExists ( Rest:List , Bs:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-auth-exists-1"
+expect = "kill"
+misunderstanding = "AU-004: auth_exists gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--auth_exists_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-auth-exists-2"
+expect = "kill"
+misunderstanding = "AU-004: auth_exists gives false where the definition gives true (match case)"
+  [[mutation.edit]]
+  rule = "split_authorization--auth_exists_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-auth-exists-3"
+expect = "kill"
+misunderstanding = "AU-004: auth_exists reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--auth_exists_3"
+  find = "=> authExists ( Rest:List , A:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-bf-all-1"
+expect = "kill"
+misunderstanding = "AU-026: a bf_root replaces each record"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_all_1"
+  find = "=> R:Rec"
+  replace = "=> rec ( 77 , 0 , profP0 , false , rsUNSPENT , fresh ( 77 ) , .List , 0 , .List , .List , false , .List )"
+
+[[mutation]]
+id = "h-bf-all-2"
+expect = "kill"
+misunderstanding = "AU-026: only the first tuple of a bf_root applies"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_all_2"
+  find = "=> bfAll ( Rest:List , bfIn ( T:BfTuple , R:Rec ) )"
+  replace = "=> bfIn ( T:BfTuple , R:Rec )"
+
+[[mutation]]
+id = "h-bf-call-refusals-1"
+expect = "kill"
+misunderstanding = "AU-013: bf_call_refusals gives no code where its check fails"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_call_refusals_1"
+  find = "=> ListItem(noRuleCode)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-bf-rec-has-nf-1"
+expect = "kill"
+misunderstanding = "AU-026: bf_rec_has_nf gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_rec_has_nf_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-bf-recs-1"
+expect = "kill"
+misunderstanding = "AU-026: a bf_root adds a record"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_recs_1"
+  find = "=> .List"
+  replace = "=> ListItem(rec ( 77 , 0 , profP0 , false , rsUNSPENT , fresh ( 77 ) , .List , 0 , .List , .List , false , .List ))"
+
+[[mutation]]
+id = "h-bf-recs-2"
+expect = "kill"
+misunderstanding = "AU-026: bf_recs drops each element instead of keeping it"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_recs_2"
+  find = "=> ListItem(bfAll ( Ts:List , R:Rec )) bfRecs ( Ts:List , Rest:List )"
+  replace = "=> bfRecs ( Ts:List , Rest:List )"
+
+[[mutation]]
+id = "h-bf-root-refusals"
+expect = "kill"
+misunderstanding = "AU-026: outside-capability is listed before no-rule"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_root_refusals"
+  find = "bfRootNoRuleCode ( Ts:List , Rs:List ) bfRootOutsideCode ( Ts:List , Rs:List )"
+  replace = "bfRootOutsideCode ( Ts:List , Rs:List ) bfRootNoRuleCode ( Ts:List , Rs:List )"
+
+[[mutation]]
+id = "h-call-an-1"
+expect = "kill"
+misunderstanding = "AU-016: the in-force entry does not name the call's auth"
+  [[mutation.edit]]
+  rule = "split_authorization--call_an_1"
+  find = "=> an ( Auth:Int , Nf:Nf )"
+  replace = "=> an ( 0 , Nf:Nf )"
+
+[[mutation]]
+id = "h-call-nf-1"
+expect = "kill"
+misunderstanding = "AU-014: the pending set receives another nf than the call's"
+  [[mutation.edit]]
+  rule = "split_authorization--call_nf_1"
+  find = "=> Nf:Nf"
+  replace = "=> fresh ( 77 )"
+
+[[mutation]]
+id = "h-carry-code-1"
+expect = "kill"
+misunderstanding = "AU-022: carry_code gives the code badCarry where its check passes"
+  [[mutation.edit]]
+  rule = "split_authorization--carry_code_1"
+  find = "=> .List"
+  replace = "=> ListItem(badCarry)"
+
+[[mutation]]
+id = "h-carry-no-rule-1"
+expect = "kill"
+misunderstanding = "AU-021, ledger 6: a call without a carry is no-rule"
+  [[mutation.edit]]
+  rule = "split_authorization--carry_no_rule_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-carry-no-rule-2"
+expect = "kill"
+misunderstanding = "AU-021, ledger 6: a valid carry is no-rule when auth_0 is unsettled"
+  [[mutation.edit]]
+  rule = "split_authorization--carry_no_rule_2"
+  find = "=> notBool anySel ( Bs:List , Auth0:Int )"
+  replace = "=> anySel ( Bs:List , Auth0:Int )"
+
+[[mutation]]
+id = "h-carry-no-rule-3"
+expect = "kill"
+misunderstanding = "AU-021, AU-022: a carry that is not valid is also no-rule"
+  [[mutation.edit]]
+  rule = "split_authorization--carry_no_rule_3"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-carry-of-1"
+expect = "kill"
+misunderstanding = "AU-021: the carry of an accepted call is not applied"
+  [[mutation.edit]]
+  rule = "split_authorization--carry_of_1"
+  find = "=> Carry:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-carry-sigs-ok-1"
+expect = "kill"
+misunderstanding = "AU-013: a call without a carried leaf fails the node's checks"
+  [[mutation.edit]]
+  rule = "split_authorization--carry_sigs_ok_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-drop-nfs-1"
+expect = "kill"
+misunderstanding = "AU-026: a landed bf_root adds an nf to the pending set"
+  [[mutation.edit]]
+  rule = "split_authorization--drop_nfs_1"
+  find = "=> .List"
+  replace = "=> ListItem(fresh ( 77 ))"
+
+[[mutation]]
+id = "h-drop-nfs-2"
+expect = "kill"
+misunderstanding = "AU-026: a landed bf_root leaves its nfs in the pending set"
+  [[mutation.edit]]
+  rule = "split_authorization--drop_nfs_2"
+  find = "=> dropNfs ( Rest:List , Nfs:List )"
+  replace = "=> ListItem(X:Nf) dropNfs ( Rest:List , Nfs:List )"
+
+[[mutation]]
+id = "h-drop-nfs-3"
+expect = "kill"
+misunderstanding = "AU-026: a landed bf_root empties the pending set"
+  [[mutation.edit]]
+  rule = "split_authorization--drop_nfs_3"
+  find = "=> ListItem(X:Nf) dropNfs ( Rest:List , Nfs:List )"
+  replace = "=> dropNfs ( Rest:List , Nfs:List )"
+
+[[mutation]]
+id = "h-final-in-2"
+expect = "kill"
+misunderstanding = "AU-010: finalize makes every SUBMITTED authorization FINAL"
+  [[mutation.edit]]
+  rule = "split_authorization--final_in_1"
+  find = "(Auth:Int ==Int A:Int)"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_authorization--final_in_2"
+  find = "(Auth:Int ==Int A:Int)"
+  replace = "true"
+
+[[mutation]]
+id = "h-find-charter-1"
+expect = "kill"
+misunderstanding = "AU-001: a record without a registered charter lands under a P0 charter"
+  [[mutation.edit]]
+  rule = "split_authorization--find_charter_1"
+  find = "=> .List"
+  replace = "=> ListItem(charter ( 0 , profP0 , false ))"
+
+[[mutation]]
+id = "h-find-charter-2"
+expect = "kill"
+misunderstanding = "AU-001: a record's own charter is not found"
+  [[mutation.edit]]
+  rule = "split_authorization--find_charter_2"
+  find = "=> ListItem(Ch:Charter)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-find-charter-3"
+expect = "kill"
+misunderstanding = "AU-001: only the first charter is searched"
+  [[mutation.edit]]
+  rule = "split_authorization--find_charter_3"
+  find = "=> findCharter ( Rest:List , Cid:Int )"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-fresh-code-1"
+expect = "kill"
+misunderstanding = "AU-004: fresh_code gives no code where its check fails"
+  [[mutation.edit]]
+  rule = "split_authorization--fresh_code_1"
+  find = "=> ListItem(outsideCapability)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-fresh-code-2"
+expect = "kill"
+misunderstanding = "AU-004: fresh_code gives the code outsideCapability where its check passes"
+  [[mutation.edit]]
+  rule = "split_authorization--fresh_code_2"
+  find = "=> .List"
+  replace = "=> ListItem(outsideCapability)"
+
+[[mutation]]
+id = "h-has-cid-1"
+expect = "kill"
+misunderstanding = "AU-011: has_cid gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--has_cid_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-has-cid-2"
+expect = "kill"
+misunderstanding = "AU-011: has_cid gives false where the definition gives true (match case)"
+  [[mutation.edit]]
+  rule = "split_authorization--has_cid_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-has-cid-3"
+expect = "kill"
+misunderstanding = "AU-011: has_cid reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--has_cid_3"
+  find = "=> hasCid ( Rest:List , Cid:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-has-rid-1"
+expect = "kill"
+misunderstanding = "AU-005: has_rid gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--has_rid_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-has-rid-2"
+expect = "kill"
+misunderstanding = "AU-005: has_rid gives false where the definition gives true (match case)"
+  [[mutation.edit]]
+  rule = "split_authorization--has_rid_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-has-rid-3"
+expect = "kill"
+misunderstanding = "AU-005: has_rid reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--has_rid_3"
+  find = "=> hasRid ( Rest:List , Rid:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-in-force-midnight-1"
+expect = "kill"
+misunderstanding = "AU-010: in_force_midnight gives true where the definition gives false (empty case)"
+  [[mutation.edit]]
+  rule = "split_authorization--in_force_midnight_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-in-force-midnight-2"
+expect = "kill"
+misunderstanding = "AU-010: in_force_midnight gives false where the definition gives true (match case)"
+  [[mutation.edit]]
+  rule = "split_authorization--in_force_midnight_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-in-force-midnight-3"
+expect = "kill"
+misunderstanding = "AU-010: in_force_midnight reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--in_force_midnight_3"
+  find = "=> inForceMidnight ( Rest:List , A:Int , H:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-is-fresh-1"
+expect = "kill"
+misunderstanding = "AU-001: a fresh nullifier is not fresh"
+  [[mutation.edit]]
+  rule = "split_authorization--is_fresh_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-is-fresh-2"
+expect = "kill"
+misunderstanding = "AU-001: a settlement nullifier is fresh"
+  [[mutation.edit]]
+  rule = "split_authorization--is_fresh_2"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-map-auth-1"
+expect = "kill"
+misunderstanding = "AU-010, AU-018: finalize revokes"
+  [[mutation.edit]]
+  rule = "split_authorization--map_auth_1"
+  find = "=> finalIn ( A:Int , H:Int , B:Auth )"
+  replace = "=> revokeIn ( A:Int , B:Auth )"
+
+[[mutation]]
+id = "h-map-auth-2"
+expect = "kill"
+misunderstanding = "AU-018: revoke changes no authorization"
+  [[mutation.edit]]
+  rule = "split_authorization--map_auth_2"
+  find = "=> revokeIn ( A:Int , B:Auth )"
+  replace = "=> B:Auth"
+
+[[mutation]]
+id = "h-map-auths-1"
+expect = "kill"
+misunderstanding = "AU-018: a finalize or revoke adds an authorization"
+  [[mutation.edit]]
+  rule = "split_authorization--map_auths_1"
+  find = "=> .List"
+  replace = "=> ListItem(auth ( 99 , fresh ( 99 ) , 0 , stSUBMITTED , ListItem(0) , setNONE , ListItem(srcSEIZURE) , .List , true ))"
+
+[[mutation]]
+id = "h-map-auths-2"
+expect = "kill"
+misunderstanding = "AU-018: map_auths drops each element instead of keeping it"
+  [[mutation.edit]]
+  rule = "split_authorization--map_auths_2"
+  find = "=> ListItem(mapAuth ( F:AuthMap , A:Int , B:Auth )) mapAuths ( F:AuthMap , A:Int , Rest:List )"
+  replace = "=> mapAuths ( F:AuthMap , A:Int , Rest:List )"
+
+[[mutation]]
+id = "h-map-rec-auths-1"
+expect = "kill"
+misunderstanding = "AU-018: a finalize or revoke adds a record"
+  [[mutation.edit]]
+  rule = "split_authorization--map_rec_auths_1"
+  find = "=> .List"
+  replace = "=> ListItem(rec ( 77 , 0 , profP0 , false , rsUNSPENT , fresh ( 77 ) , .List , 0 , .List , .List , false , .List ))"
+
+[[mutation]]
+id = "h-map-rec-auths-2"
+expect = "kill"
+misunderstanding = "AU-018: map_rec_auths drops each element instead of keeping it"
+  [[mutation.edit]]
+  rule = "split_authorization--map_rec_auths_2"
+  find = "=> ListItem(rec ( Rid:Int , CmAddr:Int , Profile:Profile , BoardFirst:Bool , Rstate:RState , Nf:Nf , Pin:List , HoldTag:Int , SlrOwn:List , SlrG:List , Spent:Bool , mapAuths ( F:AuthMap , A:Int , Auths:List ) )) mapRecAuths ( F:AuthMap , A:Int , Rest:List )"
+  replace = "=> mapRecAuths ( F:AuthMap , A:Int , Rest:List )"
+
+[[mutation]]
+id = "h-nodup-b-1"
+expect = "kill"
+misunderstanding = "AU-026: nodup_b gives false where the definition gives true (found case)"
+  [[mutation.edit]]
+  rule = "split_authorization--nodup_b_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-nodup-b-2"
+expect = "kill"
+misunderstanding = "AU-026: nodup_b gives true where the definition gives false (mismatch case)"
+  [[mutation.edit]]
+  rule = "split_authorization--nodup_b_2"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-nodup-b-3"
+expect = "kill"
+misunderstanding = "AU-026: nodup_b reads only the first element of its list"
+  [[mutation.edit]]
+  rule = "split_authorization--nodup_b_3"
+  find = "=> nodupB ( Rest:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-opt-1"
+expect = "kill"
+misunderstanding = "AU-005, AU-018: a failed statement or revoke check gives no code"
+  [[mutation.edit]]
+  rule = "split_authorization--opt_1"
+  find = "=> ListItem(R:Refusal)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-opt-2"
+expect = "kill"
+misunderstanding = "AU-005, AU-018: a passed statement or revoke check gives no-rule"
+  [[mutation.edit]]
+  rule = "split_authorization--opt_2"
+  find = "=> .List"
+  replace = "=> ListItem(noRuleCode)"
+
+[[mutation]]
+id = "h-pin-of-1"
+expect = "kill"
+misunderstanding = "AU-023, AU-009: a RELEASED record is locked to its pin and to pin 0"
+  [[mutation.edit]]
+  rule = "split_authorization--pin_of_1"
+  find = "=> .List"
+  replace = "=> ListItem(0)"
+
+[[mutation]]
+id = "h-pin-of-2"
+expect = "kill"
+misunderstanding = "AU-023, AU-009: a RELEASED record is locked to no pin"
+  [[mutation.edit]]
+  rule = "split_authorization--pin_of_2"
+  find = "=> Pin:List pinOf ( A:Int , Rest:List )"
+  replace = "=> pinOf ( A:Int , Rest:List )"
+
+[[mutation]]
+id = "h-pin-of-3"
+expect = "kill"
+misunderstanding = "AU-023, AU-009: a RELEASED record is locked to the pins of all its authorizations, not the settled one's"
+  [[mutation.edit]]
+  rule = "split_authorization--pin_of_2"
+  find = "sel ( A:Int , B:Auth )"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_authorization--pin_of_3"
+  find = "sel ( A:Int , B:Auth )"
+  replace = "true"
+
+[[mutation]]
+id = "h-q-of-1"
+expect = "kill"
+misunderstanding = "AU-021, AU-013: q is zero, so any number of signatures verifies"
+  [[mutation.edit]]
+  rule = "split_authorization--q_of_1"
+  find = "=> Q:Int"
+  replace = "=> 0"
+
+[[mutation]]
+id = "h-record-refusals-2"
+expect = "kill"
+misunderstanding = "AU-001: record_refusals gives no code where its check fails"
+  [[mutation.edit]]
+  rule = "split_authorization--record_refusals_2"
+  find = "=> ListItem(outsideCapability)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-record-refusals-3"
+expect = "kill"
+misunderstanding = "AU-001: record_refusals gives the code outsideCapability where its check passes"
+  [[mutation.edit]]
+  rule = "split_authorization--record_refusals_3"
+  find = "=> .List"
+  replace = "=> ListItem(outsideCapability)"
+
+[[mutation]]
+id = "h-revoke-in-2"
+expect = "kill"
+misunderstanding = "AU-018: a revoke revokes every authorization of every record"
+  [[mutation.edit]]
+  rule = "split_authorization--revoke_in_1"
+  find = "Auth:Int ==Int A:Int"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_authorization--revoke_in_2"
+  find = "Auth:Int =/=Int A:Int"
+  replace = "false"
+
+[[mutation]]
+id = "h-revoke-no-rule-code"
+expect = "kill"
+misunderstanding = "AU-018, ledger 9: an unknown, mistagged or revoked authorization is not_revocable"
+  [[mutation.edit]]
+  rule = "split_authorization--revoke_no_rule_code"
+  find = "noRuleCode )"
+  replace = "notRevocable )"
+
+[[mutation]]
+id = "h-root-of-2"
+expect = "kill"
+misunderstanding = "AU-006: the owner and recovery sources open slots under slr_G"
+  [[mutation.edit]]
+  rule = "split_authorization--root_of_2"
+  find = "=> rootOWN"
+  replace = "=> rootG"
+
+[[mutation]]
+id = "h-seizure-obs-1"
+expect = "kill"
+misunderstanding = "AU-028: a seizure output that pays D_reg is VOID AUTH_REFUSED"
+  [[mutation.edit]]
+  rule = "split_authorization--seizure_obs_1"
+  find = "=> ok"
+  replace = "=> void ( AUTH_REFUSED )"
+
+[[mutation]]
+id = "h-settle-all-1"
+expect = "kill"
+misunderstanding = "AU-021: a carried settlement adds a record"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_all_1"
+  find = "=> .List"
+  replace = "=> ListItem(rec ( 77 , 0 , profP0 , false , rsUNSPENT , fresh ( 77 ) , .List , 0 , .List , .List , false , .List ))"
+
+[[mutation]]
+id = "h-settle-all-2"
+expect = "kill"
+misunderstanding = "AU-021: settle_all drops each element instead of keeping it"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_all_2"
+  find = "=> ListItem(settleIn ( A:Int , O:Settled , R:Rec )) settleAll ( A:Int , O:Settled , Rest:List )"
+  replace = "=> settleAll ( A:Int , O:Settled , Rest:List )"
+
+[[mutation]]
+id = "h-settle-leaves-1"
+expect = "kill"
+misunderstanding = "AU-020: a settle_root replaces each record"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_leaves_1"
+  find = "=> R:Rec"
+  replace = "=> rec ( 77 , 0 , profP0 , false , rsUNSPENT , fresh ( 77 ) , .List , 0 , .List , .List , false , .List )"
+
+[[mutation]]
+id = "h-settle-leaves-2"
+expect = "kill"
+misunderstanding = "AU-020: only the first leaf of a settle_root applies"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_leaves_2"
+  find = "=> settleLeaves ( Rest:List , settleIn ( Auth:Int , O:Settled , R:Rec ) )"
+  replace = "=> settleIn ( Auth:Int , O:Settled , R:Rec )"
+
+[[mutation]]
+id = "h-settle-recs-1"
+expect = "kill"
+misunderstanding = "AU-020: a settle_root adds a record"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_recs_1"
+  find = "=> .List"
+  replace = "=> ListItem(rec ( 77 , 0 , profP0 , false , rsUNSPENT , fresh ( 77 ) , .List , 0 , .List , .List , false , .List ))"
+
+[[mutation]]
+id = "h-settle-recs-2"
+expect = "kill"
+misunderstanding = "AU-020: settle_recs drops each element instead of keeping it"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_recs_2"
+  find = "=> ListItem(settleLeaves ( Leaves:List , R:Rec )) settleRecs ( Leaves:List , Rest:List )"
+  replace = "=> settleRecs ( Leaves:List , Rest:List )"
+
+[[mutation]]
+id = "h-slot-ok-1"
+expect = "kill"
+misunderstanding = "AU-005 item 4: a call that names no slot fails the statement"
+  [[mutation.edit]]
+  rule = "split_authorization--slot_ok_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-tuple-auths-1"
+expect = "kill"
+misunderstanding = "AU-026, ledger 5: auth 20 counts as a tuple of every bf_root"
+  [[mutation.edit]]
+  rule = "split_authorization--tuple_auths_1"
+  find = "=> .List"
+  replace = "=> ListItem(20)"
+
+[[mutation]]
+id = "h-tuple-auths-2"
+expect = "kill"
+misunderstanding = "AU-026: tuple_auths drops each element instead of keeping it"
+  [[mutation.edit]]
+  rule = "split_authorization--tuple_auths_2"
+  find = "=> ListItem(Auth:Int) tupleAuths ( Rest:List )"
+  replace = "=> tupleAuths ( Rest:List )"
+
+[[mutation]]
+id = "h-tuple-nfs-1"
+expect = "kill"
+misunderstanding = "AU-026: every bf_root lands an extra nf"
+  [[mutation.edit]]
+  rule = "split_authorization--tuple_nfs_1"
+  find = "=> .List"
+  replace = "=> ListItem(fresh ( 77 ))"
+
+[[mutation]]
+id = "h-tuple-nfs-2"
+expect = "kill"
+misunderstanding = "AU-026: tuple_nfs drops each element instead of keeping it"
+  [[mutation.edit]]
+  rule = "split_authorization--tuple_nfs_2"
+  find = "=> ListItem(Nf:Nf) tupleNfs ( Rest:List )"
+  replace = "=> tupleNfs ( Rest:List )"
+
+[[mutation]]
+id = "h-upd-2"
+expect = "kill"
+misunderstanding = "AU-020: a leaf settles every authorization of the record, not only its own"
+  [[mutation.edit]]
+  rule = "split_authorization--upd_1"
+  find = "sel ( A:Int , B:Auth )"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_authorization--upd_2"
+  find = "sel ( A:Int , B:Auth )"
+  replace = "true"
+
+[[mutation]]
+id = "h-upd-all-1"
+expect = "kill"
+misunderstanding = "AU-020: a settlement adds an authorization"
+  [[mutation.edit]]
+  rule = "split_authorization--upd_all_1"
+  find = "=> .List"
+  replace = "=> ListItem(auth ( 99 , fresh ( 99 ) , 0 , stSUBMITTED , ListItem(0) , setNONE , ListItem(srcSEIZURE) , .List , true ))"
+
+[[mutation]]
+id = "h-upd-all-2"
+expect = "kill"
+misunderstanding = "AU-020: upd_all drops each element instead of keeping it"
+  [[mutation.edit]]
+  rule = "split_authorization--upd_all_2"
+  find = "=> ListItem(upd ( A:Int , O:Settled , B:Auth )) updAll ( A:Int , O:Settled , Rest:List )"
+  replace = "=> updAll ( A:Int , O:Settled , Rest:List )"
+
+[[mutation]]
+id = "h-used-nfs-1"
+expect = "kill"
+misunderstanding = "AU-008: the nf fresh(1) counts as used from the start"
+  [[mutation.edit]]
+  rule = "split_authorization--used_nfs_1"
+  find = "=> .List"
+  replace = "=> ListItem(fresh ( 1 ))"
+
+[[mutation]]
+id = "h-used-nfs-2"
+expect = "kill"
+misunderstanding = "AU-008: used_nfs drops each element instead of keeping it"
+  [[mutation.edit]]
+  rule = "split_authorization--used_nfs_2"
+  find = "=> ListItem(Nf:Nf) usedNfs ( Rest:List )"
+  replace = "=> usedNfs ( Rest:List )"
+
+[[mutation]]
+id = "h-used-of-1"
+expect = "kill"
+misunderstanding = "AU-008: the used pair does not record the call's auth"
+  [[mutation.edit]]
+  rule = "split_authorization--used_of_1"
+  find = "=> nfa ( Nf:Nf , Auth:Int )"
+  replace = "=> nfa ( Nf:Nf , 0 )"
+
+[[mutation]]
+id = "h-any-none-leaf-2"
+expect = "kill"
+misunderstanding = "AU-020: any_none_leaf gives false where the definition gives true (match case): a NONE leaf passes"
+  [[mutation.edit]]
+  rule = "split_authorization--any_none_leaf_2"
+  find = "=> true"
+  replace = "=> false"

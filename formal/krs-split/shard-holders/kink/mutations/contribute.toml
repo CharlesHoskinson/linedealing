@@ -1,0 +1,576 @@
+# Plausible misreadings of the contribution checks: SH-015 (one answer per pair, no
+# answer after exp_c), SH-018 (ECDSA leaf sets), SH-019 (escrow slots), SH-021
+# (recomputation), SH-022 (bad requests), SH-023 (policy) and SH-026 (guardian halves),
+# and of ledger 3 (an unfixed charter), as K patches.
+
+[[mutation]]
+id = "sh015-expiry-inclusive"
+expect = "kill"
+misunderstanding = "SH-015: the actor answers no request at its exp_c height"
+  [[mutation.edit]]
+  rule = "split_shard_holders--contrib_refusals_g_2"
+  find = "opt ( ExpC:Int <Int Height:Int , rSH015 )"
+  replace = "opt ( ExpC:Int <=Int Height:Int , rSH015 )"
+
+[[mutation]]
+id = "sh015-expiry-unchecked"
+expect = "kill"
+misunderstanding = "SH-015: the actor may answer after exp_c"
+  [[mutation.edit]]
+  rule = "split_shard_holders--contrib_refusals_g_2"
+  find = "opt ( ExpC:Int <Int Height:Int , rSH015 )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh015-pairs-not-marked"
+expect = "kill"
+misunderstanding = "SH-015: the pair is marked used after the step, so the state keeps it unused"
+  [[mutation.edit]]
+  rule = "split_shard_holders--used_after_1"
+  find = "=> pairsOf ( Actor:Int , Pairs:List ) Used:List"
+  replace = "=> Used:List"
+
+[[mutation]]
+id = "sh015-pairs-appended"
+expect = "kill"
+misunderstanding = "SH-015: newly used pairs go last in the used list"
+  [[mutation.edit]]
+  rule = "split_shard_holders--used_after_1"
+  find = "=> pairsOf ( Actor:Int , Pairs:List ) Used:List"
+  replace = "=> Used:List pairsOf ( Actor:Int , Pairs:List )"
+
+[[mutation]]
+id = "sh015-pairs-first-only"
+expect = "kill"
+misunderstanding = "SH-015: only the first named pair is marked used"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pairs_of_2"
+  find = "=> ListItem(pr ( A:Int , I:Int )) pairsOf ( A:Int , Rest:List )"
+  replace = "=> ListItem(pr ( A:Int , I:Int ))"
+
+[[mutation]]
+id = "sh015-pairs-extra"
+expect = "kill"
+misunderstanding = "SH-015: pair 0 is marked used with every contribution"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pairs_of_1"
+  find = "=> .List"
+  replace = "=> ListItem(pr ( A:Int , 0 ))"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pairs_of_1"
+  find = "pairsOf ( _ , .List )"
+  replace = "pairsOf ( A:Int , .List )"
+
+[[mutation]]
+id = "sh018-leafset-repeat-ok"
+expect = "kill"
+misunderstanding = "SH-018: a leaf set may repeat an actor"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaf_set_bad_2"
+  find = "(nodupB ( LeafSet:List ) andThenBool (size(LeafSet:List) ==Int size(SSet:List)))"
+  replace = "(true andThenBool (size(LeafSet:List) ==Int size(SSet:List)))"
+
+[[mutation]]
+id = "sh018-leafset-subset-ok"
+expect = "kill"
+misunderstanding = "SH-018: a leaf set that is a subset of S is enough"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaf_set_bad_2"
+  find = "andThenBool (size(LeafSet:List) ==Int size(SSet:List)))"
+  replace = "andThenBool true)"
+
+[[mutation]]
+id = "sh018-leafset-outsiders-ok"
+expect = "kill"
+misunderstanding = "SH-018: the leaf set may name actors outside S when its size matches"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaf_set_bad_2"
+  find = "andThenBool allIn ( LeafSet:List , SSet:List ))"
+  replace = "andThenBool true)"
+
+[[mutation]]
+id = "sh018-slot-reuse-ok"
+expect = "kill"
+misunderstanding = "SH-018: an actor may contribute twice on one ECDSA slot"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaf_set_bad_2"
+  find = " orElseBool pr ( Actor:Int , Id:Int ) in Slotsused:List"
+  replace = ""
+
+[[mutation]]
+id = "sh018-slot-once-for-all"
+expect = "kill"
+misunderstanding = "SH-018: an ECDSA slot takes one contribution from any actor"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaf_set_bad_2"
+  find = "pr ( Actor:Int , Id:Int ) in Slotsused:List"
+  replace = "(pr ( Actor:Int , Id:Int ) in Slotsused:List orBool pr ( Actor:Int -Int 1 , Id:Int ) in Slotsused:List)"
+
+[[mutation]]
+id = "sh018-committee-leafset"
+expect = "kill"
+misunderstanding = "SH-018: a committee slot is refused like a bad ECDSA slot"
+  [[mutation.edit]]
+  rule = "split_shard_holders--leaf_set_bad_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh018-slot-not-recorded"
+expect = "kill"
+misunderstanding = "SH-018: the ECDSA slot answered is not recorded"
+  [[mutation.edit]]
+  rule = "split_shard_holders--ecdsa_used_after_1"
+  find = "=> ListItem(pr ( Actor:Int , Id:Int )) Slotsused:List"
+  replace = "=> Slotsused:List"
+
+[[mutation]]
+id = "sh018-committee-recorded"
+expect = "kill"
+misunderstanding = "SH-018: a committee contribution records slot 0 as answered"
+  [[mutation.edit]]
+  rule = "split_shard_holders--ecdsa_used_after_2"
+  find = "=> Slotsused:List"
+  replace = "=> ListItem(pr ( 0 , 0 )) Slotsused:List"
+
+[[mutation]]
+id = "sh019-escrow-slot-ok"
+expect = "kill"
+misunderstanding = "SH-019: a primary holder may contribute on a slot under slr_G"
+  [[mutation.edit]]
+  rule = "split_shard_holders--escrow_slot_bad_1"
+  find = "=> inPrimary ( Actor:Int , G:Gate )"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh019-every-holder"
+expect = "kill"
+misunderstanding = "SH-019: no actor may contribute on a slot under slr_G"
+  [[mutation.edit]]
+  rule = "split_shard_holders--escrow_slot_bad_1"
+  find = "=> inPrimary ( Actor:Int , G:Gate )"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh019-unreserved-slots"
+expect = "kill"
+misunderstanding = "SH-019: a primary holder may not contribute on any ECDSA slot"
+  [[mutation.edit]]
+  rule = "split_shard_holders--escrow_slot_bad_2"
+  find = "sEcdsa ( _ , _ , false ) , _ , _ , _ , _ , _ ) ) => false"
+  replace = "sEcdsa ( _ , _ , false ) , _ , _ , _ , _ , _ ) ) => inPrimary ( Actor:Int , G:Gate )"
+  [[mutation.edit]]
+  rule = "split_shard_holders--escrow_slot_bad_2"
+  find = "escrowSlotBad ( _ , contrib ( _ ,"
+  replace = "escrowSlotBad ( G:Gate , contrib ( Actor:Int ,"
+
+[[mutation]]
+id = "sh019-committee-slot"
+expect = "kill"
+misunderstanding = "SH-019: a committee slot is reserved for the escrow branch"
+  [[mutation.edit]]
+  rule = "split_shard_holders--escrow_slot_bad_3"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh019-direct-primary-only"
+expect = "kill"
+misunderstanding = "SH-019: only the primary leaves of the top OR gate count, not those of nested OR gates"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_primary_4"
+  find = " orElseBool inPrimary ( A:Int , Primary:Gate )) orElseBool inPrimary ( A:Int , Escrow:Gate )"
+  replace = ")"
+
+[[mutation]]
+id = "sh019-primary-in-escrow-nested"
+expect = "kill"
+misunderstanding = "SH-019: an OR gate nested in an escrow branch has no primary holders"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_primary_4"
+  find = " orElseBool inPrimary ( A:Int , Escrow:Gate )"
+  replace = ""
+
+[[mutation]]
+id = "sh019-primary-own-leaves"
+expect = "kill"
+misunderstanding = "SH-019: the primary holders of an OR gate are those of nested OR gates only"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_primary_4"
+  find = "(A:Int in leaves ( Primary:Gate ) orElseBool "
+  replace = "(false orElseBool "
+
+[[mutation]]
+id = "sh019-primary-escrow-swap"
+expect = "kill"
+misunderstanding = "SH-019: the escrow holder of an OR gate is the one barred from escrow slots"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_primary_4"
+  find = "A:Int in leaves ( Primary:Gate )"
+  replace = "A:Int in leaves ( Escrow:Gate )"
+
+[[mutation]]
+id = "sh019-leaf-primary"
+expect = "kill"
+misunderstanding = "SH-019: every leaf holder counts as a primary holder"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_primary_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh019-and-not-searched"
+expect = "kill"
+misunderstanding = "SH-019: OR gates below an AND gate are not searched"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_primary_2"
+  find = "=> inPrimaryL ( A:Int , Children:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh019-group-not-searched"
+expect = "kill"
+misunderstanding = "SH-019: OR gates below a group gate are not searched"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_primary_3"
+  find = "=> inPrimaryL ( A:Int , Children:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh019-list-first-child"
+expect = "kill"
+misunderstanding = "SH-019: only the first child of a gate is searched for OR gates"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_primary_l_2"
+  find = "inPrimary ( A:Int , G:Gate ) orElseBool inPrimaryL ( A:Int , Rest:List )"
+  replace = "inPrimary ( A:Int , G:Gate )"
+
+[[mutation]]
+id = "sh019-list-end-true"
+expect = "kill"
+misunderstanding = "SH-019: every actor below a gate with children is a primary holder"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_primary_l_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh021-recompute-unchecked"
+expect = "kill"
+misunderstanding = "SH-021: the actor contributes without recomputing the request"
+  [[mutation.edit]]
+  rule = "split_shard_holders--contrib_refusals_g_2"
+  find = "opt ( notBool RecomputeOk:Bool , rSH021 )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh023-policy-unchecked"
+expect = "kill"
+misunderstanding = "SH-023: the actor's own policy does not stop a contribution"
+  [[mutation.edit]]
+  rule = "split_shard_holders--contrib_refusals_g_2"
+  find = "opt ( notBool PolicyOk:Bool , rPolicyRefused )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh022-bad-request-unchecked"
+expect = "kill"
+misunderstanding = "SH-022: the actor does not check the signing set, its weight or its pairs"
+  [[mutation.edit]]
+  rule = "split_shard_holders--contrib_refusals_g_2"
+  find = "opt ( badRequestOf ( Dealt:List , Used:List , G:Gate , C:Contrib ) , rBadRequest )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh026-guardian-unchecked"
+expect = "kill"
+misunderstanding = "SH-026: a guardian half needs no settled seizure order"
+  [[mutation.edit]]
+  rule = "split_shard_holders--contrib_refusals_g_2"
+  find = "opt ( guardianBad ( G:Gate , C:Contrib ) , rSH026 )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh018-unchecked"
+expect = "kill"
+misunderstanding = "SH-018: the actor contributes on any ECDSA slot"
+  [[mutation.edit]]
+  rule = "split_shard_holders--contrib_refusals_g_2"
+  find = "opt ( leafSetBad ( Slotsused:List , C:Contrib ) , rSH018 )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh019-unchecked"
+expect = "kill"
+misunderstanding = "SH-019: the actor's slot is not checked against the escrow branch"
+  [[mutation.edit]]
+  rule = "split_shard_holders--contrib_refusals_g_2"
+  find = "opt ( escrowSlotBad ( G:Gate , C:Contrib ) , rSH019 )"
+  replace = ".List"
+
+[[mutation]]
+id = "contrib-codes-order"
+expect = "kill"
+misunderstanding = "SH-015, SH-022 (ledger 2): bad_request is listed before the SH codes"
+  [[mutation.edit]]
+  rule = "split_shard_holders--contrib_refusals_g_2"
+  find = "=> opt ( ExpC:Int <Int Height:Int , rSH015 )"
+  replace = "=> opt ( badRequestOf ( Dealt:List , Used:List , G:Gate , C:Contrib ) , rBadRequest ) opt ( ExpC:Int <Int Height:Int , rSH015 )"
+  [[mutation.edit]]
+  rule = "split_shard_holders--contrib_refusals_g_2"
+  find = " opt ( badRequestOf ( Dealt:List , Used:List , G:Gate , C:Contrib ) , rBadRequest ) opt ( notBool PolicyOk"
+  replace = " opt ( notBool PolicyOk"
+
+[[mutation]]
+id = "contrib-no-charter-default"
+expect = "kill"
+misunderstanding = "SH-022 (ledger 3): a request for an unfixed charter is a bad request, not no-rule"
+  [[mutation.edit]]
+  rule = "split_shard_holders--contrib_refusals_g_1"
+  find = "=> ListItem(rNoRule)"
+  replace = "=> ListItem(rBadRequest)"
+
+[[mutation]]
+id = "contrib-charter-by-actor"
+expect = "kill"
+misunderstanding = "SH-022: the request's charter is looked up by the actor's index"
+  [[mutation.edit]]
+  rule = "split_shard_holders--contrib_refusals_1"
+  find = "contrib ( _ , Charter:Int ,"
+  replace = "contrib ( Charter:Int , _ ,"
+
+[[mutation]]
+id = "sh022-admission-unchecked"
+expect = "kill"
+misunderstanding = "SH-022: a signing set not admitted on Gamma is not a bad request"
+  [[mutation.edit]]
+  rule = "split_shard_holders--bad_request_of_1"
+  find = "admitted ( G:Gate , SSet:List , Initiator:Int ) )"
+  replace = "true )"
+[[mutation]]
+id = "sh022-weight-unread"
+expect = "kill"
+misunderstanding = "SH-022: the weight claimed is not compared with the signing set"
+  [[mutation.edit]]
+  rule = "split_shard_holders--bad_unless_admitted_1_2"
+  find = "weightBad ( weight ( SSet:List , Actor:Int , G:Gate ) , Weight:Q )"
+  replace = "false"
+[[mutation]]
+id = "sh022-weight-of-initiator"
+expect = "kill"
+misunderstanding = "SH-022, SH-004: the weight is computed for the initiator, not the actor"
+  [[mutation.edit]]
+  rule = "split_shard_holders--bad_unless_admitted_1_2"
+  find = "contrib ( Actor:Int , _ , SSet:List , _ ,"
+  replace = "contrib ( Actor:Int , _ , SSet:List , Initiator:Int ,"
+  [[mutation.edit]]
+  rule = "split_shard_holders--bad_unless_admitted_1_2"
+  find = "weight ( SSet:List , Actor:Int , G:Gate )"
+  replace = "weight ( SSet:List , Initiator:Int , G:Gate )"
+[[mutation]]
+id = "sh022-pair-repeat-ok"
+expect = "kill"
+misunderstanding = "SH-022: one pair may serve two halves"
+  [[mutation.edit]]
+  rule = "split_shard_holders--bad_unless_weight_2"
+  find = "nodupB ( Pairs:List ) )"
+  replace = "true )"
+[[mutation]]
+id = "sh022-pairs-unchecked"
+expect = "kill"
+misunderstanding = "SH-022: a named pair need not be an unused pair of the actor's pool"
+  [[mutation.edit]]
+  rule = "split_shard_holders--bad_unless_distinct_2"
+  find = "=> notBool pairsUnused ( Actor:Int , Pairs:List , Dealt:List , Used:List )"
+  replace = "=> false"
+[[mutation]]
+id = "sh022-used-pair-ok"
+expect = "kill"
+misunderstanding = "SH-015, SH-022: a used pair may be answered again"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pairs_unused_2_1"
+  find = "andThenBool (notBool pr ( A:Int , I:Int ) in Used:List)"
+  replace = "andThenBool true"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pairs_unused_2_2"
+  find = "andThenBool (notBool pr ( A:Int , I:Int ) in Used:List))"
+  replace = "andThenBool true)"
+
+[[mutation]]
+id = "sh022-undealt-pair-ok"
+expect = "kill"
+misunderstanding = "SH-022: a pair the actor never posted may be named when it is unused"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pairs_unused_2_1"
+  find = "pr ( A:Int , I:Int ) in Dealt:List andThenBool"
+  replace = "true andThenBool"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pairs_unused_2_2"
+  find = "pr ( A:Int , I:Int ) in Dealt:List andThenBool"
+  replace = "true andThenBool"
+
+[[mutation]]
+id = "sh022-pairs-first-only"
+expect = "kill"
+misunderstanding = "SH-022: only the first named pair is checked"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pairs_unused_2_1"
+  find = "=> pairsUnused ( A:Int , Rest:List , Dealt:List , Used:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh022-pair-bad-skipped"
+expect = "kill"
+misunderstanding = "SH-022: a named pair that fails the check is skipped"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pairs_unused_2_2"
+  find = "=> false"
+  replace = "=> pairsUnused ( A:Int , Rest:List , Dealt:List , Used:List )"
+
+[[mutation]]
+id = "sh022-no-pairs-bad"
+expect = "kill"
+misunderstanding = "SH-022: the pair check fails at the end of the list"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pairs_unused_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh026-settled-unread"
+expect = "kill"
+misunderstanding = "SH-026: a guardian never produces a half, settled seizure order or not"
+  [[mutation.edit]]
+  rule = "split_shard_holders--guardian_bad_1"
+  find = "andThenBool (notBool SeizureSettled:Bool)"
+  replace = "andThenBool true"
+
+[[mutation]]
+id = "sh026-every-actor"
+expect = "kill"
+misunderstanding = "SH-026: every actor needs a settled seizure order"
+  [[mutation.edit]]
+  rule = "split_shard_holders--guardian_bad_1"
+  find = "inEscrow ( Actor:Int , G:Gate ) andThenBool"
+  replace = "true andThenBool"
+
+[[mutation]]
+id = "sh026-direct-escrow-only"
+expect = "kill"
+misunderstanding = "SH-026: only the escrow leaves of the top OR gate are guardians"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_escrow_4"
+  find = " orElseBool inEscrow ( A:Int , Primary:Gate )) orElseBool inEscrow ( A:Int , Escrow:Gate )"
+  replace = ")"
+
+[[mutation]]
+id = "sh026-escrow-in-primary-nested"
+expect = "kill"
+misunderstanding = "SH-026: an OR gate nested in a primary branch has no guardians"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_escrow_4"
+  find = " orElseBool inEscrow ( A:Int , Primary:Gate ))"
+  replace = ")"
+
+[[mutation]]
+id = "sh026-escrow-own-leaves"
+expect = "kill"
+misunderstanding = "SH-026: the guardians of an OR gate are those of nested OR gates only"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_escrow_4"
+  find = "(A:Int in leaves ( Escrow:Gate ) orElseBool "
+  replace = "(false orElseBool "
+
+[[mutation]]
+id = "sh026-leaf-guardian"
+expect = "kill"
+misunderstanding = "SH-026: every leaf holder is a guardian"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_escrow_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh026-and-not-searched"
+expect = "kill"
+misunderstanding = "SH-026: guardians below an AND gate are not seen"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_escrow_2"
+  find = "=> inEscrowL ( A:Int , Children:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh026-group-not-searched"
+expect = "kill"
+misunderstanding = "SH-026: guardians below a group gate are not seen"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_escrow_3"
+  find = "=> inEscrowL ( A:Int , Children:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh026-list-first-child"
+expect = "kill"
+misunderstanding = "SH-026: only the first child of a gate is searched for guardians"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_escrow_l_2"
+  find = "inEscrow ( A:Int , G:Gate ) orElseBool inEscrowL ( A:Int , Rest:List )"
+  replace = "inEscrow ( A:Int , G:Gate )"
+
+[[mutation]]
+id = "sh026-list-end-true"
+expect = "kill"
+misunderstanding = "SH-026: every actor below a gate with children is a guardian"
+  [[mutation.edit]]
+  rule = "split_shard_holders--in_escrow_l_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "contrib-refused-marks-pairs"
+expect = "kill"
+misunderstanding = "SH-015, SH-022: a refused request is answered as a contribution"
+  [[mutation.edit]]
+  rule = "contribute-refused"
+  find = "ListItem(oRefused ( contribRefusals ( Charters:List , Dealt:List , Used:List , Slotsused:List , C:Contrib ) ))"
+  replace = "ListItem(oContributed ( false ))"
+
+[[mutation]]
+id = "contrib-obs-first"
+expect = "kill"
+misunderstanding = "SH-014: the contribution's observation goes before the earlier observations"
+  [[mutation.edit]]
+  rule = "contribute"
+  find = "<obs> Obs:List => Obs:List ListItem(oContributed"
+  replace = "<obs> Obs:List => ListItem(oContributed"
+  [[mutation.edit]]
+  rule = "contribute"
+  find = ", C:Contrib ) )) </obs>"
+  replace = ", C:Contrib ) )) Obs:List </obs>"
+
+[[mutation]]
+id = "sh022-unadmitted-ok"
+expect = "kill"
+misunderstanding = "SH-022: a request whose signing set is not admitted is not refused"
+  [[mutation.edit]]
+  rule = "split_shard_holders--bad_unless_admitted_1_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh022-bad-weight-ok"
+expect = "kill"
+misunderstanding = "SH-022: a weight that does not follow from the signing set is not refused"
+  [[mutation.edit]]
+  rule = "split_shard_holders--bad_unless_weight_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh022-repeat-pair-ok"
+expect = "kill"
+misunderstanding = "SH-022: a request that names one pair twice is not refused"
+  [[mutation.edit]]
+  rule = "split_shard_holders--bad_unless_distinct_1"
+  find = "=> true"
+  replace = "=> false"

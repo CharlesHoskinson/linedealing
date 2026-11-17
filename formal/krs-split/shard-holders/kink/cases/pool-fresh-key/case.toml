@@ -1,0 +1,10 @@
+# SH-013: a pool key used twice; pairs numbered after the actor's dealt pairs
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { PostPool = { actor = 1, root = 1, key = 0 } },
+  { PostPool = { actor = 2, root = 1, key = 0 } },
+  { PostPool = { actor = 1, root = 1, key = 1 } },
+  { PostPool = { actor = 1, root = 1, key = 0 } },
+  { PostPool = { actor = 1, root = 2, key = 0 } },
+]

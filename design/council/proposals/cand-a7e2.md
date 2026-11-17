@@ -447,7 +447,7 @@ Against `REPORT.md` Section 5.1 (primary gaps 1–6, one line each):
 
 ## 11. Experiment plan
 
-### 11.1 What to build first in `.`
+### 11.1 What to build first in `/home/hoskinson/Projects/mpcexperiments`
 
 Build in three incremental Rust crates plus one formal Quint model, ordered to retire the newest cryptographic and systems risks earliest:
 
@@ -475,26 +475,26 @@ Build in three incremental Rust crates plus one formal Quint model, ordered to r
 
 ### 12.1 Primary sources read in full from local repository copies
 
-1. **Design Brief** — *Design brief: one owner move, then a committee spends*. **read in full (`design/BRIEF.md`)**.
-2. **State-of-the-Art Report** — *One owner move, then a committee signs: the state of the art* (2026-11-13). **read in full (`research/REPORT.md`)**.
-3. **cgVSS** — A. Kate, E. V. Mangipudi, P. Mukherjee, H. Saleem, S. A. K. Thyagarajan, *Non-interactive VSS using Class Groups and Application to DKG*, ACM CCS 2024 / IACR ePrint 2023/451 (23 pp.). **read in full (`research/sources/eprint/2023-451.pdf`)**.
-4. **Trout** — H. Dahari-Garbian, A. Nof, L. Parker, *Trout: Two-Round Threshold ECDSA from Class Groups*, ACM CCS 2025 / IACR ePrint 2025/1666 (14 pp.). **read in full (`research/sources/eprint/2025-1666.pdf`)**.
-5. **Trout++** — A. Nof, L. Parker, *Trout++: Robust Asynchronous Two-Round ECDSA for Arbitrary Thresholds*, ESORICS 2026 / IACR ePrint 2026/1455 (29 pp.). **read in full (`research/sources/eprint/2026-1455.pdf`)**.
-6. **Lyu et al.** — Y. Lyu, Z. Li, H.-S. Zhou, X. Deng, *Threshold ECDSA in Two Rounds*, ACM CCS 2025 / IACR ePrint 2025/1696 (14 pp.). **read in full (`research/sources/eprint/2025-1696.pdf`)**.
-7. **Golden** — B. Bünz, K. Choi, C. Komlo, *Golden: Lightweight Non-Interactive Distributed Key Generation*, CRYPTO 2026 / IACR ePrint 2025/1924 (63 pp.). **read in full (`research/sources/eprint/2025-1924.pdf`)**.
-8. **Janus** — R. Baecker, P. Gerhart, S. Jarecki, P. Nazarian, D. Rausch, D. Schröder, *Adaptive Distributed Key Generation for Discrete-Log Cryptosystems*, IACR ePrint 2026/892 (38 pp.). **read in full (`research/sources/eprint/2026-892.pdf`)**.
-9. **FROST (RFC 9591)** — D. Connolly, C. Komlo, I. Goldberg, C. A. Wood, *The Flexible Round-Optimized Schnorr Threshold (FROST) Protocol for Two-Round Schnorr Signatures*, IRTF RFC 9591, June 2024. **read in full (`research/sources/lifecycle/rfc9591.txt`)**.
-10. **ROAST** — T. Ruffing, V. Ronge, E. Jin, J. Schneider-Bensch, D. Schröder, *ROAST: Robust Asynchronous Schnorr Threshold Signatures*, ACM CCS 2022 / IACR ePrint 2022/550. **read in full (`research/lanes/terra-threshold-schnorr-bls-deep-read/sources/roast.txt`)**.
-11. **HOT Protocol** — P. Volnov, A. Kuksa, N. Zhevlakov, *HOT Protocol: Decentralized MPC Network for Stateful Smart-Contract Signing*, arXiv:2512.02287v1, 2025. **read in full (`research/sources/hot.txt`)**.
-12. **Stambler ($T+1$-eWEB)** — L. Stambler, *Achieving Blockchain-Secured Cryptographic Primitives from Signature-Based Witness Encryption*, IACR ePrint 2025/1064 (21 pp.). **read in full (`research/sources/eprint/2025-1064.pdf`)**.
-13. **Budgeted Threshold Signatures (BTS)** — H. Chen, Y. Zhang, Y. Cheng, *Budgeted Threshold Signatures: Protocol-Native Spending Limits with Zero On-Chain Footprint*, IACR ePrint 2026/2176 (19 pp.). **read in full (`research/sources/eprint/2026-2176.pdf`)**.
-14. **Threshold Signatures as-a-Service (TSaaS)** — M. Rambaud, S. Roth, A. Urban, *Threshold Signatures as-a-Service: Achieving Threshold ML-DSA in One Online Round*, IACR ePrint 2026/814 (30 pp.). **read in full (`research/sources/eprint/2026-814.pdf`)**.
-15. **Threshold Cryptography as a Service (TCaaS)** — F. Benhamouda, S. Halevi, H. Krawczyk, P. Miao, T. Rabin, *Threshold Cryptography as a Service (in the Multiserver and YOSO Models)*, ACM CCS 2022 (15 pp.). **read in full (`research/sources/eprint/ccs2022-threshold-cryptography-as-a-service.pdf`)**.
-16. **Ika Whitepaper** — O. Sadika, Y. Lachmish, Y. C. Scaly, D. Hussain, *Ika: Fast, Decentralized and Secure Interoperability Powered by 2PC-MPC*, v1.0, October 2024 (11 pp.). **read in full (`research/sources/deployed/ika-whitepaper.pdf`)**.
-17. **NEAR MPC Benchmarks** — NEAR `mpc` / `threshold-signatures` benchmark results. **read in full (`research/sources/lifecycle/repos/near-benches-results.md`)**.
-18. **BitForge** — N. Makriyannis, O. Yomtov, A. Galansky, *Practical Key-Extraction Attacks in Leading MPC Wallets*, Fireblocks / IACR ePrint 2023/1234, August 2023. **read in full (`research/sources/bf.txt`)**.
-19. **TSSHOCK** — D. Nguyen et al., *TSSHOCK: Breaking MPC Wallets — New Key Extraction Attacks on Threshold ECDSA Implementations*, Verichains / Black Hat USA 2023 White Paper. **read in full (`research/sources/tsshock.txt`)**.
-20. **Native-Signature Boundary** — P. Porechna, *The Native-Signature Boundary in Post-Quantum Distributed Authorization*, arXiv:2609.03547v1, September 2026. **read in full (`research/sources/native-sig-boundary-2609.03547.txt`)**.
+1. **Design Brief** — *Design brief: one owner move, then a committee spends*. **read in full (`/home/hoskinson/Projects/mpcexperiments/design/BRIEF.md`)**.
+2. **State-of-the-Art Report** — *One owner move, then a committee signs: the state of the art* (2026-11-13). **read in full (`/home/hoskinson/Projects/mpcexperiments/research/REPORT.md`)**.
+3. **cgVSS** — A. Kate, E. V. Mangipudi, P. Mukherjee, H. Saleem, S. A. K. Thyagarajan, *Non-interactive VSS using Class Groups and Application to DKG*, ACM CCS 2024 / IACR ePrint 2023/451 (23 pp.). **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2023-451.pdf`)**.
+4. **Trout** — H. Dahari-Garbian, A. Nof, L. Parker, *Trout: Two-Round Threshold ECDSA from Class Groups*, ACM CCS 2025 / IACR ePrint 2025/1666 (14 pp.). **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2025-1666.pdf`)**.
+5. **Trout++** — A. Nof, L. Parker, *Trout++: Robust Asynchronous Two-Round ECDSA for Arbitrary Thresholds*, ESORICS 2026 / IACR ePrint 2026/1455 (29 pp.). **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2026-1455.pdf`)**.
+6. **Lyu et al.** — Y. Lyu, Z. Li, H.-S. Zhou, X. Deng, *Threshold ECDSA in Two Rounds*, ACM CCS 2025 / IACR ePrint 2025/1696 (14 pp.). **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2025-1696.pdf`)**.
+7. **Golden** — B. Bünz, K. Choi, C. Komlo, *Golden: Lightweight Non-Interactive Distributed Key Generation*, CRYPTO 2026 / IACR ePrint 2025/1924 (63 pp.). **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2025-1924.pdf`)**.
+8. **Janus** — R. Baecker, P. Gerhart, S. Jarecki, P. Nazarian, D. Rausch, D. Schröder, *Adaptive Distributed Key Generation for Discrete-Log Cryptosystems*, IACR ePrint 2026/892 (38 pp.). **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2026-892.pdf`)**.
+9. **FROST (RFC 9591)** — D. Connolly, C. Komlo, I. Goldberg, C. A. Wood, *The Flexible Round-Optimized Schnorr Threshold (FROST) Protocol for Two-Round Schnorr Signatures*, IRTF RFC 9591, June 2024. **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/lifecycle/rfc9591.txt`)**.
+10. **ROAST** — T. Ruffing, V. Ronge, E. Jin, J. Schneider-Bensch, D. Schröder, *ROAST: Robust Asynchronous Schnorr Threshold Signatures*, ACM CCS 2022 / IACR ePrint 2022/550. **read in full (`/home/hoskinson/Projects/mpcexperiments/research/lanes/terra-threshold-schnorr-bls-deep-read/sources/roast.txt`)**.
+11. **HOT Protocol** — P. Volnov, A. Kuksa, N. Zhevlakov, *HOT Protocol: Decentralized MPC Network for Stateful Smart-Contract Signing*, arXiv:2512.02287v1, 2025. **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/hot.txt`)**.
+12. **Stambler ($T+1$-eWEB)** — L. Stambler, *Achieving Blockchain-Secured Cryptographic Primitives from Signature-Based Witness Encryption*, IACR ePrint 2025/1064 (21 pp.). **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2025-1064.pdf`)**.
+13. **Budgeted Threshold Signatures (BTS)** — H. Chen, Y. Zhang, Y. Cheng, *Budgeted Threshold Signatures: Protocol-Native Spending Limits with Zero On-Chain Footprint*, IACR ePrint 2026/2176 (19 pp.). **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2026-2176.pdf`)**.
+14. **Threshold Signatures as-a-Service (TSaaS)** — M. Rambaud, S. Roth, A. Urban, *Threshold Signatures as-a-Service: Achieving Threshold ML-DSA in One Online Round*, IACR ePrint 2026/814 (30 pp.). **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2026-814.pdf`)**.
+15. **Threshold Cryptography as a Service (TCaaS)** — F. Benhamouda, S. Halevi, H. Krawczyk, P. Miao, T. Rabin, *Threshold Cryptography as a Service (in the Multiserver and YOSO Models)*, ACM CCS 2022 (15 pp.). **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/ccs2022-threshold-cryptography-as-a-service.pdf`)**.
+16. **Ika Whitepaper** — O. Sadika, Y. Lachmish, Y. C. Scaly, D. Hussain, *Ika: Fast, Decentralized and Secure Interoperability Powered by 2PC-MPC*, v1.0, October 2024 (11 pp.). **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/deployed/ika-whitepaper.pdf`)**.
+17. **NEAR MPC Benchmarks** — NEAR `mpc` / `threshold-signatures` benchmark results. **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/lifecycle/repos/near-benches-results.md`)**.
+18. **BitForge** — N. Makriyannis, O. Yomtov, A. Galansky, *Practical Key-Extraction Attacks in Leading MPC Wallets*, Fireblocks / IACR ePrint 2023/1234, August 2023. **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/bf.txt`)**.
+19. **TSSHOCK** — D. Nguyen et al., *TSSHOCK: Breaking MPC Wallets — New Key Extraction Attacks on Threshold ECDSA Implementations*, Verichains / Black Hat USA 2023 White Paper. **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/tsshock.txt`)**.
+20. **Native-Signature Boundary** — P. Porechna, *The Native-Signature Boundary in Post-Quantum Distributed Authorization*, arXiv:2609.03547v1, September 2026. **read in full (`/home/hoskinson/Projects/mpcexperiments/research/sources/native-sig-boundary-2609.03547.txt`)**.
 
 ### 12.2 Standards and related literature cited from memory or via `REPORT.md` passages
 

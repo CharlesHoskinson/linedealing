@@ -13,7 +13,7 @@ VERDICT: changes_requested
 6: RESOLVED — PROOFS.md §6.1, lines 419–443: E(c) now claims dealing identity without extraction. E(c′) requires fresh random nonces and subtracts `4Q_s/(q−1)` for collisions with either nonce sign across both continuations.
 
 **NEW BLOCKING — Corollary A′ omits the invalid-child loss.**  
-**Location:** [PROOFS.md §3.4, lines 259–267](design/proofs-review/fixcheck/PROOFS.md:259).
+**Location:** [PROOFS.md §3.4, lines 259–267](/home/hoskinson/Projects/mpcexperiments/design/proofs-review/fixcheck/PROOFS.md:259).
 
 The programming argument reduces every sampled `a` modulo `q` and claims the resulting keys follow BIP32. However, BIP32 rejects `a ≥ q` and identity children and advances the child index. [BIP32 child derivation specification](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#child-key-derivation-ckd-functions).
 

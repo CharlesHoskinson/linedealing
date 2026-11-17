@@ -1,0 +1,26 @@
+# The oracle's case 'run P1 and board-first' (lean-split/authorization/cases.json)
+[inputs]
+params = { Params = { mode = "Tee", q = 3 } }
+ops = [
+  { CharterOp = { cid = 1, profile = "P1", board_first = false, stateful = false } },
+  { CharterOp = { cid = 2, profile = "P2", board_first = false, stateful = false } },
+  { CharterOp = { cid = 3, profile = "P0", board_first = true, stateful = false } },
+  { RecordOp = { rid = 10, cid = 1, cm_addr = 100, nf = { Fresh = { n = 10 } }, hold_tag = 7, slr_own = [1], slr_g = [] } },
+  { RecordOp = { rid = 20, cid = 2, cm_addr = 200, nf = { Fresh = { n = 20 } }, hold_tag = 8, slr_own = [2], slr_g = [3] } },
+  { RecordOp = { rid = 30, cid = 3, cm_addr = 300, nf = { Fresh = { n = 30 } }, hold_tag = 9, slr_own = [], slr_g = [] } },
+  { AuthorizeOp = { c = { Cl = { rid = 10, nf = { Fresh = { n = 10 } }, auth = 501, rh = 601, source = "Owner", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 5, to_exit = false, carry = [] } } } },
+  { AuthorizeOp = { c = { Cl = { rid = 10, nf = { Fresh = { n = 10 } }, auth = 502, rh = 601, source = "Owner", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 5, to_exit = false, carry = [] } } } },
+  { QueryOp = { a = 501, h = 100 } },
+  { FinalizeOp = { a = 501, h = 50 } },
+  { QueryOp = { a = 501, h = 50 } },
+  { RevokeOp = { a = 501, tag = 7 } },
+  { SettleRootOp = { leaves = [{ Lf = [501, "SetReleased"] }] } },
+  { AuthorizeOp = { c = { Cl = { rid = 10, nf = { OfSettle = { auth = 501, o = "SetReleased" } }, auth = 503, rh = 601, source = "Owner", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 6, to_exit = false, carry = [] } } } },
+  { AuthorizeOp = { c = { Cl = { rid = 10, nf = { OfSettle = { auth = 501, o = "SetReleased" } }, auth = 503, rh = 601, source = "Owner", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 5, to_exit = false, carry = [] } } } },
+  { AuthorizeOp = { c = { Cl = { rid = 30, nf = { Fresh = { n = 30 } }, auth = 504, rh = 601, source = "Owner", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 5, to_exit = false, carry = [] } } } },
+  { BfCallOp = { c = { Bc = { auth = 701, nf = { Fresh = { n = 30 } }, proof_ok = true, root_final = true, root_age = 40, bound = 100, interval = 30, f_m = 30, carry_sigs = [] } } } },
+  { BfCallOp = { c = { Bc = { auth = 702, nf = { Fresh = { n = 30 } }, proof_ok = true, root_final = true, root_age = 40, bound = 100, interval = 30, f_m = 30, carry_sigs = [] } } } },
+  { QueryOp = { a = 701, h = 0 } },
+  { BfRootOp = { ts = [{ Tp = { auth = 701, nf = { Fresh = { n = 30 } }, rh = 801, root = 901 } }] } },
+  { CharterOp = { cid = 4, profile = "P1", board_first = true, stateful = true } },
+]

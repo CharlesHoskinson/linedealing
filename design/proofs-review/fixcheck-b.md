@@ -2,7 +2,7 @@
 
 You reviewed an earlier version of a proof document and requested changes. Your review is `fixcheck/your-review-cand-X.md` (X = b). The author has revised the document. Do not edit any file except your report. Do not run git.
 
-Folder: `design/proofs-review/fixcheck/`
+Folder: `/home/hoskinson/Projects/mpcexperiments/design/proofs-review/fixcheck/`
 - `PROOFS.md` (revised), `SCHEME.md` (revised), `FINDINGS-LEDGER.md` (new rows C19-C23 at the end), `DISPOSITION.md` (the author's response to each finding).
 - `groth-shoup-2021-1330.pdf`, `2022-506.pdf`.
 

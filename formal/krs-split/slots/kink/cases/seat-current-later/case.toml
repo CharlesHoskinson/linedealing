@@ -1,0 +1,20 @@
+# SL-019: a later ack round for the same digest makes the slot current.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { SeatPut = { key = 4 } },
+  { SeatBind = { key = 4, d = 3, slot_acks = 1, sealed_acks = 1 } },
+  { SeatBind = { key = 4, d = 3, slot_acks = 3, sealed_acks = 1 } },
+  { SeatRelease = { key = 4, d = 3 } },
+  { SeatBind = { key = 4, d = 3, slot_acks = 1, sealed_acks = 3 } },
+  { SeatRelease = { key = 4, d = 3 } },
+  { SeatBind = { key = 4, d = 3, slot_acks = 2, sealed_acks = 3 } },
+  { SeatRelease = { key = 4, d = 3 } },
+  { SeatRelease = { key = 4, d = 3 } },
+  { SeatPut = { key = 5 } },
+  { SeatBind = { key = 5, d = 1, slot_acks = 2, sealed_acks = 1 } },
+  { SeatRelease = { key = 5, d = 1 } },
+  { SeatPut = { key = 6 } },
+  { SeatBind = { key = 6, d = 1, slot_acks = 1, sealed_acks = 2 } },
+  { SeatRelease = { key = 6, d = 1 } },
+]

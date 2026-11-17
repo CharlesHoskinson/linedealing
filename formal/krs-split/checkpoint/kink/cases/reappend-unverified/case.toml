@@ -1,0 +1,13 @@
+# CP-042, CP-043: only a verified read appends the lost statements again; the board keeps
+# the statements in append order
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { ReadLedger = { ok = true, tickets = [{ P = [0, 0] }, { P = [1, 0] }, { P = [2, 0] }, { P = [3, 0] }], cov = [] } },
+  { RestoreDone = { r = { Rd = { seat = 1, boot_ctr = 1, cp_seq = 0, whole = false } } } },
+  { LoseTail = {} },
+  { ReadLedger = { ok = false, tickets = [{ P = [0, 0] }, { P = [1, 0] }, { P = [2, 0] }, { P = [3, 0] }], cov = [] } },
+  { RestoreDone = { r = { Rd = { seat = 2, boot_ctr = 1, cp_seq = 0, whole = false } } } },
+  { RestoreDone = { r = { Rd = { seat = 3, boot_ctr = 1, cp_seq = 0, whole = false } } } },
+]

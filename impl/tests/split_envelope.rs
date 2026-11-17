@@ -1,4 +1,7 @@
 mod common;
+#[allow(dead_code)]
+#[path = "../benches/support/mod.rs"]
+mod support;
 use common::{node_secret, TestRng, G};
 use k256::Scalar;
 use line_dealing::split::{envelope::*, prf};
@@ -565,6 +568,28 @@ fn contributions_embedded_before_post_and_framed_after_post_open_at_release() {
             };
             opened.validate_contribution(&frame.hd(), &payload).unwrap();
             let contribution_header = Header::contribution(opened, payload).unwrap();
+            // DECISIONS 54(2), DESIGN §4.6: a CONTRIB frame carries 32 random bytes in
+            // auth_ref, as every envelope without an authorization. A caller-chosen
+            // value (zero marks the frame as a contribution) is refused.
+            for fixed in [[0; 32], [42; 32]] {
+                let refused = PreparedEnvelope::new(
+                    Public::new(7, keylist_hash(&keys).unwrap(), 100),
+                    &keys,
+                    7,
+                    &mut rng,
+                )
+                .unwrap()
+                .build(
+                    contribution_header.clone(),
+                    vec![],
+                    vec![],
+                    vec![],
+                    &mut rng,
+                )
+                .unwrap()
+                .authorize(Some(fixed), &mut rng);
+                assert!(refused.is_err(), "CONTRIB frame took a fixed auth_ref");
+            }
             let contribution = PreparedEnvelope::new(
                 Public::new(7, keylist_hash(&keys).unwrap(), 100),
                 &keys,
@@ -760,46 +785,94 @@ fn malformed_suite_points_and_noncanonical_scalars_are_rejected() {
         .is_err());
 }
 
+// The host fields of each capsule (transaction, prevouts, destination record)
+// come from the fee variants that `split_sizes` measures: P2TR for BIP340
+// (`SchnorrSetup`, `fixture_variants`), P2WPKH for ECDSA. The capacity test
+// and the sizes table use one fixture.
 fn sized_fixture(suite: u8, k: u8, l: u8) -> (Header, Vec<Vec<Scalar>>, Vec<Capsule>) {
     let (h, b, mut c) = fixture(RequestType::Spend, suite, k, l);
-    for (i, cap) in c.iter_mut().enumerate() {
-        let halves = if suite == 1 {
-            l as usize
-        } else {
-            (i + 1).min(h.g as usize) * l as usize
-        };
-        let len = cap.encode(suite, halves).unwrap().len();
-        assert!(len <= 465);
-        cap.transaction.resize(cap.transaction.len() + 465 - len, 0);
-        assert_eq!(cap.encode(suite, halves).unwrap().len(), 465)
+    let hosts: Vec<_> = match suite {
+        1 => {
+            let mut script = vec![0, 20];
+            script.extend([9; 20]);
+            line_dealing::split::request::ecdsa::fixture_variants(&script, k, l)
+                .unwrap()
+                .into_iter()
+                .map(|v| (v.transaction, v.prevouts, v.destination))
+                .collect()
+        }
+        2 => support::schnorr::<line_dealing::split::group::Secp>(9, k, l, 0)
+            .variants
+            .into_iter()
+            .map(|v| (v.transaction, v.prevouts, v.destination))
+            .collect(),
+        _ => panic!("no measured host fixture for suite {suite}"),
+    };
+    for (v, (cap, (transaction, prevouts, destination))) in c.iter_mut().zip(hosts).enumerate() {
+        cap.transaction = transaction;
+        cap.prevouts = prevouts;
+        cap.destination = destination;
+        let halves = cap.nonces.len();
+        assert_eq!(
+            cap.encode(suite, halves).unwrap().len(),
+            capsule_len(suite, h.g, l, v as u8 + 1)
+        );
     }
     (h, b, c)
 }
+// design/enhancement/vectors/sizes.py `HOST`: the encoded host fields of one
+// capsule with their three 2-byte length prefixes.
+fn host_bytes(suite: u8, l: u8) -> usize {
+    match (suite, l) {
+        (1, 1) => HOST_ECDSA_1,
+        (1, 2) => HOST_ECDSA_2,
+        (2, 1) => HOST_P2TR_1,
+        (2, 2) => HOST_P2TR_2,
+        _ => panic!("no measured host fixture"),
+    }
+}
+const HOST_ECDSA_1: usize = 173;
+const HOST_ECDSA_2: usize = 246;
+const HOST_P2TR_1: usize = 221;
+const HOST_P2TR_2: usize = 306;
+// sizes.py `cap`: one capsule without actors and without its AEAD tag. Variant
+// `v` carries one nonce point per half (L on ECDSA, min(v, G)·L on Schnorr),
+// the salt seed 32, T_0 33, the initiator 2 and the signing set {initiator} 4.
+fn capsule_len(suite: u8, g: u8, l: u8, v: u8) -> usize {
+    let nonces = if suite == 1 { l } else { v.min(g) * l };
+    host_bytes(suite, l) + 33 * nonces as usize + 32 + 33 + 2 + 4
+}
+// The fixed TEE header fields: intent 24, public key 33, leaf_root 32, r_ic 32
+// and one 32-byte salt per variant (sizes.py `tee_header`).
+fn tee_header(k: u8) -> usize {
+    24 + 33 + 32 + 32 + 32 * k as usize
+}
 #[test]
 fn reference_and_real_serialization_budgets_cover_every_grid_and_committee() {
-    // Rows of design/enhancement/vectors/sizes.py without the layout block and the
-    // padded actor capsule (DECISIONS 57); the test adds LAYOUT_SIZE and
-    // ACTOR_CAPSULE_SIZE. Both K=L=1 suites are included.
-    // (K,L,suite,base9,per actor non/TEE,max others9 non/TEE,max others17 non/TEE)
+    // Rows of design/enhancement/vectors/sizes.py: the base frame at n = 9, the
+    // bytes per other actor (non-TEE, TEE) and the largest |S| (n = 9 non-TEE,
+    // TEE, n = 17 non-TEE, TEE). Both K = L = 1 suites are included.
     let rows = [
-        (8, 2, 2, 11072, 758, 911, 6, 5, 5, 4),
-        (8, 1, 2, 8357, 728, 821, 10, 9, 9, 8),
-        (5, 2, 2, 7169, 521, 626, 17, 14, 16, 13),
-        (3, 2, 1, 3069, 327, 360, 40, 36, 39, 35),
-        (1, 1, 1, 1671, 197, 230, 74, 63, 72, 61),
-        (1, 1, 2, 1784, 203, 240, 71, 60, 69, 58),
+        (8, 2, 2, 11422, 790, 943, 6, 5, 6, 4),
+        (8, 1, 2, 7532, 760, 853, 11, 10, 11, 9),
+        (5, 2, 2, 7387, 649, 754, 14, 12, 13, 11),
+        (3, 2, 1, 2887, 525, 558, 26, 24, 25, 23),
+        (1, 1, 1, 1547, 455, 488, 33, 31, 32, 30),
+        (1, 1, 2, 1708, 459, 496, 32, 30, 31, 29),
     ];
     for (n, t) in [(9, 7), (17, 12)] {
         let keys = committee(n);
         let mut rng = TestRng::new();
-        for (k, l, suite, base9, pa, pa_tee, non9, tee9, non17, tee17) in rows {
+        for (k, l, suite, base9, pa, pa_tee, s9, s9_tee, s17, s17_tee) in rows {
             let (header, bodies, caps) = sized_fixture(suite, k, l);
             let b = header.labels().len();
             let h = header.half_count();
             let outer = t as usize * 33 + n as usize * 32 + 33 + 196;
             assert_eq!(outer, if n == 9 { 748 } else { 1169 });
-            let old_base = base9 + if n == 9 { 0 } else { 421 };
-            let base = old_base + LAYOUT_SIZE;
+            let base = base9 + if n == 9 { 0 } else { 421 };
+            let capsules: usize = (1..=k)
+                .map(|v| capsule_len(suite, header.g, l, v) + 16)
+                .sum();
             let calculated = 96
                 + outer
                 + LAYOUT_SIZE
@@ -807,7 +880,7 @@ fn reference_and_real_serialization_budgets_cover_every_grid_and_committee() {
                 + 16
                 + h * header.ticket_len()
                 + b * (32 * l as usize + 48)
-                + k as usize * 481;
+                + capsules;
             assert_eq!(calculated, base);
             let prepared = PreparedEnvelope::new(
                 Public::new(7, keylist_hash(&keys).unwrap(), 100),
@@ -823,27 +896,23 @@ fn reference_and_real_serialization_budgets_cover_every_grid_and_committee() {
                     .used_bytes(),
                 base
             );
-            let emb = b * (49 + 32 * l as usize) + 16;
             for tee in [false, true] {
                 let pa = if tee { pa_tee } else { pa };
-                let max_ref = (FRAME_SIZE - old_base - b * 33) / pa;
+                // Each other actor adds its padded actor capsule, so the
+                // embedded form (sizes.py `emb`) replaces that capsule.
+                assert!(pa > ACTOR_CAPSULE_SIZE);
+                let tee_base = if tee { tee_header(k) } else { 0 };
+                let max = (FRAME_SIZE - base - b * 33 - tee_base) / pa;
                 assert_eq!(
-                    max_ref,
+                    max + 1,
                     match (n, tee) {
-                        (9, false) => non9,
-                        (9, true) => tee9,
-                        (_, false) => non17,
-                        (_, true) => tee17,
+                        (9, false) => s9,
+                        (9, true) => s9_tee,
+                        (_, false) => s17,
+                        (_, true) => s17_tee,
                     }
                 );
-                let old_pa = pa + if suite == 1 { 2 * k as usize } else { 0 };
-                let actual_pa = old_pa + ACTOR_CAPSULE_SIZE - (97 + 32 * k as usize);
-                let tee_base = if tee { 97 + 32 * k as usize + 24 } else { 0 };
-                let old_max = (FRAME_SIZE - old_base - b * 33 - tee_base) / old_pa;
-                let actual_max = (FRAME_SIZE - base - b * 33 - tee_base) / actual_pa;
-                let embedded_pa = pa - (97 + 32 * k as usize) + emb;
-                assert!(embedded_pa > 0);
-                for count in [actual_max, actual_max + 1] {
+                for count in [max, max + 1] {
                     let (mut header, bodies, mut caps) = sized_fixture(suite, k, l);
                     let actors = add_actors(&mut header, &mut caps, count, tee);
                     let prepared = PreparedEnvelope::new(
@@ -854,16 +923,19 @@ fn reference_and_real_serialization_budgets_cover_every_grid_and_committee() {
                     )
                     .unwrap();
                     let result = prepared.build(header, bodies, caps, actors, &mut rng);
-                    if count == actual_max {
+                    if count == max {
                         assert_eq!(
                             result.unwrap().used_bytes(),
-                            base + b * 33 + tee_base + actual_pa * count
+                            base + b * 33 + tee_base + pa * count
                         )
                     } else {
                         assert!(result.is_err())
                     }
                 }
-                println!("n={n} K={k} L={l} suite={suite} tee={tee}: reference S={} old S={} new S={} base={base} extraTEE={tee_base} perActor={actual_pa} embedded={emb}",max_ref+1,old_max+1,actual_max+1);
+                println!(
+                    "n={n} K={k} L={l} suite={suite} tee={tee}: S={} base={base} extraTEE={tee_base} perActor={pa}",
+                    max + 1
+                );
             }
         }
     }

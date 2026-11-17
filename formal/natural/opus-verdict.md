@@ -5,7 +5,7 @@ Reviewer: independent Opus agent, 2026-11-13. I did not install anything and did
 ## Host and upstream facts I checked (read-only)
 
 - `elan toolchain list`: `v4.33.1`, `v4.35.0` (the default resolves from `stable`). `~/.elan/toolchains` has the same two directories, 3.0 GB and 3.1 GB on disk.
-- `formal/lean/lean-toolchain` = `leanprover/lean4:v4.35.0`. Its lakefile has Mathlib as a **path** dependency on `~/Projects/Moriarty-wt/mca-lean/formal/mca-lean/.lake/packages/mathlib` (6.9 GB, built locally). It is a v4.35 build and other Moriarty work also uses it.
+- `formal/lean/lean-toolchain` = `leanprover/lean4:v4.35.0`. Its lakefile has Mathlib as a **path** dependency on `/home/hoskinson/Projects/Moriarty-wt/mca-lean/formal/mca-lean/.lake/packages/mathlib` (6.9 GB, built locally). It is a v4.35 build and other Moriarty work also uses it.
 - `/home` has 2.7 TB free. Disk space is not a constraint.
 - `medovina/natural_lean` HEAD is `089bcf9e265f1da685464e874fdca37d4f285888` (pushed 2026-11-13T13:38Z; five commits on that day, including two reverts). The project is active and changes every day.
 - Its `lean-toolchain` = `v4.36.0-rc2`. The lakefile requires `aesop@master` and `batteries@main`. The manifest pins batteries `6d971e7e…` and aesop `7d11bfa8…`, and **both of those commits have `lean-toolchain` = v4.36.0-rc2**. The aesop pin is exactly the aesop `v4.36.0-rc2` tag.

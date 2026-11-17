@@ -1,0 +1,10 @@
+tc_splitline_binding                 exit0     exit0     PASS 
+binding_design                       ok        ok        PASS [ok] No violation found (3628ms at 1378 traces/second).
+binding_design_rollback              ok        ok        PASS [ok] No violation found (2890ms at 1730 traces/second).
+binding_m_no_initiator               violation violation PASS [violation] Found an issue (15ms at 67 traces/second).
+binding_m_no_initiator_guard         ok        ok        PASS [ok] No violation found (460ms at 10870 traces/second).
+binding_m_no_initiator_rollback      violation violation PASS [violation] Found an issue (19ms at 105 traces/second).
+test_dt_design                       ok        ok        PASS   3 passing (33ms)
+test_dt_no_initiator                 ok        ok        PASS   3 passing (43ms)
+neg_dt_design_broken                 testfail  testfail  PASS     1) dt_design::binding_scenarios::twoInitiatorsBroken failed after 
+neg_dt_no_initiator_holds            testfail  testfail  PASS     1) dt_no_initiator::binding_scenarios::twoInitiatorsHolds failed a

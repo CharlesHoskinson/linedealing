@@ -1,0 +1,8 @@
+# CP-043, CP-037, ledger 6: a node that never read the ledger refuses an anchored release
+# with ledger_unverified and answers an unanchored one
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { ReleaseAnchor = { anchor = true, entry_h = 0 } },
+  { ReleaseAnchor = { anchor = false, entry_h = 0 } },
+]

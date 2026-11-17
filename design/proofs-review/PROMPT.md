@@ -2,7 +2,7 @@
 
 You are an independent reviewer of a cryptographic proof document. Do not edit any file except your report. Do not run git.
 
-Bundle (frozen copies; read from here): `design/proofs-review/bundle/`
+Bundle (frozen copies; read from here): `/home/hoskinson/Projects/mpcexperiments/design/proofs-review/bundle/`
 - `PROOFS.md`: the document under review.
 - `SCHEME.md`: the protocol it proves things about.
 - `PROOF-CHECK.md`: an earlier check that listed gaps the proofs try to close.

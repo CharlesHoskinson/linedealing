@@ -1,0 +1,6 @@
+# CP-010: a boot counter with its RestoreDone in the same checkpoint lands
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [{ P = [0, 1] }, { P = [1, 2] }], restart_seq = 0, seat_roots = [], restores = [{ Rd = { seat = 1, boot_ctr = 2, cp_seq = 0, whole = false } }, { Rd = { seat = 0, boot_ctr = 1, cp_seq = 0, whole = false } }] } }, mh = 1000 } },
+]

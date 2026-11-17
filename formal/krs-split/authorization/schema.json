@@ -1,0 +1,87 @@
+{
+  "capability": "split-authorization",
+  "types": {
+    "Mode": {"enum": {"TEE": "Tee", "NON_TEE": "NonTee"}},
+    "Profile": {"enum": {"P0": "P0", "P1": "P1", "P2": "P2"}},
+    "RState": {"enum": {"UNSPENT": "Unspent", "PENDING": "Pending", "LOCKED": "Locked"}},
+    "Status": {"enum": {"SUBMITTED": "Submitted", "FINAL": "StFinal", "REVOKED": "Revoked"}},
+    "Settled": {"enum": {"NONE": "SetNone", "FINAL": "SetFinal", "VOID": "SetVoid", "RELEASED": "SetReleased"}},
+    "Source": {"enum": {"OWNER": "Owner", "SEIZURE": "Seizure", "RECOVERY": "Recovery"}},
+    "Root": {"enum": {"OWN": "Own", "G": "RootG"}},
+    "Nf": {"bykeys": [
+      ["Fresh", [["fresh", "n", "int"]]],
+      ["OfSettle", [["auth", "auth", "int"], ["outcome", "o", {"ref": "Settled"}]]]]},
+    "Auth": {"record": "Au", "fields": [
+      ["auth", "auth", "int"], ["nf", "nf", {"ref": "Nf"}], ["rh", "rh", "int"],
+      ["status", "status", {"ref": "Status"}], ["final_height", "final_height", {"option": "int"}],
+      ["settled", "settled", {"ref": "Settled"}], ["source", "source", {"option": {"ref": "Source"}}],
+      ["pin", "pin", {"option": "int"}], ["direct", "direct", "bool"]]},
+    "Rec": {"record": "Rc", "fields": [
+      ["rid", "rid", "int"], ["cm_addr", "cm_addr", "int"], ["profile", "profile", {"ref": "Profile"}],
+      ["board_first", "board_first", "bool"], ["rstate", "rstate", {"ref": "RState"}],
+      ["nf", "nf", {"ref": "Nf"}], ["pin", "pin", {"option": "int"}], ["hold_tag", "hold_tag", "int"],
+      ["slr_own", "slr_own", {"option": "int"}], ["slr_G", "slr_g", {"option": "int"}],
+      ["spent", "spent", "bool"], ["auths", "auths", {"list": {"ref": "Auth"}}]]},
+    "Charter": {"record": "Ch", "fields": [
+      ["cid", "cid", "int"], ["profile", "profile", {"ref": "Profile"}], ["board_first", "board_first", "bool"]]},
+    "AnPair": {"tuple": "An", "items": ["int", {"ref": "Nf"}], "names": ["a", "nf"]},
+    "NfaPair": {"tuple": "Nfa", "items": [{"ref": "Nf"}, "int"], "names": ["nf", "a"]},
+    "Node": {"record": "Nd", "fields": [
+      ["pending", "pending", {"list": {"ref": "Nf"}}], ["in_force", "inforce", {"list": {"ref": "AnPair"}}],
+      ["landed", "landed", {"list": {"ref": "Nf"}}]]},
+    "Params": {"record": "Params", "fields": [["mode", "mode", {"ref": "Mode"}], ["q", "q", "int"]]},
+    "SlotRef": {"tuple": "Sr", "items": ["int", {"ref": "Root"}], "names": ["rid", "root"]},
+    "Leaf": {"tuple": "Lf", "items": ["int", {"ref": "Settled"}], "names": ["auth", "o"]},
+    "Carry": {"record": "Cy", "fields": [
+      ["auth_0", "auth_0", "int"], ["outcome", "outcome", {"ref": "Settled"}], ["sigs", "sigs", "int"]]},
+    "Call": {"record": "Cl", "fields": [
+      ["rid", "rid", "int"], ["nf", "nf", {"ref": "Nf"}], ["auth", "auth", "int"], ["rh", "rh", "int"],
+      ["source", "source", {"ref": "Source"}], ["slot", "slot", {"option": {"ref": "SlotRef"}}],
+      ["inputs_ok", "inputs_ok", "bool"], ["pred_ok", "pred_ok", "bool"], ["in_gamma", "in_gamma", "bool"],
+      ["blacklisted", "blacklisted", "bool"], ["ticket_ok", "ticket_ok", "bool"], ["pin", "pin", "int"],
+      ["to_exit", "to_exit", "bool"], ["carry", "carry", {"option": {"ref": "Carry"}}]]},
+    "BfTuple": {"record": "Tp", "fields": [
+      ["auth", "auth", "int"], ["nf", "nf", {"ref": "Nf"}], ["rh", "rh", "int"], ["root", "root", "int"]]},
+    "BfCall": {"record": "Bc", "fields": [
+      ["auth", "auth", "int"], ["nf", "nf", {"ref": "Nf"}], ["proof_ok", "proof_ok", "bool"],
+      ["root_final", "root_final", "bool"], ["root_age", "root_age", "int"], ["bound", "bound", "int"],
+      ["interval", "interval", "int"], ["F_M", "f_m", "int"], ["carry_sigs", "carry_sigs", {"option": "int"}]]},
+    "Refusal": {"enum": {"bad_carry": "BadCarry", "board_first_forbidden": "BoardFirstForbidden",
+                         "board_first_record": "BoardFirstRecord", "nf_pending": "NfPending",
+                         "nf_used": "NfUsed", "no-rule": "NoRule", "no_recovery": "NoRecovery",
+                         "not_revocable": "NotRevocable", "outside-capability": "OutsideCapability",
+                         "pin_mismatch": "PinMismatch"}},
+    "VoidReason": {"enum": {"AUTH_REFUSED": "AuthRefused"}},
+    "Op": {"variant": {"tag": "op", "cases": {
+      "charter": ["CharterOp", [["cid", "cid", "int"], ["profile", "profile", {"ref": "Profile"}],
+                                ["board_first", "board_first", "bool"], ["stateful", "stateful", "bool"]]],
+      "record": ["RecordOp", [["rid", "rid", "int"], ["cid", "cid", "int"], ["cm_addr", "cm_addr", "int"],
+                              ["nf", "nf", {"ref": "Nf"}], ["hold_tag", "hold_tag", "int"],
+                              ["slr_own", "slr_own", {"option": "int"}], ["slr_G", "slr_g", {"option": "int"}]]],
+      "authorize": ["AuthorizeOp", [["call", "c", {"ref": "Call"}]]],
+      "finalize": ["FinalizeOp", [["auth", "a", "int"], ["height", "h", "int"]]],
+      "revoke": ["RevokeOp", [["auth", "a", "int"], ["tag", "tag", "int"]]],
+      "settle_root": ["SettleRootOp", [["leaves", "leaves", {"list": {"ref": "Leaf"}}]]],
+      "bf_root": ["BfRootOp", [["tuples", "ts", {"list": {"ref": "BfTuple"}}]]],
+      "recover": ["RecoverOp", []],
+      "bf_call": ["BfCallOp", [["call", "c", {"ref": "BfCall"}]]],
+      "query": ["QueryOp", [["auth", "a", "int"], ["height", "h", "int"]]],
+      "seizure": ["SeizureOp", [["auth", "a", "int"], ["all_to_dreg", "all_to_dreg", "bool"]]]}}},
+    "Obs": {"keyed": {
+      "accepted": ["Accepted", null],
+      "refused": ["Refused", [[null, "codes", {"list": {"ref": "Refusal"}}]]],
+      "ok": ["Ok", null],
+      "in_force": ["InForce", [[null, "b", "bool"]]],
+      "void": ["Void", [[null, "reason", {"ref": "VoidReason"}]]]}}
+  },
+  "inputs": [["params", {"ref": "Params"}], ["ops", {"list": {"ref": "Op"}}]],
+  "state": [
+    ["params", "params", {"ref": "Params"}],
+    ["charters", "charters", {"list": {"ref": "Charter"}}],
+    ["records", "records", {"list": {"ref": "Rec"}}],
+    ["used", "used", {"list": {"ref": "NfaPair"}}],
+    ["holds", "holds", {"list": "int"}],
+    ["recovered", "recovered", "bool"],
+    ["node", null, {"ref": "Node"}]],
+  "obs": {"ref": "Obs"}
+}

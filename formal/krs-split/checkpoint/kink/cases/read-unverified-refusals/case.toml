@@ -1,0 +1,12 @@
+# CP-043, CP-017: an unverified read on a ready node is still refused with
+# outside-capability for a ticket outside the seats or a seat named twice, and leaves the
+# node ready
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { ReadLedger = { ok = true, tickets = [{ P = [0, 0] }, { P = [1, 0] }, { P = [2, 0] }, { P = [3, 0] }], cov = [] } },
+  { ReadLedger = { ok = false, tickets = [{ P = [4, 0] }], cov = [] } },
+  { ReadLedger = { ok = false, tickets = [{ P = [0, 0] }, { P = [0, 1] }], cov = [] } },
+  { ReleaseAnchor = { anchor = true, entry_h = 90 } },
+]

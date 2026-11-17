@@ -1,0 +1,16 @@
+# RQ-042: posts of two epochs are counted apart against each epoch's own q.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Rotate = { e = 1, n = 7, f = 2 } },
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { PostFinal = { eid = 1, epoch = 0, member = 0, ct = 5 } },
+  { PostFinal = { eid = 1, epoch = 1, member = 0, ct = 5 } },
+  { PostFinal = { eid = 1, epoch = 1, member = 1, ct = 5 } },
+  { PostFinal = { eid = 1, epoch = 0, member = 1, ct = 5 } },
+  { PostFinal = { eid = 1, epoch = 1, member = 2, ct = 5 } },
+  { PostFinal = { eid = 1, epoch = 1, member = 3, ct = 5 } },
+  { PostFinal = { eid = 1, epoch = 0, member = 2, ct = 5 } },
+]

@@ -12,13 +12,20 @@ use line_dealing::{
     },
 };
 use std::{collections::BTreeMap, time::Duration};
+#[path = "support/cputime.rs"]
+mod cputime;
 mod support;
+use cputime::criterion_measurement::ThreadCpu;
+type C = Criterion<ThreadCpu>;
 
 fn sizes() -> Vec<u16> {
     match std::env::var("SPLIT_BENCH_N") {
         Ok(value) => {
-            let n = value.parse().expect("SPLIT_BENCH_N must be 9 or 17");
-            assert!([9, 17].contains(&n), "SPLIT_BENCH_N must be 9 or 17");
+            let n = value.parse().expect("SPLIT_BENCH_N must be 5, 9, 17 or 33");
+            assert!(
+                [5, 9, 17, 33].contains(&n),
+                "SPLIT_BENCH_N must be 5, 9, 17 or 33"
+            );
             vec![n]
         }
         Err(std::env::VarError::NotPresent) => vec![9, 17],
@@ -26,9 +33,9 @@ fn sizes() -> Vec<u16> {
     }
 }
 
-fn offline_rows(c: &mut Criterion) {
+fn offline_rows(c: &mut C) {
     for n in sizes() {
-        let f = if n == 9 { 2 } else { 5 };
+        let f = support::faults(n);
         let t = n - f;
         let mut rng = SeededRng::new(31);
         let secrets: BTreeMap<_, _> = (1..=n).map(|i| (i, Secp::random(&mut rng))).collect();
@@ -135,7 +142,7 @@ fn offline_rows(c: &mut Criterion) {
     }
 }
 
-fn ecdsa_combine_rows(c: &mut Criterion) {
+fn ecdsa_combine_rows(c: &mut C) {
     for n in sizes() {
         for other_actors in [0, 2] {
             let (mut request, secrets) = support::ecdsa(n, other_actors);
@@ -185,7 +192,7 @@ fn ecdsa_combine_rows(c: &mut Criterion) {
     }
 }
 
-fn schnorr_rows<S: SchnorrSuite>(c: &mut Criterion, n: u16, k: u8, l: u8, name: &str) {
+fn schnorr_rows<S: SchnorrSuite>(c: &mut C, n: u16, k: u8, l: u8, name: &str) {
     for other_actors in [0, 2] {
         // Birth, slot dealing, transport keys and transaction fixtures are offline.
         // None of these operations belong to a timed request row.
@@ -583,12 +590,16 @@ fn schnorr_rows<S: SchnorrSuite>(c: &mut Criterion, n: u16, k: u8, l: u8, name: 
     }
 }
 
-fn request_rows(c: &mut Criterion) {
+fn request_rows(c: &mut C) {
     for n in sizes() {
         schnorr_rows::<Secp>(c, n, 8, 2, "bip340");
         schnorr_rows::<Edwards>(c, n, 1, 1, "ed25519");
     }
 }
 
-criterion_group!(benches, offline_rows, ecdsa_combine_rows, request_rows);
+criterion_group! {
+    name = benches;
+    config = Criterion::default().with_measurement(ThreadCpu);
+    targets = offline_rows, ecdsa_combine_rows, request_rows
+}
 criterion_main!(benches);

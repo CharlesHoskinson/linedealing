@@ -1,0 +1,7 @@
+# ledger 4: key index 1024 is outside N_pk; 1023 is inside
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { PostPool = { actor = 1, root = 1, key = 1024 } },
+  { PostPool = { actor = 1, root = 1, key = 1023 } },
+]

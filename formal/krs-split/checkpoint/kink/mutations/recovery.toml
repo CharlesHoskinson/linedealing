@@ -1,0 +1,390 @@
+# Plausible misreadings of recovery, the epoch key set, the replay floor and the
+# stateless node rules (CP-003, CP-006, CP-016, CP-030 to CP-037, RQ-001, ledger 7 to 9,
+# ledger 14), as K patches of kink/definition.k.
+
+[[mutation]]
+id = "ledger9-recover-before-landing"
+expect = "kill"
+misunderstanding = "CP-034, ledger 9: recover is accepted before any checkpoint landed"
+  [[mutation.edit]]
+  rule = "split_checkpoint--recover_refusals_1"
+  find = "=> ListItem(noRule)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "cp034-recover-twice"
+expect = "kill"
+misunderstanding = "CP-034: a second recover records a second transition"
+  [[mutation.edit]]
+  rule = "split_checkpoint--recover_refusals_2"
+  find = "opt ( Recovered:Bool , noRule ) "
+  replace = ""
+
+[[mutation]]
+id = "cp035-early-unchecked"
+expect = "kill"
+misunderstanding = "CP-035: recover is accepted before Δ_rec blocks"
+  [[mutation.edit]]
+  rule = "split_checkpoint--recover_refusals_2"
+  find = "opt ( Mh:Int <Int (Last:Int +Int dRecOf ( P:Params )) , recoveryEarly )"
+  replace = ".List"
+
+[[mutation]]
+id = "cp035-at-delta-early"
+expect = "kill"
+misunderstanding = "CP-035, ledger 14: recover at exactly Δ_rec blocks is still early"
+  [[mutation.edit]]
+  rule = "split_checkpoint--recover_refusals_2"
+  find = "Mh:Int <Int (Last:Int +Int dRecOf ( P:Params ))"
+  replace = "Mh:Int <=Int (Last:Int +Int dRecOf ( P:Params ))"
+
+[[mutation]]
+id = "cp034-no-record"
+expect = "kill"
+misunderstanding = "CP-034: the recovery transition writes no record"
+  [[mutation.edit]]
+  rule = "recover"
+  find = "ListItem(wEvent) Writes:List"
+  replace = "Writes:List"
+
+[[mutation]]
+id = "cp035-refuse-code"
+expect = "kill"
+misunderstanding = "CP-035: every refused recover is no-rule"
+  [[mutation.edit]]
+  rule = "recover-refuse"
+  find = "ListItem(refused ( recoverRefusals ( Params:Params , Chain:List , Recovered:Bool , Landmh:Int , Mh:Int ) ))"
+  replace = "ListItem(refused ( ListItem(noRule) ))"
+
+[[mutation]]
+id = "cp030-t-intact-allowed"
+expect = "kill"
+misunderstanding = "CP-030: a cold start is allowed with exactly t intact nodes"
+  [[mutation.edit]]
+  rule = "cold-start"
+  find = "(tOf ( Params:Params ) <=Int Intact:Int)"
+  replace = "(tOf ( Params:Params ) <Int Intact:Int)"
+  [[mutation.edit]]
+  rule = "cold-start-refuse"
+  find = "(tOf ( Params:Params ) <=Int Intact:Int)"
+  replace = "(tOf ( Params:Params ) <Int Intact:Int)"
+
+[[mutation]]
+id = "cp030-signers-unchecked"
+expect = "kill"
+misunderstanding = "CP-030: the coldStart record needs no operator quorum"
+  [[mutation.edit]]
+  rule = "cold-start"
+  find = " orElseBool (Signers:Int <Int qOf ( Params:Params ))"
+  replace = ""
+  [[mutation.edit]]
+  rule = "cold-start-refuse"
+  find = " orElseBool (Signers:Int <Int qOf ( Params:Params ))"
+  replace = ""
+
+[[mutation]]
+id = "ledger7-cold-start-twice"
+expect = "kill"
+misunderstanding = "CP-030, ledger 7: a second coldStart record is acted on"
+  [[mutation.edit]]
+  rule = "cold-start"
+  find = " orElseBool Cold:Bool"
+  replace = ""
+  [[mutation.edit]]
+  rule = "cold-start-refuse"
+  find = " orElseBool Cold:Bool"
+  replace = ""
+
+[[mutation]]
+id = "cp030-no-new-pool"
+expect = "kill"
+misunderstanding = "CP-030: a cold start deals no new nonce pool"
+  [[mutation.edit]]
+  rule = "cold-start"
+  find = "<newpool> _ => true </newpool>"
+  replace = "<newpool> _ => false </newpool>"
+
+[[mutation]]
+id = "cp030-refuse-code"
+expect = "kill"
+misunderstanding = "CP-030, ledger 7: a refused cold start is outside the capability"
+  [[mutation.edit]]
+  rule = "cold-start-refuse"
+  find = "ListItem(noRule)"
+  replace = "ListItem(outsideCapability)"
+
+[[mutation]]
+id = "rq001-q-floor"
+expect = "kill"
+misunderstanding = "RQ-001, CP-006, CP-030: q = ⌊(n + f + 1)/2⌋"
+  [[mutation.edit]]
+  rule = "split_checkpoint--q_of_1"
+  find = "((N:Int +Int F:Int) +Int 2) /Int 2"
+  replace = "((N:Int +Int F:Int) +Int 1) /Int 2"
+
+[[mutation]]
+id = "rq001-t-minus-one"
+expect = "kill"
+misunderstanding = "RQ-001, CP-030: t = n − f − 1"
+  [[mutation.edit]]
+  rule = "split_checkpoint--t_of_1"
+  find = "N:Int -Int F:Int"
+  replace = "(N:Int -Int F:Int) -Int 1"
+
+[[mutation]]
+id = "rq001-w-n-minus-f"
+expect = "kill"
+misunderstanding = "RQ-001, CP-006, CP-018: w = n − f"
+  [[mutation.edit]]
+  rule = "split_checkpoint--w_of_1"
+  find = "(N:Int -Int 1) -Int F:Int"
+  replace = "N:Int -Int F:Int"
+
+[[mutation]]
+id = "cp006-more-acks-allowed"
+expect = "kill"
+misunderstanding = "CP-006: an epoch key set may list more than n nodes' acks"
+  [[mutation.edit]]
+  rule = "eks"
+  find = "(size(Acks:List) =/=Int nOf ( Params:Params ))"
+  replace = "(size(Acks:List) <Int nOf ( Params:Params ))"
+  [[mutation.edit]]
+  rule = "eks-refuse"
+  find = "(size(Acks:List) =/=Int nOf ( Params:Params ))"
+  replace = "(size(Acks:List) <Int nOf ( Params:Params ))"
+
+[[mutation]]
+id = "cp006-acks-unchecked"
+expect = "kill"
+misunderstanding = "CP-006: the key set is written before every node has w acks"
+  [[mutation.edit]]
+  rule = "eks"
+  find = " orElseBool anyBelow ( Acks:List , wOf ( Params:Params ) )"
+  replace = ""
+  [[mutation.edit]]
+  rule = "eks-refuse"
+  find = " orElseBool anyBelow ( Acks:List , wOf ( Params:Params ) )"
+  replace = ""
+
+[[mutation]]
+id = "cp006-sigs-unchecked"
+expect = "kill"
+misunderstanding = "CP-006: the key set record needs no q signatures"
+  [[mutation.edit]]
+  rule = "eks"
+  find = " orElseBool (Sigs:Int <Int qOf ( Params:Params ))"
+  replace = ""
+  [[mutation.edit]]
+  rule = "eks-refuse"
+  find = " orElseBool (Sigs:Int <Int qOf ( Params:Params ))"
+  replace = ""
+
+[[mutation]]
+id = "cp006-acks-above-w"
+expect = "kill"
+misunderstanding = "CP-006: every node needs more than w acks"
+  [[mutation.edit]]
+  rule = "split_checkpoint--any_below_2_1"
+  find = "X:Int <Int W:Int"
+  replace = "X:Int <=Int W:Int"
+  [[mutation.edit]]
+  rule = "split_checkpoint--any_below_2_2"
+  find = "X:Int <Int W:Int"
+  replace = "X:Int <=Int W:Int"
+
+[[mutation]]
+id = "cp006-first-node-only"
+expect = "kill"
+misunderstanding = "CP-006: only the first node's acks are counted"
+  [[mutation.edit]]
+  rule = "split_checkpoint--any_below_2_2"
+  find = "=> anyBelow ( Rest:List , W:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp006-event-record"
+expect = "kill"
+misunderstanding = "CP-006: the key set is an event record, not EKS_e of its epoch"
+  [[mutation.edit]]
+  rule = "eks"
+  find = "ListItem(wEks ( E:Int )) Writes:List"
+  replace = "ListItem(wEks ( 0 )) ListItem(wEvent) Writes:List"
+
+[[mutation]]
+id = "ledger8-eks-refuse-code"
+expect = "kill"
+misunderstanding = "CP-006, ledger 8: a key set without its acks or signatures is outside the capability"
+  [[mutation.edit]]
+  rule = "eks-refuse"
+  find = "ListItem(noRule)"
+  replace = "ListItem(outsideCapability)"
+
+[[mutation]]
+id = "cp036-proof-ignored"
+expect = "kill"
+misunderstanding = "CP-036: a proof of non-service does not lift the replay floor"
+  [[mutation.edit]]
+  rule = "split_checkpoint--below_floor_of"
+  find = " andThenBool (notBool Proof:Bool)"
+  replace = ""
+
+[[mutation]]
+id = "cp036-peers-ignored"
+expect = "kill"
+misunderstanding = "CP-036: the floor is the latest checkpoint height only"
+  [[mutation.edit]]
+  rule = "split_checkpoint--below_floor_of"
+  find = "maxInt(foldMax ( Peers:List , 0 ), headHeight ( Chain:List ))"
+  replace = "maxInt(0 *Int size(Peers:List), headHeight ( Chain:List ))"
+
+[[mutation]]
+id = "cp036-checkpoint-ignored"
+expect = "kill"
+misunderstanding = "CP-036: the floor is the peer heights only"
+  [[mutation.edit]]
+  rule = "split_checkpoint--below_floor_of"
+  find = "maxInt(foldMax ( Peers:List , 0 ), headHeight ( Chain:List ))"
+  replace = "maxInt(foldMax ( Peers:List , 0 ), 0 *Int size(Chain:List))"
+
+[[mutation]]
+id = "cp036-at-floor-below"
+expect = "kill"
+misunderstanding = "CP-036: a request ordered at the floor is below it"
+  [[mutation.edit]]
+  rule = "split_checkpoint--below_floor_of"
+  find = "(OrderH:Int <Int (maxInt("
+  replace = "(OrderH:Int <=Int (maxInt("
+
+[[mutation]]
+id = "cp036-last-peer"
+expect = "kill"
+misunderstanding = "CP-036: the peer height is the last one reported, not the maximum"
+  [[mutation.edit]]
+  rule = "split_checkpoint--fold_max_2"
+  find = "maxInt(Acc:Int, X:Int)"
+  replace = "X:Int +Int 0 *Int Acc:Int"
+
+[[mutation]]
+id = "cp036-refuse-always"
+expect = "kill"
+misunderstanding = "CP-036: an order with a proof of non-service is still refused"
+  [[mutation.edit]]
+  rule = "order-req"
+  find = "Obs:List => Obs:List ListItem(ok)"
+  replace = "Obs:List => Obs:List ListItem(refused ( ListItem(belowFloor) ))"
+
+[[mutation]]
+id = "cp036-refuse-code"
+expect = "kill"
+misunderstanding = "CP-036: a request below the floor is refused with no-rule"
+  [[mutation.edit]]
+  rule = "order-req-refuse"
+  find = "ListItem(belowFloor)"
+  replace = "ListItem(noRule)"
+
+[[mutation]]
+id = "cp016-covered-strict"
+expect = "kill"
+misunderstanding = "CP-016: an entry at the checkpoint's board height is not yet covered"
+  [[mutation.edit]]
+  rule = "split_checkpoint--covered_at_2"
+  find = "H:Int <=Int BoardHeight:Int"
+  replace = "H:Int <Int BoardHeight:Int"
+
+[[mutation]]
+id = "cp016-covered-without-landing"
+expect = "kill"
+misunderstanding = "CP-016: before any landing every entry counts as covered"
+  [[mutation.edit]]
+  rule = "split_checkpoint--covered_at_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp016-covered-any"
+expect = "kill"
+misunderstanding = "CP-016: an entry counts once it is appended"
+  [[mutation.edit]]
+  rule = "covered"
+  find = "coveredAt ( Chain:List , H:Int )"
+  replace = "(H:Int ==Int H:Int)"
+
+[[mutation]]
+id = "cp037-anchor-ignored"
+expect = "kill"
+misunderstanding = "CP-037: an anchor_before_release charter releases without coverage"
+  [[mutation.edit]]
+  rule = "split_checkpoint--release_ok_1"
+  find = "=> coveredAt ( Chain:List , EntryH:Int )"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp037-every-charter"
+expect = "kill"
+misunderstanding = "CP-037: every charter waits for coverage before release"
+  [[mutation.edit]]
+  rule = "release-anchor"
+  find = "releaseOk ( Chain:List , Anchor:Bool , EntryH:Int )"
+  replace = "releaseOk ( Chain:List , true , EntryH:Int )"
+
+[[mutation]]
+id = "cp031-log-read-ignored"
+expect = "kill"
+misunderstanding = "CP-031: a slot whose seat log was not read in full is reshared too"
+  [[mutation.edit]]
+  rule = "split_checkpoint--reshare_list_2_1"
+  find = "(notBool Covered:Bool) andThenBool LogRead:Bool"
+  replace = "(notBool Covered:Bool)"
+  [[mutation.edit]]
+  rule = "split_checkpoint--reshare_list_2_2"
+  find = "(notBool Covered:Bool) andThenBool LogRead:Bool"
+  replace = "(notBool Covered:Bool)"
+
+[[mutation]]
+id = "cp031-covered-ignored"
+expect = "kill"
+misunderstanding = "CP-031: a slot with a covered binding is reshared too"
+  [[mutation.edit]]
+  rule = "split_checkpoint--reshare_list_2_1"
+  find = "(notBool Covered:Bool) andThenBool LogRead:Bool"
+  replace = "LogRead:Bool"
+  [[mutation.edit]]
+  rule = "split_checkpoint--reshare_list_2_2"
+  find = "(notBool Covered:Bool) andThenBool LogRead:Bool"
+  replace = "LogRead:Bool"
+
+[[mutation]]
+id = "cp031-first-slot-only"
+expect = "kill"
+misunderstanding = "CP-031: the reshare stops at the first slot it keeps"
+  [[mutation.edit]]
+  rule = "split_checkpoint--reshare_list_2_1"
+  find = "ListItem(pr ( Seat:Int , Slot:Int )) reshareList ( Rest:List )"
+  replace = "ListItem(pr ( Seat:Int , Slot:Int ))"
+
+[[mutation]]
+id = "cp032-reshare-without-anchor"
+expect = "kill"
+misunderstanding = "CP-032: without slot anchors the recovery group still reshares the uncovered slots"
+  [[mutation.edit]]
+  rule = "reshare"
+  find = "reshareOf ( Params:Params , Slots:List )"
+  replace = "reshareList ( Slots:List )"
+
+[[mutation]]
+id = "cp003-strict"
+expect = "kill"
+misunderstanding = "CP-003: a checkpoint is due only after more than 60 s"
+  [[mutation.edit]]
+  rule = "split_checkpoint--due_at"
+  find = "(Last:Int +Int 60) <=Int Now:Int"
+  replace = "(Last:Int +Int 60) <Int Now:Int"
+
+[[mutation]]
+id = "cp003-interval-30"
+expect = "kill"
+misunderstanding = "CP-003: the checkpoint interval is 30 s"
+  [[mutation.edit]]
+  rule = "due"
+  find = "dueAt ( Last:Int , Now:Int )"
+  replace = "dueAt ( Last:Int -Int 30 , Now:Int )"

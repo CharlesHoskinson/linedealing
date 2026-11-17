@@ -1,0 +1,9 @@
+# RQ-006: order sets ORDERED, order_pos and exp_c = height + delta_c.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Tick = { h = 20 } },
+  { Order = { eid = 1, qc = true, p = 4 } },
+]

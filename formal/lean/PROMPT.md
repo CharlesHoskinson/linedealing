@@ -1,8 +1,8 @@
 # Lane: Lean 4 proofs of the line-dealing algebra
 
-The design is design/SCHEME.md (line dealing). Read it in full, plus design/FINDINGS-LEDGER.md and experiments/line-dealing/checks.py (a pure-Python reference of the algebra and attacks, 36 passing assertions). Treat SCHEME.md as the specification. Do not edit SCHEME.md or anything outside your own folder. Do not commit or push. Run every build or test through heavy-run, e.g. `heavy-run --mem 16G --name <name> -- <cmd>`; if heavy-run is unavailable in your sandbox, run the command directly with low parallelism. No network installs.
+The design is /home/hoskinson/Projects/mpcexperiments/design/SCHEME.md (line dealing). Read it in full, plus design/FINDINGS-LEDGER.md and experiments/line-dealing/checks.py (a pure-Python reference of the algebra and attacks, 36 passing assertions). Treat SCHEME.md as the specification. Do not edit SCHEME.md or anything outside your own folder. Do not commit or push. Run every build or test through heavy-run, e.g. `heavy-run --mem 16G --name <name> -- <cmd>`; if heavy-run is unavailable in your sandbox, run the command directly with low parallelism. No network installs.
 
-Your folder: formal/lean/ . A Lake project is set up there (lakefile.toml, lean-toolchain v4.35.0, Mathlib by local path, builds offline with 'lake build'). Put modules under LineDealing/ and import them from LineDealing.lean.
+Your folder: /home/hoskinson/Projects/mpcexperiments/formal/lean/ . A Lake project is set up there (lakefile.toml, lean-toolchain v4.35.0, Mathlib by local path, builds offline with 'lake build'). Put modules under LineDealing/ and import them from LineDealing.lean.
 
 Model the group abstractly: a field F = ZMod q with q prime ([Fact q.Prime]), and an additive group G that is a Module F G with a fixed nonzero generator g (so a • g = 0 -> a = 0). Points are elements of G, scalar multiplication is •. Shamir shares are evaluations of polynomials of degree < t (Mathlib Polynomial or Lagrange interpolation over distinct nonzero node ids).
 

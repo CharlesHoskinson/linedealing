@@ -1,0 +1,4833 @@
+[
+ {
+  "name": "run with refusals",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "checkpoint",
+   "inputs": {
+    "params": {
+     "n": 9,
+     "f": 2,
+     "mode": "TEE",
+     "B": 200,
+     "slot_anchor": false,
+     "d_rec": 30
+    },
+    "ops": [
+     {
+      "op": "land",
+      "checkpoint": {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      "midnight_height": 1000
+     },
+     {
+      "op": "land",
+      "checkpoint": {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 90,
+         "pending_min": 95,
+         "pending": [],
+         "pending_count": 0
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      "midnight_height": 1010
+     },
+     {
+      "op": "open_session",
+      "pool": 1
+     },
+     {
+      "op": "read_ledger",
+      "ok": true,
+      "tickets": [
+       [
+        0,
+        0
+       ],
+       [
+        1,
+        0
+       ],
+       [
+        2,
+        0
+       ],
+       [
+        3,
+        0
+       ],
+       [
+        4,
+        0
+       ],
+       [
+        5,
+        0
+       ],
+       [
+        6,
+        0
+       ],
+       [
+        7,
+        0
+       ],
+       [
+        8,
+        0
+       ]
+      ],
+      "covered": []
+     },
+     {
+      "op": "land",
+      "checkpoint": {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      "midnight_height": 1020
+     },
+     {
+      "op": "recover",
+      "midnight_height": 1040
+     },
+     {
+      "op": "order_request",
+      "order_height": 1,
+      "peer_heights": [
+       5,
+       5,
+       5,
+       5,
+       5,
+       5,
+       5,
+       5,
+       5
+      ],
+      "proof": false
+     },
+     {
+      "op": "due",
+      "last": 0,
+      "now": 60
+     }
+    ]
+   }
+  },
+  "expect": {
+   "end": "final",
+   "cells": {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "obs": [
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "h_lowered",
+       "pending_gap"
+      ]
+     },
+     {
+      "refused": [
+       "ledger_unverified"
+      ]
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "recovery_early"
+      ]
+     },
+     {
+      "refused": [
+       "below_floor"
+      ]
+     },
+     {
+      "bool": true
+     }
+    ]
+   }
+  }
+ },
+ {
+  "name": "params outside the domain",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "checkpoint",
+   "inputs": {
+    "params": {
+     "n": 6,
+     "f": 2,
+     "mode": "TEE",
+     "B": 200,
+     "slot_anchor": false,
+     "d_rec": 30
+    },
+    "ops": [
+     {
+      "op": "land",
+      "checkpoint": {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      "midnight_height": 1000
+     },
+     {
+      "op": "land",
+      "checkpoint": {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 90,
+         "pending_min": 95,
+         "pending": [],
+         "pending_count": 0
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      "midnight_height": 1010
+     },
+     {
+      "op": "open_session",
+      "pool": 1
+     },
+     {
+      "op": "read_ledger",
+      "ok": true,
+      "tickets": [
+       [
+        0,
+        0
+       ],
+       [
+        1,
+        0
+       ],
+       [
+        2,
+        0
+       ],
+       [
+        3,
+        0
+       ],
+       [
+        4,
+        0
+       ],
+       [
+        5,
+        0
+       ],
+       [
+        6,
+        0
+       ],
+       [
+        7,
+        0
+       ],
+       [
+        8,
+        0
+       ]
+      ],
+      "covered": []
+     },
+     {
+      "op": "land",
+      "checkpoint": {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      "midnight_height": 1020
+     },
+     {
+      "op": "recover",
+      "midnight_height": 1040
+     },
+     {
+      "op": "order_request",
+      "order_height": 1,
+      "peer_heights": [
+       5,
+       5,
+       5,
+       5,
+       5,
+       5,
+       5,
+       5,
+       5
+      ],
+      "proof": false
+     },
+     {
+      "op": "due",
+      "last": 0,
+      "now": 60
+     }
+    ]
+   }
+  },
+  "expect": {
+   "end": "could-not-apply",
+   "reason": "outside-capability"
+  }
+ },
+ {
+  "name": "exponent",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"checkpoint\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"B\": 2e2, \"slot_anchor\": false, \"d_rec\": 30}, \"ops\": [{\"op\": \"land\", \"checkpoint\": {\"seq\": 0, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 100, \"pending_min\": 95, \"pending\": [95], \"pending_count\": 1}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1000}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 90, \"pending_min\": 95, \"pending\": [], \"pending_count\": 0}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1010}, {\"op\": \"open_session\", \"pool\": 1}, {\"op\": \"read_ledger\", \"ok\": true, \"tickets\": [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0]], \"covered\": []}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 130, \"pending_min\": 95, \"pending\": [95, 96, 120, 121], \"pending_count\": 4}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1020}, {\"op\": \"recover\", \"midnight_height\": 1040}, {\"op\": \"order_request\", \"order_height\": 1, \"peer_heights\": [5, 5, 5, 5, 5, 5, 5, 5, 5], \"proof\": false}, {\"op\": \"due\", \"last\": 0, \"now\": 60}]}}",
+  "rc": 2
+ },
+ {
+  "name": "fraction",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"checkpoint\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"B\": 200.0, \"slot_anchor\": false, \"d_rec\": 30}, \"ops\": [{\"op\": \"land\", \"checkpoint\": {\"seq\": 0, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 100, \"pending_min\": 95, \"pending\": [95], \"pending_count\": 1}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1000}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 90, \"pending_min\": 95, \"pending\": [], \"pending_count\": 0}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1010}, {\"op\": \"open_session\", \"pool\": 1}, {\"op\": \"read_ledger\", \"ok\": true, \"tickets\": [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0]], \"covered\": []}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 130, \"pending_min\": 95, \"pending\": [95, 96, 120, 121], \"pending_count\": 4}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1020}, {\"op\": \"recover\", \"midnight_height\": 1040}, {\"op\": \"order_request\", \"order_height\": 1, \"peer_heights\": [5, 5, 5, 5, 5, 5, 5, 5, 5], \"proof\": false}, {\"op\": \"due\", \"last\": 0, \"now\": 60}]}}",
+  "rc": 2
+ },
+ {
+  "name": "leading zero",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"checkpoint\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"B\": \"0200\", \"slot_anchor\": false, \"d_rec\": 30}, \"ops\": [{\"op\": \"land\", \"checkpoint\": {\"seq\": 0, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 100, \"pending_min\": 95, \"pending\": [95], \"pending_count\": 1}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1000}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 90, \"pending_min\": 95, \"pending\": [], \"pending_count\": 0}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1010}, {\"op\": \"open_session\", \"pool\": 1}, {\"op\": \"read_ledger\", \"ok\": true, \"tickets\": [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0]], \"covered\": []}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 130, \"pending_min\": 95, \"pending\": [95, 96, 120, 121], \"pending_count\": 4}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1020}, {\"op\": \"recover\", \"midnight_height\": 1040}, {\"op\": \"order_request\", \"order_height\": 1, \"peer_heights\": [5, 5, 5, 5, 5, 5, 5, 5, 5], \"proof\": false}, {\"op\": \"due\", \"last\": 0, \"now\": 60}]}}",
+  "rc": 2
+ },
+ {
+  "name": "underscore",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"checkpoint\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"B\": \"2_00\", \"slot_anchor\": false, \"d_rec\": 30}, \"ops\": [{\"op\": \"land\", \"checkpoint\": {\"seq\": 0, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 100, \"pending_min\": 95, \"pending\": [95], \"pending_count\": 1}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1000}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 90, \"pending_min\": 95, \"pending\": [], \"pending_count\": 0}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1010}, {\"op\": \"open_session\", \"pool\": 1}, {\"op\": \"read_ledger\", \"ok\": true, \"tickets\": [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0]], \"covered\": []}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 130, \"pending_min\": 95, \"pending\": [95, 96, 120, 121], \"pending_count\": 4}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1020}, {\"op\": \"recover\", \"midnight_height\": 1040}, {\"op\": \"order_request\", \"order_height\": 1, \"peer_heights\": [5, 5, 5, 5, 5, 5, 5, 5, 5], \"proof\": false}, {\"op\": \"due\", \"last\": 0, \"now\": 60}]}}",
+  "rc": 2
+ },
+ {
+  "name": "extra key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"checkpoint\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"B\": 200, \"extra\": 1, \"slot_anchor\": false, \"d_rec\": 30}, \"ops\": [{\"op\": \"land\", \"checkpoint\": {\"seq\": 0, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 100, \"pending_min\": 95, \"pending\": [95], \"pending_count\": 1}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1000}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 90, \"pending_min\": 95, \"pending\": [], \"pending_count\": 0}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1010}, {\"op\": \"open_session\", \"pool\": 1}, {\"op\": \"read_ledger\", \"ok\": true, \"tickets\": [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0]], \"covered\": []}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 130, \"pending_min\": 95, \"pending\": [95, 96, 120, 121], \"pending_count\": 4}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1020}, {\"op\": \"recover\", \"midnight_height\": 1040}, {\"op\": \"order_request\", \"order_height\": 1, \"peer_heights\": [5, 5, 5, 5, 5, 5, 5, 5, 5], \"proof\": false}, {\"op\": \"due\", \"last\": 0, \"now\": 60}]}}",
+  "rc": 2
+ },
+ {
+  "name": "missing key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"checkpoint\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"slot_anchor\": false, \"d_rec\": 30}, \"ops\": [{\"op\": \"land\", \"checkpoint\": {\"seq\": 0, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 100, \"pending_min\": 95, \"pending\": [95], \"pending_count\": 1}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1000}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 90, \"pending_min\": 95, \"pending\": [], \"pending_count\": 0}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1010}, {\"op\": \"open_session\", \"pool\": 1}, {\"op\": \"read_ledger\", \"ok\": true, \"tickets\": [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0]], \"covered\": []}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 130, \"pending_min\": 95, \"pending\": [95, 96, 120, 121], \"pending_count\": 4}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1020}, {\"op\": \"recover\", \"midnight_height\": 1040}, {\"op\": \"order_request\", \"order_height\": 1, \"peer_heights\": [5, 5, 5, 5, 5, 5, 5, 5, 5], \"proof\": false}, {\"op\": \"due\", \"last\": 0, \"now\": 60}]}}",
+  "rc": 2
+ },
+ {
+  "name": "duplicate key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"checkpoint\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"B\": 200, \"B\": 200, \"slot_anchor\": false, \"d_rec\": 30}, \"ops\": [{\"op\": \"land\", \"checkpoint\": {\"seq\": 0, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 100, \"pending_min\": 95, \"pending\": [95], \"pending_count\": 1}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1000}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 90, \"pending_min\": 95, \"pending\": [], \"pending_count\": 0}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1010}, {\"op\": \"open_session\", \"pool\": 1}, {\"op\": \"read_ledger\", \"ok\": true, \"tickets\": [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0]], \"covered\": []}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 130, \"pending_min\": 95, \"pending\": [95, 96, 120, 121], \"pending_count\": 4}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1020}, {\"op\": \"recover\", \"midnight_height\": 1040}, {\"op\": \"order_request\", \"order_height\": 1, \"peer_heights\": [5, 5, 5, 5, 5, 5, 5, 5, 5], \"proof\": false}, {\"op\": \"due\", \"last\": 0, \"now\": 60}]}}",
+  "rc": 2
+ },
+ {
+  "name": "unknown op",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "checkpoint",
+   "inputs": {
+    "params": {
+     "n": 9,
+     "f": 2,
+     "mode": "TEE",
+     "B": 200,
+     "slot_anchor": false,
+     "d_rec": 30
+    },
+    "ops": [
+     {
+      "op": "nope"
+     }
+    ]
+   }
+  },
+  "rc": 2
+ },
+ {
+  "name": "unknown enum",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"checkpoint\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"tee\", \"B\": 200, \"slot_anchor\": false, \"d_rec\": 30}, \"ops\": [{\"op\": \"land\", \"checkpoint\": {\"seq\": 0, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 100, \"pending_min\": 95, \"pending\": [95], \"pending_count\": 1}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1000}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 90, \"pending_min\": 95, \"pending\": [], \"pending_count\": 0}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1010}, {\"op\": \"open_session\", \"pool\": 1}, {\"op\": \"read_ledger\", \"ok\": true, \"tickets\": [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0]], \"covered\": []}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 130, \"pending_min\": 95, \"pending\": [95, 96, 120, 121], \"pending_count\": 4}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1020}, {\"op\": \"recover\", \"midnight_height\": 1040}, {\"op\": \"order_request\", \"order_height\": 1, \"peer_heights\": [5, 5, 5, 5, 5, 5, 5, 5, 5], \"proof\": false}, {\"op\": \"due\", \"last\": 0, \"now\": 60}]}}",
+  "rc": 2
+ },
+ {
+  "name": "protocol 2",
+  "input": "{\"protocol\": \"kink-implementation/2\", \"program\": \"checkpoint\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"B\": 200, \"slot_anchor\": false, \"d_rec\": 30}, \"ops\": [{\"op\": \"land\", \"checkpoint\": {\"seq\": 0, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 100, \"pending_min\": 95, \"pending\": [95], \"pending_count\": 1}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1000}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 90, \"pending_min\": 95, \"pending\": [], \"pending_count\": 0}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1010}, {\"op\": \"open_session\", \"pool\": 1}, {\"op\": \"read_ledger\", \"ok\": true, \"tickets\": [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0]], \"covered\": []}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 130, \"pending_min\": 95, \"pending\": [95, 96, 120, 121], \"pending_count\": 4}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1020}, {\"op\": \"recover\", \"midnight_height\": 1040}, {\"op\": \"order_request\", \"order_height\": 1, \"peer_heights\": [5, 5, 5, 5, 5, 5, 5, 5, 5], \"proof\": false}, {\"op\": \"due\", \"last\": 0, \"now\": 60}]}}",
+  "rc": 2
+ },
+ {
+  "name": "string integer accepted",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"checkpoint\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"B\": \"200\", \"slot_anchor\": false, \"d_rec\": 30}, \"ops\": [{\"op\": \"land\", \"checkpoint\": {\"seq\": 0, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 100, \"pending_min\": 95, \"pending\": [95], \"pending_count\": 1}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1000}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 90, \"pending_min\": 95, \"pending\": [], \"pending_count\": 0}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1010}, {\"op\": \"open_session\", \"pool\": 1}, {\"op\": \"read_ledger\", \"ok\": true, \"tickets\": [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0]], \"covered\": []}, {\"op\": \"land\", \"checkpoint\": {\"seq\": 1, \"epoch\": 3, \"board_height\": 1000, \"board_root\": 0, \"witness_root\": 0, \"pools\": [{\"pool\": 1, \"h\": 130, \"pending_min\": 95, \"pending\": [95, 96, 120, 121], \"pending_count\": 4}], \"settle_root\": [], \"bf_root\": [[1, 77]], \"boot_counters\": [], \"restart_seq\": 0, \"seat_roots\": [], \"restores\": []}, \"midnight_height\": 1020}, {\"op\": \"recover\", \"midnight_height\": 1040}, {\"op\": \"order_request\", \"order_height\": 1, \"peer_heights\": [5, 5, 5, 5, 5, 5, 5, 5, 5], \"proof\": false}, {\"op\": \"due\", \"last\": 0, \"now\": 60}]}}",
+  "expect": {
+   "end": "final",
+   "cells": {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "obs": [
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "h_lowered",
+       "pending_gap"
+      ]
+     },
+     {
+      "refused": [
+       "ledger_unverified"
+      ]
+     },
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "recovery_early"
+      ]
+     },
+     {
+      "refused": [
+       "below_floor"
+      ]
+     },
+     {
+      "bool": true
+     }
+    ]
+   }
+  }
+ },
+ {
+  "name": "step kinds",
+  "args": [
+   "--step"
+  ],
+  "match": "keys",
+  "input": [
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "due",
+     "last": 0,
+     "now": 59
+    }
+   },
+   "{\"state\": 1}",
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "read_ledger",
+     "ok": true,
+     "tickets": [
+      [
+       0,
+       1
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       2,
+       1
+      ],
+      [
+       3,
+       1
+      ],
+      [
+       4,
+       1
+      ],
+      [
+       5,
+       1
+      ],
+      [
+       6,
+       1
+      ],
+      [
+       7,
+       1
+      ],
+      [
+       8,
+       1
+      ]
+     ],
+     "covered": []
+    }
+   }
+  ],
+  "expect": [
+   {
+    "state": 0,
+    "obs": 0
+   },
+   {
+    "error": 0
+   },
+   {
+    "state": 0,
+    "obs": 0
+   }
+  ]
+ },
+ {
+  "name": "step answers",
+  "args": [
+   "--step"
+  ],
+  "input": [
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "read_ledger",
+     "ok": true,
+     "tickets": [
+      [
+       0,
+       1
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       2,
+       1
+      ],
+      [
+       3,
+       1
+      ],
+      [
+       4,
+       1
+      ],
+      [
+       5,
+       1
+      ],
+      [
+       6,
+       1
+      ],
+      [
+       7,
+       1
+      ],
+      [
+       8,
+       1
+      ]
+     ],
+     "covered": []
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       1
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       2,
+       1
+      ],
+      [
+       3,
+       1
+      ],
+      [
+       4,
+       1
+      ],
+      [
+       5,
+       1
+      ],
+      [
+       6,
+       1
+      ],
+      [
+       7,
+       1
+      ],
+      [
+       8,
+       1
+      ]
+     ],
+     "burn": [
+      {
+       "pool": 1,
+       "lo": 95,
+       "hi": 330
+      }
+     ],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": true,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "open_session",
+     "pool": 1
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 90,
+         "pending_min": 95,
+         "pending": [],
+         "pending_count": 0
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "due",
+     "last": 0,
+     "now": 60
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "recover",
+     "midnight_height": 1050
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "read_ledger",
+     "ok": false,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "covered": []
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "land",
+     "checkpoint": {
+      "seq": 3,
+      "epoch": 3,
+      "board_height": 1000,
+      "board_root": 0,
+      "witness_root": 0,
+      "pools": [
+       {
+        "pool": 1,
+        "h": 140,
+        "pending_min": 141,
+        "pending": [],
+        "pending_count": 0
+       }
+      ],
+      "settle_root": [],
+      "bf_root": [
+       [
+        1,
+        77
+       ]
+      ],
+      "boot_counters": [],
+      "restart_seq": 0,
+      "seat_roots": [],
+      "restores": []
+     },
+     "midnight_height": 1030
+    }
+   }
+  ],
+  "expect": [
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       1
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       2,
+       1
+      ],
+      [
+       3,
+       1
+      ],
+      [
+       4,
+       1
+      ],
+      [
+       5,
+       1
+      ],
+      [
+       6,
+       1
+      ],
+      [
+       7,
+       1
+      ],
+      [
+       8,
+       1
+      ]
+     ],
+     "burn": [
+      {
+       "pool": 1,
+       "lo": 95,
+       "hi": 330
+      }
+     ],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": true,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "obs": {
+     "ok": true
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       1
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       2,
+       1
+      ],
+      [
+       3,
+       1
+      ],
+      [
+       4,
+       1
+      ],
+      [
+       5,
+       1
+      ],
+      [
+       6,
+       1
+      ],
+      [
+       7,
+       1
+      ],
+      [
+       8,
+       1
+      ]
+     ],
+     "burn": [
+      {
+       "pool": 1,
+       "lo": 95,
+       "hi": 330
+      }
+     ],
+     "accounts": [],
+     "sessions": [
+      [
+       1,
+       [
+        {
+         "pool": 1,
+         "lo": 95,
+         "hi": 330
+        }
+       ]
+      ]
+     ],
+     "restart_open": true,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "obs": {
+     "ok": true
+    }
+   },
+   {
+    "refused": [
+     "outside-state-domain"
+    ]
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": true,
+     "writes": [
+      "event",
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "obs": {
+     "ok": true
+    }
+   },
+   {
+    "obs": {
+     "ok": true
+    },
+    "state": {
+     "accounts": [],
+     "board_restores": [],
+     "burn": [],
+     "chain": [
+      {
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "board_height": 1000,
+       "board_root": 0,
+       "boot_counters": [],
+       "epoch": 3,
+       "pools": [
+        {
+         "h": 130,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4,
+         "pending_min": 95,
+         "pool": 1
+        }
+       ],
+       "restart_seq": 0,
+       "restores": [],
+       "seat_roots": [],
+       "seq": 1,
+       "settle_root": [],
+       "witness_root": 0
+      },
+      {
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "board_height": 1000,
+       "board_root": 0,
+       "boot_counters": [],
+       "epoch": 3,
+       "pools": [
+        {
+         "h": 100,
+         "pending": [
+          95
+         ],
+         "pending_count": 1,
+         "pending_min": 95,
+         "pool": 1
+        }
+       ],
+       "restart_seq": 0,
+       "restores": [],
+       "seat_roots": [],
+       "seq": 0,
+       "settle_root": [],
+       "witness_root": 0
+      }
+     ],
+     "cold_started": false,
+     "last_land_mh": 1020,
+     "marker_landed": false,
+     "marker_prev": 0,
+     "new_pool": false,
+     "params": {
+      "B": 200,
+      "d_rec": 30,
+      "f": 2,
+      "mode": "TEE",
+      "n": 9,
+      "slot_anchor": false
+     },
+     "pending_restores": [],
+     "ready": false,
+     "recovered": false,
+     "restart_open": false,
+     "sessions": [],
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ]
+    }
+   },
+   {
+    "refused": [
+     "no-rule"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "step DECISIONS 69",
+  "args": [
+   "--step"
+  ],
+  "input": [
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "land",
+     "checkpoint": {
+      "seq": 2,
+      "epoch": 3,
+      "board_height": 1000,
+      "board_root": 0,
+      "witness_root": 0,
+      "pools": [
+       {
+        "pool": 1,
+        "h": 140,
+        "pending_min": 90,
+        "pending": [],
+        "pending_count": 0
+       }
+      ],
+      "settle_root": [],
+      "bf_root": [
+       [
+        1,
+        77
+       ]
+      ],
+      "boot_counters": [],
+      "restart_seq": 0,
+      "seat_roots": [],
+      "restores": []
+     },
+     "midnight_height": 1030
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "restore_done",
+     "restore": {
+      "node_index": 4,
+      "boot_ctr": 1,
+      "cp_seq": 1,
+      "whole_restart": false
+     }
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [
+      {
+       "node_index": 4,
+       "boot_ctr": 1,
+       "cp_seq": 1,
+       "whole_restart": false
+      }
+     ],
+     "board_restores": [
+      {
+       "node_index": 4,
+       "boot_ctr": 1,
+       "cp_seq": 1,
+       "whole_restart": false
+      }
+     ],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "lose_tail"
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [
+      {
+       "node_index": 4,
+       "boot_ctr": 1,
+       "cp_seq": 1,
+       "whole_restart": false
+      }
+     ],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "read_ledger",
+     "ok": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "covered": []
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "land",
+     "checkpoint": {
+      "seq": 2,
+      "epoch": 3,
+      "board_height": 1000,
+      "board_root": 0,
+      "witness_root": 0,
+      "pools": [
+       {
+        "pool": 1,
+        "h": 140,
+        "pending_min": 141,
+        "pending": [],
+        "pending_count": 0
+       }
+      ],
+      "settle_root": [],
+      "bf_root": [
+       [
+        1,
+        77
+       ]
+      ],
+      "boot_counters": [
+       [
+        3,
+        1
+       ]
+      ],
+      "restart_seq": 0,
+      "seat_roots": [],
+      "restores": [
+       {
+        "node_index": 3,
+        "boot_ctr": 1,
+        "cp_seq": 1,
+        "whole_restart": true
+       }
+      ]
+     },
+     "midnight_height": 1030
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": false,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "release_anchor",
+     "anchor": true,
+     "entry_height": 990
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": false,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "release_anchor",
+     "anchor": false,
+     "entry_height": 990
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": false,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "read_ledger",
+     "ok": false,
+     "tickets": [],
+     "covered": []
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "sign_seat_root",
+     "log": [
+      {
+       "kind": "bind",
+       "nf": 1,
+       "e": 9
+      },
+      {
+       "kind": "bind",
+       "nf": 2,
+       "e": 9
+      }
+     ]
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 101,
+         "pending": [],
+         "pending_count": 0
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "op": {
+     "op": "due",
+     "last": 0,
+     "now": 60
+    }
+   }
+  ],
+  "expect": [
+   {
+    "refused": [
+     "pending_min_lowered"
+    ]
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [
+      {
+       "node_index": 4,
+       "boot_ctr": 1,
+       "cp_seq": 1,
+       "whole_restart": false
+      }
+     ],
+     "board_restores": [
+      {
+       "node_index": 4,
+       "boot_ctr": 1,
+       "cp_seq": 1,
+       "whole_restart": false
+      }
+     ],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "obs": {
+     "ok": true
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [
+      {
+       "node_index": 4,
+       "boot_ctr": 1,
+       "cp_seq": 1,
+       "whole_restart": false
+      }
+     ],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "obs": {
+     "ok": true
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [
+      {
+       "node_index": 4,
+       "boot_ctr": 1,
+       "cp_seq": 1,
+       "whole_restart": false
+      }
+     ],
+     "board_restores": [
+      {
+       "node_index": 4,
+       "boot_ctr": 1,
+       "cp_seq": 1,
+       "whole_restart": false
+      }
+     ],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "obs": {
+     "ok": true
+    }
+   },
+   {
+    "refused": [
+     "restart_jump"
+    ]
+   },
+   {
+    "refused": [
+     "ledger_unverified"
+    ]
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": false,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "obs": {
+     "bool": true
+    }
+   },
+   {
+    "refused": [
+     "ledger_unverified"
+    ]
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "B": 200,
+      "slot_anchor": false,
+      "d_rec": 30
+     },
+     "chain": [
+      {
+       "seq": 1,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 130,
+         "pending_min": 95,
+         "pending": [
+          95,
+          96,
+          120,
+          121
+         ],
+         "pending_count": 4
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      },
+      {
+       "seq": 0,
+       "epoch": 3,
+       "board_height": 1000,
+       "board_root": 0,
+       "witness_root": 0,
+       "pools": [
+        {
+         "pool": 1,
+         "h": 100,
+         "pending_min": 95,
+         "pending": [
+          95
+         ],
+         "pending_count": 1
+        }
+       ],
+       "settle_root": [],
+       "bf_root": [
+        [
+         1,
+         77
+        ]
+       ],
+       "boot_counters": [],
+       "restart_seq": 0,
+       "seat_roots": [],
+       "restores": []
+      }
+     ],
+     "last_land_mh": 1020,
+     "recovered": false,
+     "writes": [
+      "checkpoint",
+      "checkpoint"
+     ],
+     "ready": true,
+     "tickets": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ]
+     ],
+     "burn": [],
+     "accounts": [],
+     "sessions": [],
+     "restart_open": false,
+     "marker_prev": 0,
+     "marker_landed": false,
+     "pending_restores": [],
+     "board_restores": [],
+     "cold_started": false,
+     "new_pool": false
+    },
+    "obs": {
+     "bool": true
+    }
+   },
+   {
+    "refused": [
+     "outside-state-domain"
+    ]
+   }
+  ]
+ }
+]

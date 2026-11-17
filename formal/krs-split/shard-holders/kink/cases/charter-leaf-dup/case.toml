@@ -1,0 +1,6 @@
+# SH-002 (ledger 11): one actor on two leaves
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { FixCharter = { id = 8, gamma = { And = { mid = 0, children = [{ Leaf = { mid = 1, actor = 1 } }, { Leaf = { mid = 2, actor = 1 } }] } } } },
+]

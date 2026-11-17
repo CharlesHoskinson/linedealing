@@ -1,0 +1,10 @@
+# CP-014 with CP-040 (DECISIONS 71, finding F7; Lean pin_f7_lands): after the F7 checkpoint (pool 1,
+# pending_min = 2), the fields of the old listing (pending_min = 1) are refused pending_min_lowered and the
+# signed fields above the floor land.
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 2, pending_min = 2, pending = [2], pending_count = 1 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { Land = { c = { CpOf = { seq = 1, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 2, pending_min = 1, pending = [1, 2], pending_count = 2 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { Land = { c = { CpOf = { seq = 1, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 2, pending_min = 2, pending = [2], pending_count = 1 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+]

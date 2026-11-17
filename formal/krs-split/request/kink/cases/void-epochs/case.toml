@@ -1,0 +1,12 @@
+# RQ-042: VOID posts of two epochs are not added together.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Rotate = { e = 1, n = 7, f = 2 } },
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { PostVoid = { eid = 1, epoch = 0, member = 0, reason = "Stalled" } },
+  { PostVoid = { eid = 1, epoch = 1, member = 0, reason = "Stalled" } },
+  { PostVoid = { eid = 1, epoch = 1, member = 1, reason = "Stalled" } },
+]

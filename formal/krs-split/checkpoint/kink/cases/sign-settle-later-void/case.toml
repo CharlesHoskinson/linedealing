@@ -1,0 +1,7 @@
+# CP-013: a later leaf whose auth Midnight records as VOID must keep VOID
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { SignSettle = { leaves = [{ Lf = [1, "Final"] }, { Lf = [2, "Final"] }], ended = [{ Lf = [1, "Final"] }, { Lf = [2, "Final"] }], mv = [2] } },
+  { SignSettle = { leaves = [{ Lf = [1, "Final"] }, { Lf = [2, "Void"] }], ended = [{ Lf = [1, "Final"] }, { Lf = [2, "Void"] }], mv = [2] } },
+]

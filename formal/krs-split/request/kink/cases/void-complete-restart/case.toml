@@ -1,0 +1,17 @@
+# RQ-045, RQ-052: a VOID end after a restart burn gives RELEASED or FINAL.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { Post = { eid = 2, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 2, qc = true, p = 0 } },
+  { RestartBurn = { eid = 1 } },
+  { PostVoid = { eid = 1, epoch = 0, member = 0, reason = "Restart" } },
+  { PostVoid = { eid = 1, epoch = 0, member = 1, reason = "Restart" } },
+  { RestartBurn = { eid = 2 } },
+  { Confirm = { eid = 2 } },
+  { PostVoid = { eid = 2, epoch = 0, member = 2, reason = "Restart" } },
+  { PostVoid = { eid = 2, epoch = 0, member = 3, reason = "Restart" } },
+]

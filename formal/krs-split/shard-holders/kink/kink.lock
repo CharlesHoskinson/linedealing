@@ -1,0 +1,2883 @@
+# kink's verdicts of a corpus, one section per command: [run] (`run` on a mutation list),
+# [coverage] (`coverage`), [compare] (`compare`) and [query] (`query` on a pattern list). As a
+# lock (`--lock FILE`; krs keeps <corpus>/kink.lock), each command reads, checks (--locked) and
+# rewrites only its own section, and keeps the others as they are.
+schema = "kink-flow-verdicts"
+definition = "split-shard-holders-reference:main"
+
+[run]
+# The verdicts of kink's `run` command (`krs kink run`, `kink-flow run`): the next run tries
+# each `killer` first, a run without --locked rewrites this section, and `run --locked` checks
+# that it is current.
+version = 28
+profile = "z3"
+z3_version = "5.3.3.0 430d19e697e2ec9bad79ff210d41b4a7a5fcfa3e 430d19e"
+work_factor = 5
+
+[run.spec]
+outcome = "admitted"
+
+# Each [[run.mutation]] is a mutation of the list, by its id, and its verdict: killed (a
+# program's result differs on the mutant; `killer` names it), survived (every program agreed;
+# `horizon`, those that agreed only up to an observation horizon), equivalent or unkillable (no
+# program can tell the mutant apart), timeout, unknown or error (no verdict), invalid-mutation
+# or not-admitted (its author must fix it; `reason` says why).
+[[run.mutation]]
+id = "ack/sh034-registered-acked"
+status = "killed"
+killer = "cases/ack-check-refused-each/case.toml"
+
+[[run.mutation]]
+id = "ack/sh034-network-flag-dropped"
+status = "killed"
+killer = "cases/ack-check-refused-each/case.toml"
+
+[[run.mutation]]
+id = "ack/sh035-unknown-record-blocked"
+status = "killed"
+killer = "cases/ack-oracle-run/case.toml"
+
+[[run.mutation]]
+id = "ack/sh037-record-not-found"
+status = "killed"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[run.mutation]]
+id = "ack/sh035-first-record-read"
+status = "killed"
+killer = "cases/ack-oracle-run/case.toml"
+
+[[run.mutation]]
+id = "ack/sh035-flags-swapped"
+status = "killed"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[run.mutation]]
+id = "ack/sh030-unknown-record-sends"
+status = "killed"
+killer = "cases/ack-oracle-run/case.toml"
+
+[[run.mutation]]
+id = "ack/sh036-unknown-record-both"
+status = "killed"
+killer = "cases/ack-oracle-run/case.toml"
+
+[[run.mutation]]
+id = "ack/sh036-unchecked"
+status = "killed"
+killer = "cases/ack-oracle-run/case.toml"
+
+[[run.mutation]]
+id = "ack/sh036-inverted"
+status = "killed"
+killer = "cases/ack-oracle-run/case.toml"
+
+[[run.mutation]]
+id = "ack/sh030-any-record"
+status = "killed"
+killer = "cases/holder-open-no-network/case.toml"
+
+[[run.mutation]]
+id = "ack/sh030-codes-unsorted"
+status = "killed"
+killer = "cases/holder-open-no-network/case.toml"
+
+[[run.mutation]]
+id = "ack/sh030-no-envelope"
+status = "killed"
+killer = "cases/ack-oracle-run/case.toml"
+
+[[run.mutation]]
+id = "ack/sh036-fixed-code"
+status = "killed"
+killer = "cases/ack-oracle-run/case.toml"
+
+[[run.mutation]]
+id = "ack/sh031-no-recompute"
+status = "killed"
+killer = "cases/ack-check-node-bound/case.toml"
+
+[[run.mutation]]
+id = "ack/sh031-no-opening"
+status = "killed"
+killer = "cases/ack-check-refused-each/case.toml"
+
+[[run.mutation]]
+id = "ack/sh031-no-pop-u"
+status = "killed"
+killer = "cases/ack-check-node-bound/case.toml"
+
+[[run.mutation]]
+id = "ack/sh031-any-check"
+status = "killed"
+killer = "cases/ack-check-node-bound/case.toml"
+
+[[run.mutation]]
+id = "ack/sh032-never-refused"
+status = "killed"
+killer = "cases/ack-check-node-bound/case.toml"
+
+[[run.mutation]]
+id = "ack/sh032-node-bound-inclusive"
+status = "killed"
+killer = "cases/ack-check-node-bound/case.toml"
+
+[[run.mutation]]
+id = "ack/sh032-codes-unsorted"
+status = "killed"
+killer = "cases/ack-check-node-bound/case.toml"
+
+[[run.mutation]]
+id = "ack/sh031-ack-swapped"
+status = "killed"
+killer = "cases/ack-check-node-bound/case.toml"
+
+[[run.mutation]]
+id = "ack/sh031-ack-every-time"
+status = "killed"
+killer = "cases/ack-check-ok/case.toml"
+
+[[run.mutation]]
+id = "ack/sh031-obs-birth-ok"
+status = "killed"
+killer = "cases/ack-check-node-bound/case.toml"
+
+[[run.mutation]]
+id = "ack/sh032-fixed-code"
+status = "killed"
+killer = "cases/ack-check-node-bound/case.toml"
+
+[[run.mutation]]
+id = "ack/sh033-ackers-any"
+status = "killed"
+killer = "cases/ack-forged-birth/case.toml"
+
+[[run.mutation]]
+id = "ack/sh033-ackers-dropped"
+status = "killed"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[run.mutation]]
+id = "ack/sh033-ackers-extra"
+status = "killed"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[run.mutation]]
+id = "ack/sh033-quorum-strict"
+status = "killed"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[run.mutation]]
+id = "ack/sh033-quorum-f-plus-one"
+status = "killed"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[run.mutation]]
+id = "ack/sh033-signers-counted"
+status = "killed"
+killer = "cases/ack-forged-birth/case.toml"
+
+[[run.mutation]]
+id = "ack/sh033-unknown-record-lands"
+status = "killed"
+killer = "cases/ack-oracle-run/case.toml"
+
+[[run.mutation]]
+id = "ack/sh033-unchecked"
+status = "killed"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[run.mutation]]
+id = "ack/sh033-dup-signers-allowed"
+status = "killed"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[run.mutation]]
+id = "ack/sh033-codes-unsorted"
+status = "killed"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[run.mutation]]
+id = "ack/sh037-not-set"
+status = "killed"
+killer = "cases/ack-non-network/case.toml"
+
+[[run.mutation]]
+id = "ack/sh037-sets-every-record"
+status = "killed"
+killer = "cases/ack-other-cm/case.toml"
+
+[[run.mutation]]
+id = "ack/sh037-clears-network-flag"
+status = "killed"
+killer = "cases/ack-non-network/case.toml"
+
+[[run.mutation]]
+id = "ack/sh037-adds-record"
+status = "killed"
+killer = "cases/ack-non-network/case.toml"
+
+[[run.mutation]]
+id = "ack/sh037-first-only"
+status = "killed"
+killer = "cases/ack-other-cm/case.toml"
+
+[[run.mutation]]
+id = "ack/sh037-records-unchanged"
+status = "killed"
+killer = "cases/ack-non-network/case.toml"
+
+[[run.mutation]]
+id = "ack/sh037-obs-paid"
+status = "killed"
+killer = "cases/ack-non-network/case.toml"
+
+[[run.mutation]]
+id = "ack/sh033-fixed-code"
+status = "killed"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[run.mutation]]
+id = "ack/sh035-every-record"
+status = "killed"
+killer = "cases/ack-non-network/case.toml"
+
+[[run.mutation]]
+id = "ack/sh035-acked-ignored"
+status = "killed"
+killer = "cases/ack-oracle-run/case.toml"
+
+[[run.mutation]]
+id = "ack/sh035-unknown-paid"
+status = "killed"
+killer = "cases/ack-oracle-run/case.toml"
+
+[[run.mutation]]
+id = "ack/sh035-unchecked"
+status = "killed"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[run.mutation]]
+id = "ack/sh035-obs-ok"
+status = "killed"
+killer = "cases/ack-non-network/case.toml"
+
+[[run.mutation]]
+id = "ack/sh035-fixed-code"
+status = "killed"
+killer = "cases/ack-oracle-run/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-initiator-not-member"
+status = "killed"
+killer = "cases/contrib-bad-signing-set/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-repeats-ok"
+status = "killed"
+killer = "cases/contrib-bad-signing-set/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-outsiders-ok"
+status = "killed"
+killer = "cases/contrib-bad-signing-set/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-structure-unchecked"
+status = "killed"
+killer = "cases/contrib-bad-signing-set/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-group-at-least-k"
+status = "killed"
+killer = "cases/contrib-group-exact-k/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-group-used-unchecked"
+status = "killed"
+killer = "cases/contrib-nested-group/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-or-both-children"
+status = "killed"
+killer = "cases/contrib-or-primary/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-or-child-unchecked"
+status = "killed"
+killer = "cases/contrib-or-primary/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-or-primary-always"
+status = "killed"
+killer = "cases/contrib-escrow-slot/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-or-escrow-always"
+status = "killed"
+killer = "cases/contrib-escrow-slot-escrow-or/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-and-first-child"
+status = "killed"
+killer = "cases/contrib-or-admission/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-and-unchecked"
+status = "killed"
+killer = "cases/contrib-or-admission/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-leaf-always"
+status = "killed"
+killer = "cases/contrib-and-leaf-missing/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-ends-false"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-used-first-only"
+status = "killed"
+killer = "cases/contrib-group-second-used/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-unused-child-checked"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-count-first-only"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-count-starts-one"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-count-every-child"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-count-used-zero"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-uses-leaf-always"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-uses-and-never"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-uses-group-never"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-uses-or-primary-only"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-uses-or-escrow-only"
+status = "killed"
+killer = "cases/contrib-escrow-slot-escrow-or/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-uses-first-child"
+status = "killed"
+killer = "cases/contrib-group-later-used/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-uses-end-true"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-leaves-or-primary"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-leaves-and-none"
+status = "killed"
+killer = "cases/charter-leaf-dup/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-leaves-group-none"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-leaves-leaf-mid"
+status = "killed"
+killer = "cases/charter-leaf-dup/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-leaves-first-child"
+status = "killed"
+killer = "cases/charter-leaf-dup/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-leaves-end-zero"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-allin-first-only"
+status = "killed"
+killer = "cases/contrib-bad-signing-set/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-allin-outsider-ok"
+status = "killed"
+killer = "cases/contrib-bad-signing-set/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-allin-end-false"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/nodup-repeat-ok"
+status = "killed"
+killer = "cases/charter-leaf-dup/case.toml"
+
+[[run.mutation]]
+id = "admission/nodup-first-only"
+status = "killed"
+killer = "cases/contrib-bad-signing-set/case.toml"
+
+[[run.mutation]]
+id = "admission/nodup-empty-false"
+status = "killed"
+killer = "cases/charter-and-empty/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-no-initiator-admitted"
+status = "killed"
+killer = "cases/contrib-bad-signing-set/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-repeat-admitted"
+status = "killed"
+killer = "cases/contrib-bad-signing-set/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-outsider-admitted"
+status = "killed"
+killer = "cases/contrib-bad-signing-set/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-group-count-ignored"
+status = "killed"
+killer = "cases/contrib-bad-signing-set/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-or-count-ignored"
+status = "killed"
+killer = "cases/contrib-nested-group/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-and-child-skipped"
+status = "killed"
+killer = "cases/contrib-nested-group/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-used-child-bad-ok"
+status = "killed"
+killer = "cases/contrib-nested-group/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-unused-child-ends"
+status = "killed"
+killer = "cases/contrib-nested-group/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-used-child-unadmitted"
+status = "killed"
+killer = "cases/contrib-nested-group/case.toml"
+
+[[run.mutation]]
+id = "admission/sh003-uses-later-child"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-leaf-weight-any"
+status = "killed"
+killer = "cases/contrib-committee/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-leaf-weight-none"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-weight-via-leaf"
+status = "killed"
+killer = "cases/contrib-committee/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-and-weight-none"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-group-all-children"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-or-primary-only"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-or-escrow-first"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-or-weight-half"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-group-weight-none"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-group-absent-one"
+status = "killed"
+killer = "cases/contrib-group-weights/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-andlist-end-one"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-andlist-first-only"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-andlist-found-continue"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-andlist-stop"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-grouplist-end"
+status = "killed"
+killer = "cases/contrib-group-weights/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-grouplist-first-mid"
+status = "killed"
+killer = "cases/contrib-committee/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-grouplist-found-mid"
+status = "killed"
+killer = "cases/contrib-committee/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-grouplist-stop"
+status = "killed"
+killer = "cases/contrib-committee/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-lagrange-sign"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-lagrange-end"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-lagrange-start"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-others-keep-self"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-others-drop"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-others-end"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-used-children-all"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-used-children-drop"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-used-children-end"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-qmul-add"
+status = "killed"
+killer = "cases/contrib-bad-weight/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-eqv-equal-num"
+status = "killed"
+killer = "cases/contrib-bad-weight/case.toml"
+
+[[run.mutation]]
+id = "admission/sh004-eqv-zero-den"
+status = "killed"
+killer = "cases/contrib-bad-weight/case.toml"
+
+[[run.mutation]]
+id = "admission/sh022-weight-unchecked"
+status = "killed"
+killer = "cases/contrib-bad-weight/case.toml"
+
+[[run.mutation]]
+id = "admission/sh022-no-weight-ok"
+status = "killed"
+killer = "cases/contrib-no-weight-pooled/case.toml"
+
+[[run.mutation]]
+id = "birth/sh007-validity-unchecked"
+status = "killed"
+killer = "cases/birth-pop-invalid/case.toml"
+
+[[run.mutation]]
+id = "birth/sh007-statement-unchecked"
+status = "killed"
+killer = "cases/birth-pop-wrong-ctx/case.toml"
+
+[[run.mutation]]
+id = "birth/sh007-statement-no-chain"
+status = "killed"
+killer = "cases/birth-pop-wrong-ctx/case.toml"
+
+[[run.mutation]]
+id = "birth/sh007-statement-no-xf"
+status = "killed"
+killer = "cases/birth-pop-wrong-ctx/case.toml"
+
+[[run.mutation]]
+id = "birth/sh008-network-unchecked"
+status = "killed"
+killer = "cases/birth-network-created/case.toml"
+
+[[run.mutation]]
+id = "birth/sh008-popu-only"
+status = "killed"
+killer = "cases/birth-network-created/case.toml"
+
+[[run.mutation]]
+id = "birth/sh008-delta-only"
+status = "killed"
+killer = "cases/birth-network-created/case.toml"
+
+[[run.mutation]]
+id = "birth/sh008-every-shard"
+status = "killed"
+killer = "cases/birth-node-outside/case.toml"
+
+[[run.mutation]]
+id = "birth/sh009-first-actor-only"
+status = "killed"
+killer = "cases/birth-second-actor-bad/case.toml"
+
+[[run.mutation]]
+id = "birth/sh009-bad-proof-skipped"
+status = "killed"
+killer = "cases/birth-network-created/case.toml"
+
+[[run.mutation]]
+id = "birth/sh009-no-actors-bad"
+status = "killed"
+killer = "cases/birth-network-created/case.toml"
+
+[[run.mutation]]
+id = "birth/sh009-dealer-unchecked"
+status = "killed"
+killer = "cases/birth-both-codes/case.toml"
+
+[[run.mutation]]
+id = "birth/sh009-x-unchecked"
+status = "killed"
+killer = "cases/birth-dealer-and-flags/case.toml"
+
+[[run.mutation]]
+id = "birth/sh009-encoding-unchecked"
+status = "killed"
+killer = "cases/birth-dealer-and-flags/case.toml"
+
+[[run.mutation]]
+id = "birth/sh009-opening-unchecked"
+status = "killed"
+killer = "cases/birth-dealer-and-flags/case.toml"
+
+[[run.mutation]]
+id = "birth/sh009-pops-unchecked"
+status = "killed"
+killer = "cases/birth-network-created/case.toml"
+
+[[run.mutation]]
+id = "birth/sh010-node-range-off-by-one"
+status = "killed"
+killer = "cases/birth-node-outside/case.toml"
+
+[[run.mutation]]
+id = "birth/sh010-code-order"
+status = "killed"
+killer = "cases/birth-both-codes/case.toml"
+
+[[run.mutation]]
+id = "birth/sh010-n-is-f"
+status = "killed"
+killer = "cases/birth-dealer-and-flags/case.toml"
+
+[[run.mutation]]
+id = "birth/sh009-birth-twice"
+status = "killed"
+killer = "cases/birth-ok-once/case.toml"
+
+[[run.mutation]]
+id = "birth/sh009-birth-appended"
+status = "killed"
+killer = "cases/birth-ok-once/case.toml"
+
+[[run.mutation]]
+id = "birth/sh009-birth-wrong-pair"
+status = "killed"
+killer = "cases/birth-network-created/case.toml"
+
+[[run.mutation]]
+id = "birth/sh009-birth-obs-ok"
+status = "killed"
+killer = "cases/birth-network-created/case.toml"
+
+[[run.mutation]]
+id = "birth/sh010-refused-recorded"
+status = "killed"
+killer = "cases/birth-both-codes/case.toml"
+
+[[run.mutation]]
+id = "charter/sh001-and-empty-ok"
+status = "killed"
+killer = "cases/charter-and-empty/case.toml"
+
+[[run.mutation]]
+id = "charter/sh001-group-k-zero"
+status = "killed"
+killer = "cases/charter-all-codes/case.toml"
+
+[[run.mutation]]
+id = "charter/sh001-group-k-above-m"
+status = "killed"
+killer = "cases/charter-group-k-above-m/case.toml"
+
+[[run.mutation]]
+id = "charter/sh001-group-k-below-m"
+status = "killed"
+killer = "cases/charter-group-k-equal-m/case.toml"
+
+[[run.mutation]]
+id = "charter/sh001-group-children-unchecked"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/sh001-and-children-unchecked"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/sh001-or-primary-unchecked"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/sh001-or-escrow-unchecked"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/sh001-list-first-only"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/sh001-leaf-bad"
+status = "killed"
+killer = "cases/charter-all-codes/case.toml"
+
+[[run.mutation]]
+id = "charter/sh001-empty-list-bad"
+status = "killed"
+killer = "cases/charter-all-codes/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-mid-zero-ok"
+status = "killed"
+killer = "cases/charter-mid-zero/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-mid-dup-ok"
+status = "killed"
+killer = "cases/charter-mid-dup/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-group-nested-unchecked"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-and-nested-unchecked"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-or-primary-unchecked"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-or-escrow-unchecked"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-list-first-only"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-leaf-and-end-bad"
+status = "killed"
+killer = "cases/charter-all-codes/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-leaf-dup-ok"
+status = "killed"
+killer = "cases/charter-leaf-dup/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-mids-only-leaves"
+status = "killed"
+killer = "cases/charter-mid-dup/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-allnonzero-first-only"
+status = "killed"
+killer = "cases/charter-mid-zero-later/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-allnonzero-zero-ok"
+status = "killed"
+killer = "cases/charter-mid-zero/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-allnonzero-end-bad"
+status = "killed"
+killer = "cases/charter-all-codes/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-mid-wrong-field"
+status = "killed"
+killer = "cases/charter-mid-dup/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-mid-of-and-zero"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-mid-of-group-zero"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-mid-of-or-zero"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-mids-first-only"
+status = "killed"
+killer = "cases/charter-mid-dup/case.toml"
+
+[[run.mutation]]
+id = "charter/sh002-mids-end-zero"
+status = "killed"
+killer = "cases/charter-all-codes/case.toml"
+
+[[run.mutation]]
+id = "charter/sh001-codes-order"
+status = "killed"
+killer = "cases/charter-all-codes/case.toml"
+
+[[run.mutation]]
+id = "charter/charter-refix-allowed"
+status = "killed"
+killer = "cases/charter-all-codes/case.toml"
+
+[[run.mutation]]
+id = "charter/charter-fixed-appended"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/charter-refused-fixed"
+status = "killed"
+killer = "cases/charter-all-codes/case.toml"
+
+[[run.mutation]]
+id = "charter/charter-ok-obs-first"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/isSome-flipped"
+status = "killed"
+killer = "cases/charter-all-codes/case.toml"
+
+[[run.mutation]]
+id = "charter/charterOf-last-match"
+status = "killed"
+killer = "cases/charter-all-codes/case.toml"
+
+[[run.mutation]]
+id = "charter/charterOf-first-any"
+status = "killed"
+killer = "cases/charter-nested-bad/case.toml"
+
+[[run.mutation]]
+id = "charter/charterOf-empty-found"
+status = "killed"
+killer = "cases/charter-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh015-expiry-inclusive"
+status = "killed"
+killer = "cases/contrib-expired/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh015-expiry-unchecked"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh015-pairs-not-marked"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh015-pairs-appended"
+status = "killed"
+killer = "cases/contrib-bad-weight/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh015-pairs-first-only"
+status = "killed"
+killer = "cases/contrib-committee/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh015-pairs-extra"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh018-leafset-repeat-ok"
+status = "killed"
+killer = "cases/contrib-ecdsa-leafset/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh018-leafset-subset-ok"
+status = "killed"
+killer = "cases/contrib-ecdsa-leafset/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh018-leafset-outsiders-ok"
+status = "killed"
+killer = "cases/contrib-ecdsa-leafset/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh018-slot-reuse-ok"
+status = "killed"
+killer = "cases/contrib-ecdsa-ok/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh018-slot-once-for-all"
+status = "killed"
+killer = "cases/contrib-ecdsa-reused/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh018-committee-leafset"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh018-slot-not-recorded"
+status = "killed"
+killer = "cases/contrib-ecdsa-ok/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh018-committee-recorded"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-escrow-slot-ok"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-every-holder"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-unreserved-slots"
+status = "killed"
+killer = "cases/contrib-escrow-slot/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-committee-slot"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-direct-primary-only"
+status = "killed"
+killer = "cases/contrib-escrow-slot-escrow-or/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-primary-in-escrow-nested"
+status = "killed"
+killer = "cases/contrib-escrow-slot-escrow-or/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-primary-own-leaves"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-primary-escrow-swap"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-leaf-primary"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-and-not-searched"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-group-not-searched"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-list-first-child"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-list-end-true"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh021-recompute-unchecked"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh023-policy-unchecked"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-bad-request-unchecked"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh026-guardian-unchecked"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh018-unchecked"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh019-unchecked"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/contrib-codes-order"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/contrib-no-charter-default"
+status = "killed"
+killer = "cases/contrib-no-charter/case.toml"
+
+[[run.mutation]]
+id = "contribute/contrib-charter-by-actor"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-admission-unchecked"
+status = "killed"
+killer = "cases/contrib-bad-signing-set/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-weight-unread"
+status = "killed"
+killer = "cases/contrib-bad-weight/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-weight-of-initiator"
+status = "killed"
+killer = "cases/contrib-committee/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-pair-repeat-ok"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-pairs-unchecked"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-used-pair-ok"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-undealt-pair-ok"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-pairs-first-only"
+status = "killed"
+killer = "cases/contrib-second-pair-bad/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-pair-bad-skipped"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-no-pairs-bad"
+status = "killed"
+killer = "cases/contrib-committee/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh026-settled-unread"
+status = "killed"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh026-every-actor"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh026-direct-escrow-only"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh026-escrow-in-primary-nested"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh026-escrow-own-leaves"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh026-leaf-guardian"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh026-and-not-searched"
+status = "killed"
+killer = "cases/contrib-guardian-nested/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh026-group-not-searched"
+status = "killed"
+killer = "cases/contrib-guardian-nested/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh026-list-first-child"
+status = "killed"
+killer = "cases/contrib-guardian-nested/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh026-list-end-true"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/contrib-refused-marks-pairs"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/contrib-obs-first"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-unadmitted-ok"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-bad-weight-ok"
+status = "killed"
+killer = "cases/contrib-bad-weight/case.toml"
+
+[[run.mutation]]
+id = "contribute/sh022-repeat-pair-ok"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-key-reuse-ok"
+status = "killed"
+killer = "cases/pool-both-codes/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-key-per-actor"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-key-ignores-root"
+status = "killed"
+killer = "cases/pool-fresh-key/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-npk-1023"
+status = "killed"
+killer = "cases/pool-both-codes/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-npk-unbounded"
+status = "killed"
+killer = "cases/pool-both-codes/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-npool-63"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-numbering-restarts"
+status = "killed"
+killer = "cases/pool-fresh-key/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-pool-prepended"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-key-appended"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-refused-codes-first"
+status = "killed"
+killer = "cases/pool-both-codes/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-mkpairs-extra"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-mkpairs-same-index"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-count-all-actors"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-count-own-skipped"
+status = "killed"
+killer = "cases/pool-fresh-key/case.toml"
+
+[[run.mutation]]
+id = "pools/sh013-count-base-one"
+status = "killed"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[run.mutation]]
+id = "pools/sh014-refill-at-nh"
+status = "killed"
+killer = "cases/contrib-refill-edge/case.toml"
+
+[[run.mutation]]
+id = "pools/sh014-refill-before-step"
+status = "killed"
+killer = "cases/contrib-refill-actor/case.toml"
+
+[[run.mutation]]
+id = "pools/sh014-refill-counts-used"
+status = "killed"
+killer = "cases/contrib-refill-actor/case.toml"
+
+[[run.mutation]]
+id = "pools/sh014-refill-unused-skipped"
+status = "killed"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[run.mutation]]
+id = "pools/sh014-refill-base-one"
+status = "killed"
+killer = "cases/contrib-refill-actor/case.toml"
+
+[[run.mutation]]
+id = "pools/sh014-refill-other-actor"
+status = "killed"
+killer = "cases/contrib-guardian-nested/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-quorum-floor"
+status = "killed"
+killer = "cases/record-quorum-five/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-quorum-two-f-plus-one"
+status = "killed"
+killer = "cases/record-quorum-five/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-quorum-strict"
+status = "killed"
+killer = "cases/record-all-codes/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-p0-needs-births"
+status = "killed"
+killer = "cases/record-p0/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-p0-unchecked"
+status = "killed"
+killer = "cases/record-p0/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-signers-unverified"
+status = "killed"
+killer = "cases/record-dup-and-signers/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-signer-other-address"
+status = "killed"
+killer = "cases/record-dup-and-signers/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-signer-dropped"
+status = "killed"
+killer = "cases/record-all-codes/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-signers-extra"
+status = "killed"
+killer = "cases/params-larger-committee/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-record-all-signers"
+status = "killed"
+killer = "cases/record-p1-ok/case.toml"
+
+[[run.mutation]]
+id = "records/sh012-escrow-quorum-unchecked"
+status = "killed"
+killer = "cases/record-escrow-nested/case.toml"
+
+[[run.mutation]]
+id = "records/sh012-escrow-every-gamma"
+status = "killed"
+killer = "cases/record-escrow-nested/case.toml"
+
+[[run.mutation]]
+id = "records/sh012-escrow-strict"
+status = "killed"
+killer = "cases/record-all-codes/case.toml"
+
+[[run.mutation]]
+id = "records/sh012-guardians-unchecked"
+status = "killed"
+killer = "cases/record-p2-guardians/case.toml"
+
+[[run.mutation]]
+id = "records/sh012-guardians-every-profile"
+status = "killed"
+killer = "cases/record-quorum-five/case.toml"
+
+[[run.mutation]]
+id = "records/sh012-guardians-strict"
+status = "killed"
+killer = "cases/record-p2-guardians/case.toml"
+
+[[run.mutation]]
+id = "records/sh012-hasor-leaf"
+status = "killed"
+killer = "cases/record-escrow-nested/case.toml"
+
+[[run.mutation]]
+id = "records/sh012-hasor-and-unchecked"
+status = "killed"
+killer = "cases/record-escrow-nested/case.toml"
+
+[[run.mutation]]
+id = "records/sh012-hasor-group-unchecked"
+status = "killed"
+killer = "cases/record-escrow-nested/case.toml"
+
+[[run.mutation]]
+id = "records/sh012-hasor-or-false"
+status = "killed"
+killer = "cases/record-escrow-nested/case.toml"
+
+[[run.mutation]]
+id = "records/sh012-hasor-first-child"
+status = "killed"
+killer = "cases/record-escrow-nested/case.toml"
+
+[[run.mutation]]
+id = "records/sh012-hasor-end-true"
+status = "killed"
+killer = "cases/record-escrow-nested/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-codes-order"
+status = "killed"
+killer = "cases/record-all-codes/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-record-twice"
+status = "killed"
+killer = "cases/record-all-codes/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-signer-twice"
+status = "killed"
+killer = "cases/record-all-codes/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-no-charter-default"
+status = "killed"
+killer = "cases/record-no-charter/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-charter-by-cm"
+status = "killed"
+killer = "cases/params-larger-committee/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-hasrecord-match-missed"
+status = "killed"
+killer = "cases/record-all-codes/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-hasrecord-any"
+status = "killed"
+killer = "cases/record-dup-and-signers/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-hasrecord-end"
+status = "killed"
+killer = "cases/params-larger-committee/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-record-appended"
+status = "killed"
+killer = "cases/record-quorum-five/case.toml"
+
+[[run.mutation]]
+id = "records/sh011-refused-codes-first"
+status = "killed"
+killer = "cases/record-all-codes/case.toml"
+
+[[run.mutation]]
+id = "records/opt-inverted"
+status = "killed"
+killer = "cases/birth-both-codes/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh016-keep-all"
+status = "killed"
+killer = "cases/session-keep-complain/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh016-keep-drops-good"
+status = "killed"
+killer = "cases/session-keep-complain/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh016-keep-extra"
+status = "killed"
+killer = "cases/session-keep-complain/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh016-complain-silent"
+status = "killed"
+killer = "cases/session-keep-complain/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh016-complain-all"
+status = "killed"
+killer = "cases/session-keep-complain/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh016-complain-extra"
+status = "killed"
+killer = "cases/session-keep-complain/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh016-swap"
+status = "killed"
+killer = "cases/session-keep-complain/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh016-dup-slot-ok"
+status = "killed"
+killer = "cases/session-dup/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh016-slot-ids-first"
+status = "killed"
+killer = "cases/session-dup/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh016-slot-ids-extra"
+status = "killed"
+killer = "cases/session-keep-complain/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh017-every-mode"
+status = "killed"
+killer = "cases/puts-non-tee/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh017-tee-none"
+status = "killed"
+killer = "cases/puts-tee/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh017-dup-ok"
+status = "killed"
+killer = "cases/puts-dup/case.toml"
+
+[[run.mutation]]
+id = "sessions/sh017-obs-first"
+status = "killed"
+killer = "cases/puts-tee/case.toml"
+
+[[run.mutation]]
+id = "sessions/run-end-requeues"
+status = "killed"
+killer = "cases/birth-both-codes/case.toml"
+
+[coverage]
+# The verdicts of kink's `coverage` command (`krs kink coverage`, `kink-flow coverage`): the
+# next run tries each flip's `killer` first, a run without --locked rewrites this section, and
+# `coverage --locked` checks that it is current.
+version = 28
+profile = "z3"
+z3_version = "5.3.3.0 430d19e697e2ec9bad79ff210d41b4a7a5fcfa3e 430d19e"
+krs_annotation = 10
+
+[coverage.spec]
+outcome = "admitted"
+
+[coverage.settings]
+depth = 1
+mcdc = true
+work_factor = 5
+
+# Each family lists its obligations by id: `open`, those no program covers; `argued`, those an
+# argument of FLOW.toml ([[coverage.argued]]) stands in for, each with the `standing` it rests
+# on (text: its text alone; connected, checked-on-runs or proved: its invariant's checks hold;
+# unchecked: a check did not decide); `undecided`, those the records cannot decide.
+[coverage.rules]
+open = [
+]
+argued = [
+]
+
+[coverage.requirements]
+open = [
+]
+argued = [
+]
+
+[coverage.syntax]
+open = [
+]
+argued = [
+]
+
+# Each [[coverage.flip]] is a condition flip: a mutant kink generates from the definition by
+# negating one condition (`negates`, as the source writes it) or toggling one bit of an encoding
+# (`toggles`) in the `rules` it lists, and runs as `run` runs a mutation. Its status:
+# distinguished (a program's result differs on it; `killer` names it), undistinguished (every
+# comparable program agreed), unreached (no program reaches the condition), argued (an
+# argument stands in for a program; its `standing`), equivalent (no program can tell it
+# apart), refused (the flipped definition is not admitted; `reason`), unknown (no verdict).
+[coverage.flips]
+run = true
+
+[[coverage.flip]]
+id = "flip--ack_check+ack_check_refused--IntEqual"
+negates = "list::size(AckRefusals(params, node, ack)) == 0"
+rules = [
+  "rule:crate::ack_check",
+  "rule:crate::ack_check_refused",
+]
+status = "distinguished"
+killer = "cases/ack-check-node-bound/case.toml"
+
+[[coverage.flip]]
+id = "flip--acknowledge+acknowledge_refused--IntEqual"
+negates = "list::size(AcknowledgeRefusals(params, acks, FindRec(records, cm_addr), cm_addr, signers)) == 0"
+rules = [
+  "rule:crate::acknowledge",
+  "rule:crate::acknowledge_refused",
+]
+status = "distinguished"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[coverage.flip]]
+id = "flip--add_once_1+add_once_2--atom"
+negates = "list::contains(x, xs)"
+rules = [
+  "rule:crate::add_once_1",
+  "rule:crate::add_once_2",
+]
+status = "distinguished"
+killer = "cases/birth-network-created/case.toml"
+
+[[coverage.flip]]
+id = "flip--adm_3_1+adm_3_2--UsedCount"
+negates = "UsedCount(s, children) == kk"
+rules = [
+  "rule:crate::adm_3_1",
+  "rule:crate::adm_3_2",
+]
+status = "distinguished"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[coverage.flip]]
+id = "flip--adm_4_1+adm_4_2--Uses"
+negates = "Uses"
+rules = [
+  "rule:crate::adm_4_1",
+  "rule:crate::adm_4_2",
+]
+status = "distinguished"
+killer = "cases/contrib-escrow-slot-escrow-or/case.toml"
+
+[[coverage.flip]]
+id = "flip--adm_4_1+adm_4_2--Uses-2"
+negates = "Uses"
+rules = [
+  "rule:crate::adm_4_1",
+  "rule:crate::adm_4_2",
+]
+status = "distinguished"
+killer = "cases/contrib-escrow-slot-escrow-or/case.toml"
+
+[[coverage.flip]]
+id = "flip--adm_all_2_1+adm_all_2_2--Adm"
+negates = "Adm(s, g)"
+rules = [
+  "rule:crate::adm_all_2_1",
+  "rule:crate::adm_all_2_2",
+]
+status = "distinguished"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[coverage.flip]]
+id = "flip--adm_or_1+adm_or_2--Uses"
+negates = "Uses(s, p)"
+rules = [
+  "rule:crate::adm_or_1",
+  "rule:crate::adm_or_2",
+]
+status = "distinguished"
+killer = "cases/contrib-escrow-slot/case.toml"
+
+[[coverage.flip]]
+id = "flip--adm_used_if_1+adm_used_if_2--ok"
+negates = "ok"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--adm_used_step_1+adm_used_step_2--used"
+negates = "used"
+rules = [
+  "rule:crate::adm_used_step_1",
+  "rule:crate::adm_used_step_2",
+]
+status = "distinguished"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[coverage.flip]]
+id = "flip--admitted_in_1+admitted_in_2--inside"
+negates = "inside"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--admitted_named_1+admitted_named_2--named"
+negates = "named"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--admitted_once_1+admitted_once_2--once"
+negates = "once"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--all_in_2_1+all_in_2_2--atom"
+negates = "list::contains(x, ys)"
+rules = [
+  "rule:crate::all_in_2_1",
+  "rule:crate::all_in_2_2",
+]
+status = "distinguished"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[coverage.flip]]
+id = "flip--all_nonzero_2_1+all_nonzero_2_2--IntNotEqual"
+negates = "x != 0"
+rules = [
+  "rule:crate::all_nonzero_2_1",
+  "rule:crate::all_nonzero_2_2",
+]
+status = "distinguished"
+killer = "cases/charter-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--all_proof_ok_2_1+all_proof_ok_2_2--ProofOk"
+negates = "ProofOk(x_f, charter_id, chain_id, ap)"
+rules = [
+  "rule:crate::all_proof_ok_2_1",
+  "rule:crate::all_proof_ok_2_2",
+]
+status = "distinguished"
+killer = "cases/birth-network-created/case.toml"
+
+[[coverage.flip]]
+id = "flip--bad_unless_admitted_1_1+bad_unless_admitted_1_2--admitted"
+negates = "admitted"
+rules = [
+  "rule:crate::bad_unless_admitted_1_1",
+  "rule:crate::bad_unless_admitted_1_2",
+]
+status = "distinguished"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[coverage.flip]]
+id = "flip--bad_unless_distinct_1+bad_unless_distinct_2--distinct"
+negates = "distinct"
+rules = [
+  "rule:crate::bad_unless_distinct_1",
+  "rule:crate::bad_unless_distinct_2",
+]
+status = "distinguished"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[coverage.flip]]
+id = "flip--bad_unless_weight_1+bad_unless_weight_2--weight_bad"
+negates = "weight_bad"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--birth_check+birth_check_refused--IntEqual"
+negates = "list::size(BirthRefusals(params, node, birth)) == 0"
+rules = [
+  "rule:crate::birth_check",
+  "rule:crate::birth_check_refused",
+]
+status = "distinguished"
+killer = "cases/birth-both-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--charter_of_2_1+charter_of_2_2--IntEqual"
+negates = "id == c"
+rules = [
+  "rule:crate::charter_of_2_1",
+  "rule:crate::charter_of_2_2",
+]
+status = "distinguished"
+killer = "cases/charter-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--contribute+contribute_refused--IntEqual"
+negates = "list::size(ContribRefusals(charters, dealt, used, slotsused, c)) == 0"
+rules = [
+  "rule:crate::contribute",
+  "rule:crate::contribute_refused",
+]
+status = "distinguished"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--dealt_count_2_1+dealt_count_2_2--IntEqual"
+negates = "xa == a"
+rules = [
+  "rule:crate::dealt_count_2_1",
+  "rule:crate::dealt_count_2_2",
+]
+status = "distinguished"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[coverage.flip]]
+id = "flip--find_rec_2_1+find_rec_2_2--IntEqual"
+negates = "cm_addr == cm"
+rules = [
+  "rule:crate::find_rec_2_1",
+  "rule:crate::find_rec_2_2",
+]
+status = "distinguished"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[coverage.flip]]
+id = "flip--fix_charter+fix_charter_refused--IntEqual"
+negates = "list::size(CharterRefusals(charters, id, gamma)) == 0"
+rules = [
+  "rule:crate::fix_charter",
+  "rule:crate::fix_charter_refused",
+]
+status = "distinguished"
+killer = "cases/charter-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--has_record_2_1+has_record_2_2--IntEqual"
+negates = "cm_addr == cm"
+rules = [
+  "rule:crate::has_record_2_1",
+  "rule:crate::has_record_2_2",
+]
+status = "distinguished"
+killer = "cases/record-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--holder_open+holder_open_refused--IntEqual"
+negates = "list::size(HolderRefusals(FindRec(records, cm_addr), x_match)) == 0"
+rules = [
+  "rule:crate::holder_open",
+  "rule:crate::holder_open_refused",
+]
+status = "distinguished"
+killer = "cases/ack-oracle-run/case.toml"
+
+[[coverage.flip]]
+id = "flip--leaf_weight_1+leaf_weight_2--IntEqual"
+negates = "a == b"
+rules = [
+  "rule:crate::leaf_weight_1",
+  "rule:crate::leaf_weight_2",
+]
+status = "distinguished"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[coverage.flip]]
+id = "flip--mk_pairs_1+mk_pairs_2--IntLessEqual"
+negates = "n <= 0"
+rules = [
+  "rule:crate::mk_pairs_1",
+  "rule:crate::mk_pairs_2",
+]
+status = "distinguished"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--no_birth_cert_of_1+no_birth_cert_of_2--P0"
+negates = "profile.eq::<K>(ProfileC::P0)"
+rules = [
+  "rule:crate::no_birth_cert_of_1",
+  "rule:crate::no_birth_cert_of_2",
+]
+status = "distinguished"
+killer = "cases/record-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--opt_1+opt_2--b"
+negates = "b"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--others_2_1+others_2_2--IntNotEqual"
+negates = "y != x"
+rules = [
+  "rule:crate::others_2_1",
+  "rule:crate::others_2_2",
+]
+status = "distinguished"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[coverage.flip]]
+id = "flip--pairs_unused_2_1+pairs_unused_2_2--atom"
+negates = "list::contains(Pair::P { a, b: i }, dealt)"
+rules = [
+  "rule:crate::pairs_unused_2_1",
+  "rule:crate::pairs_unused_2_2",
+]
+status = "distinguished"
+killer = "cases/contrib-committee/case.toml"
+
+[[coverage.flip]]
+id = "flip--pairs_unused_2_1+pairs_unused_2_2--atom-2"
+negates = "list::contains(Pair::P { a, b: i }, used)"
+rules = [
+  "rule:crate::pairs_unused_2_1",
+  "rule:crate::pairs_unused_2_2",
+]
+status = "distinguished"
+killer = "cases/contrib-committee/case.toml"
+
+[[coverage.flip]]
+id = "flip--pay+pay_refused--IntEqual"
+negates = "list::size(PayRefusals(FindRec(records, cm_addr))) == 0"
+rules = [
+  "rule:crate::pay",
+  "rule:crate::pay_refused",
+]
+status = "distinguished"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[coverage.flip]]
+id = "flip--post_pool+post_pool_refused--IntEqual"
+negates = "list::size(PoolRefusals(keys, actor, root, key)) == 0"
+rules = [
+  "rule:crate::post_pool",
+  "rule:crate::post_pool_refused",
+]
+status = "distinguished"
+killer = "cases/contrib-all-codes/case.toml"
+
+[[coverage.flip]]
+id = "flip--put_shares+put_shares_dup--NodupB"
+negates = "NodupB(slots)"
+rules = [
+  "rule:crate::put_shares",
+  "rule:crate::put_shares_dup",
+]
+status = "distinguished"
+killer = "cases/puts-dup/case.toml"
+
+[[coverage.flip]]
+id = "flip--session+session_dup--NodupB"
+negates = "NodupB(SlotIds(slots))"
+rules = [
+  "rule:crate::session",
+  "rule:crate::session_dup",
+]
+status = "distinguished"
+killer = "cases/session-dup/case.toml"
+
+[[coverage.flip]]
+id = "flip--set_acked_1_1+set_acked_1_2--IntEqual"
+negates = "cm_addr == cm"
+rules = [
+  "rule:crate::set_acked_1_1",
+  "rule:crate::set_acked_1_2",
+]
+status = "distinguished"
+killer = "cases/ack-non-network/case.toml"
+
+[[coverage.flip]]
+id = "flip--submit_record+submit_record_refused--IntEqual"
+negates = "list::size(RecordRefusals(params, charters, births, records, record)) == 0"
+rules = [
+  "rule:crate::submit_record",
+  "rule:crate::submit_record_refused",
+]
+status = "distinguished"
+killer = "cases/params-larger-committee/case.toml"
+
+[[coverage.flip]]
+id = "flip--unused_count_2_1+unused_count_2_2--IntEqual"
+negates = "xa == a"
+rules = [
+  "rule:crate::unused_count_2_1",
+  "rule:crate::unused_count_2_2",
+]
+status = "distinguished"
+killer = "cases/contrib-guardian/case.toml"
+
+[[coverage.flip]]
+id = "flip--unused_count_2_1+unused_count_2_2--atom"
+negates = "list::contains(Pair::P { a: xa, b: xb }, used)"
+rules = [
+  "rule:crate::unused_count_2_1",
+  "rule:crate::unused_count_2_2",
+]
+status = "distinguished"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[coverage.flip]]
+id = "flip--used_children_2_1+used_children_2_2--Uses"
+negates = "Uses(s, g)"
+rules = [
+  "rule:crate::used_children_2_1",
+  "rule:crate::used_children_2_2",
+]
+status = "distinguished"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[coverage.flip]]
+id = "flip--used_one_1+used_one_2--Uses"
+negates = "Uses(s, g)"
+rules = [
+  "rule:crate::used_one_1",
+  "rule:crate::used_one_2",
+]
+status = "distinguished"
+killer = "cases/contrib-bad-pairs/case.toml"
+
+[[coverage.flip]]
+id = "flip--uses_4_1+uses_4_2--Uses"
+negates = "Uses(s, primary)"
+rules = [
+  "rule:crate::uses_4_1",
+  "rule:crate::uses_4_2",
+]
+status = "distinguished"
+killer = "cases/contrib-escrow-slot-escrow-or/case.toml"
+
+[[coverage.flip]]
+id = "flip--uses_l_2_1+uses_l_2_2--Uses"
+negates = "Uses(s, g)"
+rules = [
+  "rule:crate::uses_l_2_1",
+  "rule:crate::uses_l_2_2",
+]
+status = "distinguished"
+killer = "cases/contrib-escrow-slot-nested/case.toml"
+
+[[coverage.flip]]
+id = "flip--valid_ackers_2_1+valid_ackers_2_2--atom"
+negates = "list::contains(Pair::P { a: n, b: cm }, acks)"
+rules = [
+  "rule:crate::valid_ackers_2_1",
+  "rule:crate::valid_ackers_2_2",
+]
+status = "distinguished"
+killer = "cases/ack-dup-signers/case.toml"
+
+[[coverage.flip]]
+id = "flip--valid_signers_2_1+valid_signers_2_2--atom"
+negates = "list::contains(Pair::P { a: n, b: cm }, births)"
+rules = [
+  "rule:crate::valid_signers_2_1",
+  "rule:crate::valid_signers_2_2",
+]
+status = "distinguished"
+killer = "cases/record-all-codes/case.toml"
+
+[compare]
+# The verdicts of kink's `compare` command (`krs kink compare`, `kink-flow compare`): a run
+# without --locked rewrites this section, and `compare --locked` checks that it is current.
+version = 28
+profile = "z3"
+z3_version = "5.3.3.0 430d19e697e2ec9bad79ff210d41b4a7a5fcfa3e 430d19e"
+protocol = "kink-implementation/1"
+
+[compare.spec]
+outcome = "admitted"
+
+# Each [[compare.verdict]] is one view of one implementation on one program, and its verdict:
+# equal (its end agrees with the definition's under the view), different (`difference`, the
+# first difference), could-not-apply (it declined the program; `reason`, its own words) or
+# not-compared (`reason` says why). `request_sha256` names the request it was given, and
+# `identity_sha256` its build (its `identity` file); a run that gave no answer keeps its rows.
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/ack-check-node-bound/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "9b1c7e6ff7d4ce12556a189a55d227bb0404ca6c33045f0cb1f3bfc1cd5b3ce4"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/ack-check-ok/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "28012f3cb5c06ec239c0ef0d49201e0d2ffa05d5699c58905c64c13a2e7ee66c"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/ack-check-refused-each/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "219c0dbde5ba09ff54c0553377890ca7e0f5f7bc0e31997e5dcee299696d8745"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/ack-dup-signers/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "00cde5cb491eee7c0186f989e35ae85bc09ebfec0c9d99403bbbf0919e00cdcb"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/ack-forged-birth/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "56a72a5118098b440f0b99bb476e4b7467de139009f3dd33e2be9f9d20bb1f6f"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/ack-non-network/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "d5703ce2dc80f12705aadd37bf027787478e3b4792f36833ad92314f4f49044c"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/ack-oracle-run/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "98f1795c5a53058045b71fc7ae9c134026b13e9fcc6f2cb12684b84263e25b88"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/ack-other-cm/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "024720021d2df865cd3399dc659969510050c9c3abe9982a3ef7dbcdac9214e8"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/ack-own-record/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "4be37612b35586769f079a0c476e7db4e7de0246806e95de56e42d0c2798be55"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/ack-quorum-more/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "4efc0e8c76237068d7dccb859f55b1dc264aba2df3c7b19444f4117e71edeb28"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/ack-quorum/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "60a30d0aeed9bb4dda089d740b5af9dbf265dee3630de50c7c18d458f3887ccb"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/ack-twice/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "f5fcccbd78c6404a62d32b2f095a761c9adbdd9a7e9461483b9f08a64077b313"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/ack-unknown-record/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "f004fb45eb23bbd373c62d0af5e537551867cb328f059a1ebd41064636aa3b79"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/birth-both-codes/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c733b0160933bd0757117f003b1e1c995c234219ad033d70aaf594150d143d60"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/birth-dealer-and-flags/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "3a00696d6120429047c75c4be12e3379036a78533ff5e132c3de0ff2b63ccb70"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/birth-network-created/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c7782be80c8f70b1723ff02a65b2a92019aa713e7eea8c685f5076af8638e3b4"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/birth-node-outside/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "517ed02de10e4170f05ed1a304b1ec170270287cac5a5e47b3efa51b6df9a90e"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/birth-ok-once/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "20d00cffed26c317cd578c252d02b873dd0e375edd711bf45c82421200da0410"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/birth-pop-invalid/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "dfa61c5c951577488cbacc42e5d30d75db07aaabe28854b420838e56e954cefd"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/birth-pop-wrong-ctx/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "cef0aeebe86d447d2500ee38295beb1b203429a7f17d633ff1a36ef071f24e0d"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/birth-second-actor-bad/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "f491cce2252bcbfc3c6790497a1e3814548a6974672dec5889449473940c3118"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-all-codes/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "0e766f9b8a59c47bd4ccacdf61dc5dfb56655440065a6ffd63c114b25cef227d"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-and-empty/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "441480f8d4cbe76c7d4d5b2baa6be48075c6ae2a38a19bf5651996d082f0b06e"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-group-k-above-m/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "42cedf2eed41a52db0e3a64f412bf52058e08a2e7dc9de067b3e76c440e1e512"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-group-k-equal-m/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "a0cb665b044663ee62113cf856f683c77669e1180977b02b69dd0e5bb2b8fd7f"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-group-k-zero/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "0c063404e8dee90ded296a5b39dee932bf30be5630455d511768aa56054e87d8"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-leaf-dup/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "1e36c59b458b56aff98c963417e781ca5d8b41797c57fc5fadbc7a98ea8cf4fe"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-mid-dup/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "8640534570779213f7fb88ed83fb758698a0e0f1635752e38a0ed6a0186bf222"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-mid-zero-later/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "dfd9061cc3a7d56af472ce6da5394e623b27a2a979e29f6a9603467574e2362e"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-mid-zero/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "ef818a732724bbe732c92485b2c9597a0d6a1090f477ff6323235736210f7001"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-nested-bad/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "6ea6ddc657e174fc97624bb545fca7ae484ed79e728fc8864b4592700ef89998"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/charter-ok-then-again/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "0b4b217e6b7fa1e2f10cdce1a0d670d3c661db5f1c400b19265268ee8bdc675b"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-all-codes/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "4d99b07b1fd3d748eb774a67e928335c0d24b786d8ca873e60f0aafeb73a164b"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-and-leaf-missing/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "98d5d6192382af63a83074c5e6d92e5c8d5a5d808987804b1a26233b07aadc53"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-bad-pairs/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c6e9a45a2b594bf45bd30eca212a9dcb79993370a34722c4346490441cd2403f"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-bad-signing-set/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "e26b95b62369e91cf0a1eedac8b507af6a742041787efb5d343fdc6f96b2da67"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-bad-weight/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "8089ec0b91fde9b7291957354a1a644c23f2c870a7873137d3e5f74f6c876387"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-committee/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "9f25a25dd2197b70394e7c85ba6a9afde2b9f0d98e089966eb42f1e20b56f7e4"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-ecdsa-leafset/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "0951fce0a0783cdd9a83b1ee66ca83b28e45eb9a904e3b5f186b8b2cdaa6620a"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-ecdsa-ok/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "d92d1c6580051adc6a6ef741675b414bb9adb1c7e4ce771e039377bbb4095160"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-ecdsa-reused/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "2e1ecf785443dd3f8e72e9d35292f02782c327954ab4a41a1dab621b068e8863"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-escrow-slot-escrow-or/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "4701f5b4316ef51dc6a6eb24c13474f632468598732f28fe3de1a33d6617a141"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-escrow-slot-nested/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "719a35834afc82496f148481c5b7c78c27a8dc81863a8249b736fa53511fb153"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-escrow-slot/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "1585a2c69f3b0b0582179a54172fa1be80d620cd69c363eee5f21d212e166621"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-expired/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "eecc60ecd4dc99a12db95bffe6e82952f15e44feb7cab42074115212f8296a6d"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-group-exact-k/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "dff258b6fdd9e437215d18bcba9c12a7118d6ac106497a1b29e7054f5e22437e"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-group-later-used/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "6c80db30344e4ac4b26f9b07b8a9cc40697c4310995b02e0ba05d87c7ad21013"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-group-second-used/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "67722cf64cfc50034559421b1ce083d562b672a069d0521d644c25f7dfa4215d"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-group-weights/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "49307c51c95ebbad3d40a2954a0e4849abda1a73e6dbae7da57f9e43b5dd0af7"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-guardian-nested/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "8abf0345cdfcf9272e9cf2b9cde142be2d0efe65b08a64f669e4fcbc990a5f25"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-guardian/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "56cfd987205539748f7df16b3613bcd0c13fac1cba108e7c4c1b825b01fb5f11"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-nested-group/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "7df3392768ada24a02b1c4367308f79bb7a0a91f83e2164a3cdd2efd7bf0cabb"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-no-charter/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "a524526b691d18a62dca769d283f1b77b17b67f705e9650707a412a34a7e39b7"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-no-weight-pooled/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c722dac205301273fb97593cbf3de771b55223189c4fae5f0710961cb5c5b61a"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-or-admission/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "b670eadd5fafd2d20cf2286cd3154f8d8bbccc869b85050a6b233a5bcaa79c08"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-or-primary/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "d5972bf7b634d14e102ae1b89e563cb9217d797861858e94838b4778b23f421a"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-policy/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "430b3cf67d8a061a9e27b59168b2266b9e641ad8b214b91338099f811597b7f6"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-recompute/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "4b54c556e9e101e599534b1ab67a9f6c43ba3b1b7d37257b0ab95a86bee10a38"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-refill-actor/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "5c431665f8976da29349ede871a26e866c496223e45700227cd212876f10d460"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-refill-edge/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "798ac6bad51df02ba0e16627fb7d0bb954c7a6f74970ce7e28048eb690a1f85e"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-refill/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "851d68a82ea5c2c3a12e436bf38c50a11190c9084baeb293a1c409547ced5518"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/contrib-second-pair-bad/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "f9dc2839a5119e4434480d0bad33abb2bf88b0ad5b816ab763e3597fe6a06b3d"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/holder-open-acked/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "36e8a1c34c4a63a2feb00bd06dca063bd3dee1cae74a07f6bbebc2e5de3a00ce"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/holder-open-no-network/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "e4df407e2f582e9b57a945a380c41adbafe06757bd495768a0b192fdc0c5a4e9"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/holder-open-ok/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "4aeb3d5b30f0a5e1a22b550eac4cfe2bb078062f3a90f6a88c523a76bf2919cd"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/holder-open-unknown/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "e4f266eaa1b29d2cc3372c22ffa36504628246f8b0b759e53ad2898c5cf12aef"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/holder-open-wrong-ec/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "e3de8d118eb1cced121ed59c7593a08bac231ad738582ba8abfb9636507b355d"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/params-larger-committee/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "45d2668b0ad1fe1a5d8f394959ae535cff830e5cfd24ba6d62daf926ee11c458"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/pay-unknown/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "b60bce9a9db6c8208febff0f63696d27ff9913126a943a37fd206c236213e161"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/pool-both-codes/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "fba85c4705ec2be0b438611da51c570eb1e360f40cd178ce046692241bf31867"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/pool-fresh-key/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c847cf851488a7e46abf0d9d46f132b233bb47bef2588a87fb988ef401515aae"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/pool-key-range/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "dc714c6e38abc0480018baec68adbdb38814e57dbc5fb64d16a62a83acfa5166"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/puts-dup/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "ee8ea804b1284ea284beb21b719bf6e3426c7fead2d2c0016a7f8d7cb5f19a5b"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/puts-non-tee/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "69ee15c03e312843d3aac492e950f0e7212756b04b0b1b060dab56174bef0484"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/puts-tee/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "b390b196fd56f1f6861c1dfe3e83d3f7249541772478967d7e76893aacc99adb"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-all-codes/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "b86e21ef87dd8c4a2569d8b524d804c6b696adfa1145eaf6b3c3d8d38ad810a1"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-dup-and-signers/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "69f14777af4208fd0412990de7ab512e9700f43693a7faf55c267cbbca83a055"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-escrow-nested/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "e39dc5319af8c594e8ba9e4cc0e8386e5551a117e48e1cfa2be692d26fd2d998"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-escrow/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "a2157d5051f27a917396a616daa0c4471836abd832237d0641eb6d825a64e583"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-net-unacked/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c4ae61765b4d8c3cae0ddb24a021dbd7ef819e7695111625a6c36d13034c4cd6"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-no-charter/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "e07c670b8f655fc456a18b37eb011194ba9e01b9405a8beb190cd3c467fccdc0"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-p0/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c819b6c2c93d7a1ab8933061c0509b246301108554e37c2fa386c20c5438265c"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-p1-ok/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "25c374e8fecb1c266361b2789c788a953df493f772d9857155e9b7b344f78c83"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-p1-short/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "da3a01c67bbcdf5a01d1c1ba7ea8638a2c84deb81c2a7287055afea95affe452"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-p2-guardians/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "598ae29da7229ee37fe222fb9ca637401d066dde1b745458d3f1ad3c9e62d31b"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/record-quorum-five/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "bb6e88422e340f3d705d48e80bdcd41b2db7604dfaca506bdc813efb7135bafd"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/session-dup/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "277f264e26ae59e29b1cab4c2632ccb5c1c1ec9b40b5028160f9790eda5c36a1"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/session-keep-complain/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "2deb3bf8b747b93df7f0d6d84389dd7060b772e3830d8237c7f0f572494ee027"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/witness-acked/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "849dfc62a3747bb197d334246db6a11e8196abc3b7bb4be3151c7ee6eda5433d"

@@ -1381,7 +1381,9 @@ impl Sim {
                 .zip(&cp.boot_counters)
                 .filter(|(a, b)| a == b)
                 .count();
-            if same < self.params.w + 1 {
+            if same < self.params.w + 1
+                || (cfg!(feature = "d039") && cp.restart_seq != old.restart_seq)
+            {
                 cp.h = cp.h.max(old.h.saturating_add(self.params.b));
                 let voided: Vec<_> = self
                     .requests

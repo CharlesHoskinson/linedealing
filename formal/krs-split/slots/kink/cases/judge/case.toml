@@ -1,0 +1,12 @@
+# SL-012 to SL-015: unlisted pool, above the window, in the window, pending, taken.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { Judge = { listed = false, h = 100, pending_min = 90, pending = [], bw = 200, eid = 1, idxs = [150] } },
+  { Judge = { listed = true, h = 100, pending_min = 90, pending = [{ P = [95, 1] }, { P = [96, 2] }], bw = 200, eid = 1, idxs = [301, 300, 150, 101, 100, 95, 96, 89, 97] } },
+  { Judge = { listed = true, h = 100, pending_min = 96, pending = [{ P = [95, 1] }], bw = 1, eid = 1, idxs = [95, 102, 101] } },
+  { Judge = { listed = true, h = 0, pending_min = 0, pending = [], bw = 0, eid = 1, idxs = [1] } },
+  { Judge = { listed = false, h = 100, pending_min = 90, pending = [{ P = [95, 1] }], bw = 200, eid = 1, idxs = [301, 95, 89] } },
+  { Judge = { listed = true, h = 100, pending_min = 90, pending = [{ P = [150, 1] }], bw = 200, eid = 1, idxs = [150] } },
+  { Judge = { listed = true, h = 100, pending_min = 400, pending = [], bw = 200, eid = 1, idxs = [301, 150, 99] } },
+]

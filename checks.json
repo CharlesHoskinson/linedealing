@@ -1,0 +1,353 @@
+{
+  "version": 1,
+  "checks": {
+    "SLG-001": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/drwatt/scripts/ears_lint.py",
+        "openspec/changes/add-split-line-dealing/specs/*/spec.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-002": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "openspec/changes/add-split-line-dealing/**/*"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-003": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "specs/refinement/tools/check.py",
+        "specs/refinement/*.yaml",
+        "specs/refinement/sources/quint-split-aa038fa/*.md",
+        "design/enhancement/DECISIONS.md",
+        "design/enhancement/DESIGN.md",
+        "specs/refinement/architecture.md",
+        "openspec/changes/add-split-line-dealing/design.md",
+        "specs/refinement/tools/gen.py",
+        "openspec/changes/add-split-line-dealing/specs/*/spec.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-004": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/gates.sh",
+        "formal/lean-split/scripts/*.py",
+        "formal/lean-split/codec/lakefile.toml",
+        "formal/lean-split/codec/lake-manifest.json",
+        "formal/lean-split/codec/lean-toolchain",
+        "formal/lean-split/codec/**/*.lean",
+        "formal/lean-split/envelope/lakefile.toml",
+        "formal/lean-split/envelope/lake-manifest.json",
+        "formal/lean-split/envelope/lean-toolchain",
+        "formal/lean-split/envelope/*.lean",
+        "formal/lean-split/envelope/**/*.lean",
+        "formal/lean-split/envelope/*.json",
+        "formal/lean-split/envelope/ambiguity-ledger.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-005": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/gates.sh",
+        "formal/lean-split/scripts/*.py",
+        "formal/lean-split/codec/lakefile.toml",
+        "formal/lean-split/codec/lake-manifest.json",
+        "formal/lean-split/codec/lean-toolchain",
+        "formal/lean-split/codec/**/*.lean",
+        "formal/lean-split/request/lakefile.toml",
+        "formal/lean-split/request/lake-manifest.json",
+        "formal/lean-split/request/lean-toolchain",
+        "formal/lean-split/request/*.lean",
+        "formal/lean-split/request/**/*.lean",
+        "formal/lean-split/request/*.json",
+        "formal/lean-split/request/ambiguity-ledger.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-006": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/gates.sh",
+        "formal/lean-split/scripts/*.py",
+        "formal/lean-split/codec/lakefile.toml",
+        "formal/lean-split/codec/lake-manifest.json",
+        "formal/lean-split/codec/lean-toolchain",
+        "formal/lean-split/codec/**/*.lean",
+        "formal/lean-split/slots/lakefile.toml",
+        "formal/lean-split/slots/lake-manifest.json",
+        "formal/lean-split/slots/lean-toolchain",
+        "formal/lean-split/slots/*.lean",
+        "formal/lean-split/slots/**/*.lean",
+        "formal/lean-split/slots/*.json",
+        "formal/lean-split/slots/ambiguity-ledger.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-007": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/gates.sh",
+        "formal/lean-split/scripts/*.py",
+        "formal/lean-split/codec/lakefile.toml",
+        "formal/lean-split/codec/lake-manifest.json",
+        "formal/lean-split/codec/lean-toolchain",
+        "formal/lean-split/codec/**/*.lean",
+        "formal/lean-split/authorization/lakefile.toml",
+        "formal/lean-split/authorization/lake-manifest.json",
+        "formal/lean-split/authorization/lean-toolchain",
+        "formal/lean-split/authorization/*.lean",
+        "formal/lean-split/authorization/**/*.lean",
+        "formal/lean-split/authorization/*.json",
+        "formal/lean-split/authorization/ambiguity-ledger.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-008": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/gates.sh",
+        "formal/lean-split/scripts/*.py",
+        "formal/lean-split/codec/lakefile.toml",
+        "formal/lean-split/codec/lake-manifest.json",
+        "formal/lean-split/codec/lean-toolchain",
+        "formal/lean-split/codec/**/*.lean",
+        "formal/lean-split/checkpoint/lakefile.toml",
+        "formal/lean-split/checkpoint/lake-manifest.json",
+        "formal/lean-split/checkpoint/lean-toolchain",
+        "formal/lean-split/checkpoint/*.lean",
+        "formal/lean-split/checkpoint/**/*.lean",
+        "formal/lean-split/checkpoint/*.json",
+        "formal/lean-split/checkpoint/ambiguity-ledger.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-009": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/gates.sh",
+        "formal/lean-split/scripts/*.py",
+        "formal/lean-split/codec/lakefile.toml",
+        "formal/lean-split/codec/lake-manifest.json",
+        "formal/lean-split/codec/lean-toolchain",
+        "formal/lean-split/codec/**/*.lean",
+        "formal/lean-split/shard-holders/lakefile.toml",
+        "formal/lean-split/shard-holders/lake-manifest.json",
+        "formal/lean-split/shard-holders/lean-toolchain",
+        "formal/lean-split/shard-holders/*.lean",
+        "formal/lean-split/shard-holders/**/*.lean",
+        "formal/lean-split/shard-holders/*.json",
+        "formal/lean-split/shard-holders/ambiguity-ledger.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-010": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/gates.sh",
+        "formal/lean-split/scripts/*.py",
+        "formal/lean-split/envelope/README.md",
+        "formal/lean-split/envelope/trace.json",
+        "formal/lean-split/envelope/**/*.lean",
+        "openspec/changes/add-split-line-dealing/specs/*/spec.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-011": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/gates.sh",
+        "formal/lean-split/scripts/*.py",
+        "formal/lean-split/request/README.md",
+        "formal/lean-split/request/trace.json",
+        "formal/lean-split/request/**/*.lean",
+        "openspec/changes/add-split-line-dealing/specs/*/spec.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-012": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/gates.sh",
+        "formal/lean-split/scripts/*.py",
+        "formal/lean-split/slots/README.md",
+        "formal/lean-split/slots/trace.json",
+        "formal/lean-split/slots/**/*.lean",
+        "openspec/changes/add-split-line-dealing/specs/*/spec.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-013": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/gates.sh",
+        "formal/lean-split/scripts/*.py",
+        "formal/lean-split/authorization/README.md",
+        "formal/lean-split/authorization/trace.json",
+        "formal/lean-split/authorization/**/*.lean",
+        "openspec/changes/add-split-line-dealing/specs/*/spec.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-014": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/gates.sh",
+        "formal/lean-split/scripts/*.py",
+        "formal/lean-split/checkpoint/README.md",
+        "formal/lean-split/checkpoint/trace.json",
+        "formal/lean-split/checkpoint/**/*.lean",
+        "openspec/changes/add-split-line-dealing/specs/*/spec.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-015": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/gates.sh",
+        "formal/lean-split/scripts/*.py",
+        "formal/lean-split/shard-holders/README.md",
+        "formal/lean-split/shard-holders/trace.json",
+        "formal/lean-split/shard-holders/**/*.lean",
+        "openspec/changes/add-split-line-dealing/specs/*/spec.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-016": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/scripts/count_ids.py",
+        "formal/lean-split/*/README.md",
+        "openspec/changes/add-split-line-dealing/specs/*/spec.md"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-017": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/quint-spec/splitspec.qnt",
+        "formal/quint-spec/splitspec_test.qnt"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-018": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/quint-spec/splitspec.qnt",
+        "formal/quint-spec/splitspec_test.qnt"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-019": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/quint-spec/splitspec.qnt",
+        "formal/quint-spec/splitspec_test.qnt"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-020": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/quint-spec/splitspec.qnt",
+        "formal/quint-spec/splitspec_test.qnt"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-021": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/quint-spec/splitspec.qnt",
+        "formal/quint-spec/splitspec_test.qnt"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-022": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "impl/Cargo.toml",
+        "impl/Cargo.lock",
+        "impl/src/**/*.rs",
+        "impl/tests/**/*.rs",
+        "impl/tests/**/*.json",
+        "impl/benches/**/*.rs",
+        "tests/quint-regressions/**/*",
+        "formal/quint/conformance/traces/**/*"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-023": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "impl/Cargo.toml",
+        "impl/Cargo.lock",
+        "impl/src/**/*.rs",
+        "impl/tests/**/*.rs",
+        "impl/tests/**/*.json",
+        "impl/benches/**/*.rs",
+        "tests/quint-regressions/**/*",
+        "formal/quint/conformance/traces/**/*"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-024": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "impl/Cargo.toml",
+        "impl/src/**/*.rs",
+        "impl/tests/**/*.rs",
+        "impl/benches/**/*.rs"
+      ],
+      "parallel_safe": true
+    },
+    "SLG-025": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/krs-split/**/*",
+        "formal/lean-split/**/*"
+      ],
+      "parallel_safe": false
+    },
+    "SLG-026": {
+      "inputs": [
+        "formal/drwatt/gate.sh",
+        "formal/lean-split/replay/replay.py",
+        "formal/lean-split/codec/lakefile.toml",
+        "formal/lean-split/codec/lake-manifest.json",
+        "formal/lean-split/codec/lean-toolchain",
+        "formal/lean-split/codec/**/*.lean",
+        "formal/lean-split/request/lakefile.toml",
+        "formal/lean-split/request/lake-manifest.json",
+        "formal/lean-split/request/lean-toolchain",
+        "formal/lean-split/request/*.lean",
+        "formal/lean-split/request/**/*.lean",
+        "formal/lean-split/authorization/lakefile.toml",
+        "formal/lean-split/authorization/lake-manifest.json",
+        "formal/lean-split/authorization/lean-toolchain",
+        "formal/lean-split/authorization/*.lean",
+        "formal/lean-split/authorization/**/*.lean",
+        "formal/lean-split/slots/lakefile.toml",
+        "formal/lean-split/slots/lake-manifest.json",
+        "formal/lean-split/slots/lean-toolchain",
+        "formal/lean-split/slots/*.lean",
+        "formal/lean-split/slots/**/*.lean",
+        "formal/lean-split/envelope/lakefile.toml",
+        "formal/lean-split/envelope/lake-manifest.json",
+        "formal/lean-split/envelope/lean-toolchain",
+        "formal/lean-split/envelope/*.lean",
+        "formal/lean-split/envelope/**/*.lean",
+        "formal/lean-split/shard-holders/lakefile.toml",
+        "formal/lean-split/shard-holders/lake-manifest.json",
+        "formal/lean-split/shard-holders/lean-toolchain",
+        "formal/lean-split/shard-holders/*.lean",
+        "formal/lean-split/shard-holders/**/*.lean",
+        "formal/quint-spec/traces-sample/**/*.itf.json"
+      ],
+      "parallel_safe": true
+    }
+  }
+}

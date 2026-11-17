@@ -1,0 +1,106 @@
+# Plausible misreadings of the lapse of a precedence (SL-005, SL-010, ledgers 1, 9, 10;
+# DECISIONS 63), as K patches of kink/definition.k.
+
+[[mutation]]
+id = "sl005-lapse-keeps"
+expect = "kill"
+misunderstanding = "SL-005, SL-010: a lapsed precedence leaves the committee slot as it is"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_2_1"
+  find = "=> burnC ( X:CSlot )"
+  replace = "=> X:CSlot"
+
+[[mutation]]
+id = "sl005-lapse-burns-all"
+expect = "kill"
+misunderstanding = "SL-005: a lapse burns every committee slot, not only the ones where the request holds prec"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_2_1"
+  find = "requires cPrec ( X:CSlot ) ==K ListItem(Eid:Int)"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_2_2"
+  find = "requires notBool (cPrec ( X:CSlot ) ==K ListItem(Eid:Int))"
+  replace = "requires false"
+
+[[mutation]]
+id = "ledger1-lapse-twice"
+expect = "kill"
+misunderstanding = "SL-005, ledger 1: a lapsed request may lapse again or come into force later"
+  [[mutation.edit]]
+  rule = "split_slots--known_req"
+  find = " orElseBool Eid:Int in Lapsed:List"
+  replace = ""
+
+[[mutation]]
+id = "lapse-not-recorded"
+expect = "kill"
+misunderstanding = "SL-005: the lapse is not recorded"
+  [[mutation.edit]]
+  rule = "lapse"
+  find = "Lapsed:List => ListItem(Eid:Int) Lapsed:List"
+  replace = "Lapsed:List"
+
+[[mutation]]
+id = "lapse-refused-code"
+expect = "kill"
+misunderstanding = "SL-005, ledger 1: a lapse of a request in force is outside the capability"
+  [[mutation.edit]]
+  rule = "lapse-refused"
+  find = "ListItem(noRule)"
+  replace = "ListItem(outsideCapability)"
+
+[[mutation]]
+id = "sl005-late-open-live"
+expect = "kill"
+misunderstanding = "SL-005, SL-010 (DECISIONS 63): a header that opens after its lapse takes a live precedence; the slot stays NAMED"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_1_1"
+  find = "=> burnIfLapsed ( Lapsed:List , openSlot ( Eid:Int , Pos:Int , X:CSlot ) )"
+  replace = "=> openSlot ( Eid:Int , Pos:Int , X:CSlot )"
+
+[[mutation]]
+id = "sl005-lapsed-opener-burns"
+expect = "kill"
+misunderstanding = "SL-005: a lapsed request that names a slot burns it, also when another request holds prec"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_1_1"
+  find = "=> burnIfLapsed ( Lapsed:List , openSlot ( Eid:Int , Pos:Int , X:CSlot ) )"
+  replace = "=> burnIfLapsedPrec ( Lapsed:List , ListItem(Eid:Int) , openSlot ( Eid:Int , Pos:Int , X:CSlot ) )"
+
+[[mutation]]
+id = "sl005-late-precedence-unread"
+expect = "kill"
+misunderstanding = "SL-005: the lapse check reads no precedence, so a late open never burns"
+  [[mutation.edit]]
+  rule = "split_slots--burn_if_lapsed"
+  find = "cPrec ( X:CSlot )"
+  replace = ".List"
+
+[[mutation]]
+id = "sl005-lapsed-prec-kept"
+expect = "kill"
+misunderstanding = "SL-005, SL-010: a slot under a lapsed precedence taken at the open is not burned"
+  [[mutation.edit]]
+  rule = "split_slots--burn_if_lapsed_prec_2_1"
+  find = "=> burnC ( X:CSlot )"
+  replace = "=> X:CSlot"
+
+[[mutation]]
+id = "sl005-live-prec-burns"
+expect = "kill"
+misunderstanding = "SL-005: every slot an open names burns, also under a live precedence"
+  [[mutation.edit]]
+  rule = "split_slots--burn_if_lapsed_prec_2_2"
+  find = "=> X:CSlot"
+  replace = "=> burnC ( X:CSlot )"
+
+[[mutation]]
+id = "sl017-open-revives-burned"
+expect = "kill"
+misunderstanding = "SL-005, SL-017: an open that leaves a slot without precedence moves it to NAMED, so a BURNED slot without prec comes back"
+  [[mutation.edit]]
+  rule = "split_slots--burn_if_lapsed_prec_1"
+  find = "=> X:CSlot"
+  replace = "=> setBstatC ( NAMED , X:CSlot )"
+

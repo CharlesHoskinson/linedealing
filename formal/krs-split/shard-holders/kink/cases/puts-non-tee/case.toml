@@ -1,0 +1,6 @@
+# SH-017: no put entries outside TEE mode
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "NonTee", n_h = 10 } }
+ops = [
+  { PutShares = { slots = [1, 2] } },
+]

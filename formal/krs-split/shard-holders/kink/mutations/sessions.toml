@@ -1,0 +1,137 @@
+# Plausible misreadings of SH-016 (ECDSA slot sessions), SH-017 (slot puts in TEE
+# mode), ledger 4 (a slot named twice) and of the run's end, as K patches.
+
+[[mutation]]
+id = "sh016-keep-all"
+expect = "kill"
+misunderstanding = "SH-016: a slot whose public check fails is kept"
+  [[mutation.edit]]
+  rule = "split_shard_holders--session_keep_3"
+  find = "ListItem(cslot ( _ , false )) Rest:List ) => sessionKeep ( Rest:List )"
+  replace = "ListItem(cslot ( Slot:Int , false )) Rest:List ) => ListItem(Slot:Int) sessionKeep ( Rest:List )"
+
+[[mutation]]
+id = "sh016-keep-drops-good"
+expect = "kill"
+misunderstanding = "SH-016: the node keeps no slot of a session"
+  [[mutation.edit]]
+  rule = "split_shard_holders--session_keep_2"
+  find = "=> ListItem(Slot:Int) sessionKeep ( Rest:List )"
+  replace = "=> sessionKeep ( Rest:List )"
+
+[[mutation]]
+id = "sh016-keep-extra"
+expect = "kill"
+misunderstanding = "SH-016: the session keeps slot 0 as well"
+  [[mutation.edit]]
+  rule = "split_shard_holders--session_keep_1"
+  find = "=> .List"
+  replace = "=> ListItem(0)"
+
+[[mutation]]
+id = "sh016-complain-silent"
+expect = "kill"
+misunderstanding = "SH-016: the node drops a failed slot without a complaint"
+  [[mutation.edit]]
+  rule = "split_shard_holders--session_complain_3"
+  find = "=> ListItem(Slot:Int) sessionComplain ( Rest:List )"
+  replace = "=> sessionComplain ( Rest:List )"
+
+[[mutation]]
+id = "sh016-complain-all"
+expect = "kill"
+misunderstanding = "SH-016: the node complains about every slot of the session"
+  [[mutation.edit]]
+  rule = "split_shard_holders--session_complain_2"
+  find = "ListItem(cslot ( _ , true )) Rest:List ) => sessionComplain ( Rest:List )"
+  replace = "ListItem(cslot ( Slot:Int , true )) Rest:List ) => ListItem(Slot:Int) sessionComplain ( Rest:List )"
+
+[[mutation]]
+id = "sh016-complain-extra"
+expect = "kill"
+misunderstanding = "SH-016: the session ends with a complaint about slot 0"
+  [[mutation.edit]]
+  rule = "split_shard_holders--session_complain_1"
+  find = "=> .List"
+  replace = "=> ListItem(0)"
+
+[[mutation]]
+id = "sh016-swap"
+expect = "kill"
+misunderstanding = "SH-016: the observation lists the complaints before the kept slots"
+  [[mutation.edit]]
+  rule = "session"
+  find = "oSession ( sessionKeep ( Slots:List ) , sessionComplain ( Slots:List ) )"
+  replace = "oSession ( sessionComplain ( Slots:List ) , sessionKeep ( Slots:List ) )"
+
+[[mutation]]
+id = "sh016-dup-slot-ok"
+expect = "kill"
+misunderstanding = "SH-016 (ledger 4): a session may name one slot twice"
+  [[mutation.edit]]
+  rule = "session-dup"
+  find = "ListItem(oRefused ( ListItem(rOutsideCapability) ))"
+  replace = "ListItem(oSession ( sessionKeep ( Slots:List ) , sessionComplain ( Slots:List ) ))"
+
+[[mutation]]
+id = "sh016-slot-ids-first"
+expect = "kill"
+misunderstanding = "SH-016 (ledger 4): only the first slot of a session is checked for a repeat"
+  [[mutation.edit]]
+  rule = "split_shard_holders--slot_ids_2"
+  find = "=> ListItem(Slot:Int) slotIds ( Rest:List )"
+  replace = "=> ListItem(Slot:Int)"
+
+[[mutation]]
+id = "sh016-slot-ids-extra"
+expect = "kill"
+misunderstanding = "SH-016 (ledger 4): slot 4 is reserved, so naming it repeats it"
+  [[mutation.edit]]
+  rule = "split_shard_holders--slot_ids_1"
+  find = "=> .List"
+  replace = "=> ListItem(4)"
+
+[[mutation]]
+id = "sh017-every-mode"
+expect = "kill"
+misunderstanding = "SH-017: committee shares are put into the account pool in NON_TEE mode too"
+  [[mutation.edit]]
+  rule = "split_shard_holders--put_entries_2"
+  find = "params ( _ , _ , mNONTEE , _ ) , _ ) => .List"
+  replace = "params ( _ , _ , mNONTEE , _ ) , Slots:List ) => Slots:List"
+
+[[mutation]]
+id = "sh017-tee-none"
+expect = "kill"
+misunderstanding = "SH-017: no put entry is appended in TEE mode"
+  [[mutation.edit]]
+  rule = "split_shard_holders--put_entries_1"
+  find = "=> Slots:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "sh017-dup-ok"
+expect = "kill"
+misunderstanding = "SH-017 (ledger 4): a put list may name one slot twice"
+  [[mutation.edit]]
+  rule = "put-shares-dup"
+  find = "ListItem(oRefused ( ListItem(rOutsideCapability) ))"
+  replace = "ListItem(oPuts ( Slots:List ))"
+
+[[mutation]]
+id = "sh017-obs-first"
+expect = "kill"
+misunderstanding = "SH-017: the put observation goes before the earlier observations"
+  [[mutation.edit]]
+  rule = "put-shares"
+  find = "Obs:List => Obs:List ListItem(oPuts ( putEntries ( Params:Params , Slots:List ) ))"
+  replace = "Obs:List => ListItem(oPuts ( putEntries ( Params:Params , Slots:List ) )) Obs:List"
+
+[[mutation]]
+id = "run-end-requeues"
+expect = "kill"
+misunderstanding = "runOps: the run ends by queuing an empty put_shares it never runs"
+  [[mutation.edit]]
+  rule = "done"
+  find = "<ops> .List </ops>"
+  replace = "<ops> .List => ListItem(putShares ( .List )) </ops>"

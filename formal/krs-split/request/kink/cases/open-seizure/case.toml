@@ -1,0 +1,12 @@
+# RQ-066: SEIZURE, P0 and EXIT requests are signing requests.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Seizure", profile = "PfP2" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { Post = { eid = 2, epoch = 0, exp = 1000, rtype = "TyP0", profile = "PfP0" } },
+  { Order = { eid = 2, qc = true, p = 0 } },
+  { Open = { eid = 1, kk = 2, ll = 1, collecting = false, npos = 0, rates = [10, 20] } },
+  { Open = { eid = 2, kk = 2, ll = 1, collecting = true, npos = 1, rates = [10, 20] } },
+]

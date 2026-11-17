@@ -1,0 +1,15 @@
+# CP-025, CP-027: the marker checkpoint without w + 1 continuous seats leaves the restart open; binds resume
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { ReadLedger = { ok = true, tickets = [], cov = [] } },
+  { OpenAcct = { a = { AcctOf = { id = 1, slots = ["Free", "Free"], mark = 0, refill = false } } } },
+  { ReadLedger = { ok = true, tickets = [{ P = [0, 1] }, { P = [1, 1] }, { P = [2, 1] }, { P = [3, 1] }], cov = [] } },
+  { Land = { c = { CpOf = { seq = 1, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 111, pending_min = 111, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [{ P = [0, 1] }, { P = [1, 1] }], restart_seq = 0, seat_roots = [], restores = [{ Rd = { seat = 0, boot_ctr = 1, cp_seq = 0, whole = true } }, { Rd = { seat = 1, boot_ctr = 1, cp_seq = 0, whole = false } }] } }, mh = 1000 } },
+  { BindAcct = { aid = 1, i = 1, d = 4 } },
+  { OpenSession = { pool = 1 } },
+  { OpenAcct = { a = { AcctOf = { id = 3, slots = ["Free"], mark = 1, refill = false } } } },
+  { BindAcct = { aid = 3, i = 0, d = 4 } },
+  { Land = { c = { CpOf = { seq = 2, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 111, pending_min = 111, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [{ P = [0, 1] }, { P = [1, 1] }], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+]

@@ -1,0 +1,15 @@
+# SL-026: the gate holds when off, or when nf is bound to d and nothing else.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { AnchorGate = { on = false, covered = [], nf = 1, d = 2 } },
+  { AnchorGate = { on = true, covered = [{ P = [1, 2] }], nf = 1, d = 2 } },
+  { AnchorGate = { on = true, covered = [{ P = [1, 2] }, { P = [1, 3] }], nf = 1, d = 2 } },
+  { AnchorGate = { on = true, covered = [{ P = [1, 3] }], nf = 1, d = 2 } },
+  { AnchorGate = { on = true, covered = [], nf = 1, d = 2 } },
+  { AnchorGate = { on = true, covered = [{ P = [2, 5] }, { P = [1, 2] }, { P = [3, 3] }], nf = 1, d = 2 } },
+  { AnchorGate = { on = true, covered = [{ P = [1, 2] }, { P = [2, 3] }], nf = 1, d = 2 } },
+  { AnchorGate = { on = true, covered = [{ P = [2, 2] }, { P = [1, 2] }], nf = 1, d = 2 } },
+  { AnchorGate = { on = false, covered = [{ P = [1, 2] }], nf = 1, d = 2 } },
+  { AnchorGate = { on = true, covered = [{ P = [2, 5] }, { P = [1, 2] }, { P = [1, 3] }], nf = 1, d = 2 } },
+]

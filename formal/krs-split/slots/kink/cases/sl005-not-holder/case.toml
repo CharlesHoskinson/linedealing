@@ -1,0 +1,10 @@
+# SL-005 (oracle pin `pin_sl005_not_holder`): lapsed request 2 names a slot under the
+# precedence of request 1; it takes none, and the slot keeps its holder and is not burned.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealC = { suite = "Bip340", epoch = 3, kcount = 1 } },
+  { OpenC = { eid = 1, pos = 10, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 1 } }] } },
+  { Lapse = { eid = 2 } },
+  { OpenC = { eid = 2, pos = 20, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 1 } }] } },
+]

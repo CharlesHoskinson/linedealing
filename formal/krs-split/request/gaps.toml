@@ -1,0 +1,115 @@
+# EARS IDs of split-request that no rule of the KRS definition stands for, so no
+# mutation can name them, and the check that covers each instead. The `mutations` gate
+# (scripts/check_mutations.py) fails on an ID that is neither here nor named by a mutation.
+#
+# The node rules ("the committee node SHALL") are branches of the oracle's `nodeAct`,
+# which only the oracle's `--step` mode runs (a `{"node": ...}` line). A kink program
+# runs board events only, so the KRS definition has no node rule.
+
+[[gap]]
+id = "RQ-008"
+covered_by = "node rule (nodeAct, --step only): Lean SplitRequest.C8_sealed_until_order and pin_rq008"
+
+[[gap]]
+id = "RQ-009"
+covered_by = "node rule (nodeAct, --step only): Lean SplitRequest.pin_rq009"
+
+[[gap]]
+id = "RQ-010"
+covered_by = "node rule (nodeAct, --step only): Lean SplitRequest.pin_rq010"
+
+[[gap]]
+id = "RQ-014"
+covered_by = "node rule (voids, --step only): Lean SplitRequest.pin_rq014"
+
+[[gap]]
+id = "RQ-015"
+covered_by = "node rule (voids, --step only): Lean SplitRequest.pin_rq014 (the DEALER_FAULT branch)"
+
+[[gap]]
+id = "RQ-016"
+covered_by = "node rule (votes, --step only): Lean SplitRequest.pin_rq016"
+
+[[gap]]
+id = "RQ-023"
+covered_by = "node rule (votes, --step only): Lean SplitRequest.pin_rq023"
+
+[[gap]]
+id = "RQ-024"
+covered_by = "node rule (votes, --step only): Lean SplitRequest.pin_rq024, pin_rq025_mismatch (NOT_IN_FORCE gives not_in_force and no VOID AUTH_REFUSED; IN_FORCE_MISMATCH gives no vote and no not_in_force) and C6_release_in_force"
+
+[[gap]]
+id = "RQ-025"
+covered_by = "node rule (voids, --step only; DECISIONS 68): Lean SplitRequest.pin_rq025 (auth REFUSED) and pin_rq025_mismatch (auth IN_FORCE_MISMATCH: VOID AUTH_REFUSED at phase rank >= 2, no vote, no release)"
+
+[[gap]]
+id = "RQ-031"
+covered_by = "node rule (releaseOk, voids, --step only): Lean SplitRequest.pin_rq031"
+
+[[gap]]
+id = "RQ-032"
+covered_by = "node rule (revocationClear, --step only): Lean SplitRequest.pin_rq032 and C7_no_release_after_revocation"
+
+[[gap]]
+id = "RQ-033"
+covered_by = "node rule (releaseOk, --step only): Lean SplitRequest.pin_rq033 and C7_hold_p2"
+
+[[gap]]
+id = "RQ-034"
+covered_by = "node rule (voids, --step only): Lean SplitRequest.pin_rq032 (the REVOKED branch); the tombstone reading of REVOKED is readsAs (RQ-071, rq071_mixed_reads_none)"
+
+[[gap]]
+id = "RQ-035"
+covered_by = "node rule (releaseOk, --step only): Lean SplitRequest.pin_rq035 and rq035_tee_acks"
+
+[[gap]]
+id = "RQ-036"
+covered_by = "node rule (combinerCount, --step only): Lean SplitRequest.pin_rq036"
+
+[[gap]]
+id = "RQ-038"
+covered_by = "node rule (voids, --step only): Lean SplitRequest.pin_rq038"
+
+[[gap]]
+id = "RQ-039"
+covered_by = "node rule (nodeAct failure evidence, --step only): Lean SplitRequest.pin_rq038"
+
+[[gap]]
+id = "RQ-040"
+covered_by = "node rule (nodeAct, --step only): Lean SplitRequest.pin_rq040"
+
+[[gap]]
+id = "RQ-041"
+covered_by = "node rule (voids, --step only): Lean SplitRequest.pin_rq041"
+
+[[gap]]
+id = "RQ-047"
+covered_by = "node rule (voids, --step only): Lean SplitRequest.witness_rq047_stalled and C20_stalled_releases_nothing"
+
+[[gap]]
+id = "RQ-053"
+covered_by = "node rule (nodeAct, --step only): Lean SplitRequest.pin_rq053"
+
+[[gap]]
+id = "RQ-055"
+covered_by = "node rule (nodeAct erase, --step only): Lean SplitRequest.pin_rq053"
+
+[[gap]]
+id = "RQ-058"
+covered_by = "node rule (releases, --step only): Lean SplitRequest.C9_release_only_anchor"
+
+[[gap]]
+id = "RQ-059"
+covered_by = "node rule (revocationClear, --step only): Lean SplitRequest.C7_no_release_after_revocation and pin_rq059_bounds"
+
+[[gap]]
+id = "RQ-061"
+covered_by = "node rule (votes, --step only): Lean SplitRequest.pin_rq061"
+
+[[gap]]
+id = "RQ-063"
+covered_by = "exception in the oracle README: liveness under partial synchrony (C13) is not a state property; Lean SplitRequest.witness_C13_final; the SLOT_TAKEN reading of a tombstone is readsAs (RQ-071, rq071_mixed_reads_none)"
+
+[[gap]]
+id = "RQ-069"
+covered_by = "node rule (releases, --step only; release_record act): Lean SplitRequest.pin_rq069, pin_rq069_expired and rq069_send_after_record (a NON_TEE node posts RELEASE while released[g] is unset and sends partials only once released[g] = j). The board record it reads is the release step (RQ-037), whose mutations are in kink/mutations/release.toml"

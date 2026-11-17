@@ -1,0 +1,8 @@
+# EN-005: a key-list hash that is not the current epoch's is refused bad_epoch.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { Submit = { e = { Env = { size = 16384, pubpart = { Pub = { version = 1, epoch = 3, keylist_hash = 34, exp = 900, size_class = 0, auth_ref = 7, reserved = 0 } }, hd = 100, dd = 500, proof_ctx = { P = [100, 7] }, proof_valid = true, rtype = "Spend" } } } },
+]

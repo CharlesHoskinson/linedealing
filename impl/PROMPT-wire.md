@@ -1,6 +1,6 @@
 # Rust lane: bring the prototype up to the revised scheme
 
-Worktree: . (branch loop/rust-prototype, up to date with main). Work only in impl/ and experiments/line-dealing/checks.py. Never commit, push or run git write commands. Build only with `--offline` (all crates are in the local cargo cache; do not add new dependencies). Run heavy builds as `heavy-run --mem 16G --name ld-rust -- cargo ...`.
+Worktree: /home/hoskinson/Projects/mpcexperiments-wt-rust (branch loop/rust-prototype, up to date with main). Work only in impl/ and experiments/line-dealing/checks.py. Never commit, push or run git write commands. Build only with `--offline` (all crates are in the local cargo cache; do not add new dependencies). Run heavy builds as `heavy-run --mem 16G --name ld-rust -- cargo ...`.
 
 Spec: design/SCHEME.md and design/FINDINGS-LEDGER.md (sections "Corrections from PROOFS.md section 9" and "Corrections from the cross-family review of PROOFS.md"). Implement:
 1. C2-C5, C9: the authorship proof π becomes (E', T_1, T_2, z_e, T_a, z_a), 196 bytes; E' = e·HG_eph(hd ‖ H_ct(ct) ‖ E) with a DLEQ proof (LD1/eph, LD1/ephpok), the LD1/auth challenge input as SCHEME §3.1 now specifies; Step A check 9 and the private check as in §3.4; the §5 Transfer/reshare dealer proof the same way. Use the hash-to-curve the SCHEME names; if an RFC 9380 suite is not available in k256 0.13.4 / curve25519-dalek 4.1.3 from the cache, implement the try-and-increment or the crate's own hash_to_curve if present, and record in README which one and why.

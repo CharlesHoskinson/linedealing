@@ -1,0 +1,486 @@
+    Finished `bench` profile [optimized] target(s) in 0.02s
+     Running benches/protocol.rs (target/release/deps/protocol-55ee6f5b8764d503)
+Benchmarking ecdsa/open/n9/t3/owner_deal_encrypt
+Benchmarking ecdsa/open/n9/t3/owner_deal_encrypt: Warming up for 100.00 ms
+Benchmarking ecdsa/open/n9/t3/owner_deal_encrypt: Collecting 10 samples in estimated 1.0373 s (1265 iterations)
+Benchmarking ecdsa/open/n9/t3/owner_deal_encrypt: Analyzing
+ecdsa/open/n9/t3/owner_deal_encrypt
+                        time:   [818.42 µs 818.68 µs 818.86 µs]
+Benchmarking ecdsa/open/n9/t3/step_a
+Benchmarking ecdsa/open/n9/t3/step_a: Warming up for 100.00 ms
+Benchmarking ecdsa/open/n9/t3/step_a: Collecting 10 samples in estimated 1.0102 s (2915 iterations)
+Benchmarking ecdsa/open/n9/t3/step_a: Analyzing
+ecdsa/open/n9/t3/step_a time:   [341.98 µs 342.11 µs 342.39 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high severe
+Benchmarking ecdsa/open/n9/t3/decrypt
+Benchmarking ecdsa/open/n9/t3/decrypt: Warming up for 100.00 ms
+Benchmarking ecdsa/open/n9/t3/decrypt: Collecting 10 samples in estimated 1.0033 s (9240 iterations)
+Benchmarking ecdsa/open/n9/t3/decrypt: Analyzing
+ecdsa/open/n9/t3/decrypt
+                        time:   [108.47 µs 108.50 µs 108.53 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+Benchmarking ecdsa/open/n9/t3/partial
+Benchmarking ecdsa/open/n9/t3/partial: Warming up for 100.00 ms
+Benchmarking ecdsa/open/n9/t3/partial: Collecting 10 samples in estimated 1.0027 s (12k iterations)
+Benchmarking ecdsa/open/n9/t3/partial: Analyzing
+ecdsa/open/n9/t3/partial
+                        time:   [85.205 µs 85.229 µs 85.270 µs]
+Benchmarking ecdsa/open/n9/t3/verify_partial
+Benchmarking ecdsa/open/n9/t3/verify_partial: Warming up for 100.00 ms
+Benchmarking ecdsa/open/n9/t3/verify_partial: Collecting 10 samples in estimated 1.0031 s (12k iterations)
+Benchmarking ecdsa/open/n9/t3/verify_partial: Analyzing
+ecdsa/open/n9/t3/verify_partial
+                        time:   [85.084 µs 85.232 µs 85.400 µs]
+Benchmarking ecdsa/open/n9/t3/combine
+Benchmarking ecdsa/open/n9/t3/combine: Warming up for 100.00 ms
+Benchmarking ecdsa/open/n9/t3/combine: Collecting 10 samples in estimated 1.0011 s (9845 iterations)
+Benchmarking ecdsa/open/n9/t3/combine: Analyzing
+ecdsa/open/n9/t3/combine
+                        time:   [101.60 µs 101.76 µs 102.02 µs]
+
+Benchmarking ecdsa/sealed-k8/n9/t3/owner_deal_encrypt
+Benchmarking ecdsa/sealed-k8/n9/t3/owner_deal_encrypt: Warming up for 100.00 ms
+Benchmarking ecdsa/sealed-k8/n9/t3/owner_deal_encrypt: Collecting 10 samples in estimated 1.0156 s (330 iterations)
+Benchmarking ecdsa/sealed-k8/n9/t3/owner_deal_encrypt: Analyzing
+ecdsa/sealed-k8/n9/t3/owner_deal_encrypt
+                        time:   [3.0574 ms 3.0621 ms 3.0654 ms]
+Benchmarking ecdsa/sealed-k8/n9/t3/step_a
+Benchmarking ecdsa/sealed-k8/n9/t3/step_a: Warming up for 100.00 ms
+Benchmarking ecdsa/sealed-k8/n9/t3/step_a: Collecting 10 samples in estimated 1.0385 s (1155 iterations)
+Benchmarking ecdsa/sealed-k8/n9/t3/step_a: Analyzing
+ecdsa/sealed-k8/n9/t3/step_a
+                        time:   [895.08 µs 896.09 µs 897.20 µs]
+Benchmarking ecdsa/sealed-k8/n9/t3/decrypt
+Benchmarking ecdsa/sealed-k8/n9/t3/decrypt: Warming up for 100.00 ms
+Benchmarking ecdsa/sealed-k8/n9/t3/decrypt: Collecting 10 samples in estimated 1.0086 s (3520 iterations)
+Benchmarking ecdsa/sealed-k8/n9/t3/decrypt: Analyzing
+ecdsa/sealed-k8/n9/t3/decrypt
+                        time:   [285.00 µs 285.17 µs 285.38 µs]
+Benchmarking ecdsa/sealed-k8/n9/t3/partial
+Benchmarking ecdsa/sealed-k8/n9/t3/partial: Warming up for 100.00 ms
+Benchmarking ecdsa/sealed-k8/n9/t3/partial: Collecting 10 samples in estimated 1.0010 s (18k iterations)
+Benchmarking ecdsa/sealed-k8/n9/t3/partial: Analyzing
+ecdsa/sealed-k8/n9/t3/partial
+                        time:   [56.477 µs 56.499 µs 56.516 µs]
+Benchmarking ecdsa/sealed-k8/n9/t3/verify_partial
+Benchmarking ecdsa/sealed-k8/n9/t3/verify_partial: Warming up for 100.00 ms
+Benchmarking ecdsa/sealed-k8/n9/t3/verify_partial: Collecting 10 samples in estimated 1.0009 s (18k iterations)
+Benchmarking ecdsa/sealed-k8/n9/t3/verify_partial: Analyzing
+ecdsa/sealed-k8/n9/t3/verify_partial
+                        time:   [56.399 µs 56.481 µs 56.556 µs]
+Benchmarking ecdsa/sealed-k8/n9/t3/combine
+Benchmarking ecdsa/sealed-k8/n9/t3/combine: Warming up for 100.00 ms
+Benchmarking ecdsa/sealed-k8/n9/t3/combine: Collecting 10 samples in estimated 1.0044 s (10k iterations)
+Benchmarking ecdsa/sealed-k8/n9/t3/combine: Analyzing
+ecdsa/sealed-k8/n9/t3/combine
+                        time:   [100.24 µs 100.30 µs 100.36 µs]
+
+Benchmarking bip340/open/n9/t3/owner_deal_encrypt
+Benchmarking bip340/open/n9/t3/owner_deal_encrypt: Warming up for 100.00 ms
+Benchmarking bip340/open/n9/t3/owner_deal_encrypt: Collecting 10 samples in estimated 1.0313 s (1210 iterations)
+Benchmarking bip340/open/n9/t3/owner_deal_encrypt: Analyzing
+bip340/open/n9/t3/owner_deal_encrypt
+                        time:   [854.46 µs 854.85 µs 855.26 µs]
+Benchmarking bip340/open/n9/t3/step_a
+Benchmarking bip340/open/n9/t3/step_a: Warming up for 100.00 ms
+Benchmarking bip340/open/n9/t3/step_a: Collecting 10 samples in estimated 1.0053 s (2585 iterations)
+Benchmarking bip340/open/n9/t3/step_a: Analyzing
+bip340/open/n9/t3/step_a
+                        time:   [383.70 µs 383.87 µs 384.03 µs]
+Benchmarking bip340/open/n9/t3/decrypt
+Benchmarking bip340/open/n9/t3/decrypt: Warming up for 100.00 ms
+Benchmarking bip340/open/n9/t3/decrypt: Collecting 10 samples in estimated 1.0038 s (9900 iterations)
+Benchmarking bip340/open/n9/t3/decrypt: Analyzing
+bip340/open/n9/t3/decrypt
+                        time:   [102.34 µs 102.43 µs 102.55 µs]
+Benchmarking bip340/open/n9/t3/partial
+Benchmarking bip340/open/n9/t3/partial: Warming up for 100.00 ms
+Benchmarking bip340/open/n9/t3/partial: Collecting 10 samples in estimated 1.0025 s (9845 iterations)
+Benchmarking bip340/open/n9/t3/partial: Analyzing
+bip340/open/n9/t3/partial
+                        time:   [102.05 µs 102.09 µs 102.14 µs]
+Benchmarking bip340/open/n9/t3/verify_partial
+Benchmarking bip340/open/n9/t3/verify_partial: Warming up for 100.00 ms
+Benchmarking bip340/open/n9/t3/verify_partial: Collecting 10 samples in estimated 1.0029 s (10k iterations)
+Benchmarking bip340/open/n9/t3/verify_partial: Analyzing
+bip340/open/n9/t3/verify_partial
+                        time:   [99.328 µs 99.366 µs 99.410 µs]
+Benchmarking bip340/open/n9/t3/combine
+Benchmarking bip340/open/n9/t3/combine: Warming up for 100.00 ms
+Benchmarking bip340/open/n9/t3/combine: Collecting 10 samples in estimated 1.0021 s (10k iterations)
+Benchmarking bip340/open/n9/t3/combine: Analyzing
+bip340/open/n9/t3/combine
+                        time:   [97.228 µs 97.275 µs 97.327 µs]
+
+Benchmarking bip340/sealed-k8/n9/t3/owner_deal_encrypt
+Benchmarking bip340/sealed-k8/n9/t3/owner_deal_encrypt: Warming up for 100.00 ms
+Benchmarking bip340/sealed-k8/n9/t3/owner_deal_encrypt: Collecting 10 samples in estimated 1.0931 s (550 iterations)
+Benchmarking bip340/sealed-k8/n9/t3/owner_deal_encrypt: Analyzing
+bip340/sealed-k8/n9/t3/owner_deal_encrypt
+                        time:   [1.9884 ms 1.9892 ms 1.9899 ms]
+Benchmarking bip340/sealed-k8/n9/t3/step_a
+Benchmarking bip340/sealed-k8/n9/t3/step_a: Warming up for 100.00 ms
+Benchmarking bip340/sealed-k8/n9/t3/step_a: Collecting 10 samples in estimated 1.0061 s (1265 iterations)
+Benchmarking bip340/sealed-k8/n9/t3/step_a: Analyzing
+bip340/sealed-k8/n9/t3/step_a
+                        time:   [790.44 µs 791.08 µs 791.49 µs]
+Benchmarking bip340/sealed-k8/n9/t3/decrypt
+Benchmarking bip340/sealed-k8/n9/t3/decrypt: Warming up for 100.00 ms
+Benchmarking bip340/sealed-k8/n9/t3/decrypt: Collecting 10 samples in estimated 1.0079 s (5335 iterations)
+Benchmarking bip340/sealed-k8/n9/t3/decrypt: Analyzing
+bip340/sealed-k8/n9/t3/decrypt
+                        time:   [190.51 µs 190.75 µs 191.07 µs]
+Benchmarking bip340/sealed-k8/n9/t3/partial
+Benchmarking bip340/sealed-k8/n9/t3/partial: Warming up for 100.00 ms
+Benchmarking bip340/sealed-k8/n9/t3/partial: Collecting 10 samples in estimated 1.0002 s (22k iterations)
+Benchmarking bip340/sealed-k8/n9/t3/partial: Analyzing
+bip340/sealed-k8/n9/t3/partial
+                        time:   [44.725 µs 44.773 µs 44.838 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+Benchmarking bip340/sealed-k8/n9/t3/verify_partial
+Benchmarking bip340/sealed-k8/n9/t3/verify_partial: Warming up for 100.00 ms
+Benchmarking bip340/sealed-k8/n9/t3/verify_partial: Collecting 10 samples in estimated 1.0021 s (24k iterations)
+Benchmarking bip340/sealed-k8/n9/t3/verify_partial: Analyzing
+bip340/sealed-k8/n9/t3/verify_partial
+                        time:   [41.968 µs 41.985 µs 42.001 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) low mild
+Benchmarking bip340/sealed-k8/n9/t3/combine
+Benchmarking bip340/sealed-k8/n9/t3/combine: Warming up for 100.00 ms
+Benchmarking bip340/sealed-k8/n9/t3/combine: Collecting 10 samples in estimated 1.0013 s (10k iterations)
+Benchmarking bip340/sealed-k8/n9/t3/combine: Analyzing
+bip340/sealed-k8/n9/t3/combine
+                        time:   [97.281 µs 97.317 µs 97.347 µs]
+
+Benchmarking ecdsa/open/n9/t7/owner_deal_encrypt
+Benchmarking ecdsa/open/n9/t7/owner_deal_encrypt: Warming up for 100.00 ms
+Benchmarking ecdsa/open/n9/t7/owner_deal_encrypt: Collecting 10 samples in estimated 1.0461 s (990 iterations)
+Benchmarking ecdsa/open/n9/t7/owner_deal_encrypt: Analyzing
+ecdsa/open/n9/t7/owner_deal_encrypt
+                        time:   [1.0506 ms 1.0509 ms 1.0513 ms]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+Benchmarking ecdsa/open/n9/t7/step_a
+Benchmarking ecdsa/open/n9/t7/step_a: Warming up for 100.00 ms
+Benchmarking ecdsa/open/n9/t7/step_a: Collecting 10 samples in estimated 1.0192 s (2420 iterations)
+Benchmarking ecdsa/open/n9/t7/step_a: Analyzing
+ecdsa/open/n9/t7/step_a time:   [415.16 µs 415.55 µs 415.93 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+Benchmarking ecdsa/open/n9/t7/decrypt
+Benchmarking ecdsa/open/n9/t7/decrypt: Warming up for 100.00 ms
+Benchmarking ecdsa/open/n9/t7/decrypt: Collecting 10 samples in estimated 1.0030 s (8910 iterations)
+Benchmarking ecdsa/open/n9/t7/decrypt: Analyzing
+ecdsa/open/n9/t7/decrypt
+                        time:   [112.43 µs 112.53 µs 112.59 µs]
+Benchmarking ecdsa/open/n9/t7/partial
+Benchmarking ecdsa/open/n9/t7/partial: Warming up for 100.00 ms
+Benchmarking ecdsa/open/n9/t7/partial: Collecting 10 samples in estimated 1.0024 s (11k iterations)
+Benchmarking ecdsa/open/n9/t7/partial: Analyzing
+ecdsa/open/n9/t7/partial
+                        time:   [88.186 µs 88.219 µs 88.260 µs]
+Benchmarking ecdsa/open/n9/t7/verify_partial
+Benchmarking ecdsa/open/n9/t7/verify_partial: Warming up for 100.00 ms
+Benchmarking ecdsa/open/n9/t7/verify_partial: Collecting 10 samples in estimated 1.0033 s (11k iterations)
+Benchmarking ecdsa/open/n9/t7/verify_partial: Analyzing
+ecdsa/open/n9/t7/verify_partial
+                        time:   [88.065 µs 88.106 µs 88.136 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) low mild
+Benchmarking ecdsa/open/n9/t7/combine
+Benchmarking ecdsa/open/n9/t7/combine: Warming up for 100.00 ms
+Benchmarking ecdsa/open/n9/t7/combine: Collecting 10 samples in estimated 1.0031 s (6985 iterations)
+Benchmarking ecdsa/open/n9/t7/combine: Analyzing
+ecdsa/open/n9/t7/combine
+                        time:   [143.59 µs 143.63 µs 143.68 µs]
+
+Benchmarking ecdsa/sealed-k8/n9/t7/owner_deal_encrypt
+Benchmarking ecdsa/sealed-k8/n9/t7/owner_deal_encrypt: Warming up for 100.00 ms
+Benchmarking ecdsa/sealed-k8/n9/t7/owner_deal_encrypt: Collecting 10 samples in estimated 1.1022 s (275 iterations)
+Benchmarking ecdsa/sealed-k8/n9/t7/owner_deal_encrypt: Analyzing
+ecdsa/sealed-k8/n9/t7/owner_deal_encrypt
+                        time:   [3.9861 ms 3.9895 ms 3.9922 ms]
+Benchmarking ecdsa/sealed-k8/n9/t7/step_a
+Benchmarking ecdsa/sealed-k8/n9/t7/step_a: Warming up for 100.00 ms
+Benchmarking ecdsa/sealed-k8/n9/t7/step_a: Collecting 10 samples in estimated 1.0569 s (880 iterations)
+Benchmarking ecdsa/sealed-k8/n9/t7/step_a: Analyzing
+ecdsa/sealed-k8/n9/t7/step_a
+                        time:   [1.1863 ms 1.1873 ms 1.1890 ms]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high severe
+Benchmarking ecdsa/sealed-k8/n9/t7/decrypt
+Benchmarking ecdsa/sealed-k8/n9/t7/decrypt: Warming up for 100.00 ms
+Benchmarking ecdsa/sealed-k8/n9/t7/decrypt: Collecting 10 samples in estimated 1.0117 s (3355 iterations)
+Benchmarking ecdsa/sealed-k8/n9/t7/decrypt: Analyzing
+ecdsa/sealed-k8/n9/t7/decrypt
+                        time:   [300.62 µs 300.87 µs 301.03 µs]
+Benchmarking ecdsa/sealed-k8/n9/t7/partial
+Benchmarking ecdsa/sealed-k8/n9/t7/partial: Warming up for 100.00 ms
+Benchmarking ecdsa/sealed-k8/n9/t7/partial: Collecting 10 samples in estimated 1.0019 s (17k iterations)
+Benchmarking ecdsa/sealed-k8/n9/t7/partial: Analyzing
+ecdsa/sealed-k8/n9/t7/partial
+                        time:   [58.006 µs 58.018 µs 58.033 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) low severe
+Benchmarking ecdsa/sealed-k8/n9/t7/verify_partial
+Benchmarking ecdsa/sealed-k8/n9/t7/verify_partial: Warming up for 100.00 ms
+Benchmarking ecdsa/sealed-k8/n9/t7/verify_partial: Collecting 10 samples in estimated 1.0012 s (17k iterations)
+Benchmarking ecdsa/sealed-k8/n9/t7/verify_partial: Analyzing
+ecdsa/sealed-k8/n9/t7/verify_partial
+                        time:   [57.923 µs 57.938 µs 57.956 µs]
+Benchmarking ecdsa/sealed-k8/n9/t7/combine
+Benchmarking ecdsa/sealed-k8/n9/t7/combine: Warming up for 100.00 ms
+Benchmarking ecdsa/sealed-k8/n9/t7/combine: Collecting 10 samples in estimated 1.0039 s (6985 iterations)
+Benchmarking ecdsa/sealed-k8/n9/t7/combine: Analyzing
+ecdsa/sealed-k8/n9/t7/combine
+                        time:   [143.54 µs 143.60 µs 143.67 µs]
+
+Benchmarking bip340/open/n9/t7/owner_deal_encrypt
+Benchmarking bip340/open/n9/t7/owner_deal_encrypt: Warming up for 100.00 ms
+Benchmarking bip340/open/n9/t7/owner_deal_encrypt: Collecting 10 samples in estimated 1.0171 s (990 iterations)
+Benchmarking bip340/open/n9/t7/owner_deal_encrypt: Analyzing
+bip340/open/n9/t7/owner_deal_encrypt
+                        time:   [1.0293 ms 1.0301 ms 1.0308 ms]
+Benchmarking bip340/open/n9/t7/step_a
+Benchmarking bip340/open/n9/t7/step_a: Warming up for 100.00 ms
+Benchmarking bip340/open/n9/t7/step_a: Collecting 10 samples in estimated 1.0201 s (2035 iterations)
+Benchmarking bip340/open/n9/t7/step_a: Analyzing
+bip340/open/n9/t7/step_a
+                        time:   [493.90 µs 494.07 µs 494.18 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) low mild
+Benchmarking bip340/open/n9/t7/decrypt
+Benchmarking bip340/open/n9/t7/decrypt: Warming up for 100.00 ms
+Benchmarking bip340/open/n9/t7/decrypt: Collecting 10 samples in estimated 1.0005 s (9350 iterations)
+Benchmarking bip340/open/n9/t7/decrypt: Analyzing
+bip340/open/n9/t7/decrypt
+                        time:   [108.09 µs 108.14 µs 108.20 µs]
+Benchmarking bip340/open/n9/t7/partial
+Benchmarking bip340/open/n9/t7/partial: Warming up for 100.00 ms
+Benchmarking bip340/open/n9/t7/partial: Collecting 10 samples in estimated 1.0002 s (9405 iterations)
+Benchmarking bip340/open/n9/t7/partial: Analyzing
+bip340/open/n9/t7/partial
+                        time:   [106.69 µs 106.86 µs 107.02 µs]
+Benchmarking bip340/open/n9/t7/verify_partial
+Benchmarking bip340/open/n9/t7/verify_partial: Warming up for 100.00 ms
+Benchmarking bip340/open/n9/t7/verify_partial: Collecting 10 samples in estimated 1.0048 s (9680 iterations)
+Benchmarking bip340/open/n9/t7/verify_partial: Analyzing
+bip340/open/n9/t7/verify_partial
+                        time:   [103.87 µs 103.97 µs 104.09 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+Benchmarking bip340/open/n9/t7/combine
+Benchmarking bip340/open/n9/t7/combine: Warming up for 100.00 ms
+Benchmarking bip340/open/n9/t7/combine: Collecting 10 samples in estimated 1.0061 s (7150 iterations)
+Benchmarking bip340/open/n9/t7/combine: Analyzing
+bip340/open/n9/t7/combine
+                        time:   [140.48 µs 140.58 µs 140.67 µs]
+
+Benchmarking bip340/sealed-k8/n9/t7/owner_deal_encrypt
+Benchmarking bip340/sealed-k8/n9/t7/owner_deal_encrypt: Warming up for 100.00 ms
+Benchmarking bip340/sealed-k8/n9/t7/owner_deal_encrypt: Collecting 10 samples in estimated 1.0790 s (440 iterations)
+Benchmarking bip340/sealed-k8/n9/t7/owner_deal_encrypt: Analyzing
+bip340/sealed-k8/n9/t7/owner_deal_encrypt
+                        time:   [2.4539 ms 2.4551 ms 2.4577 ms]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high severe
+Benchmarking bip340/sealed-k8/n9/t7/step_a
+Benchmarking bip340/sealed-k8/n9/t7/step_a: Warming up for 100.00 ms
+Benchmarking bip340/sealed-k8/n9/t7/step_a: Collecting 10 samples in estimated 1.0231 s (935 iterations)
+Benchmarking bip340/sealed-k8/n9/t7/step_a: Analyzing
+bip340/sealed-k8/n9/t7/step_a
+                        time:   [1.0822 ms 1.0825 ms 1.0828 ms]
+Benchmarking bip340/sealed-k8/n9/t7/decrypt
+Benchmarking bip340/sealed-k8/n9/t7/decrypt: Warming up for 100.00 ms
+Benchmarking bip340/sealed-k8/n9/t7/decrypt: Collecting 10 samples in estimated 1.0109 s (4950 iterations)
+Benchmarking bip340/sealed-k8/n9/t7/decrypt: Analyzing
+bip340/sealed-k8/n9/t7/decrypt
+                        time:   [205.90 µs 206.08 µs 206.33 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) low mild
+Benchmarking bip340/sealed-k8/n9/t7/partial
+Benchmarking bip340/sealed-k8/n9/t7/partial: Warming up for 100.00 ms
+Benchmarking bip340/sealed-k8/n9/t7/partial: Collecting 10 samples in estimated 1.0021 s (22k iterations)
+Benchmarking bip340/sealed-k8/n9/t7/partial: Analyzing
+bip340/sealed-k8/n9/t7/partial
+                        time:   [46.239 µs 46.255 µs 46.274 µs]
+Benchmarking bip340/sealed-k8/n9/t7/verify_partial
+Benchmarking bip340/sealed-k8/n9/t7/verify_partial: Warming up for 100.00 ms
+Benchmarking bip340/sealed-k8/n9/t7/verify_partial: Collecting 10 samples in estimated 1.0003 s (23k iterations)
+Benchmarking bip340/sealed-k8/n9/t7/verify_partial: Analyzing
+bip340/sealed-k8/n9/t7/verify_partial
+                        time:   [43.487 µs 43.503 µs 43.521 µs]
+Benchmarking bip340/sealed-k8/n9/t7/combine
+Benchmarking bip340/sealed-k8/n9/t7/combine: Warming up for 100.00 ms
+Benchmarking bip340/sealed-k8/n9/t7/combine: Collecting 10 samples in estimated 1.0067 s (7150 iterations)
+Benchmarking bip340/sealed-k8/n9/t7/combine: Analyzing
+bip340/sealed-k8/n9/t7/combine
+                        time:   [140.57 µs 140.60 µs 140.66 µs]
+
+Benchmarking ed25519/open/n9/t3/owner_deal_encrypt
+Benchmarking ed25519/open/n9/t3/owner_deal_encrypt: Warming up for 100.00 ms
+Benchmarking ed25519/open/n9/t3/owner_deal_encrypt: Collecting 10 samples in estimated 1.1417 s (440 iterations)
+Benchmarking ed25519/open/n9/t3/owner_deal_encrypt: Analyzing
+ed25519/open/n9/t3/owner_deal_encrypt
+                        time:   [2.5835 ms 2.5852 ms 2.5866 ms]
+Found 3 outliers among 10 measurements (30.00%)
+  2 (20.00%) low mild
+  1 (10.00%) high mild
+Benchmarking ed25519/open/n9/t3/step_a
+Benchmarking ed25519/open/n9/t3/step_a: Warming up for 100.00 ms
+Benchmarking ed25519/open/n9/t3/step_a: Collecting 10 samples in estimated 1.0141 s (880 iterations)
+Benchmarking ed25519/open/n9/t3/step_a: Analyzing
+ed25519/open/n9/t3/step_a
+                        time:   [1.1489 ms 1.1494 ms 1.1500 ms]
+Benchmarking ed25519/open/n9/t3/decrypt
+Benchmarking ed25519/open/n9/t3/decrypt: Warming up for 100.00 ms
+Benchmarking ed25519/open/n9/t3/decrypt: Collecting 10 samples in estimated 1.0003 s (16k iterations)
+Benchmarking ed25519/open/n9/t3/decrypt: Analyzing
+ed25519/open/n9/t3/decrypt
+                        time:   [61.219 µs 61.314 µs 61.395 µs]
+Benchmarking ed25519/open/n9/t3/partial
+Benchmarking ed25519/open/n9/t3/partial: Warming up for 100.00 ms
+Benchmarking ed25519/open/n9/t3/partial: Collecting 10 samples in estimated 1.0025 s (13k iterations)
+Benchmarking ed25519/open/n9/t3/partial: Analyzing
+ed25519/open/n9/t3/partial
+                        time:   [76.763 µs 76.822 µs 76.940 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+Benchmarking ed25519/open/n9/t3/verify_partial
+Benchmarking ed25519/open/n9/t3/verify_partial: Warming up for 100.00 ms
+Benchmarking ed25519/open/n9/t3/verify_partial: Collecting 10 samples in estimated 1.0025 s (13k iterations)
+Benchmarking ed25519/open/n9/t3/verify_partial: Analyzing
+ed25519/open/n9/t3/verify_partial
+                        time:   [76.362 µs 76.415 µs 76.457 µs]
+Benchmarking ed25519/open/n9/t3/combine
+Benchmarking ed25519/open/n9/t3/combine: Warming up for 100.00 ms
+Benchmarking ed25519/open/n9/t3/combine: Collecting 10 samples in estimated 1.0039 s (8635 iterations)
+Benchmarking ed25519/open/n9/t3/combine: Analyzing
+ed25519/open/n9/t3/combine
+                        time:   [114.66 µs 114.71 µs 114.78 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+
+Benchmarking ed25519/sealed-k8/n9/t3/owner_deal_encrypt
+Benchmarking ed25519/sealed-k8/n9/t3/owner_deal_encrypt: Warming up for 100.00 ms
+Benchmarking ed25519/sealed-k8/n9/t3/owner_deal_encrypt: Collecting 10 samples in estimated 1.0579 s (165 iterations)
+Benchmarking ed25519/sealed-k8/n9/t3/owner_deal_encrypt: Analyzing
+ed25519/sealed-k8/n9/t3/owner_deal_encrypt
+                        time:   [6.3855 ms 6.3904 ms 6.3963 ms]
+Benchmarking ed25519/sealed-k8/n9/t3/step_a
+Benchmarking ed25519/sealed-k8/n9/t3/step_a: Warming up for 100.00 ms
+Benchmarking ed25519/sealed-k8/n9/t3/step_a: Collecting 10 samples in estimated 1.0950 s (495 iterations)
+Benchmarking ed25519/sealed-k8/n9/t3/step_a: Analyzing
+ed25519/sealed-k8/n9/t3/step_a
+                        time:   [2.2129 ms 2.2138 ms 2.2148 ms]
+Benchmarking ed25519/sealed-k8/n9/t3/decrypt
+Benchmarking ed25519/sealed-k8/n9/t3/decrypt: Warming up for 100.00 ms
+Benchmarking ed25519/sealed-k8/n9/t3/decrypt: Collecting 10 samples in estimated 1.0049 s (9680 iterations)
+Benchmarking ed25519/sealed-k8/n9/t3/decrypt: Analyzing
+ed25519/sealed-k8/n9/t3/decrypt
+                        time:   [103.52 µs 103.59 µs 103.67 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+Benchmarking ed25519/sealed-k8/n9/t3/partial
+Benchmarking ed25519/sealed-k8/n9/t3/partial: Warming up for 100.00 ms
+Benchmarking ed25519/sealed-k8/n9/t3/partial: Collecting 10 samples in estimated 1.0003 s (33k iterations)
+Benchmarking ed25519/sealed-k8/n9/t3/partial: Analyzing
+ed25519/sealed-k8/n9/t3/partial
+                        time:   [30.018 µs 30.038 µs 30.062 µs]
+Benchmarking ed25519/sealed-k8/n9/t3/verify_partial
+Benchmarking ed25519/sealed-k8/n9/t3/verify_partial: Warming up for 100.00 ms
+Benchmarking ed25519/sealed-k8/n9/t3/verify_partial: Collecting 10 samples in estimated 1.0006 s (33k iterations)
+Benchmarking ed25519/sealed-k8/n9/t3/verify_partial: Analyzing
+ed25519/sealed-k8/n9/t3/verify_partial
+                        time:   [29.881 µs 29.895 µs 29.906 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+Benchmarking ed25519/sealed-k8/n9/t3/combine
+Benchmarking ed25519/sealed-k8/n9/t3/combine: Warming up for 100.00 ms
+Benchmarking ed25519/sealed-k8/n9/t3/combine: Collecting 10 samples in estimated 1.0027 s (8635 iterations)
+Benchmarking ed25519/sealed-k8/n9/t3/combine: Analyzing
+ed25519/sealed-k8/n9/t3/combine
+                        time:   [114.75 µs 114.83 µs 114.92 µs]
+
+Benchmarking ed25519/open/n9/t7/owner_deal_encrypt
+Benchmarking ed25519/open/n9/t7/owner_deal_encrypt: Warming up for 100.00 ms
+Benchmarking ed25519/open/n9/t7/owner_deal_encrypt: Collecting 10 samples in estimated 1.0923 s (330 iterations)
+Benchmarking ed25519/open/n9/t7/owner_deal_encrypt: Analyzing
+ed25519/open/n9/t7/owner_deal_encrypt
+                        time:   [3.2881 ms 3.2901 ms 3.2918 ms]
+Benchmarking ed25519/open/n9/t7/step_a
+Benchmarking ed25519/open/n9/t7/step_a: Warming up for 100.00 ms
+Benchmarking ed25519/open/n9/t7/step_a: Collecting 10 samples in estimated 1.0840 s (605 iterations)
+Benchmarking ed25519/open/n9/t7/step_a: Analyzing
+ed25519/open/n9/t7/step_a
+                        time:   [1.7920 ms 1.7931 ms 1.7942 ms]
+Benchmarking ed25519/open/n9/t7/decrypt
+Benchmarking ed25519/open/n9/t7/decrypt: Warming up for 100.00 ms
+Benchmarking ed25519/open/n9/t7/decrypt: Collecting 10 samples in estimated 1.0011 s (15k iterations)
+Benchmarking ed25519/open/n9/t7/decrypt: Analyzing
+ed25519/open/n9/t7/decrypt
+                        time:   [66.189 µs 66.224 µs 66.263 µs]
+Benchmarking ed25519/open/n9/t7/partial
+Benchmarking ed25519/open/n9/t7/partial: Warming up for 100.00 ms
+Benchmarking ed25519/open/n9/t7/partial: Collecting 10 samples in estimated 1.0044 s (13k iterations)
+Benchmarking ed25519/open/n9/t7/partial: Analyzing
+ed25519/open/n9/t7/partial
+                        time:   [79.995 µs 80.044 µs 80.084 µs]
+Benchmarking ed25519/open/n9/t7/verify_partial
+Benchmarking ed25519/open/n9/t7/verify_partial: Warming up for 100.00 ms
+Benchmarking ed25519/open/n9/t7/verify_partial: Collecting 10 samples in estimated 1.0009 s (13k iterations)
+Benchmarking ed25519/open/n9/t7/verify_partial: Analyzing
+ed25519/open/n9/t7/verify_partial
+                        time:   [79.604 µs 79.643 µs 79.692 µs]
+Benchmarking ed25519/open/n9/t7/combine
+Benchmarking ed25519/open/n9/t7/combine: Warming up for 100.00 ms
+Benchmarking ed25519/open/n9/t7/combine: Collecting 10 samples in estimated 1.0048 s (6380 iterations)
+Benchmarking ed25519/open/n9/t7/combine: Analyzing
+ed25519/open/n9/t7/combine
+                        time:   [155.76 µs 155.82 µs 155.92 µs]
+
+Benchmarking ed25519/sealed-k8/n9/t7/owner_deal_encrypt
+Benchmarking ed25519/sealed-k8/n9/t7/owner_deal_encrypt: Warming up for 100.00 ms
+Benchmarking ed25519/sealed-k8/n9/t7/owner_deal_encrypt: Collecting 10 samples in estimated 1.3651 s (165 iterations)
+Benchmarking ed25519/sealed-k8/n9/t7/owner_deal_encrypt: Analyzing
+ed25519/sealed-k8/n9/t7/owner_deal_encrypt
+                        time:   [8.2540 ms 8.2580 ms 8.2627 ms]
+Found 2 outliers among 10 measurements (20.00%)
+  1 (10.00%) low mild
+  1 (10.00%) high mild
+Benchmarking ed25519/sealed-k8/n9/t7/step_a
+Benchmarking ed25519/sealed-k8/n9/t7/step_a: Warming up for 100.00 ms
+Benchmarking ed25519/sealed-k8/n9/t7/step_a: Collecting 10 samples in estimated 1.0783 s (275 iterations)
+Benchmarking ed25519/sealed-k8/n9/t7/step_a: Analyzing
+ed25519/sealed-k8/n9/t7/step_a
+                        time:   [3.9216 ms 3.9243 ms 3.9264 ms]
+Benchmarking ed25519/sealed-k8/n9/t7/decrypt
+Benchmarking ed25519/sealed-k8/n9/t7/decrypt: Warming up for 100.00 ms
+Benchmarking ed25519/sealed-k8/n9/t7/decrypt: Collecting 10 samples in estimated 1.0009 s (8525 iterations)
+Benchmarking ed25519/sealed-k8/n9/t7/decrypt: Analyzing
+ed25519/sealed-k8/n9/t7/decrypt
+                        time:   [117.31 µs 117.40 µs 117.51 µs]
+Benchmarking ed25519/sealed-k8/n9/t7/partial
+Benchmarking ed25519/sealed-k8/n9/t7/partial: Warming up for 100.00 ms
+Benchmarking ed25519/sealed-k8/n9/t7/partial: Collecting 10 samples in estimated 1.0011 s (32k iterations)
+Benchmarking ed25519/sealed-k8/n9/t7/partial: Analyzing
+ed25519/sealed-k8/n9/t7/partial
+                        time:   [31.099 µs 31.109 µs 31.119 µs]
+Benchmarking ed25519/sealed-k8/n9/t7/verify_partial
+Benchmarking ed25519/sealed-k8/n9/t7/verify_partial: Warming up for 100.00 ms
+Benchmarking ed25519/sealed-k8/n9/t7/verify_partial: Collecting 10 samples in estimated 1.0003 s (32k iterations)
+Benchmarking ed25519/sealed-k8/n9/t7/verify_partial: Analyzing
+ed25519/sealed-k8/n9/t7/verify_partial
+                        time:   [30.978 µs 31.005 µs 31.043 µs]
+Benchmarking ed25519/sealed-k8/n9/t7/combine
+Benchmarking ed25519/sealed-k8/n9/t7/combine: Warming up for 100.00 ms
+Benchmarking ed25519/sealed-k8/n9/t7/combine: Collecting 10 samples in estimated 1.0059 s (6380 iterations)
+Benchmarking ed25519/sealed-k8/n9/t7/combine: Analyzing
+ed25519/sealed-k8/n9/t7/combine
+                        time:   [155.86 µs 155.95 µs 156.02 µs]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high severe
+

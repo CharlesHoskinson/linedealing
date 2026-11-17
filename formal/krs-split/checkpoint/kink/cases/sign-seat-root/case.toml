@@ -1,0 +1,10 @@
+# CP-015: no second binding of one slot key and no second put of one digest
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { SignSeatRoot = { log = [{ Bind = { nf = 1, e = 5 } }, { Put = { digest = 7 } }, { RestoreE = { r = { Rd = { seat = 1, boot_ctr = 7, cp_seq = 0, whole = false } } } }, { ReleaseE = { eid = 2, g = 8 } }, { Bind = { nf = 2, e = 5 } }, { Put = { digest = 8 } }] } },
+  { SignSeatRoot = { log = [{ Bind = { nf = 1, e = 5 } }, { Put = { digest = 7 } }, { Bind = { nf = 1, e = 6 } }] } },
+  { SignSeatRoot = { log = [{ Put = { digest = 7 } }, { ReleaseE = { eid = 1, g = 1 } }, { Bind = { nf = 1, e = 6 } }, { RestoreE = { r = { Rd = { seat = 0, boot_ctr = 1, cp_seq = 0, whole = false } } } }, { Put = { digest = 7 } }] } },
+  { SignSeatRoot = { log = [] } },
+  { SignSeatRoot = { log = [{ Bind = { nf = 7, e = 1 } }, { Put = { digest = 7 } }] } },
+]

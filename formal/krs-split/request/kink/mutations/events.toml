@@ -1,0 +1,1145 @@
+# Plausible misreadings of the events that name a request (RQ-005 to RQ-029, RQ-042 to
+# RQ-044, RQ-048 to RQ-068), as K patches of kink/definition.k.
+
+[[mutation]]
+id = "order-not-stored"
+expect = "kill"
+misunderstanding = "RQ-006: an applied order event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "order"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "order-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-006: a refused order event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "order-refused"
+  find = "ListItem(refused ( resCodes ( tOrder ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tOrder ("
+
+[[mutation]]
+id = "open-header-not-stored"
+expect = "kill"
+misunderstanding = "RQ-013: an applied open-header event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "open-header"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "open-header-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-013: a refused open-header event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "open-header-refused"
+  find = "ListItem(refused ( resCodes ( tOpen ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tOpen ("
+
+[[mutation]]
+id = "complaint-not-stored"
+expect = "kill"
+misunderstanding = "RQ-011: an applied complaint event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "complaint"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "complaint-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-011: a refused complaint event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "complaint-refused"
+  find = "ListItem(refused ( resCodes ( tComplaint ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tComplaint ("
+
+[[mutation]]
+id = "frame-not-stored"
+expect = "kill"
+misunderstanding = "RQ-018: an applied frame event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "frame"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "frame-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-018: a refused frame event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "frame-refused"
+  find = "ListItem(refused ( resCodes ( tFrame ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tFrame ("
+
+[[mutation]]
+id = "detach-not-stored"
+expect = "kill"
+misunderstanding = "RQ-022: an applied detach event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "detach"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "detach-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-022: a refused detach event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "detach-refused"
+  find = "ListItem(refused ( resCodes ( tDetach ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tDetach ("
+
+[[mutation]]
+id = "vote-opened-not-stored"
+expect = "kill"
+misunderstanding = "RQ-017: an applied vote-opened event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "vote-opened"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "vote-opened-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-017: a refused vote-opened event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "vote-opened-refused"
+  find = "ListItem(refused ( resCodes ( tVoteOpened ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tVoteOpened ("
+
+[[mutation]]
+id = "vote-admit-not-stored"
+expect = "kill"
+misunderstanding = "RQ-026: an applied vote-admit event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "vote-admit"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "vote-admit-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-026: a refused vote-admit event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "vote-admit-refused"
+  find = "ListItem(refused ( resCodes ( tVoteAdmit ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tVoteAdmit ("
+
+[[mutation]]
+id = "obs2-not-stored"
+expect = "kill"
+misunderstanding = "RQ-028: an applied obs2 event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "obs2"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "obs2-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-028: a refused obs2 event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "obs2-refused"
+  find = "ListItem(refused ( resCodes ( tObs2 ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tObs2 ("
+
+[[mutation]]
+id = "post-final-not-stored"
+expect = "kill"
+misunderstanding = "RQ-042: an applied post-final event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "post-final"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "post-final-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-042: a refused post-final event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "post-final-refused"
+  find = "ListItem(refused ( resCodes ( tPostFinal ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tPostFinal ("
+
+[[mutation]]
+id = "post-void-not-stored"
+expect = "kill"
+misunderstanding = "RQ-042: an applied post-void event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "post-void"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "post-void-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-042: a refused post-void event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "post-void-refused"
+  find = "ListItem(refused ( resCodes ( tPostVoid ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tPostVoid ("
+
+[[mutation]]
+id = "restart-burn-not-stored"
+expect = "kill"
+misunderstanding = "RQ-048: an applied restart-burn event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "restart-burn"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "restart-burn-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-048: a refused restart-burn event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "restart-burn-refused"
+  find = "ListItem(refused ( resCodes ( tRestartBurn ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tRestartBurn ("
+
+[[mutation]]
+id = "confirm-not-stored"
+expect = "kill"
+misunderstanding = "RQ-052: an applied confirm event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "confirm"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "confirm-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-052: a refused confirm event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "confirm-refused"
+  find = "ListItem(refused ( resCodes ( tConfirm ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tConfirm ("
+
+[[mutation]]
+id = "carry-not-stored"
+expect = "kill"
+misunderstanding = "RQ-060: an applied carry event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "carry"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "carry-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-060: a refused carry event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "carry-refused"
+  find = "ListItem(refused ( resCodes ( tCarry ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tCarry ("
+
+[[mutation]]
+id = "order-code-order"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-007: terminal goes before no_qc"
+  [[mutation.edit]]
+  rule = "split_request--order_codes"
+  find = "opt ( notBool Qc:Bool , rfNoQc ) opt ( isTerminal ( Ph:Phase ) , rfTerminal )"
+  replace = "opt ( isTerminal ( Ph:Phase ) , rfTerminal ) opt ( notBool Qc:Bool , rfNoQc )"
+
+[[mutation]]
+id = "order-no-qc-ok"
+expect = "kill"
+misunderstanding = "RQ-007: a block without a quorum certificate orders the request"
+  [[mutation.edit]]
+  rule = "split_request--order_codes"
+  find = "opt ( notBool Qc:Bool , rfNoQc ) "
+  replace = ""
+
+[[mutation]]
+id = "order-exp-c"
+expect = "kill"
+misunderstanding = "RQ-006: exp_c = delta_c, not b + delta_c"
+  [[mutation.edit]]
+  rule = "split_request--step_order_1"
+  find = "ctxHeight ( C:Ctx ) +Int ctxDeltaC ( C:Ctx )"
+  replace = "ctxDeltaC ( C:Ctx )"
+
+[[mutation]]
+id = "order-again"
+expect = "kill"
+misunderstanding = "RQ-006, RQ-056: an order of an ORDERED request orders it again"
+  [[mutation.edit]]
+  rule = "split_request--order_codes"
+  find = "Ph:Phase ==K phPOSTED"
+  replace = "notBool isTerminal ( Ph:Phase )"
+
+[[mutation]]
+id = "open-k-max-seven"
+expect = "kill"
+misunderstanding = "RQ-067: K_max is 7"
+  [[mutation.edit]]
+  rule = "split_request--open_in_domain"
+  find = "(Kk:Int <=Int 8)"
+  replace = "(Kk:Int <=Int 7)"
+
+[[mutation]]
+id = "open-k-zero"
+expect = "kill"
+misunderstanding = "RQ-067: K = 0 is inside the domain"
+  [[mutation.edit]]
+  rule = "split_request--open_in_domain"
+  find = "(1 <=Int Kk:Int)"
+  replace = "(0 <=Int Kk:Int)"
+
+[[mutation]]
+id = "open-l-zero"
+expect = "kill"
+misunderstanding = "RQ-067: L = 0 is inside the domain"
+  [[mutation.edit]]
+  rule = "split_request--open_in_domain"
+  find = "(1 <=Int Ll:Int)"
+  replace = "(0 <=Int Ll:Int)"
+
+[[mutation]]
+id = "open-l-three"
+expect = "kill"
+misunderstanding = "RQ-067: L = 3 is inside the domain"
+  [[mutation.edit]]
+  rule = "split_request--open_in_domain"
+  find = "(Ll:Int <=Int 2)"
+  replace = "(Ll:Int <=Int 3)"
+
+[[mutation]]
+id = "open-rates-any"
+expect = "kill"
+misunderstanding = "RQ-067: a header may name fewer fee rates than variants"
+  [[mutation.edit]]
+  rule = "split_request--open_in_domain"
+  find = "(size(Rates:List) ==Int Kk:Int)"
+  replace = "true"
+
+[[mutation]]
+id = "open-any-phase"
+expect = "kill"
+misunderstanding = "RQ-013, RQ-056: a header opens a request in any live phase"
+  [[mutation.edit]]
+  rule = "split_request--open_ordered_1"
+  find = "getPhase ( R:Req ) ==K phORDERED"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_request--open_ordered_2"
+  find = "getPhase ( R:Req ) ==K phORDERED"
+  replace = "true"
+
+[[mutation]]
+id = "open-no-table"
+expect = "kill"
+misunderstanding = "RQ-013, RQ-018: the actor slot table of a collecting header starts with no position"
+  [[mutation.edit]]
+  rule = "split_request--open_header_1"
+  find = "noneList ( Npos:Int )"
+  replace = ".List"
+
+[[mutation]]
+id = "open-g-is-k"
+expect = "kill"
+misunderstanding = "RQ-067, RQ-001: G = K, without the cap G_max = 2"
+  [[mutation.edit]]
+  rule = "split_request--g_of"
+  find = "minInt(Kk:Int, 2)"
+  replace = "Kk:Int"
+
+[[mutation]]
+id = "open-birth-collects"
+expect = "kill"
+misunderstanding = "RQ-062: a BIRTH, REFILL or CONTRIB header collects contributions as it says"
+  [[mutation.edit]]
+  rule = "split_request--open_header_2"
+  find = "rOk ( setOpened ( R:Req , false ,"
+  replace = "rOk ( setOpened ( R:Req , true ,"
+
+[[mutation]]
+id = "birth-signing"
+expect = "kill"
+misunderstanding = "RQ-062, RQ-066: BIRTH is a signing request"
+  [[mutation.edit]]
+  rule = "split_request--signing_1"
+  find = "signing ( BIRTH ) => false"
+  replace = "signing ( BIRTH ) => true"
+
+[[mutation]]
+id = "refill-signing"
+expect = "kill"
+misunderstanding = "RQ-062, RQ-066: REFILL is a signing request"
+  [[mutation.edit]]
+  rule = "split_request--signing_2"
+  find = "signing ( REFILL ) => false"
+  replace = "signing ( REFILL ) => true"
+
+[[mutation]]
+id = "contrib-signing"
+expect = "kill"
+misunderstanding = "RQ-062, RQ-066: CONTRIB is a signing request"
+  [[mutation.edit]]
+  rule = "split_request--signing_3"
+  find = "signing ( CONTRIB ) => false"
+  replace = "signing ( CONTRIB ) => true"
+
+[[mutation]]
+id = "complaint-until-q"
+expect = "kill"
+misunderstanding = "RQ-011, RQ-012: a complaint is early until q ADMIT votes commit, not until the first"
+  [[mutation.edit]]
+  rule = "split_request--complaint_ordered_1"
+  find = "size(getAdmitVotes ( R:Req )) ==Int 0"
+  replace = "size(getAdmitVotes ( R:Req )) <Int 3"
+  [[mutation.edit]]
+  rule = "split_request--complaint_ordered_2"
+  find = "size(getAdmitVotes ( R:Req )) ==Int 0"
+  replace = "size(getAdmitVotes ( R:Req )) <Int 3"
+
+[[mutation]]
+id = "complaint-posted"
+expect = "kill"
+misunderstanding = "RQ-011: a complaint against a POSTED request records early_complaint"
+  [[mutation.edit]]
+  rule = "split_request--complaint_live_1"
+  find = "getPhase ( R:Req ) ==K phPOSTED"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--complaint_live_2"
+  find = "getPhase ( R:Req ) ==K phPOSTED"
+  replace = "false"
+
+[[mutation]]
+id = "complaint-late-early"
+expect = "kill"
+misunderstanding = "RQ-012: a complaint after the first ADMIT vote is recorded as an early complaint"
+  [[mutation.edit]]
+  rule = "split_request--complaint_ordered_2"
+  find = "rOk ( setDealerFault ( R:Req ) )"
+  replace = "rOk ( setEarly ( R:Req ) )"
+
+[[mutation]]
+id = "frame-held-ordered-only"
+expect = "kill"
+misunderstanding = "RQ-021: frames are held only for an ORDERED request; a POSTED request refuses them"
+  [[mutation.edit]]
+  rule = "split_request--frame_posted_1"
+  find = "getPhase ( R:Req ) ==K phPOSTED"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--frame_posted_2"
+  find = "getPhase ( R:Req ) ==K phPOSTED"
+  replace = "false"
+
+[[mutation]]
+id = "frame-held-own-height"
+expect = "kill"
+misunderstanding = "RQ-021: a held frame keeps the height it carries, not the board height it was ordered at"
+  [[mutation.edit]]
+  rule = "split_request--frame_hold"
+  find = "frameAt ( Fr:Frame , ctxHeight ( C:Ctx ) )"
+  replace = "Fr:Frame"
+
+[[mutation]]
+id = "frame-position-last"
+expect = "kill"
+misunderstanding = "RQ-018: the last position of the actor slot table is outside it"
+  [[mutation.edit]]
+  rule = "split_request--frame_in_table_1"
+  find = "framePos ( Fr:Frame ) <Int size(getPositions ( R:Req ))"
+  replace = "framePos ( Fr:Frame ) +Int 1 <Int size(getPositions ( R:Req ))"
+  [[mutation.edit]]
+  rule = "split_request--frame_in_table_2"
+  find = "framePos ( Fr:Frame ) <Int size(getPositions ( R:Req ))"
+  replace = "framePos ( Fr:Frame ) +Int 1 <Int size(getPositions ( R:Req ))"
+
+[[mutation]]
+id = "frame-late-at-exp-c"
+expect = "kill"
+misunderstanding = "RQ-020: a frame ordered at exp_c is late"
+  [[mutation.edit]]
+  rule = "split_request--late"
+  find = "<Int H:Int"
+  replace = "<=Int H:Int"
+
+[[mutation]]
+id = "frame-code-order"
+expect = "kill"
+misunderstanding = "RQ-019, RQ-020: position_filled goes before late_contribution"
+  [[mutation.edit]]
+  rule = "split_request--frame_codes_1"
+  find = "opt ( late ( getExpC ( R:Req ) , ctxHeight ( C:Ctx ) ) , rfLateContribution ) opt ( isSome ( getD ( getPositions ( R:Req ) , Position:Int ) ) , rfPositionFilled )"
+  replace = "opt ( isSome ( getD ( getPositions ( R:Req ) , Position:Int ) ) , rfPositionFilled ) opt ( late ( getExpC ( R:Req ) , ctxHeight ( C:Ctx ) ) , rfLateContribution )"
+
+[[mutation]]
+id = "frame-filled-replaces"
+expect = "kill"
+misunderstanding = "RQ-019: a frame for a filled position replaces its contribution"
+  [[mutation.edit]]
+  rule = "split_request--frame_codes_1"
+  find = "opt ( isSome ( getD ( getPositions ( R:Req ) , Position:Int ) ) , rfPositionFilled )"
+  replace = ".List"
+
+[[mutation]]
+id = "frame-lengths-unchecked"
+expect = "kill"
+misunderstanding = "RQ-018: the contribution lengths are not checked"
+  [[mutation.edit]]
+  rule = "split_request--frame_codes_1"
+  find = "TokenOk:Bool andThenBool LengthsOk:Bool"
+  replace = "TokenOk:Bool"
+
+[[mutation]]
+id = "frame-token-unchecked"
+expect = "kill"
+misunderstanding = "RQ-018: the token is not checked"
+  [[mutation.edit]]
+  rule = "split_request--frame_codes_1"
+  find = "TokenOk:Bool andThenBool LengthsOk:Bool"
+  replace = "LengthsOk:Bool"
+
+[[mutation]]
+id = "held-any-height"
+expect = "survive"
+misunderstanding = "RQ-021, RQ-020: held frames attach whatever height they were ordered at. Argued survivor since the item 13 ruling (ledger 8: RQ-020 in every live phase): a frame is held only when it is not late, at POSTED (no exp_c yet; the later order sets exp_c = b + delta_c with b at or above the frame's height, as the board height never goes down) or at ORDERED with height <= exp_c. Every held frame has height <= exp_c, so the attach-time height check of attachHeld, kept because the oracle keeps it, never decides and no program tells the mutant apart"
+  [[mutation.edit]]
+  rule = "split_request--held_ok_1"
+  find = "(Height:Int <=Int E:Int)"
+  replace = "true"
+
+[[mutation]]
+id = "held-token-unchecked"
+expect = "kill"
+misunderstanding = "RQ-021, RQ-018: a held frame's token is not checked when it attaches"
+  [[mutation.edit]]
+  rule = "split_request--held_ok_1"
+  find = "andThenBool TokenOk:Bool)"
+  replace = "andThenBool true)"
+
+[[mutation]]
+id = "held-lengths-unchecked"
+expect = "kill"
+misunderstanding = "RQ-021, RQ-018: a held frame's lengths are not checked when it attaches"
+  [[mutation.edit]]
+  rule = "split_request--held_ok_1"
+  find = "andThenBool LengthsOk:Bool)"
+  replace = "andThenBool true)"
+
+[[mutation]]
+id = "held-later-replaces"
+expect = "kill"
+misunderstanding = "RQ-021: a later held frame for one position replaces the earlier one"
+  [[mutation.edit]]
+  rule = "split_request--held_ok_1"
+  find = "(notBool isSome ( getD ( Ps:List , Position:Int ) ))"
+  replace = "true"
+
+[[mutation]]
+id = "held-dropped"
+expect = "kill"
+misunderstanding = "RQ-021: held frames are dropped, not attached, when the request reaches COLLECTING"
+  [[mutation.edit]]
+  rule = "split_request--opened_count_1"
+  find = "attachHeld ( orElse ( getExpC ( R:Req ) , 0 ) , getPositions ( R:Req ) , getHeld ( R:Req ) )"
+  replace = "getPositions ( R:Req )"
+
+[[mutation]]
+id = "detach-keeps"
+expect = "kill"
+misunderstanding = "RQ-022: a detached frame keeps its position filled"
+  [[mutation.edit]]
+  rule = "split_request--detach_live_1"
+  find = "getPositions ( R:Req ) [ Position:Int <- .List ]"
+  replace = "getPositions ( R:Req )"
+
+[[mutation]]
+id = "opened-any-hash"
+expect = "kill"
+misunderstanding = "RQ-017: OPENED votes count whatever header hash they name"
+  [[mutation.edit]]
+  rule = "split_request--opened_count_1"
+  find = "count2 ( Vs:List , Hash:Int )"
+  replace = "size(Vs:List)"
+  [[mutation.edit]]
+  rule = "split_request--opened_count_2"
+  find = "count2 ( Vs:List , Hash:Int )"
+  replace = "size(Vs:List)"
+
+[[mutation]]
+id = "opened-twice"
+expect = "kill"
+misunderstanding = "RQ-017: a node's second OPENED vote counts again"
+  [[mutation.edit]]
+  rule = "split_request--opened_fresh_1"
+  find = "anyNode2 ( getOpenedVotes ( R:Req ) , Node:Int )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--opened_fresh_2"
+  find = "anyNode2 ( getOpenedVotes ( R:Req ) , Node:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "opened-not-collecting"
+expect = "kill"
+misunderstanding = "RQ-017: OPENED votes count for a header with collecting = false"
+  [[mutation.edit]]
+  rule = "split_request--opened_phase_1"
+  find = "getCollecting ( R:Req )"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_request--opened_phase_2"
+  find = "getCollecting ( R:Req )"
+  replace = "true"
+
+[[mutation]]
+id = "opened-node-n"
+expect = "kill"
+misunderstanding = "RQ-001: node indices run 0..n"
+  [[mutation.edit]]
+  rule = "split_request--opened_node_1"
+  find = "Node:Int <Int ctxN ( C:Ctx )"
+  replace = "Node:Int <=Int ctxN ( C:Ctx )"
+  [[mutation.edit]]
+  rule = "split_request--opened_node_2"
+  find = "Node:Int <Int ctxN ( C:Ctx )"
+  replace = "Node:Int <=Int ctxN ( C:Ctx )"
+
+[[mutation]]
+id = "admit-any-hash"
+expect = "kill"
+misunderstanding = "RQ-026: ADMIT votes count whatever header hash they name"
+  [[mutation.edit]]
+  rule = "split_request--admit_count_1"
+  find = "size(mine ( Vs:List , Hash:Int ))"
+  replace = "size(Vs:List)"
+  [[mutation.edit]]
+  rule = "split_request--admit_count_2"
+  find = "size(mine ( Vs:List , Hash:Int ))"
+  replace = "size(Vs:List)"
+
+[[mutation]]
+id = "admit-all-heights"
+expect = "kill"
+misunderstanding = "RQ-027: the anchor height reads the OBS reports of every ADMIT vote, not of the q votes with one hash"
+  [[mutation.edit]]
+  rule = "split_request--admit_count_1"
+  find = "heights ( mine ( Vs:List , Hash:Int ) )"
+  replace = "heights ( Vs:List )"
+
+[[mutation]]
+id = "anchor-highest"
+expect = "kill"
+misunderstanding = "RQ-027: the anchor height is the highest OBS height"
+  [[mutation.edit]]
+  rule = "split_request--anchor_height"
+  find = "[ F:Int ]"
+  replace = "[ 0 ]"
+
+[[mutation]]
+id = "anchor-ascending"
+expect = "kill"
+misunderstanding = "RQ-027: the anchor height is entry f + 1 of the heights sorted lowest first"
+  [[mutation.edit]]
+  rule = "split_request--insert_desc_2"
+  find = "requires Y:Int <=Int X:Int"
+  replace = "requires Y:Int >=Int X:Int"
+  [[mutation.edit]]
+  rule = "split_request--insert_desc_3"
+  find = "requires Y:Int >Int X:Int"
+  replace = "requires Y:Int <Int X:Int"
+
+[[mutation]]
+id = "select-strict"
+expect = "kill"
+misunderstanding = "RQ-027: a fee rate must exceed the median to meet it"
+  [[mutation.edit]]
+  rule = "split_request--first_meet_2"
+  find = "requires M:Int <=Int X:Int"
+  replace = "requires M:Int <Int X:Int"
+  [[mutation.edit]]
+  rule = "split_request--first_meet_3"
+  find = "requires M:Int >Int X:Int"
+  replace = "requires M:Int >=Int X:Int"
+
+[[mutation]]
+id = "select-lowest"
+expect = "kill"
+misunderstanding = "RQ-027, ledger 6: when no rate meets the median the lowest variant is selected"
+  [[mutation.edit]]
+  rule = "split_request--select"
+  find = "orElse ( firstMeet ( M:Int , Rates:List ) , Kk:Int )"
+  replace = "orElse ( firstMeet ( M:Int , Rates:List ) , 1 )"
+
+[[mutation]]
+id = "admit-no-median-records"
+expect = "kill"
+misunderstanding = "Ledger 7, RQ-026: without a median the q-th ADMIT vote is recorded and the phase stays"
+  [[mutation.edit]]
+  rule = "split_request--admit_anchor_1"
+  find = "admitAnchor ( R:Req , _ , .List ) => rErr ( R:Req , ListItem(rfNoRule) )"
+  replace = "admitAnchor ( R:Req , Vs:List , .List ) => rOk ( setAdmitVotes ( R:Req , Vs:List ) )"
+
+[[mutation]]
+id = "admit-not-collecting"
+expect = "kill"
+misunderstanding = "RQ-026: a COLLECTING request takes no ADMIT vote"
+  [[mutation.edit]]
+  rule = "split_request--admit_phase_1"
+  find = "(getPhase ( R:Req ) ==K phCOLLECTING)"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--admit_phase_2"
+  find = "(getPhase ( R:Req ) ==K phCOLLECTING)"
+  replace = "false"
+
+[[mutation]]
+id = "admit-twice"
+expect = "kill"
+misunderstanding = "RQ-026: a node's second ADMIT vote counts again"
+  [[mutation.edit]]
+  rule = "split_request--admit_fresh_1"
+  find = "anyNode3 ( getAdmitVotes ( R:Req ) , Node:Int )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--admit_fresh_2"
+  find = "anyNode3 ( getAdmitVotes ( R:Req ) , Node:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "obs2-g1"
+expect = "survive"
+misunderstanding = "RQ-028: a request with G = 1 has a generation 2. Argued equivalent: RQ-013, RQ-029: G = min(K, 2), so G = 1 only when K = 1; then the only variant is 1, anchor[1] = 1 after ADMITTED, and generation 2 must select j > 1, which obs2Select refuses with no-rule as the G check does: the mutant is equivalent"
+  [[mutation.edit]]
+  rule = "split_request--obs2_ready_1"
+  find = "(getGg ( R:Req ) ==Int 2)"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_request--obs2_ready_2"
+  find = "(getGg ( R:Req ) ==Int 2)"
+  replace = "true"
+
+[[mutation]]
+id = "obs2-again"
+expect = "kill"
+misunderstanding = "RQ-028: anchor[2] may be set again"
+  [[mutation.edit]]
+  rule = "split_request--obs2_ready_1"
+  find = "(notBool isSome ( getD ( getAnchor ( R:Req ) , 1 ) ))"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_request--obs2_ready_2"
+  find = "(notBool isSome ( getD ( getAnchor ( R:Req ) , 1 ) ))"
+  replace = "true"
+
+[[mutation]]
+id = "obs2-not-missed"
+expect = "kill"
+misunderstanding = "RQ-028: generation 2 starts without a missed deadline"
+  [[mutation.edit]]
+  rule = "split_request--obs2_ready_1"
+  find = "andThenBool Gen1Missed:Bool"
+  replace = "andThenBool true"
+  [[mutation.edit]]
+  rule = "split_request--obs2_ready_2"
+  find = "andThenBool Gen1Missed:Bool"
+  replace = "andThenBool true"
+
+[[mutation]]
+id = "obs2-f-heights"
+expect = "kill"
+misunderstanding = "RQ-028: generation 2 needs f + 2 OBS heights"
+  [[mutation.edit]]
+  rule = "split_request--obs2_heights_1"
+  find = "ctxF ( C:Ctx ) <Int size(Heights:List)"
+  replace = "ctxF ( C:Ctx ) +Int 1 <Int size(Heights:List)"
+  [[mutation.edit]]
+  rule = "split_request--obs2_heights_2"
+  find = "ctxF ( C:Ctx ) <Int size(Heights:List)"
+  replace = "ctxF ( C:Ctx ) +Int 1 <Int size(Heights:List)"
+
+[[mutation]]
+id = "obs2-before-admitted"
+expect = "kill"
+misunderstanding = "RQ-028: an OBS set before ADMITTED sets anchor[2]"
+  [[mutation.edit]]
+  rule = "split_request--obs2_ready_1"
+  find = "(getPhase ( R:Req ) ==K phADMITTED)"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_request--obs2_ready_2"
+  find = "(getPhase ( R:Req ) ==K phADMITTED)"
+  replace = "true"
+
+[[mutation]]
+id = "obs2-equal"
+expect = "kill"
+misunderstanding = "RQ-029: generation 2 may select the variant of anchor[1]"
+  [[mutation.edit]]
+  rule = "split_request--obs2_select_1"
+  find = "orElse ( getD ( getAnchor ( R:Req ) , 0 ) , 0 ) <Int J:Int"
+  replace = "orElse ( getD ( getAnchor ( R:Req ) , 0 ) , 0 ) <=Int J:Int"
+  [[mutation.edit]]
+  rule = "split_request--obs2_select_2"
+  find = "orElse ( getD ( getAnchor ( R:Req ) , 0 ) , 0 ) <Int J:Int"
+  replace = "orElse ( getD ( getAnchor ( R:Req ) , 0 ) , 0 ) <=Int J:Int"
+
+[[mutation]]
+id = "final-committee-q"
+expect = "kill"
+misunderstanding = "RQ-042: FINAL posts count against the committee's n and q, not the epoch's own"
+  [[mutation.edit]]
+  rule = "split_request--final_with_2"
+  find = "Ct:Int , N:Int , F:Int )"
+  replace = "Ct:Int , ctxN ( C:Ctx ) , ctxF ( C:Ctx ) )"
+
+[[mutation]]
+id = "final-any-ct"
+expect = "kill"
+misunderstanding = "RQ-044: FINAL posts count whatever ciphertext they carry"
+  [[mutation.edit]]
+  rule = "split_request--count_fin_2"
+  find = "(X:Int ==Int Ct:Int)"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_request--count_fin_3"
+  find = "(X:Int ==Int Ct:Int)"
+  replace = "true"
+
+[[mutation]]
+id = "final-epochs-added"
+expect = "kill"
+misunderstanding = "RQ-042: FINAL posts of two epochs are added together"
+  [[mutation.edit]]
+  rule = "split_request--count_fin_2"
+  find = "(Epoch:Int ==Int E:Int)"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_request--count_fin_3"
+  find = "(Epoch:Int ==Int E:Int)"
+  replace = "true"
+
+[[mutation]]
+id = "final-member-across-epochs"
+expect = "kill"
+misunderstanding = "RQ-042: a member's FINAL post in one epoch blocks its post in another epoch"
+  [[mutation.edit]]
+  rule = "split_request--any_fin_2"
+  find = "(Epoch:Int ==Int E:Int)"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_request--any_fin_3"
+  find = "(Epoch:Int ==Int E:Int)"
+  replace = "true"
+
+[[mutation]]
+id = "final-old-epoch"
+expect = "kill"
+misunderstanding = "RQ-042: an epoch older than the request's serves it"
+  [[mutation.edit]]
+  rule = "split_request--final_serves_1"
+  find = "E:Int <Int getEpoch ( R:Req )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--final_serves_2"
+  find = "E:Int <Int getEpoch ( R:Req )"
+  replace = "false"
+
+[[mutation]]
+id = "final-member-n"
+expect = "kill"
+misunderstanding = "RQ-042: member indices run 0..n_e"
+  [[mutation.edit]]
+  rule = "split_request--final_member_1"
+  find = "M:Int <Int Ne:Int"
+  replace = "M:Int <=Int Ne:Int"
+  [[mutation.edit]]
+  rule = "split_request--final_member_2"
+  find = "M:Int <Int Ne:Int"
+  replace = "M:Int <=Int Ne:Int"
+
+[[mutation]]
+id = "final-unknown-hides-terminal"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-043: an unknown epoch hides the terminal code"
+  [[mutation.edit]]
+  rule = "split_request--final_with_1"
+  find = "opt ( isTerminal ( getPhase ( R:Req ) ) , rfTerminal ) ListItem(rfUnknownEpoch)"
+  replace = "ListItem(rfUnknownEpoch)"
+
+[[mutation]]
+id = "final-outcome-none"
+expect = "kill"
+misunderstanding = "RQ-049: a FINAL end keeps outcome NONE"
+  [[mutation.edit]]
+  rule = "split_request--end_final_at_1"
+  find = "ocFINAL"
+  replace = "ocNONE"
+
+[[mutation]]
+id = "final-no-end-height"
+expect = "kill"
+misunderstanding = "RQ-044, RQ-054: a FINAL end records no end height"
+  [[mutation.edit]]
+  rule = "split_request--end_final"
+  find = "ListItem(ctxHeight ( C:Ctx ))"
+  replace = ".List"
+
+[[mutation]]
+id = "void-reason-none"
+expect = "kill"
+misunderstanding = "RQ-065: a VOID post may carry reason NONE"
+  [[mutation.edit]]
+  rule = "split_request--void_reason_1"
+  find = "Reason:Reason ==K rsNONE"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--void_reason_2"
+  find = "Reason:Reason ==K rsNONE"
+  replace = "false"
+
+[[mutation]]
+id = "void-member-n"
+expect = "kill"
+misunderstanding = "RQ-042: member indices run 0..n_e"
+  [[mutation.edit]]
+  rule = "split_request--void_member_1"
+  find = "M:Int <Int Ne:Int"
+  replace = "M:Int <=Int Ne:Int"
+  [[mutation.edit]]
+  rule = "split_request--void_member_2"
+  find = "M:Int <Int Ne:Int"
+  replace = "M:Int <=Int Ne:Int"
+
+[[mutation]]
+id = "void-old-epoch"
+expect = "kill"
+misunderstanding = "RQ-043, RQ-042: an epoch older than the request's serves it"
+  [[mutation.edit]]
+  rule = "split_request--void_serves_1"
+  find = "E:Int <Int getEpoch ( R:Req )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--void_serves_2"
+  find = "E:Int <Int getEpoch ( R:Req )"
+  replace = "false"
+
+[[mutation]]
+id = "void-member-across-epochs"
+expect = "kill"
+misunderstanding = "RQ-042: a member's VOID post in one epoch blocks its post in another epoch"
+  [[mutation.edit]]
+  rule = "split_request--any_void_2"
+  find = "(Epoch:Int ==Int E:Int)"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_request--any_void_3"
+  find = "(Epoch:Int ==Int E:Int)"
+  replace = "true"
+
+[[mutation]]
+id = "void-unknown-hides-terminal"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-043: an unknown epoch hides the terminal code"
+  [[mutation.edit]]
+  rule = "split_request--void_with_1"
+  find = "opt ( isTerminal ( getPhase ( R:Req ) ) , rfTerminal ) ListItem(rfUnknownEpoch)"
+  replace = "ListItem(rfUnknownEpoch)"
+
+[[mutation]]
+id = "void-epochs-added"
+expect = "kill"
+misunderstanding = "RQ-042: VOID posts of two epochs are added together"
+  [[mutation.edit]]
+  rule = "split_request--count_void_2"
+  find = "requires Epoch:Int ==Int E:Int"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_request--count_void_3"
+  find = "requires Epoch:Int =/=Int E:Int"
+  replace = "requires false"
+
+[[mutation]]
+id = "burn-carried"
+expect = "kill"
+misunderstanding = "RQ-054, ledger 12: a carried leaf is re-ended by a restart"
+  [[mutation.edit]]
+  rule = "split_request--burn_ended_1"
+  find = "getCarried ( R:Req )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--burn_ended_2"
+  find = "getCarried ( R:Req )"
+  replace = "false"
+
+[[mutation]]
+id = "burn-cp-strict"
+expect = "kill"
+misunderstanding = "RQ-054, RQ-068: a checkpoint at the end height does not hold the leaf"
+  [[mutation.edit]]
+  rule = "split_request--burn_held_1"
+  find = "<=Int ctxCp ( C:Ctx )"
+  replace = "<Int ctxCp ( C:Ctx )"
+  [[mutation.edit]]
+  rule = "split_request--burn_held_2"
+  find = "<=Int ctxCp ( C:Ctx )"
+  replace = "<Int ctxCp ( C:Ctx )"
+
+[[mutation]]
+id = "burn-live-unmarked"
+expect = "kill"
+misunderstanding = "RQ-048: a restart burn of a live request does not mark it"
+  [[mutation.edit]]
+  rule = "split_request--step_restart_burn_2"
+  find = "rOk ( setRestart ( R:Req ) )"
+  replace = "rOk ( R:Req )"
+
+[[mutation]]
+id = "restart-released"
+expect = "kill"
+misunderstanding = "RQ-052, RQ-068: a restart end is RELEASED even when the variant confirmed"
+  [[mutation.edit]]
+  rule = "split_request--restart_outcome_1"
+  find = "=> ocFINAL"
+  replace = "=> ocRELEASED"
+
+[[mutation]]
+id = "restart-outcome-void"
+expect = "kill"
+misunderstanding = "RQ-052: restart_end does not change the outcome of an end"
+  [[mutation.edit]]
+  rule = "split_request--end_outcome_1"
+  find = "=> restartOutcome ( R:Req )"
+  replace = "=> ocVOID"
+
+[[mutation]]
+id = "carry-released"
+expect = "kill"
+misunderstanding = "RQ-060, AU-021: a reissue carries a RELEASED leaf, not a VOID one"
+  [[mutation.edit]]
+  rule = "split_request--step_carry_1"
+  find = "ocVOID"
+  replace = "ocRELEASED"
+  [[mutation.edit]]
+  rule = "split_request--step_carry_2"
+  find = "ocVOID"
+  replace = "ocRELEASED"
+
+[[mutation]]
+id = "order-exp-c-strict"
+expect = "kill"
+misunderstanding = "EN-023 at the ordering block (RQ-006 scenario): exp_c = b + delta_c equal to exp still orders the request"
+  [[mutation.edit]]
+  rule = "split_request--at_exp"
+  find = "getExp ( R:Req ) <=Int"
+  replace = "getExp ( R:Req ) <Int"
+
+[[mutation]]
+id = "order-exp-c-unchecked"
+expect = "kill"
+misunderstanding = "RQ-006, EN-023: the order event does not check exp_c against exp (EN-023 only at acceptance)"
+  [[mutation.edit]]
+  rule = "split_request--order_codes"
+  find = "opt ( Atexp:Bool , rfExpCNotBelowExp ) "
+  replace = ""
+
+[[mutation]]
+id = "order-exp-c-after-no-qc"
+expect = "kill"
+misunderstanding = "Ledger 1, EN-023, RQ-007: exp_c_not_below_exp is listed after no_qc"
+  [[mutation.edit]]
+  rule = "split_request--order_codes"
+  find = "opt ( Atexp:Bool , rfExpCNotBelowExp ) opt ( notBool Qc:Bool , rfNoQc )"
+  replace = "opt ( notBool Qc:Bool , rfNoQc ) opt ( Atexp:Bool , rfExpCNotBelowExp )"
+
+[[mutation]]
+id = "frame-late-held"
+expect = "kill"
+misunderstanding = "RQ-020 (ledger 8): a frame ordered above exp_c while the target is ORDERED or OPENED is held, not refused"
+  [[mutation.edit]]
+  rule = "split_request--frame_window_1"
+  find = "requires late ( getExpC ( R:Req ) , ctxHeight ( C:Ctx ) )"
+  replace = "requires false"
+  [[mutation.edit]]
+  rule = "split_request--frame_window_2"
+  find = "requires notBool late ( getExpC ( R:Req ) , ctxHeight ( C:Ctx ) )"
+  replace = "requires true"
+
+[[mutation]]
+id = "frame-opened-no-rule"
+expect = "kill"
+misunderstanding = "RQ-075 (DECISIONS 70): a frame for a target in OPENED or ADMITTED is refused with no-rule (the reading before ledger 8 was ruled)"
+  [[mutation.edit]]
+  rule = "split_request--frame_ordered_2"
+  find = "ListItem(rfLateContribution)"
+  replace = "ListItem(rfNoRule)"
+
+[[mutation]]
+id = "frame-opened-held"
+expect = "kill"
+misunderstanding = "RQ-075, RQ-021: a frame for a target in OPENED or ADMITTED is held like one for an ORDERED target"
+  [[mutation.edit]]
+  rule = "split_request--frame_ordered_2"
+  find = "=> rErr ( R:Req , ListItem(rfLateContribution) )"
+  replace = "=> frameHold ( C:Ctx , R:Req , Fr:Frame )"
+  [[mutation.edit]]
+  rule = "split_request--frame_ordered_2"
+  find = "rule frameOrdered ( _ , R:Req , _ )"
+  replace = "rule frameOrdered ( C:Ctx , R:Req , Fr:Frame )"
+
+[[mutation]]
+id = "carry-any-void"
+expect = "kill"
+misunderstanding = "RQ-060, RQ-071 (ledger 25): a reissue carries every VOID leaf, whatever its tombstone reason (MIXED, SLOT_TAKEN, an expiry)"
+  [[mutation.edit]]
+  rule = "split_request--carry_stalled_1"
+  find = "requires readsAs ( getReason ( R:Req ) , rsSTALLED )"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_request--carry_stalled_2"
+  find = "requires notBool readsAs ( getReason ( R:Req ) , rsSTALLED )"
+  replace = "requires false"
+
+[[mutation]]
+id = "reads-mixed-as-any"
+expect = "kill"
+misunderstanding = "RQ-071: a MIXED tombstone reads as every named reason, so it reads as STALLED and its leaf is carried"
+  [[mutation.edit]]
+  rule = "split_request--reads_as_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "burn-drops-release"
+expect = "kill"
+misunderstanding = "RQ-076 (ledger 28): a whole-committee restart loses the board tail, so the live request's any_release is reset"
+  [[mutation.edit]]
+  rule = "split_request--set_restart_1"
+  find = "AnyRelease:Bool , true ,"
+  replace = "false , true ,"
+
+[[mutation]]
+id = "burn-drops-released"
+expect = "kill"
+misunderstanding = "RQ-076 (ledger 28): a whole-committee restart clears released[g] of the live request"
+  [[mutation.edit]]
+  rule = "split_request--set_restart_1"
+  find = "Released:List , AnyRelease:Bool , true ,"
+  replace = "ListItem(.List) ListItem(.List) , AnyRelease:Bool , true ,"
+
+[[mutation]]
+id = "carry-reads-stalled"
+expect = "kill"
+misunderstanding = "RQ-060, RQ-071: carry reads every tombstone reason as STALLED"
+  [[mutation.edit]]
+  rule = "split_request--get_reason_1"
+  find = "=> Reason:Reason"
+  replace = "=> rsSTALLED"
+
+[[mutation]]
+id = "reads-as-any"
+expect = "kill"
+misunderstanding = "RQ-060, RQ-071: a tombstone reason other than MIXED reads as every named reason, so a SLOT_TAKEN leaf is carried"
+  [[mutation.edit]]
+  rule = "split_request--reads_as_2"
+  find = "=> Reason:Reason ==K X:Reason"
+  replace = "=> true"

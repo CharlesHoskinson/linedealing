@@ -1,0 +1,8 @@
+# SL-023, SL-024: the complaint lists the failing polynomials from 1.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { Batch = { polys = [] } },
+  { Batch = { polys = [true, true] } },
+  { Batch = { polys = [false, true, false] } },
+]

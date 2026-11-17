@@ -1,0 +1,144 @@
+# Misreadings of the RELEASE record (RQ-030, RQ-037, RQ-050, RQ-051, RQ-057): a RELEASE
+# commits in a board vote (RQ-037; a NON_TEE node posts it before any partial, RQ-069) and a
+# request that released settles RELEASED, never VOID.
+
+[[mutation]]
+id = "release-not-stored"
+expect = "kill"
+misunderstanding = "RQ-037: an applied release event is observed with the request's phase, but the board keeps the old record"
+  [[mutation.edit]]
+  rule = "release"
+  find = "replace ( Eid:Int ,"
+  replace = "replace ( 0 -Int 1 ,"
+
+[[mutation]]
+id = "release-refused-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 1, RQ-037: a refused release event lists no-rule with its spec codes"
+  [[mutation.edit]]
+  rule = "release-refused"
+  find = "ListItem(refused ( resCodes ( tRelease ("
+  replace = "ListItem(refused ( ListItem(rfNoRule) resCodes ( tRelease ("
+
+[[mutation]]
+id = "release-before-admitted"
+expect = "kill"
+misunderstanding = "RQ-057, RQ-037: a RELEASE before ADMITTED is recorded"
+  [[mutation.edit]]
+  rule = "split_request--release_admitted_1"
+  find = "getPhase ( R:Req ) ==K phADMITTED"
+  replace = "getPhase ( R:Req ) =/=K phPOSTED"
+  [[mutation.edit]]
+  rule = "split_request--release_admitted_2"
+  find = "getPhase ( R:Req ) ==K phADMITTED"
+  replace = "getPhase ( R:Req ) =/=K phPOSTED"
+
+[[mutation]]
+id = "release-g-last"
+expect = "kill"
+misunderstanding = "RQ-037: the last generation G takes no RELEASE"
+  [[mutation.edit]]
+  rule = "split_request--release_in_domain_1"
+  find = "(G:Int <=Int getGg ( R:Req ))"
+  replace = "(G:Int <Int getGg ( R:Req ))"
+  [[mutation.edit]]
+  rule = "split_request--release_in_domain_2"
+  find = "(G:Int <=Int getGg ( R:Req ))"
+  replace = "(G:Int <Int getGg ( R:Req ))"
+
+[[mutation]]
+id = "release-j-any"
+expect = "kill"
+misunderstanding = "RQ-037: a RELEASE may name a variant above K"
+  [[mutation.edit]]
+  rule = "split_request--release_in_domain_1"
+  find = "(J:Int <=Int getKk ( R:Req ))"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_request--release_in_domain_2"
+  find = "(J:Int <=Int getKk ( R:Req ))"
+  replace = "true"
+
+[[mutation]]
+id = "release-j-zero"
+expect = "kill"
+misunderstanding = "RQ-037: variant 0 takes a RELEASE"
+  [[mutation.edit]]
+  rule = "split_request--release_in_domain_1"
+  find = "(1 <=Int J:Int)"
+  replace = "(0 <=Int J:Int)"
+  [[mutation.edit]]
+  rule = "split_request--release_in_domain_2"
+  find = "(1 <=Int J:Int)"
+  replace = "(0 <=Int J:Int)"
+
+[[mutation]]
+id = "release-two-variants"
+expect = "kill"
+misunderstanding = "RQ-037: a generation takes RELEASEs of two variants; the later one replaces the first"
+  [[mutation.edit]]
+  rule = "split_request--release_rec_1"
+  find = "orElse ( Prev:List , J:Int ) =/=Int J:Int"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--release_rec_2"
+  find = "orElse ( Prev:List , J:Int ) =/=Int J:Int"
+  replace = "false"
+
+[[mutation]]
+id = "release-no-flag"
+expect = "kill"
+misunderstanding = "RQ-030, RQ-051: a recorded RELEASE leaves any_release false"
+  [[mutation.edit]]
+  rule = "split_request--set_released_1"
+  find = "VReleased:List , true , RestartEnd:Bool"
+  replace = "VReleased:List , false , RestartEnd:Bool"
+
+[[mutation]]
+id = "released-settles-void"
+expect = "kill"
+misunderstanding = "RQ-050, RQ-051: a request that released and then ends settles VOID"
+  [[mutation.edit]]
+  rule = "split_request--end_outcome_2"
+  find = "=> ocRELEASED"
+  replace = "=> ocVOID"
+
+[[mutation]]
+id = "h-step-release-guard"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-056: a RELEASE for a FINAL, VOID or EXPIRED request is applied as for a live one"
+  [[mutation.edit]]
+  rule = "split_request--step_release_1"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--step_release_2"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+
+[[mutation]]
+id = "h-t-release"
+expect = "kill"
+misunderstanding = "RQ-004: a release event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_release"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-get-any-release-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's any_release is read as negated"
+  [[mutation.edit]]
+  rule = "split_request--get_any_release_1"
+  find = "=> AnyRelease:Bool"
+  replace = "=> notBool AnyRelease:Bool"
+
+[[mutation]]
+id = "h-get-released-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's released is read as two empty entries"
+  [[mutation.edit]]
+  rule = "split_request--get_released_1"
+  find = "=> Released:List"
+  replace = "=> ListItem(.List) ListItem(.List)"

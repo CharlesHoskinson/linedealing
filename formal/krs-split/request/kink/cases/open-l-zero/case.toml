@@ -1,0 +1,9 @@
+# RQ-067: L = 0 is outside the capability.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { Open = { eid = 1, kk = 2, ll = 0, collecting = false, npos = 0, rates = [10, 20] } },
+]

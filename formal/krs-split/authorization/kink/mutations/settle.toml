@@ -1,0 +1,126 @@
+# Plausible misreadings of AU-020 and AU-023 (settlement by settle_root) and ledger 5.
+
+[[mutation]]
+id = "au020-root-ignored"
+expect = "kill"
+misunderstanding = "AU-020: a landed settle_root changes no authorization"
+  [[mutation.edit]]
+  rule = "settle-root"
+  find = "settleRecs ( Leaves:List , Records:List )"
+  replace = "Records:List"
+
+[[mutation]]
+id = "au020-refuse-ok"
+expect = "kill"
+misunderstanding = "AU-020: a settle_root with a NONE leaf lands"
+  [[mutation.edit]]
+  rule = "settle-root-refuse"
+  find = "ListItem(refused ( settleRootRefusals ( Leaves:List ) ))"
+  replace = "ListItem(ok)"
+
+[[mutation]]
+id = "au020-none-leaf"
+expect = "kill"
+misunderstanding = "AU-020, ledger 5: a leaf with outcome NONE is in the domain"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_root_refusals_1"
+  find = "anyNoneLeaf ( Leaves:List )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_root_refusals_2"
+  find = "anyNoneLeaf ( Leaves:List )"
+  replace = "false"
+
+[[mutation]]
+id = "au020-void-leaf-refused"
+expect = "kill"
+misunderstanding = "AU-020: a VOID leaf is outside the domain"
+  [[mutation.edit]]
+  rule = "split_authorization--any_none_leaf_3"
+  find = "=> anyNoneLeaf ( Rest:List )"
+  replace = "=> any3 ( O:Settled ==K setVOID , anyNoneLeaf ( Rest:List ) , false )"
+
+[[mutation]]
+id = "au020-resettle"
+expect = "kill"
+misunderstanding = "AU-020: a leaf settles an authorization again after its first settlement"
+  [[mutation.edit]]
+  rule = "split_authorization--sel_1"
+  find = " andThenBool (Settled:Settled ==K setNONE)"
+  replace = ""
+
+[[mutation]]
+id = "au020-every-record"
+expect = "kill"
+misunderstanding = "AU-020, AU-023: a leaf makes a successor of every record, not only of the record that holds the authorization"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_in_1"
+  find = "anySel ( Auths:List , A:Int )"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_in_2"
+  find = "anySel ( Auths:List , A:Int )"
+  replace = "true"
+
+[[mutation]]
+id = "au020-outcome-final"
+expect = "kill"
+misunderstanding = "AU-020: every settled authorization records FINAL"
+  [[mutation.edit]]
+  rule = "split_authorization--upd_1"
+  find = ", O:Settled , Source:List"
+  replace = ", setFINAL , Source:List"
+
+[[mutation]]
+id = "au023-final-not-spent"
+expect = "kill"
+misunderstanding = "AU-023 FINAL: the record is not spent; the change record does not replace it"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_outcome_1"
+  find = "SlrG:List , true , updAll"
+  replace = "SlrG:List , false , updAll"
+
+[[mutation]]
+id = "au023-void-keeps-state"
+expect = "kill"
+misunderstanding = "AU-023 VOID: the record keeps rstate PENDING"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_outcome_2"
+  find = "rsUNSPENT , ofSettle ( A:Int , setVOID )"
+  replace = "rsPENDING , ofSettle ( A:Int , setVOID )"
+
+[[mutation]]
+id = "au023-void-nf-tag"
+expect = "kill"
+misunderstanding = "AU-023 VOID: the successor nullifier is N(nsk, auth, RELEASED)"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_outcome_2"
+  find = "ofSettle ( A:Int , setVOID )"
+  replace = "ofSettle ( A:Int , setRELEASED )"
+
+[[mutation]]
+id = "au023-released-unspent"
+expect = "kill"
+misunderstanding = "AU-023 RELEASED: the record returns to UNSPENT"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_outcome_4"
+  find = "rsLOCKED"
+  replace = "rsUNSPENT"
+
+[[mutation]]
+id = "au023-released-no-pin"
+expect = "kill"
+misunderstanding = "AU-023 RELEASED, AU-009: the record is LOCKED without its pin"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_outcome_4"
+  find = "pinOf ( A:Int , Auths:List )"
+  replace = ".List"
+
+[[mutation]]
+id = "au023-released-nf-tag"
+expect = "kill"
+misunderstanding = "AU-023 RELEASED: the successor nullifier is N(nsk, auth, VOID)"
+  [[mutation.edit]]
+  rule = "split_authorization--settle_outcome_4"
+  find = "ofSettle ( A:Int , setRELEASED )"
+  replace = "ofSettle ( A:Int , setVOID )"

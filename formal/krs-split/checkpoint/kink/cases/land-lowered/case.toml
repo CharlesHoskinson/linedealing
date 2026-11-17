@@ -1,0 +1,8 @@
+# CP-007: h below the previous h for a pool of both is h_lowered (the candidate also lowers
+# pending_min, so CP-040 adds pending_min_lowered)
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 2, h = 5, pending_min = 6, pending = [], pending_count = 0 } }, { PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { Land = { c = { CpOf = { seq = 1, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 3, h = 1, pending_min = 2, pending = [], pending_count = 0 } }, { PoolOf = { pool = 1, h = 99, pending_min = 100, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+]

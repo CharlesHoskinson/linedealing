@@ -1,0 +1,60 @@
+# Reference suite for split-authorization. The programs are typed cases: cases/*/case.toml.
+# `krs kink coverage` must leave no obligation open, `krs kink run` must kill every
+# mutation or carry an argued survivor, and `krs kink compare` checks the reference
+# definition against the Lean oracle (corpus end equivalence: equal ends on every program).
+
+[spec]
+krs = { package = "split-authorization-reference", definition = "main" }
+
+# Unique-cause MC/DC on every guard.
+[coverage]
+mcdc = true
+
+# AU-026 (bfIn): a bf_root lands only when every tuple's nf is a board-first record's
+# (ledger 8), and no two records hold the same nf (AU-001, ledger 5; a settlement nf
+# names its auth, and auths are unique), so no run meets a record whose nf a tuple names
+# and that is not board-first: the board_first operand cannot be the unique cause.
+[[coverage.argued]]
+item = "requirement:crate::bf_in_1:board_first:mcdc"
+argument = "AU-026, ledger 8: an accepted bf_root names only board-first records' nfs and record nfs are unique (AU-001, ledger 5), so a tuple's nf never matches a record that is not board-first"
+
+[[coverage.argued]]
+item = "requirement:crate::bf_in_2:board_first:mcdc"
+argument = "AU-026, ledger 8: an accepted bf_root names only board-first records' nfs and record nfs are unique (AU-001, ledger 5), so a tuple's nf never matches a record that is not board-first"
+
+# AU-002, AU-010 (finalIn): finalize runs only when an authorization `auth` is SUBMITTED
+# (ledger 10), and auth ids are unique (ledger 5), so the authorization finalIn meets with
+# that id is SUBMITTED: the status operand is never false where the id matches.
+[[coverage.argued]]
+item = "requirement:crate::final_in_1:status.eq::<K>(StatusC::Submitted):false"
+argument = "Ledger 10: finalize is accepted only when the authorization auth is SUBMITTED, and auth ids are unique (ledger 5), so the one authorization with that id is SUBMITTED"
+
+[[coverage.argued]]
+item = "requirement:crate::final_in_1:status.eq::<K>(StatusC::Submitted):mcdc"
+argument = "Ledger 10: finalize is accepted only when the authorization auth is SUBMITTED, and auth ids are unique (ledger 5), so the one authorization with that id is SUBMITTED"
+
+[[coverage.argued]]
+item = "requirement:crate::final_in_2:status.eq::<K>(StatusC::Submitted):false"
+argument = "Ledger 10: finalize is accepted only when the authorization auth is SUBMITTED, and auth ids are unique (ledger 5), so the one authorization with that id is SUBMITTED"
+
+[[coverage.argued]]
+item = "requirement:crate::final_in_2:status.eq::<K>(StatusC::Submitted):mcdc"
+argument = "Ledger 10: finalize is accepted only when the authorization auth is SUBMITTED, and auth ids are unique (ledger 5), so the one authorization with that id is SUBMITTED"
+
+[budget]
+time_ms = 600000
+
+[[program]]
+cases = "cases/*/case.toml"
+
+# Spec anchor: the Lean oracle (formal/lean-split/authorization, `lake build oracle`),
+# through the schema-driven adapter that translates the KRS typed encoding to the
+# oracle's JSON and back. No identity: the answers depend on the adapter, the schema and
+# the binary, and one identity file cannot cover all three, so kink caches none.
+[[implementation]]
+name = "lean-oracle"
+command = ["python3", "-I", "../../scripts/oracle_adapter.py", "../schema.json",
+           "../../../lean-split/authorization/.lake/build/bin/oracle"]
+given = "inputs"
+omits = ["k", "ops"]
+views = [{ name = "end", required = true }]

@@ -1,0 +1,13 @@
+# ledger 18: an acknowledge call that names no registered record is no rule only
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { Acknowledge = { cm_addr = 900, signers = [0, 1, 2] } },
+  { AckCheckOp = { node = 0, cm_addr = 900, ack = { Ac = { x_recomputed = true, opening_ok = true, pop_u = true } } } },
+  { AckCheckOp = { node = 1, cm_addr = 900, ack = { Ac = { x_recomputed = true, opening_ok = true, pop_u = true } } } },
+  { AckCheckOp = { node = 2, cm_addr = 900, ack = { Ac = { x_recomputed = true, opening_ok = true, pop_u = true } } } },
+  { FixCharter = { id = 8, gamma = { Group = { mid = 0, kk = 2, children = [{ Leaf = { mid = 1, actor = 1 } }, { Leaf = { mid = 2, actor = 2 } }, { Leaf = { mid = 3, actor = 3 } }] } } } },
+  { SubmitRecord = { record = { Rr = { cm_addr = 900, profile = "P0", charter = 8, signers = [], owner_reg = true, escrow_acks = 0, escrow_quorum = 0, guardian_acks = 0, q_g = 0, network_created = true } } } },
+  { Acknowledge = { cm_addr = 901, signers = [0, 1, 2] } },
+  { Acknowledge = { cm_addr = 901, signers = [0, 0] } },
+]

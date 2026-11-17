@@ -1,0 +1,8 @@
+# Ledger 5: t = 0 is outside the capability.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { CombineOp = { t = 0, dealing_ok = true, partials = [{ Part = { sender = 1, proof_ok = true } }] } },
+]

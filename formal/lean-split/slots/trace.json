@@ -1,0 +1,55 @@
+{
+  "prefix": "SL",
+  "namespace": "SplitSlots",
+  "spec": "openspec/changes/add-split-line-dealing/specs/split-slots/spec.md",
+  "count": 30,
+  "proved": {
+    "SL-005": [
+      "C13_run_lapsed_burned"
+    ],
+    "SL-007": [
+      "sl007_unauthorized_namer",
+      "sl007_unauthorized_end"
+    ],
+    "SL-012": [
+      "sl012_window_iff"
+    ],
+    "SL-013": [
+      "sl013_sl014_outside"
+    ],
+    "SL-014": [
+      "sl013_sl014_outside"
+    ],
+    "SL-017": [
+      "sl017_step",
+      "sl017_run"
+    ],
+    "SL-021": [
+      "C12_run_one_ticket"
+    ],
+    "SL-028": [
+      "C13_ecdsa_burn_only_if_reserved"
+    ]
+  },
+  "exceptions": {
+    "SL-029": "the slot state holds no generation, variant or input; the ticket-to-slot map is header data that split-envelope EN-010 and EN-011 check"
+  },
+  "ledger": {
+    "SL-004": "1, 5",
+    "SL-005": "1, 9, 10",
+    "SL-006": "2, 3",
+    "SL-009": "1",
+    "SL-010": "1",
+    "SL-012": "9",
+    "SL-016": "9",
+    "SL-017": "3",
+    "SL-018": "6, 8",
+    "SL-019": "6, 8",
+    "SL-020": "6, 7",
+    "SL-021": "7",
+    "SL-022": "5",
+    "SL-025": "9",
+    "SL-027": "7",
+    "SL-030": "6, 9"
+  }
+}

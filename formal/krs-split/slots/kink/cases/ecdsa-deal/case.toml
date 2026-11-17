@@ -1,0 +1,9 @@
+# SL-003, SL-022: account pools deal above their own highest index.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealE = { pool = 1, leaf_set = 5, root = "Own", kcount = 2 } },
+  { DealE = { pool = 2, leaf_set = 6, root = "Gr", kcount = 1 } },
+  { DealE = { pool = 1, leaf_set = 7, root = "Gr", kcount = 1 } },
+  { DealE = { pool = 1, leaf_set = 8, root = "Own", kcount = 0 } },
+]

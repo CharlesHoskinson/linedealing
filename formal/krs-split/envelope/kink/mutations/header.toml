@@ -1,0 +1,302 @@
+# Plausible misreadings of EN-009 to EN-013 (the header checks after order) and of the
+# header domain (RQ-067, ledger 5), as K patches of kink/definition.k.
+
+[[mutation]]
+id = "en009-body-offset"
+expect = "kill"
+misunderstanding = "EN-009, EN-016: the unused body entries start one past the variant bodies, so the first unused entry is never checked"
+  [[mutation.edit]]
+  rule = "split_envelope--layout_bad_1_1"
+  find = "dropN ( bodyCount ( Suite:Suite , Kk:Int ) , Bodies:List )"
+  replace = "dropN ( bodyCount ( Suite:Suite , Kk:Int ) +Int 1 , Bodies:List )"
+  [[mutation.edit]]
+  rule = "split_envelope--layout_bad_1_2"
+  find = "dropN ( bodyCount ( Suite:Suite , Kk:Int ) , Bodies:List )"
+  replace = "dropN ( bodyCount ( Suite:Suite , Kk:Int ) +Int 1 , Bodies:List )"
+  [[mutation.edit]]
+  rule = "split_envelope--layout_bad_1_3"
+  find = "dropN ( bodyCount ( Suite:Suite , Kk:Int ) , Bodies:List )"
+  replace = "dropN ( bodyCount ( Suite:Suite , Kk:Int ) +Int 1 , Bodies:List )"
+
+[[mutation]]
+id = "en009-capsules-unchecked"
+expect = "kill"
+misunderstanding = "EN-009: the capsule entries past n_capsules are not checked"
+  [[mutation.edit]]
+  rule = "split_envelope--layout_bad_1_2"
+  find = "=> true"
+  replace = "=> RegionOutside:Bool orElseBool LengthMismatch:Bool"
+
+[[mutation]]
+id = "en009-region-unchecked"
+expect = "kill"
+misunderstanding = "EN-009: a region that leaves the frame or overlaps the actor capsules is not a fault"
+  [[mutation.edit]]
+  rule = "split_envelope--layout_bad_1_3"
+  find = "=> RegionOutside:Bool orElseBool LengthMismatch:Bool"
+  replace = "=> LengthMismatch:Bool"
+
+[[mutation]]
+id = "en009-length-unchecked"
+expect = "kill"
+misunderstanding = "EN-009: a length that disagrees with the header is not a fault"
+  [[mutation.edit]]
+  rule = "split_envelope--layout_bad_1_3"
+  find = "=> RegionOutside:Bool orElseBool LengthMismatch:Bool"
+  replace = "=> RegionOutside:Bool"
+
+[[mutation]]
+id = "en016-no-generation-cap"
+expect = "kill"
+misunderstanding = "EN-016, EN-010: variant v has v generations, not min(v, G), so K = 3 counts 1 + 2 + 3 bodies and tickets"
+  [[mutation.edit]]
+  rule = "split_envelope--sum_min_2"
+  find = "(minInt(I:Int, G:Int))"
+  replace = "I:Int"
+
+[[mutation]]
+id = "en010-gmax-three"
+expect = "kill"
+misunderstanding = "EN-010, RQ-067: G_max is 3, so G = min(K, 3)"
+  [[mutation.edit]]
+  rule = "split_envelope--g_of"
+  find = "minInt(Kk:Int, 2)"
+  replace = "minInt(Kk:Int, 3)"
+
+[[mutation]]
+id = "en010-ecdsa-tickets-k"
+expect = "kill"
+misunderstanding = "EN-010: an ECDSA header holds K tickets, not K·L"
+  [[mutation.edit]]
+  rule = "split_envelope--ticket_count_2"
+  find = "=> Kk:Int *Int Ll:Int"
+  replace = "=> Kk:Int"
+
+[[mutation]]
+id = "en010-schnorr-tickets-no-l"
+expect = "kill"
+misunderstanding = "EN-010: a Schnorr header holds Σ min(v, G) tickets, without the factor L"
+  [[mutation.edit]]
+  rule = "split_envelope--ticket_count_1"
+  find = "=> Ll:Int *Int sumMin ( Kk:Int , gOf ( Kk:Int ) )"
+  replace = "=> sumMin ( Kk:Int , gOf ( Kk:Int ) )"
+
+[[mutation]]
+id = "en010-slot-count-unchecked"
+expect = "kill"
+misunderstanding = "EN-010: extra committee slots beyond the G × L grid are allowed"
+  [[mutation.edit]]
+  rule = "split_envelope--count_bad_1"
+  find = "(size(Slots:List) =/=Int (gOf ( Kk:Int ) *Int Ll:Int)) orElseBool "
+  replace = ""
+
+[[mutation]]
+id = "en010-grid-unchecked"
+expect = "kill"
+misunderstanding = "EN-010: G·L slots are enough even when they miss a grid cell (g, j)"
+  [[mutation.edit]]
+  rule = "split_envelope--count_bad_1"
+  find = "(notBool gridAll ( gOf ( Kk:Int ) , Ll:Int , Slots:List ))"
+  replace = "false"
+
+[[mutation]]
+id = "en010-grid-j-only"
+expect = "kill"
+misunderstanding = "EN-010: a slot covers grid cell (g, j) when its j matches, whatever its g"
+  [[mutation.edit]]
+  rule = "split_envelope--has_cell_2"
+  find = "(Sg:Int ==Int G:Int) andThenBool (Sj:Int ==Int J:Int)"
+  replace = "Sj:Int ==Int J:Int"
+
+[[mutation]]
+id = "en010-slots-on-ecdsa"
+expect = "kill"
+misunderstanding = "EN-010: ECDSA headers must also name the G × L committee slots"
+  [[mutation.edit]]
+  rule = "split_envelope--count_bad_1"
+  find = "schnorr ( Suite:Suite ) andThenBool"
+  replace = "true andThenBool"
+
+[[mutation]]
+id = "en011-ra-unchecked"
+expect = "kill"
+misunderstanding = "EN-011: a repeated R_A is allowed"
+  [[mutation.edit]]
+  rule = "split_envelope--distinct_bad_1"
+  find = "(notBool nodupB ( RA:List ))"
+  replace = "false"
+
+[[mutation]]
+id = "en011-recdsa-unchecked"
+expect = "kill"
+misunderstanding = "EN-011: a repeated ECDSA R_l is allowed"
+  [[mutation.edit]]
+  rule = "split_envelope--distinct_bad_1"
+  find = "(notBool nodupB ( REcdsa:List ))"
+  replace = "false"
+
+[[mutation]]
+id = "en011-slot-unchecked"
+expect = "kill"
+misunderstanding = "EN-011: a repeated committee slot index is allowed"
+  [[mutation.edit]]
+  rule = "split_envelope--distinct_bad_1"
+  find = "(notBool nodupB ( ells ( Slots:List ) ))"
+  replace = "false"
+
+[[mutation]]
+id = "en011-pairs-every-mode"
+expect = "kill"
+misunderstanding = "EN-011: the actor pool pairs must be distinct in every mode, not only TEE"
+  [[mutation.edit]]
+  rule = "split_envelope--distinct_bad_1"
+  find = "(M:Mode ==K TEE) andThenBool"
+  replace = "true andThenBool"
+
+[[mutation]]
+id = "en011-pairs-unchecked"
+expect = "kill"
+misunderstanding = "EN-011: a repeated actor pool pair is allowed in TEE mode"
+  [[mutation.edit]]
+  rule = "split_envelope--distinct_bad_1"
+  find = "(notBool nodupB ( Pairs:List ))"
+  replace = "false"
+
+[[mutation]]
+id = "en012-ic-unchecked"
+expect = "kill"
+misunderstanding = "EN-012: a header without ic is well formed"
+  [[mutation.edit]]
+  rule = "split_envelope--commit_bad_1"
+  find = "(notBool HasIc:Bool)"
+  replace = "false"
+
+[[mutation]]
+id = "en012-rtkc-unchecked"
+expect = "kill"
+misunderstanding = "EN-012: a header without r_tkc is well formed"
+  [[mutation.edit]]
+  rule = "split_envelope--commit_bad_1"
+  find = "(notBool HasRTkc:Bool)"
+  replace = "false"
+
+[[mutation]]
+id = "en012-tkc-checked"
+expect = "kill"
+misunderstanding = "EN-012 (DECISIONS 68): the opening check still compares the recomputed tkc with the one auth commits, which is RQ-025's admission check"
+  [[mutation.edit]]
+  rule = "split_envelope--commit_bad_1"
+  find = "header ( _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , HasIc:Bool , HasRTkc:Bool , _ , _ , _ )"
+  replace = "header ( _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , HasIc:Bool , HasRTkc:Bool , Tkc:Int , AuthTkc:Int , _ )"
+  [[mutation.edit]]
+  rule = "split_envelope--commit_bad_1"
+  find = "(notBool HasRTkc:Bool)"
+  replace = "(notBool HasRTkc:Bool) orElseBool (Tkc:Int =/=Int AuthTkc:Int)"
+
+[[mutation]]
+id = "en013-every-mode"
+expect = "kill"
+misunderstanding = "EN-013: the enclave recomputation is checked in every mode, not only TEE"
+  [[mutation.edit]]
+  rule = "split_envelope--recompute_bad_1"
+  find = "(M:Mode ==K TEE) andThenBool"
+  replace = "true andThenBool"
+
+[[mutation]]
+id = "en013-unchecked"
+expect = "kill"
+misunderstanding = "EN-013: a recomputed field that differs from a ticket's own is not a fault"
+  [[mutation.edit]]
+  rule = "split_envelope--recompute_bad_1"
+  find = "andThenBool RecomputeMismatch:Bool"
+  replace = "andThenBool false"
+
+[[mutation]]
+id = "fault-order"
+expect = "kill"
+misunderstanding = "EN-009, EN-010: the failed requirements are listed in another order than EN-009 to EN-013"
+  [[mutation.edit]]
+  rule = "split_envelope--header_faults"
+  find = "f009 ( H:Header ) f010 ( H:Header )"
+  replace = "f010 ( H:Header ) f009 ( H:Header )"
+
+[[mutation]]
+id = "header-k-zero"
+expect = "kill"
+misunderstanding = "RQ-067: K = 0 is inside the header domain"
+  [[mutation.edit]]
+  rule = "split_envelope--header_in_domain_1"
+  find = "(1 <=Int Kk:Int)"
+  replace = "(0 <=Int Kk:Int)"
+
+[[mutation]]
+id = "header-k-max-seven"
+expect = "kill"
+misunderstanding = "RQ-067, EN-020: K_max is 7, so K = 8 is outside the header domain"
+  [[mutation.edit]]
+  rule = "split_envelope--header_in_domain_1"
+  find = "(Kk:Int <=Int 8)"
+  replace = "(Kk:Int <=Int 7)"
+
+[[mutation]]
+id = "header-l-zero"
+expect = "kill"
+misunderstanding = "RQ-067: L = 0 is inside the header domain"
+  [[mutation.edit]]
+  rule = "split_envelope--header_in_domain_1"
+  find = "(1 <=Int Ll:Int)"
+  replace = "(0 <=Int Ll:Int)"
+
+[[mutation]]
+id = "header-l-three"
+expect = "kill"
+misunderstanding = "RQ-067: L = 3 is inside the header domain"
+  [[mutation.edit]]
+  rule = "split_envelope--header_in_domain_1"
+  find = "(Ll:Int <=Int 2)"
+  replace = "(Ll:Int <=Int 3)"
+
+[[mutation]]
+id = "header-bodies-any"
+expect = "kill"
+misunderstanding = "EN-009: the layout block may hold any number of body regions"
+  [[mutation.edit]]
+  rule = "split_envelope--header_in_domain_1"
+  find = "(size(Bodies:List) ==Int 15)"
+  replace = "true"
+
+[[mutation]]
+id = "header-capsules-any"
+expect = "kill"
+misunderstanding = "EN-009, EN-020: the layout block may hold any number of capsule regions"
+  [[mutation.edit]]
+  rule = "split_envelope--header_in_domain_1"
+  find = "(size(Capsules:List) ==Int 8)"
+  replace = "true"
+
+[[mutation]]
+id = "header-ncap-nine"
+expect = "kill"
+misunderstanding = "EN-020: nine actor capsules are inside the header domain"
+  [[mutation.edit]]
+  rule = "split_envelope--header_in_domain_1"
+  find = "(NCapsules:Int <=Int 8)"
+  replace = "(NCapsules:Int <=Int 9)"
+
+[[mutation]]
+id = "header-obs-first"
+expect = "kill"
+misunderstanding = "EN-009 to EN-013: the observation of a header goes before the earlier observations"
+  [[mutation.edit]]
+  rule = "header"
+  find = "Obs:List => Obs:List ListItem(faults ( headerFaults ( Mode:Mode , Hdr:Header ) ))"
+  replace = "Obs:List => ListItem(faults ( headerFaults ( Mode:Mode , Hdr:Header ) )) Obs:List"
+
+[[mutation]]
+id = "header-outside-faults"
+expect = "kill"
+misunderstanding = "RQ-067: a header outside the domain is checked like any header instead of refused"
+  [[mutation.edit]]
+  rule = "header-outside"
+  find = "ListItem(refused ( ListItem(outsideCapability) ))"
+  replace = "ListItem(faults ( .List ))"

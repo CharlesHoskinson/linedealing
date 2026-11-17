@@ -1,0 +1,12 @@
+# CP-021, SL-028: a restart burns one account pool; a burned slot gets no precedence.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealE = { pool = 1, leaf_set = 5, root = "Own", kcount = 2 } },
+  { DealE = { pool = 2, leaf_set = 5, root = "Own", kcount = 1 } },
+  { OpenE = { eid = 1, pos = 10, names = [{ Ek = { pool = 1, idx = 1 } }] } },
+  { BurnPool = { pool = 1 } },
+  { InForce = { eid = 1, root = "Own" } },
+  { BurnPool = { pool = 3 } },
+  { OpenE = { eid = 2, pos = 20, names = [{ Ek = { pool = 1, idx = 2 } }] } },
+]

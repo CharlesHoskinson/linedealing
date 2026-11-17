@@ -1,0 +1,20 @@
+# AU-013: a call fails without its proof, a final root, the age bound, an unlanded nf, or q carried signatures
+[inputs]
+params = { Params = { mode = "Tee", q = 3 } }
+ops = [
+  { CharterOp = { cid = 1, profile = "P1", board_first = false, stateful = false } },
+  { CharterOp = { cid = 2, profile = "P2", board_first = false, stateful = false } },
+  { CharterOp = { cid = 3, profile = "P0", board_first = false, stateful = false } },
+  { CharterOp = { cid = 4, profile = "P1", board_first = true, stateful = false } },
+  { RecordOp = { rid = 1, cid = 1, cm_addr = 101, nf = { Fresh = { n = 1 } }, hold_tag = 0, slr_own = [11], slr_g = [] } },
+  { RecordOp = { rid = 2, cid = 2, cm_addr = 102, nf = { Fresh = { n = 2 } }, hold_tag = 7, slr_own = [21], slr_g = [22] } },
+  { RecordOp = { rid = 3, cid = 3, cm_addr = 103, nf = { Fresh = { n = 3 } }, hold_tag = 0, slr_own = [], slr_g = [] } },
+  { RecordOp = { rid = 4, cid = 4, cm_addr = 104, nf = { Fresh = { n = 4 } }, hold_tag = 0, slr_own = [], slr_g = [] } },
+  { BfCallOp = { c = { Bc = { auth = 20, nf = { Fresh = { n = 4 } }, proof_ok = false, root_final = true, root_age = 1, bound = 10, interval = 2, f_m = 3, carry_sigs = [] } } } },
+  { BfCallOp = { c = { Bc = { auth = 21, nf = { Fresh = { n = 4 } }, proof_ok = true, root_final = false, root_age = 1, bound = 10, interval = 2, f_m = 3, carry_sigs = [] } } } },
+  { BfCallOp = { c = { Bc = { auth = 22, nf = { Fresh = { n = 4 } }, proof_ok = true, root_final = true, root_age = 6, bound = 10, interval = 2, f_m = 3, carry_sigs = [] } } } },
+  { BfCallOp = { c = { Bc = { auth = 23, nf = { Fresh = { n = 4 } }, proof_ok = true, root_final = true, root_age = 5, bound = 10, interval = 2, f_m = 3, carry_sigs = [] } } } },
+  { BfCallOp = { c = { Bc = { auth = 24, nf = { Fresh = { n = 5 } }, proof_ok = true, root_final = true, root_age = 1, bound = 10, interval = 2, f_m = 3, carry_sigs = [2] } } } },
+  { BfRootOp = { ts = [{ Tp = { auth = 25, nf = { Fresh = { n = 4 } }, rh = 0, root = 0 } }] } },
+  { BfCallOp = { c = { Bc = { auth = 26, nf = { Fresh = { n = 4 } }, proof_ok = true, root_final = true, root_age = 1, bound = 10, interval = 2, f_m = 3, carry_sigs = [] } } } },
+]

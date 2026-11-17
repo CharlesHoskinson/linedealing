@@ -1,0 +1,13 @@
+# SL-005, SL-010: a lapse burns every committee slot where the request holds prec.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealC = { suite = "Bip340", epoch = 3, kcount = 3 } },
+  { OpenC = { eid = 1, pos = 10, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 1 } }, { Ck = { suite = "Bip340", epoch = 3, idx = 2 } }] } },
+  { OpenC = { eid = 2, pos = 20, names = [{ Ck = { suite = "Bip340", epoch = 3, idx = 2 } }, { Ck = { suite = "Bip340", epoch = 3, idx = 3 } }] } },
+  { Lapse = { eid = 1 } },
+  { Lapse = { eid = 1 } },
+  { Lapse = { eid = 5 } },
+  { InForce = { eid = 1, root = "Own" } },
+  { InForce = { eid = 5, root = "Gr" } },
+]

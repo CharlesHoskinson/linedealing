@@ -1,0 +1,13 @@
+# CP-018, CP-020, CP-021, CP-024: a whole restart burns [pending_min, h + B] of each pool and every account slot; a later session opens with its pool's burns
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 95, pending = [95, 98], pending_count = 2 } }, { PoolOf = { pool = 2, h = 40, pending_min = 41, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { ReadLedger = { ok = true, tickets = [], cov = [] } },
+  { OpenAcct = { a = { AcctOf = { id = 1, slots = ["Free", { Bound = { d = 5 } }, "Burned"], mark = 0, refill = false } } } },
+  { OpenAcct = { a = { AcctOf = { id = 2, slots = ["Free"], mark = 0, refill = false } } } },
+  { ReadLedger = { ok = true, tickets = [{ P = [0, 1] }, { P = [1, 1] }], cov = [] } },
+  { OpenSession = { pool = 2 } },
+  { OpenSession = { pool = 1 } },
+  { OpenSession = { pool = 3 } },
+]

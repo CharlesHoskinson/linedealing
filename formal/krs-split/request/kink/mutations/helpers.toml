@@ -1,0 +1,1531 @@
+# Misreadings of the helper functions, the record readers and writers, and the terminal and
+# guard checks that the event misreadings leave alone. Every equation of the definition is a
+# mutation target, so each equation no other file edits has one here.
+
+[[mutation]]
+id = "h-step-open-guard"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-056: a header for a FINAL, VOID or EXPIRED request is applied as for a live one"
+  [[mutation.edit]]
+  rule = "split_request--step_open_1"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--step_open_2"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+
+[[mutation]]
+id = "h-step-complaint-guard"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-056: a share complaint for a FINAL, VOID or EXPIRED request is applied as for a live one"
+  [[mutation.edit]]
+  rule = "split_request--step_complaint_1"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--step_complaint_2"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+
+[[mutation]]
+id = "h-step-frame-guard"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-056: a frame for a FINAL, VOID or EXPIRED request is applied as for a live one"
+  [[mutation.edit]]
+  rule = "split_request--step_frame_1"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--step_frame_2"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+
+[[mutation]]
+id = "h-step-detach-guard"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-056: a detach for a FINAL, VOID or EXPIRED request is applied as for a live one"
+  [[mutation.edit]]
+  rule = "split_request--step_detach_1"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--step_detach_2"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+
+[[mutation]]
+id = "h-step-vote-opened-guard"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-056: an OPENED vote for a FINAL, VOID or EXPIRED request is applied as for a live one"
+  [[mutation.edit]]
+  rule = "split_request--step_vote_opened_1"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--step_vote_opened_2"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+
+[[mutation]]
+id = "h-step-vote-admit-guard"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-056: an ADMIT vote for a FINAL, VOID or EXPIRED request is applied as for a live one"
+  [[mutation.edit]]
+  rule = "split_request--step_vote_admit_1"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--step_vote_admit_2"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+
+[[mutation]]
+id = "h-step-obs2-guard"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-056: an OBS set for a FINAL, VOID or EXPIRED request is applied as for a live one"
+  [[mutation.edit]]
+  rule = "split_request--step_obs2_1"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--step_obs2_2"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+
+[[mutation]]
+id = "h-final-in-guard"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-056: a FINAL post for a FINAL, VOID or EXPIRED request is applied as for a live one"
+  [[mutation.edit]]
+  rule = "split_request--final_in_1"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--final_in_2"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+
+[[mutation]]
+id = "h-void-in-guard"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-056: a VOID post for a FINAL, VOID or EXPIRED request is applied as for a live one"
+  [[mutation.edit]]
+  rule = "split_request--void_in_1"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--void_in_2"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+
+[[mutation]]
+id = "h-step-restart-burn-guard"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-056: a restart burn for a FINAL, VOID or EXPIRED request is applied as for a live one"
+  [[mutation.edit]]
+  rule = "split_request--step_restart_burn_1"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--step_restart_burn_2"
+  find = "isTerminal ( getPhase ( R:Req ) )"
+  replace = "false"
+
+[[mutation]]
+id = "h-admit-node-guard"
+expect = "kill"
+misunderstanding = "RQ-001: ADMIT vote node indices run 0..n"
+  [[mutation.edit]]
+  rule = "split_request--admit_node_1"
+  find = "Node:Int <Int ctxN ( C:Ctx )"
+  replace = "Node:Int <=Int ctxN ( C:Ctx )"
+  [[mutation.edit]]
+  rule = "split_request--admit_node_2"
+  find = "Node:Int <Int ctxN ( C:Ctx )"
+  replace = "Node:Int <=Int ctxN ( C:Ctx )"
+
+[[mutation]]
+id = "h-attach-one-guard"
+expect = "kill"
+misunderstanding = "RQ-021: held frames never attach when the request reaches COLLECTING"
+  [[mutation.edit]]
+  rule = "split_request--attach_one_1"
+  find = "heldOk ( E:Int , Ps:List , Fr:Frame )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--attach_one_2"
+  find = "heldOk ( E:Int , Ps:List , Fr:Frame )"
+  replace = "false"
+
+[[mutation]]
+id = "h-detach-live-guard"
+expect = "kill"
+misunderstanding = "RQ-022: a share complaint never detaches a frame"
+  [[mutation.edit]]
+  rule = "split_request--detach_live_1"
+  find = "isSome ( getD ( getPositions ( R:Req ) , Position:Int ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--detach_live_2"
+  find = "isSome ( getD ( getPositions ( R:Req ) , Position:Int ) )"
+  replace = "false"
+
+[[mutation]]
+id = "h-fee-meds-guard"
+expect = "kill"
+misunderstanding = "RQ-027: a host fee median of a known height is recorded again"
+  [[mutation.edit]]
+  rule = "split_request--fee_meds_1"
+  find = "isSome ( lookupMed ( Meds:List , H:Int ) )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--fee_meds_2"
+  find = "isSome ( lookupMed ( Meds:List , H:Int ) )"
+  replace = "false"
+
+[[mutation]]
+id = "h-final-count-guard"
+expect = "kill"
+misunderstanding = "RQ-044: q_e + 1 FINAL posts end the request FINAL"
+  [[mutation.edit]]
+  rule = "split_request--final_count_1"
+  find = "qOf ( Ne:Int , Fe:Int ) <=Int"
+  replace = "qOf ( Ne:Int , Fe:Int ) <Int"
+  [[mutation.edit]]
+  rule = "split_request--final_count_2"
+  find = "qOf ( Ne:Int , Fe:Int ) <=Int"
+  replace = "qOf ( Ne:Int , Fe:Int ) <Int"
+
+[[mutation]]
+id = "h-final-fresh-guard"
+expect = "kill"
+misunderstanding = "Ledger 10, RQ-042: a member's second FINAL post of an epoch counts again"
+  [[mutation.edit]]
+  rule = "split_request--final_fresh_1"
+  find = "anyFin ( getFinalPosts ( R:Req ) , E:Int , M:Int )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--final_fresh_2"
+  find = "anyFin ( getFinalPosts ( R:Req ) , E:Int , M:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "h-void-fresh-guard"
+expect = "kill"
+misunderstanding = "Ledger 10, RQ-042: a member's second VOID post of an epoch counts again"
+  [[mutation.edit]]
+  rule = "split_request--void_fresh_1"
+  find = "anyVoid ( getVoidPosts ( R:Req ) , E:Int , M:Int )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--void_fresh_2"
+  find = "anyVoid ( getVoidPosts ( R:Req ) , E:Int , M:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "h-frame-attach-guard"
+expect = "kill"
+misunderstanding = "RQ-018 to RQ-020: a frame attaches whatever its codes"
+  [[mutation.edit]]
+  rule = "split_request--frame_attach_1"
+  find = "size(frameCodes ( C:Ctx , R:Req , Fr:Frame )) ==Int 0"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_request--frame_attach_2"
+  find = "size(frameCodes ( C:Ctx , R:Req , Fr:Frame )) ==Int 0"
+  replace = "true"
+
+[[mutation]]
+id = "h-frame-collecting-guard"
+expect = "kill"
+misunderstanding = "RQ-018: a frame for an OPENED or ADMITTED request attaches as for a COLLECTING one"
+  [[mutation.edit]]
+  rule = "split_request--frame_live_1"
+  find = "getPhase ( R:Req ) ==K phCOLLECTING"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_request--frame_live_2"
+  find = "getPhase ( R:Req ) ==K phCOLLECTING"
+  replace = "true"
+
+[[mutation]]
+id = "h-frame-ordered-guard"
+expect = "kill"
+misunderstanding = "RQ-021: a frame for an ORDERED request is not held"
+  [[mutation.edit]]
+  rule = "split_request--frame_ordered_1"
+  find = "getPhase ( R:Req ) ==K phORDERED"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--frame_ordered_2"
+  find = "getPhase ( R:Req ) ==K phORDERED"
+  replace = "false"
+
+[[mutation]]
+id = "h-get-d-guard"
+expect = "kill"
+misunderstanding = "RQ-018, RQ-022: the last entry of an option list reads as empty"
+  [[mutation.edit]]
+  rule = "split_request--get_d_1"
+  find = "I:Int <Int size(Ps:List)"
+  replace = "I:Int +Int 1 <Int size(Ps:List)"
+  [[mutation.edit]]
+  rule = "split_request--get_d_2"
+  find = "I:Int <Int size(Ps:List)"
+  replace = "I:Int +Int 1 <Int size(Ps:List)"
+
+[[mutation]]
+id = "h-open-live-guard"
+expect = "kill"
+misunderstanding = "RQ-067: a header outside K in 1..8, L in 1..2 or one rate per variant opens"
+  [[mutation.edit]]
+  rule = "split_request--open_live_1"
+  find = "openInDomain ( Kk:Int , Ll:Int , Rates:List )"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_request--open_live_2"
+  find = "openInDomain ( Kk:Int , Ll:Int , Rates:List )"
+  replace = "true"
+
+[[mutation]]
+id = "h-any-fin-1"
+expect = "kill"
+misunderstanding = "Ledger 10: a member's first FINAL post counts as a second one"
+  [[mutation.edit]]
+  rule = "split_request--any_fin_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-void-1"
+expect = "kill"
+misunderstanding = "Ledger 10: a member's first VOID post counts as a second one"
+  [[mutation.edit]]
+  rule = "split_request--any_void_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-node2-1"
+expect = "kill"
+misunderstanding = "RQ-017: a node's first OPENED vote counts as a second one"
+  [[mutation.edit]]
+  rule = "split_request--any_node2_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-node2-2"
+expect = "kill"
+misunderstanding = "RQ-017: a node's second OPENED vote is not recognized"
+  [[mutation.edit]]
+  rule = "split_request--any_node2_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-node2-3"
+expect = "kill"
+misunderstanding = "RQ-017: only the first OPENED vote is checked for a repeat"
+  [[mutation.edit]]
+  rule = "split_request--any_node2_3"
+  find = "=> anyNode2 ( Rest:List , Node:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-node3-1"
+expect = "kill"
+misunderstanding = "RQ-026: a node's first ADMIT vote counts as a second one"
+  [[mutation.edit]]
+  rule = "split_request--any_node3_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-any-node3-2"
+expect = "kill"
+misunderstanding = "RQ-026: a node's second ADMIT vote is not recognized"
+  [[mutation.edit]]
+  rule = "split_request--any_node3_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-any-node3-3"
+expect = "kill"
+misunderstanding = "RQ-026: only the first ADMIT vote is checked for a repeat"
+  [[mutation.edit]]
+  rule = "split_request--any_node3_3"
+  find = "=> anyNode3 ( Rest:List , Node:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-count2-1"
+expect = "kill"
+misunderstanding = "RQ-017: the OPENED count starts at one"
+  [[mutation.edit]]
+  rule = "split_request--count2_1"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "h-count2-2"
+expect = "kill"
+misunderstanding = "RQ-017: OPENED votes with the hash do not count"
+  [[mutation.edit]]
+  rule = "split_request--count2_2"
+  find = "=> 1 +Int count2 ( Rest:List , Hash:Int )"
+  replace = "=> count2 ( Rest:List , Hash:Int )"
+
+[[mutation]]
+id = "h-count2-3"
+expect = "kill"
+misunderstanding = "RQ-017: OPENED votes with another hash count too"
+  [[mutation.edit]]
+  rule = "split_request--count2_3"
+  find = "=> count2 ( Rest:List , Hash:Int )"
+  replace = "=> 1 +Int count2 ( Rest:List , Hash:Int )"
+
+[[mutation]]
+id = "h-count-fin-1"
+expect = "kill"
+misunderstanding = "RQ-044: the FINAL count starts at one"
+  [[mutation.edit]]
+  rule = "split_request--count_fin_1"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "h-count-void-1"
+expect = "kill"
+misunderstanding = "RQ-045: the VOID count starts at one"
+  [[mutation.edit]]
+  rule = "split_request--count_void_1"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "h-attach-held-1"
+expect = "kill"
+misunderstanding = "RQ-021: attaching the held frames empties the actor slot table"
+  [[mutation.edit]]
+  rule = "split_request--attach_held_1"
+  find = "=> Ps:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-attach-held-2"
+expect = "kill"
+misunderstanding = "RQ-021: only the first held frame attaches"
+  [[mutation.edit]]
+  rule = "split_request--attach_held_2"
+  find = "=> attachHeld ( E:Int , attachOne ( E:Int , Ps:List , Fr:Frame ) , Rest:List )"
+  replace = "=> attachOne ( E:Int , Ps:List , Fr:Frame )"
+
+[[mutation]]
+id = "h-expire-all-1"
+expect = "kill"
+misunderstanding = "RQ-046: a tick adds a blank request"
+  [[mutation.edit]]
+  rule = "split_request--expire_all_1"
+  find = "=> .List"
+  replace = "=> ListItem(newReq ( 0 , 0 , 0 , SPEND , pfP0 ))"
+
+[[mutation]]
+id = "h-expire-all-2"
+expect = "kill"
+misunderstanding = "RQ-046: a tick does not expire the first request"
+  [[mutation.edit]]
+  rule = "split_request--expire_all_2"
+  find = "=> ListItem(expire ( H:Int , R:Req )) expireAll ( H:Int , Rest:List )"
+  replace = "=> ListItem(R:Req) expireAll ( H:Int , Rest:List )"
+
+[[mutation]]
+id = "h-fee-codes-1"
+expect = "kill"
+misunderstanding = "RQ-027: the median of a new host height is refused"
+  [[mutation.edit]]
+  rule = "split_request--fee_codes_1"
+  find = "=> .List"
+  replace = "=> ListItem(rfNoRule)"
+
+[[mutation]]
+id = "h-fee-codes-2"
+expect = "kill"
+misunderstanding = "RQ-027: the same median again for a known height is refused"
+  [[mutation.edit]]
+  rule = "split_request--fee_codes_2"
+  find = "=> .List"
+  replace = "=> ListItem(rfNoRule)"
+
+[[mutation]]
+id = "h-fee-codes-3"
+expect = "kill"
+misunderstanding = "RQ-027: a different median for a known height is accepted"
+  [[mutation.edit]]
+  rule = "split_request--fee_codes_3"
+  find = "=> ListItem(rfNoRule)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-find-2"
+expect = "kill"
+misunderstanding = "RQ-004: an event reads a blank record instead of the request it names"
+  [[mutation.edit]]
+  rule = "split_request--find_2"
+  find = "=> R:Req"
+  replace = "=> find ( Eid:Int , .List )"
+
+[[mutation]]
+id = "h-find-3"
+expect = "kill"
+misunderstanding = "RQ-004: only the first request on the board is found"
+  [[mutation.edit]]
+  rule = "split_request--find_3"
+  find = "=> find ( Eid:Int , Rest:List )"
+  replace = "=> newReq ( Eid:Int , 0 , 0 , SPEND , pfP0 )"
+
+[[mutation]]
+id = "h-find-epoch-1"
+expect = "kill"
+misunderstanding = "RQ-043: an unregistered epoch is read as a committee of 4 with f = 1"
+  [[mutation.edit]]
+  rule = "split_request--find_epoch_1"
+  find = "=> .List"
+  replace = "=> ListItem(ep ( 0 , 4 , 1 ))"
+
+[[mutation]]
+id = "h-find-epoch-2"
+expect = "kill"
+misunderstanding = "RQ-043: a registered epoch is not found"
+  [[mutation.edit]]
+  rule = "split_request--find_epoch_2"
+  find = "=> ListItem(Ep:Epoch)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-find-epoch-3"
+expect = "kill"
+misunderstanding = "RQ-043, RQ-042: only the first registered epoch is searched"
+  [[mutation.edit]]
+  rule = "split_request--find_epoch_3"
+  find = "=> findEpoch ( Rest:List , E:Int )"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-first-meet-1"
+expect = "kill"
+misunderstanding = "RQ-027, ledger 6: no rate meets the median and variant 1 is selected"
+  [[mutation.edit]]
+  rule = "split_request--first_meet_1"
+  find = "=> .List"
+  replace = "=> ListItem(1)"
+
+[[mutation]]
+id = "h-has-req-1"
+expect = "kill"
+misunderstanding = "RQ-004: an eid the board does not hold is found"
+  [[mutation.edit]]
+  rule = "split_request--has_req_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-has-req-2"
+expect = "kill"
+misunderstanding = "RQ-004: the request an event names is not found"
+  [[mutation.edit]]
+  rule = "split_request--has_req_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-has-req-3"
+expect = "kill"
+misunderstanding = "RQ-004: only the first request on the board is searched"
+  [[mutation.edit]]
+  rule = "split_request--has_req_3"
+  find = "=> hasReq ( Eid:Int , Rest:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-heights-1"
+expect = "kill"
+misunderstanding = "RQ-027: the OBS heights hold one height above every report"
+  [[mutation.edit]]
+  rule = "split_request--heights_1"
+  find = "=> .List"
+  replace = "=> ListItem(1000000)"
+
+[[mutation]]
+id = "h-heights-2"
+expect = "kill"
+misunderstanding = "RQ-027: the OBS heights of ADMIT votes are read as 0"
+  [[mutation.edit]]
+  rule = "split_request--heights_2"
+  find = "=> ListItem(H:Int) heights ( Rest:List )"
+  replace = "=> ListItem(0) heights ( Rest:List )"
+
+[[mutation]]
+id = "h-inc-1"
+expect = "kill"
+misunderstanding = "RQ-027, ledger 6: no rate meets the median and variant K - 1 is selected"
+  [[mutation.edit]]
+  rule = "split_request--inc_1"
+  find = "=> .List"
+  replace = "=> ListItem(0)"
+
+[[mutation]]
+id = "h-inc-2"
+expect = "kill"
+misunderstanding = "RQ-027: variant indices are not counted past the first rate"
+  [[mutation.edit]]
+  rule = "split_request--inc_2"
+  find = "=> ListItem(I:Int +Int 1)"
+  replace = "=> ListItem(I:Int)"
+
+[[mutation]]
+id = "h-insert-desc-1"
+expect = "kill"
+misunderstanding = "RQ-027: the lowest OBS height is read one higher"
+  [[mutation.edit]]
+  rule = "split_request--insert_desc_1"
+  find = "=> ListItem(X:Int)"
+  replace = "=> ListItem(X:Int +Int 1)"
+
+[[mutation]]
+id = "h-is-some-1"
+expect = "kill"
+misunderstanding = "RQ-002: an empty entry reads as set"
+  [[mutation.edit]]
+  rule = "split_request--is_some_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-is-some-2"
+expect = "kill"
+misunderstanding = "RQ-002: a set entry reads as empty"
+  [[mutation.edit]]
+  rule = "split_request--is_some_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-is-terminal-1"
+expect = "kill"
+misunderstanding = "RQ-005: a FINAL request is not terminal"
+  [[mutation.edit]]
+  rule = "split_request--is_terminal_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-is-terminal-4"
+expect = "kill"
+misunderstanding = "RQ-005: every phase is terminal"
+  [[mutation.edit]]
+  rule = "split_request--is_terminal_4"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "h-signing-4"
+expect = "kill"
+misunderstanding = "RQ-066: SPEND, EXIT and SEIZURE requests are not signing requests"
+  [[mutation.edit]]
+  rule = "split_request--signing_4"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "h-lookup-med-1"
+expect = "kill"
+misunderstanding = "Ledger 7, RQ-027: a host height with no median reads median 0"
+  [[mutation.edit]]
+  rule = "split_request--lookup_med_1"
+  find = "=> .List"
+  replace = "=> ListItem(0)"
+
+[[mutation]]
+id = "h-lookup-med-2"
+expect = "kill"
+misunderstanding = "Ledger 7, RQ-027: the median of a known host height is not found"
+  [[mutation.edit]]
+  rule = "split_request--lookup_med_2"
+  find = "=> ListItem(M:Int)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-lookup-med-3"
+expect = "kill"
+misunderstanding = "Ledger 7, RQ-027: only the first host height is searched"
+  [[mutation.edit]]
+  rule = "split_request--lookup_med_3"
+  find = "=> lookupMed ( Rest:List , H:Int )"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-mine-1"
+expect = "kill"
+misunderstanding = "RQ-026: an ADMIT count starts with one vote of height 0"
+  [[mutation.edit]]
+  rule = "split_request--mine_1"
+  find = "=> .List"
+  replace = "=> ListItem(vAdmit ( 0 , 0 , 0 ))"
+
+[[mutation]]
+id = "h-mine-2"
+expect = "kill"
+misunderstanding = "RQ-026: ADMIT votes with the hash do not count"
+  [[mutation.edit]]
+  rule = "split_request--mine_2"
+  find = "=> ListItem(V:Vote3) mine ( Rest:List , Hash:Int )"
+  replace = "=> mine ( Rest:List , Hash:Int )"
+
+[[mutation]]
+id = "h-mine-3"
+expect = "kill"
+misunderstanding = "RQ-026: ADMIT votes with another hash count, with height 0"
+  [[mutation.edit]]
+  rule = "split_request--mine_3"
+  find = "=> mine ( Rest:List , Hash:Int )"
+  replace = "=> ListItem(vAdmit ( 0 , X:Int , 0 )) mine ( Rest:List , Hash:Int )"
+
+[[mutation]]
+id = "h-none-list-1"
+expect = "kill"
+misunderstanding = "RQ-013: a table of n entries gets n + 1 empty entries"
+  [[mutation.edit]]
+  rule = "split_request--none_list_1"
+  find = "=> .List"
+  replace = "=> ListItem(.List)"
+
+[[mutation]]
+id = "h-none-list-2"
+expect = "kill"
+misunderstanding = "RQ-013: a new table starts with every entry set to 0"
+  [[mutation.edit]]
+  rule = "split_request--none_list_2"
+  find = "=> ListItem(.List) noneList ( N:Int -Int 1 )"
+  replace = "=> ListItem(ListItem(0)) noneList ( N:Int -Int 1 )"
+
+[[mutation]]
+id = "h-obs2-anchor-1"
+expect = "kill"
+misunderstanding = "Ledger 7: no median at the generation 2 anchor height is outside the capability"
+  [[mutation.edit]]
+  rule = "split_request--obs2_anchor_1"
+  find = "=> rErr ( R:Req , ListItem(rfNoRule) )"
+  replace = "=> rErr ( R:Req , ListItem(rfOutsideCapability) )"
+
+[[mutation]]
+id = "h-obs2-anchor-2"
+expect = "kill"
+misunderstanding = "RQ-029: generation 2 selects with a median of 0"
+  [[mutation.edit]]
+  rule = "split_request--obs2_anchor_2"
+  find = "=> obs2Select ( R:Req , select ( getKk ( R:Req ) , getRates ( R:Req ) , M:Int ) )"
+  replace = "=> obs2Select ( R:Req , select ( getKk ( R:Req ) , getRates ( R:Req ) , 0 ) )"
+
+[[mutation]]
+id = "h-opt-1"
+expect = "kill"
+misunderstanding = "RQ-005: a failed check gives no code"
+  [[mutation.edit]]
+  rule = "split_request--opt_1"
+  find = "=> ListItem(X:Refusal)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-opt-2"
+expect = "kill"
+misunderstanding = "RQ-005: a passed check gives no-rule"
+  [[mutation.edit]]
+  rule = "split_request--opt_2"
+  find = "=> .List"
+  replace = "=> ListItem(rfNoRule)"
+
+[[mutation]]
+id = "h-or-else-1"
+expect = "kill"
+misunderstanding = "RQ-002, RQ-027: an empty entry reads as 0, whatever default the reader names"
+  [[mutation.edit]]
+  rule = "split_request--or_else_1"
+  find = "=> D:Int"
+  replace = "=> 0"
+
+[[mutation]]
+id = "h-or-else-2"
+expect = "kill"
+misunderstanding = "RQ-002: a set entry reads one higher"
+  [[mutation.edit]]
+  rule = "split_request--or_else_2"
+  find = "=> V:Int"
+  replace = "=> V:Int +Int 1"
+
+[[mutation]]
+id = "h-or-no-rule-1"
+expect = "kill"
+misunderstanding = "RQ-005: a check without a spec code that fails gives no no-rule"
+  [[mutation.edit]]
+  rule = "split_request--or_no_rule_1"
+  find = "=> opt ( notBool Ok:Bool , rfNoRule )"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-or-no-rule-2"
+expect = "kill"
+misunderstanding = "RQ-005: no-rule is listed after the spec codes"
+  [[mutation.edit]]
+  rule = "split_request--or_no_rule_2"
+  find = "=> Spec:List"
+  replace = "=> Spec:List ListItem(rfNoRule)"
+
+[[mutation]]
+id = "h-r-err"
+expect = "kill"
+misunderstanding = "Ledger 1: a refused event is applied"
+  [[mutation.edit]]
+  rule = "split_request--r_err"
+  find = "=> res ( false , R:Req , Codes:List )"
+  replace = "=> res ( true , R:Req , Codes:List )"
+
+[[mutation]]
+id = "h-r-ok"
+expect = "kill"
+misunderstanding = "Ledger 1: an applied event is refused"
+  [[mutation.edit]]
+  rule = "split_request--r_ok"
+  find = "=> res ( true , R:Req , .List )"
+  replace = "=> res ( false , R:Req , .List )"
+
+[[mutation]]
+id = "h-replace-1"
+expect = "kill"
+misunderstanding = "RQ-004: storing a record adds a blank request"
+  [[mutation.edit]]
+  rule = "split_request--replace_1"
+  find = "=> .List"
+  replace = "=> ListItem(newReq ( 0 , 0 , 0 , SPEND , pfP0 ))"
+
+[[mutation]]
+id = "h-replace-2"
+expect = "kill"
+misunderstanding = "RQ-004: storing a record drops the requests after it"
+  [[mutation.edit]]
+  rule = "split_request--replace_2"
+  find = "=> ListItem(R2:Req) replace ( Eid:Int , R2:Req , Rest:List )"
+  replace = "=> ListItem(R2:Req)"
+
+[[mutation]]
+id = "h-replace-3"
+expect = "kill"
+misunderstanding = "RQ-004: storing a record drops the requests before it"
+  [[mutation.edit]]
+  rule = "split_request--replace_3"
+  find = "=> ListItem(R:Req) replace ( Eid:Int , R2:Req , Rest:List )"
+  replace = "=> replace ( Eid:Int , R2:Req , Rest:List )"
+
+[[mutation]]
+id = "h-restart-outcome-2"
+expect = "kill"
+misunderstanding = "RQ-068: a re-ended request whose variant did not confirm gets outcome VOID"
+  [[mutation.edit]]
+  rule = "split_request--restart_outcome_2"
+  find = "=> ocRELEASED"
+  replace = "=> ocVOID"
+
+[[mutation]]
+id = "h-rotate-codes-1"
+expect = "kill"
+misunderstanding = "RQ-001: a ROTATE with n < 3f + 1 or f = 0 registers"
+  [[mutation.edit]]
+  rule = "split_request--rotate_codes_1"
+  find = "=> ListItem(rfOutsideCapability)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-sort-desc-1"
+expect = "kill"
+misunderstanding = "RQ-027: the sorted OBS heights hold one height above every report"
+  [[mutation.edit]]
+  rule = "split_request--sort_desc_1"
+  find = "=> .List"
+  replace = "=> ListItem(1000000)"
+
+[[mutation]]
+id = "h-sort-desc-2"
+expect = "kill"
+misunderstanding = "RQ-027: the first OBS height stays first, unsorted"
+  [[mutation.edit]]
+  rule = "split_request--sort_desc_2"
+  find = "=> insertDesc ( X:Int , sortDesc ( Rest:List ) )"
+  replace = "=> ListItem(X:Int) sortDesc ( Rest:List )"
+
+[[mutation]]
+id = "h-step-confirm"
+expect = "kill"
+misunderstanding = "RQ-052: a confirmation is not recorded"
+  [[mutation.edit]]
+  rule = "split_request--step_confirm"
+  find = "=> rOk ( setConfirmed ( R:Req ) )"
+  replace = "=> rOk ( R:Req )"
+
+[[mutation]]
+id = "h-step-order-2"
+expect = "kill"
+misunderstanding = "RQ-007: a refused order lists no-rule, not its codes"
+  [[mutation.edit]]
+  rule = "split_request--step_order_2"
+  find = "=> rErr ( R:Req , orderCodes ( atExp ( C:Ctx , R:Req ) , Qc:Bool , getPhase ( R:Req ) ) )"
+  replace = "=> rErr ( R:Req , ListItem(rfNoRule) )"
+
+[[mutation]]
+id = "h-step-post-final"
+expect = "kill"
+misunderstanding = "RQ-042, RQ-043: every FINAL post is read under epoch 0"
+  [[mutation.edit]]
+  rule = "split_request--step_post_final"
+  find = "=> finalWith ( C:Ctx , R:Req , Epoch:Int , Member:Int , Ct:Int , findEpoch ( ctxEpochs ( C:Ctx ) , Epoch:Int ) )"
+  replace = "=> finalWith ( C:Ctx , R:Req , Epoch:Int , Member:Int , Ct:Int , findEpoch ( ctxEpochs ( C:Ctx ) , 0 ) )"
+
+[[mutation]]
+id = "h-step-post-void"
+expect = "kill"
+misunderstanding = "RQ-042, RQ-043: every VOID post is read under epoch 0"
+  [[mutation.edit]]
+  rule = "split_request--step_post_void"
+  find = "=> voidWith ( C:Ctx , R:Req , Epoch:Int , Member:Int , Reason:Reason , findEpoch ( ctxEpochs ( C:Ctx ) , Epoch:Int ) )"
+  replace = "=> voidWith ( C:Ctx , R:Req , Epoch:Int , Member:Int , Reason:Reason , findEpoch ( ctxEpochs ( C:Ctx ) , 0 ) )"
+
+[[mutation]]
+id = "h-targeted-1"
+expect = "kill"
+misunderstanding = "RQ-004: an event for a held eid is refused with no-rule"
+  [[mutation.edit]]
+  rule = "split_request--targeted_1"
+  find = "=> X:Res"
+  replace = "=> rErr ( resReq ( X:Res ) , ListItem(rfNoRule) )"
+
+[[mutation]]
+id = "h-void-with-2"
+expect = "kill"
+misunderstanding = "RQ-042, RQ-045: VOID posts count against the committee's n and f + 1, not the epoch's own"
+  [[mutation.edit]]
+  rule = "split_request--void_with_2"
+  find = "=> voidIn ( C:Ctx , R:Req , E:Int , M:Int , Reason:Reason , N:Int , F:Int )"
+  replace = "=> voidIn ( C:Ctx , R:Req , E:Int , M:Int , Reason:Reason , ctxN ( C:Ctx ) , ctxF ( C:Ctx ) )"
+
+[[mutation]]
+id = "h-admit-anchor-2"
+expect = "kill"
+misunderstanding = "RQ-027: anchor[1] is always the highest variant K"
+  [[mutation.edit]]
+  rule = "split_request--admit_anchor_2"
+  find = "=> rOk ( setAdmitted ( R:Req , getAnchor ( R:Req ) [ 0 <- ListItem(select ( getKk ( R:Req ) , getRates ( R:Req ) , M:Int )) ] , Vs:List ) )"
+  replace = "=> rOk ( setAdmitted ( R:Req , getAnchor ( R:Req ) [ 0 <- ListItem(getKk ( R:Req )) ] , Vs:List ) )"
+
+[[mutation]]
+id = "h-end-outcome-3"
+expect = "kill"
+misunderstanding = "RQ-050: a request with no release and no restart burn ends with outcome FINAL"
+  [[mutation.edit]]
+  rule = "split_request--end_outcome_3"
+  find = "=> ocVOID"
+  replace = "=> ocFINAL"
+
+[[mutation]]
+id = "h-res-codes-1"
+expect = "kill"
+misunderstanding = "Ledger 1: a refused event lists no codes"
+  [[mutation.edit]]
+  rule = "split_request--res_codes_1"
+  find = "=> Codes:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-res-ok-1"
+expect = "kill"
+misunderstanding = "Ledger 1: an applied event counts as refused, a refused one as applied"
+  [[mutation.edit]]
+  rule = "split_request--res_ok_1"
+  find = "=> Ok:Bool"
+  replace = "=> notBool Ok:Bool"
+
+[[mutation]]
+id = "h-res-req-1"
+expect = "kill"
+misunderstanding = "RQ-002: an applied event stores a blank record"
+  [[mutation.edit]]
+  rule = "split_request--res_req_1"
+  find = "=> R:Req"
+  replace = "=> newReq ( 0 , 0 , 0 , SPEND , pfP0 )"
+
+[[mutation]]
+id = "h-frame-pos-1"
+expect = "kill"
+misunderstanding = "RQ-018: every frame names position 0"
+  [[mutation.edit]]
+  rule = "split_request--frame_pos_1"
+  find = "=> Position:Int"
+  replace = "=> 0"
+
+[[mutation]]
+id = "h-frame-cid-1"
+expect = "kill"
+misunderstanding = "RQ-018: the attached contribution is recorded as 0"
+  [[mutation.edit]]
+  rule = "split_request--frame_cid_1"
+  find = "=> Cid:Int"
+  replace = "=> 0"
+
+[[mutation]]
+id = "h-frame-at-1"
+expect = "kill"
+misunderstanding = "RQ-021: a held frame is recorded at a height past exp_c, so it never attaches"
+  [[mutation.edit]]
+  rule = "split_request--frame_at_1"
+  find = "LengthsOk:Bool , H:Int , Cid:Int )"
+  replace = "LengthsOk:Bool , H:Int +Int 1000 , Cid:Int )"
+
+[[mutation]]
+id = "h-find-1"
+expect = "survive"
+misunderstanding = "RQ-004: an event for an eid the board does not hold reads a record of type EXIT. Argued equivalent: RQ-004: find gives this record only when hasReq is false, and targeted then answers unknown_request without reading it, so no program observes the record"
+  [[mutation.edit]]
+  rule = "split_request--find_1"
+  find = "newReq ( Eid:Int , 0 , 0 , SPEND , pfP0 )"
+  replace = "newReq ( Eid:Int , 0 , 0 , EXIT , pfP0 )"
+
+[[mutation]]
+id = "h-t-carry"
+expect = "kill"
+misunderstanding = "RQ-004: a carry event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_carry"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-t-complaint"
+expect = "kill"
+misunderstanding = "RQ-004: a complaint event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_complaint"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-t-confirm"
+expect = "kill"
+misunderstanding = "RQ-004: a confirm event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_confirm"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-t-detach"
+expect = "kill"
+misunderstanding = "RQ-004: a detach event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_detach"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-t-frame"
+expect = "kill"
+misunderstanding = "RQ-004: a frame event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_frame"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-t-obs2"
+expect = "kill"
+misunderstanding = "RQ-004: a obs2 event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_obs2"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-t-open"
+expect = "kill"
+misunderstanding = "RQ-004: a open event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_open"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-t-order"
+expect = "kill"
+misunderstanding = "RQ-004: a order event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_order"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-t-post-final"
+expect = "kill"
+misunderstanding = "RQ-004: a post final event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_post_final"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-t-post-void"
+expect = "kill"
+misunderstanding = "RQ-004: a post void event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_post_void"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-t-restart-burn"
+expect = "kill"
+misunderstanding = "RQ-004: a restart burn event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_restart_burn"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-t-vote-admit"
+expect = "kill"
+misunderstanding = "RQ-004: a vote admit event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_vote_admit"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-t-vote-opened"
+expect = "kill"
+misunderstanding = "RQ-004: a vote opened event for an eid the board does not hold is applied to a blank record"
+  [[mutation.edit]]
+  rule = "split_request--t_vote_opened"
+  find = "targeted ( hasReq ( Eid:Int , Rs:List )"
+  replace = "targeted ( true"
+
+[[mutation]]
+id = "h-ctx-cp-1"
+expect = "kill"
+misunderstanding = "RQ-001: cp is read as cp plus one"
+  [[mutation.edit]]
+  rule = "split_request--ctx_cp_1"
+  find = "=> Cp:Int"
+  replace = "=> Cp:Int +Int 1"
+
+[[mutation]]
+id = "h-ctx-delta-c-1"
+expect = "kill"
+misunderstanding = "RQ-001: delta c is read as deltac plus one"
+  [[mutation.edit]]
+  rule = "split_request--ctx_delta_c_1"
+  find = "=> DeltaC:Int"
+  replace = "=> DeltaC:Int +Int 1"
+
+[[mutation]]
+id = "h-ctx-f-1"
+expect = "kill"
+misunderstanding = "RQ-001: f is read as f plus one"
+  [[mutation.edit]]
+  rule = "split_request--ctx_f_1"
+  find = "=> F:Int"
+  replace = "=> F:Int +Int 1"
+
+[[mutation]]
+id = "h-ctx-height-1"
+expect = "kill"
+misunderstanding = "RQ-001: height is read as height plus one"
+  [[mutation.edit]]
+  rule = "split_request--ctx_height_1"
+  find = "=> Height:Int"
+  replace = "=> Height:Int +Int 1"
+
+[[mutation]]
+id = "h-ctx-n-1"
+expect = "kill"
+misunderstanding = "RQ-001: n is read as n plus one"
+  [[mutation.edit]]
+  rule = "split_request--ctx_n_1"
+  find = "=> N:Int"
+  replace = "=> N:Int +Int 1"
+
+[[mutation]]
+id = "h-ctx-epochs-1"
+expect = "kill"
+misunderstanding = "RQ-001: epochs is read as .list empty"
+  [[mutation.edit]]
+  rule = "split_request--ctx_epochs_1"
+  find = "=> Epochs:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-ctx-meds-1"
+expect = "kill"
+misunderstanding = "RQ-001: meds is read as .list empty"
+  [[mutation.edit]]
+  rule = "split_request--ctx_meds_1"
+  find = "=> HostMed:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-get-admit-votes-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's admit_votes is read as empty"
+  [[mutation.edit]]
+  rule = "split_request--get_admit_votes_1"
+  find = "=> AdmitVotes:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-get-anchor-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's anchor is read as two empty entries"
+  [[mutation.edit]]
+  rule = "split_request--get_anchor_1"
+  find = "=> Anchor:List"
+  replace = "=> ListItem(.List) ListItem(.List)"
+
+[[mutation]]
+id = "h-get-carried-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's carried is read as negated"
+  [[mutation.edit]]
+  rule = "split_request--get_carried_1"
+  find = "=> Carried:Bool"
+  replace = "=> notBool Carried:Bool"
+
+[[mutation]]
+id = "h-get-collecting-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's collecting is read as negated"
+  [[mutation.edit]]
+  rule = "split_request--get_collecting_1"
+  find = "=> Collecting:Bool"
+  replace = "=> notBool Collecting:Bool"
+
+[[mutation]]
+id = "h-get-confirmed-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's confirmed is read as negated"
+  [[mutation.edit]]
+  rule = "split_request--get_confirmed_1"
+  find = "=> Confirmed:Bool"
+  replace = "=> notBool Confirmed:Bool"
+
+[[mutation]]
+id = "h-get-end-height-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's end_height is read as empty"
+  [[mutation.edit]]
+  rule = "split_request--get_end_height_1"
+  find = "=> EndHeight:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-get-epoch-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's epoch is read as 1"
+  [[mutation.edit]]
+  rule = "split_request--get_epoch_1"
+  find = "=> Epoch:Int"
+  replace = "=> 1"
+
+[[mutation]]
+id = "h-get-exp-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's exp is read as 1"
+  [[mutation.edit]]
+  rule = "split_request--get_exp_1"
+  find = "=> Exp:Int"
+  replace = "=> 1"
+
+[[mutation]]
+id = "h-get-exp-c-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's exp_c is read as empty"
+  [[mutation.edit]]
+  rule = "split_request--get_exp_c_1"
+  find = "=> ExpC:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-get-final-posts-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's final_posts is read as empty"
+  [[mutation.edit]]
+  rule = "split_request--get_final_posts_1"
+  find = "=> FinalPosts:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-get-gg-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's gg is read as 1"
+  [[mutation.edit]]
+  rule = "split_request--get_gg_1"
+  find = "=> Gg:Int"
+  replace = "=> 1"
+
+[[mutation]]
+id = "h-get-held-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's held is read as empty"
+  [[mutation.edit]]
+  rule = "split_request--get_held_1"
+  find = "=> Held:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-get-kk-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's kk is read as 1"
+  [[mutation.edit]]
+  rule = "split_request--get_kk_1"
+  find = "=> Kk:Int"
+  replace = "=> 1"
+
+[[mutation]]
+id = "h-get-opened-votes-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's opened_votes is read as empty"
+  [[mutation.edit]]
+  rule = "split_request--get_opened_votes_1"
+  find = "=> OpenedVotes:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-get-outcome-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's outcome is read as VOID"
+  [[mutation.edit]]
+  rule = "split_request--get_outcome_1"
+  find = "=> Outcome:Outcome"
+  replace = "=> ocVOID"
+
+[[mutation]]
+id = "h-get-phase-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's phase is read as POSTED"
+  [[mutation.edit]]
+  rule = "split_request--get_phase_1"
+  find = "=> Phase:Phase"
+  replace = "=> phPOSTED"
+
+[[mutation]]
+id = "h-get-positions-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's positions is read as empty"
+  [[mutation.edit]]
+  rule = "split_request--get_positions_1"
+  find = "=> Positions:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-get-rates-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's rates is read as empty"
+  [[mutation.edit]]
+  rule = "split_request--get_rates_1"
+  find = "=> Rates:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-get-restart-end-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's restart_end is read as negated"
+  [[mutation.edit]]
+  rule = "split_request--get_restart_end_1"
+  find = "=> RestartEnd:Bool"
+  replace = "=> notBool RestartEnd:Bool"
+
+[[mutation]]
+id = "h-get-rtype-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's rtype is read as BIRTH"
+  [[mutation.edit]]
+  rule = "split_request--get_rtype_1"
+  find = "=> Rtype:RType"
+  replace = "=> BIRTH"
+
+[[mutation]]
+id = "h-get-void-posts-1"
+expect = "kill"
+misunderstanding = "RQ-002: the record's void_posts is read as empty"
+  [[mutation.edit]]
+  rule = "split_request--get_void_posts_1"
+  find = "=> VoidPosts:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "h-set-admit-votes-1"
+expect = "kill"
+misunderstanding = "RQ-026: set admit votes leaves admit_votes .List instead of writing the new value"
+  [[mutation.edit]]
+  rule = "split_request--set_admit_votes_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , VAdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , .List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-admitted-1"
+expect = "kill"
+misunderstanding = "RQ-026: set admitted leaves phase phCOLLECTING instead of writing phADMITTED"
+  [[mutation.edit]]
+  rule = "split_request--set_admitted_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , phADMITTED , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , VAnchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , VAdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , phCOLLECTING , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , VAnchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , VAdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-anchor-1"
+expect = "kill"
+misunderstanding = "RQ-028: set anchor leaves anchor .List instead of writing the new value"
+  [[mutation.edit]]
+  rule = "split_request--set_anchor_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , VAnchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , .List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-carried-1"
+expect = "kill"
+misunderstanding = "RQ-060: set carried leaves carried false instead of writing true"
+  [[mutation.edit]]
+  rule = "split_request--set_carried_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , true )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , false )"
+
+[[mutation]]
+id = "h-set-collecting-1"
+expect = "kill"
+misunderstanding = "RQ-017: set collecting leaves phase phOPENED instead of writing phCOLLECTING"
+  [[mutation.edit]]
+  rule = "split_request--set_collecting_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , phCOLLECTING , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , VPositions:List , .List , VOpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , phOPENED , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , VPositions:List , .List , VOpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-confirmed-1"
+expect = "kill"
+misunderstanding = "RQ-052: set confirmed leaves confirmed false instead of writing true"
+  [[mutation.edit]]
+  rule = "split_request--set_confirmed_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , true , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , false , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-dealer-fault-1"
+expect = "kill"
+misunderstanding = "RQ-012: set dealer fault leaves dealer_fault false instead of writing true"
+  [[mutation.edit]]
+  rule = "split_request--set_dealer_fault_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , true , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , false , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-early-1"
+expect = "kill"
+misunderstanding = "RQ-011: set early leaves early_complaint false instead of writing true"
+  [[mutation.edit]]
+  rule = "split_request--set_early_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , true , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , false , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-expired-1"
+expect = "kill"
+misunderstanding = "RQ-046: set expired leaves phase phVOID instead of writing phEXPIRED"
+  [[mutation.edit]]
+  rule = "split_request--set_expired_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , phEXPIRED , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , VOutcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , VEndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , phVOID , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , VOutcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , VEndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-final-posts-1"
+expect = "kill"
+misunderstanding = "RQ-042: set final posts leaves final_posts .List instead of writing the new value"
+  [[mutation.edit]]
+  rule = "split_request--set_final_posts_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , VFinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , .List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-held-1"
+expect = "kill"
+misunderstanding = "RQ-021: set held leaves held .List instead of writing the new value"
+  [[mutation.edit]]
+  rule = "split_request--set_held_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , VHeld:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , .List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-opened-1"
+expect = "kill"
+misunderstanding = "RQ-013: set opened leaves phase phORDERED instead of writing phOPENED"
+  [[mutation.edit]]
+  rule = "split_request--set_opened_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , phOPENED , Reason:Reason , VCollecting:Bool , VKk:Int , VLl:Int , VGg:Int , VAnchor:List , VReleased:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , VRates:List , VPositions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , phORDERED , Reason:Reason , VCollecting:Bool , VKk:Int , VLl:Int , VGg:Int , VAnchor:List , VReleased:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , VRates:List , VPositions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-opened-votes-1"
+expect = "kill"
+misunderstanding = "RQ-017: set opened votes leaves opened_votes .List instead of writing the new value"
+  [[mutation.edit]]
+  rule = "split_request--set_opened_votes_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , VOpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , .List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-ordered-1"
+expect = "kill"
+misunderstanding = "RQ-006: set ordered leaves order_pos .List instead of writing the new value"
+  [[mutation.edit]]
+  rule = "split_request--set_ordered_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , VOrderPos:List , VExpC:List , phORDERED , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , .List , VExpC:List , phORDERED , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-positions-1"
+expect = "kill"
+misunderstanding = "RQ-018: set positions leaves positions .List instead of writing the new value"
+  [[mutation.edit]]
+  rule = "split_request--set_positions_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , VPositions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , .List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-restart-1"
+expect = "kill"
+misunderstanding = "RQ-048: set restart leaves restart_end false instead of writing true"
+  [[mutation.edit]]
+  rule = "split_request--set_restart_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , true , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , false , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-restart-outcome-1"
+expect = "kill"
+misunderstanding = "RQ-068: set restart outcome leaves restart_end false instead of writing true"
+  [[mutation.edit]]
+  rule = "split_request--set_restart_outcome_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , true , VOutcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , false , VOutcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+
+[[mutation]]
+id = "h-set-void-posts-1"
+expect = "kill"
+misunderstanding = "RQ-042: set void posts leaves void_posts .List instead of writing the new value"
+  [[mutation.edit]]
+  rule = "split_request--set_void_posts_1"
+  find = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , VVoidPosts:List , EndHeight:List , Confirmed:Bool , Carried:Bool )"
+  replace = "=> req ( Eid:Int , Epoch:Int , Exp:Int , Rtype:RType , Profile:Profile , OrderPos:List , ExpC:List , Phase:Phase , Reason:Reason , Collecting:Bool , Kk:Int , Ll:Int , Gg:Int , Anchor:List , Released:List , AnyRelease:Bool , RestartEnd:Bool , Outcome:Outcome , Rates:List , Positions:List , Held:List , OpenedVotes:List , AdmitVotes:List , EarlyComplaint:Bool , DealerFault:Bool , FinalPosts:List , .List , EndHeight:List , Confirmed:Bool , Carried:Bool )"

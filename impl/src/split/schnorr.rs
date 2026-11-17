@@ -337,7 +337,11 @@ impl<S: SchnorrSuite> Request<S> {
         cl_points.extend([self.d, self.e]);
         let encoded = S::encode_points(&cl_points)?;
         let mut encoded = encoded.into_iter();
-        let mut cl = encoded.next().ok_or(Error::Point)?;
+        // The list starts with the initiator's leaf id (DESIGN §4.2 item 3,
+        // DECISIONS 72). With the leaves of S' below, it names the whole signing
+        // set, so one list fixes every weight.
+        let mut cl = self.initiator.encode();
+        cl.extend_from_slice(&encoded.next().ok_or(Error::Point)?);
         let mut distinct = BTreeSet::new();
         for (id, pair) in &self.pairs {
             if !distinct.insert((pair.pool_id, pair.index)) {

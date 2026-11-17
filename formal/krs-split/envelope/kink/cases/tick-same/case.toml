@@ -1,0 +1,8 @@
+# Ledger 4 boundary: the same height is an ordinary tick.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { Tick = { h = 800 } },
+]

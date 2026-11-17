@@ -1,0 +1,112 @@
+# Plausible misreadings of the dealing of committee and ECDSA slots (SL-001 to SL-003,
+# SL-022), as K patches of kink/definition.k.
+
+[[mutation]]
+id = "sl022-deal-c-from-one"
+expect = "kill"
+misunderstanding = "SL-022: every dealing numbers its slots from 1, so a refill deals again to indices a dealing already gave shares"
+  [[mutation.edit]]
+  rule = "deal-c"
+  find = "maxIdxC ( Suite:Suite , Epoch:Int , Cslots:List )"
+  replace = "0"
+
+[[mutation]]
+id = "sl001-pool-by-suite"
+expect = "kill"
+misunderstanding = "SL-001: a committee pool is one per suite, across epochs, so a dealing for a new epoch continues the old epoch's indices"
+  [[mutation.edit]]
+  rule = "split_slots--max_idx_c_2_1"
+  find = "(Suite:Suite ==K Su:Suite) andThenBool (Epoch:Int ==Int E:Int)"
+  replace = "(Suite:Suite ==K Su:Suite)"
+  [[mutation.edit]]
+  rule = "split_slots--max_idx_c_2_2"
+  find = "(Suite:Suite ==K Su:Suite) andThenBool (Epoch:Int ==Int E:Int)"
+  replace = "(Suite:Suite ==K Su:Suite)"
+
+[[mutation]]
+id = "sl001-pool-by-epoch"
+expect = "kill"
+misunderstanding = "SL-001: the two Schnorr suites share one pool per epoch"
+  [[mutation.edit]]
+  rule = "split_slots--max_idx_c_2_1"
+  find = "(Suite:Suite ==K Su:Suite) andThenBool (Epoch:Int ==Int E:Int)"
+  replace = "(Epoch:Int ==Int E:Int)"
+  [[mutation.edit]]
+  rule = "split_slots--max_idx_c_2_2"
+  find = "(Suite:Suite ==K Su:Suite) andThenBool (Epoch:Int ==Int E:Int)"
+  replace = "(Epoch:Int ==Int E:Int)"
+
+[[mutation]]
+id = "sl002-deal-named"
+expect = "kill"
+misunderstanding = "SL-002: a dealt committee slot starts NAMED"
+  [[mutation.edit]]
+  rule = "split_slots--gen_c_2"
+  find = "+Int 1 , UNNAMED"
+  replace = "+Int 1 , NAMED"
+
+[[mutation]]
+id = "sl022-deal-c-one-short"
+expect = "kill"
+misunderstanding = "SL-001: a dealing of k slots deals k - 1 slots after index top + 1"
+  [[mutation.edit]]
+  rule = "split_slots--gen_c_1"
+  find = "I:Int >=Int K:Int"
+  replace = "I:Int +Int 1 >=Int K:Int"
+  [[mutation.edit]]
+  rule = "split_slots--gen_c_2"
+  find = "notBool (I:Int >=Int K:Int)"
+  replace = "notBool (I:Int +Int 1 >=Int K:Int)"
+
+[[mutation]]
+id = "sl022-deal-e-from-one"
+expect = "kill"
+misunderstanding = "SL-022: every ECDSA dealing numbers its slots from 1"
+  [[mutation.edit]]
+  rule = "deal-e"
+  find = "maxIdxE ( Pool:Int , Eslots:List )"
+  replace = "0"
+
+[[mutation]]
+id = "sl003-pool-any"
+expect = "kill"
+misunderstanding = "SL-003: the ECDSA slot indices run across every account pool"
+  [[mutation.edit]]
+  rule = "split_slots--max_idx_e_2_1"
+  find = "requires Pool:Int ==Int P:Int"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_slots--max_idx_e_2_2"
+  find = "requires notBool (Pool:Int ==Int P:Int)"
+  replace = "requires false"
+
+[[mutation]]
+id = "sl003-root-own"
+expect = "kill"
+misunderstanding = "SL-003: every ECDSA slot lies under the account's own root, whatever the dealing says"
+  [[mutation.edit]]
+  rule = "split_slots--gen_e_2"
+  find = "Ls:Int , R:Root , UNNAMED"
+  replace = "Ls:Int , rootOwn , UNNAMED"
+
+[[mutation]]
+id = "sl003-leaf-set-dropped"
+expect = "kill"
+misunderstanding = "SL-003: an ECDSA slot keeps no leaf set"
+  [[mutation.edit]]
+  rule = "split_slots--gen_e_2"
+  find = "+Int 1 , Ls:Int , R:Root"
+  replace = "+Int 1 , 0 , R:Root"
+
+[[mutation]]
+id = "sl003-deal-e-one-short"
+expect = "kill"
+misunderstanding = "SL-003: a dealing of k ECDSA slots deals k - 1"
+  [[mutation.edit]]
+  rule = "split_slots--gen_e_1"
+  find = "I:Int >=Int K:Int"
+  replace = "I:Int +Int 1 >=Int K:Int"
+  [[mutation.edit]]
+  rule = "split_slots--gen_e_2"
+  find = "notBool (I:Int >=Int K:Int)"
+  replace = "notBool (I:Int +Int 1 >=Int K:Int)"

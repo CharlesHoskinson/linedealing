@@ -1,0 +1,15 @@
+# SH-001, SH-002: faults below OR, AND and group children
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { FixCharter = { id = 1, gamma = { Or = { mid = 0, primary = { And = { mid = 1, children = [] } }, escrow = { Leaf = { mid = 2, actor = 2 } } } } } },
+  { FixCharter = { id = 2, gamma = { Or = { mid = 0, primary = { Leaf = { mid = 1, actor = 1 } }, escrow = { And = { mid = 2, children = [] } } } } } },
+  { FixCharter = { id = 3, gamma = { And = { mid = 0, children = [{ Leaf = { mid = 1, actor = 1 } }, { And = { mid = 2, children = [] } }] } } } },
+  { FixCharter = { id = 4, gamma = { Group = { mid = 0, kk = 1, children = [{ Leaf = { mid = 1, actor = 1 } }, { Group = { mid = 2, kk = 0, children = [{ Leaf = { mid = 1, actor = 3 } }] } }] } } } },
+  { FixCharter = { id = 5, gamma = { Or = { mid = 0, primary = { Group = { mid = 1, kk = 1, children = [{ Leaf = { mid = 0, actor = 1 } }] } }, escrow = { Leaf = { mid = 2, actor = 2 } } } } } },
+  { FixCharter = { id = 6, gamma = { Or = { mid = 0, primary = { Leaf = { mid = 1, actor = 1 } }, escrow = { Group = { mid = 2, kk = 1, children = [{ Leaf = { mid = 0, actor = 2 } }] } } } } } },
+  { FixCharter = { id = 7, gamma = { And = { mid = 0, children = [{ Leaf = { mid = 1, actor = 1 } }, { Group = { mid = 2, kk = 1, children = [{ Leaf = { mid = 0, actor = 2 } }] } }] } } } },
+  { FixCharter = { id = 8, gamma = { Group = { mid = 0, kk = 1, children = [{ Leaf = { mid = 1, actor = 1 } }, { Group = { mid = 2, kk = 1, children = [{ Leaf = { mid = 0, actor = 2 } }] } }] } } } },
+  { FixCharter = { id = 9, gamma = { Group = { mid = 0, kk = 1, children = [{ And = { mid = 1, children = [{ Leaf = { mid = 1, actor = 1 } }, { Or = { mid = 2, primary = { Leaf = { mid = 1, actor = 2 } }, escrow = { Leaf = { mid = 2, actor = 3 } } } }] } }, { Group = { mid = 2, kk = 1, children = [{ Or = { mid = 1, primary = { Leaf = { mid = 1, actor = 4 } }, escrow = { Leaf = { mid = 2, actor = 6 } } } }] } }] } } } },
+  { FixCharter = { id = 10, gamma = { Or = { mid = 0, primary = { Group = { mid = 1, kk = 2, children = [{ Leaf = { mid = 1, actor = 1 } }, { Leaf = { mid = 2, actor = 2 } }] } }, escrow = { Leaf = { mid = 2, actor = 5 } } } } } },
+]

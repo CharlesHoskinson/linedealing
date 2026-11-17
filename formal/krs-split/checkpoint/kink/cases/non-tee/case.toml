@@ -1,0 +1,6 @@
+# CP-033: a non-TEE restart deals a new pool; on a TEE committee it is no rule
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { NonTeeRestart = {} },
+]

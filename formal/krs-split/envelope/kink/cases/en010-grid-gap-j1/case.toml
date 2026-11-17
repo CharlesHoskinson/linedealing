@@ -1,0 +1,8 @@
+# EN-010: L = 2 and generation 1 misses column 1 while column 2 is covered; every column is checked.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { HeaderOp = { hdr = { Hdr = { suite = "Bip340", kk = 2, ll = 2, tickets = 6, slots = [{ SlotOf = { g = 2, j = 2, l = 10 } }, { SlotOf = { g = 2, j = 1, l = 11 } }, { SlotOf = { g = 1, j = 2, l = 12 } }, { SlotOf = { g = 2, j = 2, l = 13 } }], r_a = [1, 2], r_ecdsa = [], pairs = [5, 6], layout = { Lay = { body_0 = 1, bodies = [7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], capsules = [9, 9, 0, 0, 0, 0, 0, 0] } }, n_capsules = 2, region_outside = false, length_mismatch = false, has_ic = true, has_r_tkc = true, tkc = 9, auth_tkc = 9, recompute_mismatch = false } } } },
+]

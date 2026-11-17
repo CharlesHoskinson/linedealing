@@ -1,0 +1,491 @@
+# Plausible misreadings of AU-004 to AU-009, AU-012 and AU-027 (the authorize call).
+
+[[mutation]]
+id = "au004-used-appended"
+expect = "kill"
+misunderstanding = "AU-004, AU-008: an accepted call's (nf, auth) goes after the earlier ones"
+  [[mutation.edit]]
+  rule = "authorize"
+  find = "ListItem(usedOf ( C:Call )) Used:List"
+  replace = "Used:List ListItem(usedOf ( C:Call ))"
+
+[[mutation]]
+id = "au004-refuse-accepts"
+expect = "kill"
+misunderstanding = "AU-004: a refused call is reported as accepted"
+  [[mutation.edit]]
+  rule = "authorize-refuse"
+  find = "ListItem(refused ( authorizeRefusals ( Params:Params , Records:List , Used:List , Holds:List , Recovered:Bool , C:Call ) ))"
+  replace = "ListItem(accepted)"
+
+[[mutation]]
+id = "au004-stays-unspent"
+expect = "kill"
+misunderstanding = "AU-004: the record stays UNSPENT when its authorization is added"
+  [[mutation.edit]]
+  rule = "split_authorization--add_auth_1"
+  find = "rsPENDING"
+  replace = "rsUNSPENT"
+
+[[mutation]]
+id = "au004-auth-appended"
+expect = "kill"
+misunderstanding = "AU-004: the new authorization goes after the record's earlier ones"
+  [[mutation.edit]]
+  rule = "split_authorization--add_auth_1"
+  find = "ListItem(newAuth ( C:Call )) Auths:List"
+  replace = "Auths:List ListItem(newAuth ( C:Call ))"
+
+[[mutation]]
+id = "au002-born-final"
+expect = "kill"
+misunderstanding = "AU-002, AU-004: an authorization is added FINAL"
+  [[mutation.edit]]
+  rule = "split_authorization--new_auth_1"
+  find = "stSUBMITTED"
+  replace = "stFINAL"
+
+[[mutation]]
+id = "au002-not-direct"
+expect = "kill"
+misunderstanding = "AU-002: a Midnight-first authorization is not marked direct"
+  [[mutation.edit]]
+  rule = "split_authorization--new_auth_1"
+  find = "ListItem(Pin:Int) , true )"
+  replace = "ListItem(Pin:Int) , false )"
+
+[[mutation]]
+id = "au009-no-pin"
+expect = "kill"
+misunderstanding = "AU-009, AU-023: the authorization keeps no pin, so a RELEASED settlement locks to nothing"
+  [[mutation.edit]]
+  rule = "split_authorization--new_auth_1"
+  find = "ListItem(Pin:Int) , true )"
+  replace = ".List , true )"
+
+[[mutation]]
+id = "au005-nf-unchecked"
+expect = "kill"
+misunderstanding = "AU-005: the statement need not name the record's current nullifier"
+  [[mutation.edit]]
+  rule = "split_authorization--statement_ok_1"
+  find = "(Nf:Nf ==K Rnf:Nf) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "au005-spent-unchecked"
+expect = "kill"
+misunderstanding = "AU-005: a spent record may be authorized again"
+  [[mutation.edit]]
+  rule = "split_authorization--statement_ok_1"
+  find = "(notBool Spent:Bool)"
+  replace = "true"
+
+[[mutation]]
+id = "au005-inputs-unchecked"
+expect = "kill"
+misunderstanding = "AU-005 item 1: the statement holds without verified inputs"
+  [[mutation.edit]]
+  rule = "split_authorization--statement_ok_1"
+  find = "andThenBool InputsOk:Bool)"
+  replace = "andThenBool true)"
+
+[[mutation]]
+id = "au007-checks-skipped"
+expect = "kill"
+misunderstanding = "AU-007: the check table is not part of the statement"
+  [[mutation.edit]]
+  rule = "split_authorization--statement_ok_1"
+  find = "checksOk ( Held:Bool , Profile:Profile , C:Call )"
+  replace = "true"
+
+[[mutation]]
+id = "au006-source-skipped"
+expect = "kill"
+misunderstanding = "AU-006: every source is admitted for every profile"
+  [[mutation.edit]]
+  rule = "split_authorization--statement_ok_1"
+  find = "sourceOk ( Profile:Profile , Source:Source )"
+  replace = "true"
+
+[[mutation]]
+id = "au005-slot-skipped"
+expect = "kill"
+misunderstanding = "AU-005 item 4, AU-006: a named ECDSA slot need not lie under the record's root"
+  [[mutation.edit]]
+  rule = "split_authorization--statement_ok_1"
+  find = "slotOk ( R:Rec , C:Call )"
+  replace = "true"
+
+[[mutation]]
+id = "au005-ticket-always"
+expect = "kill"
+misunderstanding = "AU-005 item 5: the ticket is checked in TEE mode too"
+  [[mutation.edit]]
+  rule = "split_authorization--statement_ok_1"
+  find = "((M:Mode ==K modeTEE) orElseBool TicketOk:Bool)"
+  replace = "TicketOk:Bool"
+
+[[mutation]]
+id = "au005-ticket-never"
+expect = "kill"
+misunderstanding = "AU-005 item 5: the ticket is not checked in NON_TEE mode"
+  [[mutation.edit]]
+  rule = "split_authorization--statement_ok_1"
+  find = "((M:Mode ==K modeTEE) orElseBool TicketOk:Bool)"
+  replace = "true"
+
+[[mutation]]
+id = "au006-owner-p0-only"
+expect = "kill"
+misunderstanding = "AU-006: the owner source is not admitted"
+  [[mutation.edit]]
+  rule = "split_authorization--source_ok_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "au006-seizure-not-p2"
+expect = "kill"
+misunderstanding = "AU-006: the seizure-order source is not admitted for P2"
+  [[mutation.edit]]
+  rule = "split_authorization--source_ok_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "au006-seizure-p0-p1"
+expect = "kill"
+misunderstanding = "AU-006: the seizure-order source is admitted for P0 and P1"
+  [[mutation.edit]]
+  rule = "split_authorization--source_ok_3"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "au006-recovery-p0"
+expect = "kill"
+misunderstanding = "AU-006: the recovery-exit source is admitted for P0"
+  [[mutation.edit]]
+  rule = "split_authorization--source_ok_4"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "au006-recovery-not-p1-p2"
+expect = "kill"
+misunderstanding = "AU-006: the recovery-exit source is not admitted for P1 and P2"
+  [[mutation.edit]]
+  rule = "split_authorization--source_ok_5"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "au007-p0-checked"
+expect = "kill"
+misunderstanding = "AU-007: the owner source of P0 fails the check table"
+  [[mutation.edit]]
+  rule = "split_authorization--checks_ok_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "au007-p1-no-gamma"
+expect = "kill"
+misunderstanding = "AU-007: the owner source of P1 needs the predicate only, not the approver check"
+  [[mutation.edit]]
+  rule = "split_authorization--checks_ok_2"
+  find = "PredOk:Bool andThenBool InGamma:Bool"
+  replace = "PredOk:Bool"
+
+[[mutation]]
+id = "au007-p1-no-predicate"
+expect = "kill"
+misunderstanding = "AU-007: the owner source of P1 needs the approver check only, not the predicate"
+  [[mutation.edit]]
+  rule = "split_authorization--checks_ok_2"
+  find = "PredOk:Bool andThenBool InGamma:Bool"
+  replace = "InGamma:Bool"
+
+[[mutation]]
+id = "au007-p2-no-predicate"
+expect = "kill"
+misunderstanding = "AU-007: the owner source of P2 needs no predicate"
+  [[mutation.edit]]
+  rule = "split_authorization--checks_ok_3"
+  find = "(PredOk:Bool andThenBool InGamma:Bool)"
+  replace = "InGamma:Bool"
+
+[[mutation]]
+id = "au007-p2-no-gamma"
+expect = "kill"
+misunderstanding = "AU-007: the owner source of P2 needs no approver check"
+  [[mutation.edit]]
+  rule = "split_authorization--checks_ok_3"
+  find = "(PredOk:Bool andThenBool InGamma:Bool)"
+  replace = "PredOk:Bool"
+
+[[mutation]]
+id = "au007-p2-no-blacklist"
+expect = "kill"
+misunderstanding = "AU-007: the registry blacklist does not apply to the owner source of P2"
+  [[mutation.edit]]
+  rule = "split_authorization--checks_ok_3"
+  find = "(notBool Blacklisted:Bool)"
+  replace = "true"
+
+[[mutation]]
+id = "au007-p2-owner-no-hold"
+expect = "kill"
+misunderstanding = "AU-007, AU-018: the hold accumulator does not apply to the owner source of P2"
+  [[mutation.edit]]
+  rule = "split_authorization--checks_ok_3"
+  find = "(notBool Held:Bool)"
+  replace = "true"
+
+[[mutation]]
+id = "au007-p2-recovery-no-hold"
+expect = "kill"
+misunderstanding = "AU-007, AU-018: the hold accumulator does not apply to the recovery source of P2"
+  [[mutation.edit]]
+  rule = "split_authorization--checks_ok_4"
+  find = "notBool Held:Bool"
+  replace = "true"
+
+[[mutation]]
+id = "au007-p1-recovery-checked"
+expect = "kill"
+misunderstanding = "AU-007: a P1 recovery exit fails the check table"
+  [[mutation.edit]]
+  rule = "split_authorization--checks_ok_5"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "au007-seizure-checked"
+expect = "kill"
+misunderstanding = "AU-007: the seizure source fails the check table"
+  [[mutation.edit]]
+  rule = "split_authorization--checks_ok_6"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "au007-hold-ignored"
+expect = "kill"
+misunderstanding = "AU-007, AU-018: a record's hold tag in the accumulator does not make it held"
+  [[mutation.edit]]
+  rule = "split_authorization--any_bad_statement_2"
+  find = "HoldTag:Int in Holds:List"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--any_bad_statement_3"
+  find = "HoldTag:Int in Holds:List"
+  replace = "false"
+
+[[mutation]]
+id = "au005-slot-any-record"
+expect = "kill"
+misunderstanding = "AU-005 item 4: a call may name an ECDSA slot of another record"
+  [[mutation.edit]]
+  rule = "split_authorization--slot_ok_2"
+  find = "(Rid2:Int ==Int Rid:Int) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "au006-slot-any-root"
+expect = "kill"
+misunderstanding = "AU-006: a call may open a slot under either root, whatever its source"
+  [[mutation.edit]]
+  rule = "split_authorization--slot_ok_2"
+  find = "(Root:Root ==K rootOf ( Source:Source ))"
+  replace = "true"
+
+[[mutation]]
+id = "au006-slot-root-unset"
+expect = "kill"
+misunderstanding = "AU-006: a slot may lie under a root the record does not have"
+  [[mutation.edit]]
+  rule = "split_authorization--slot_ok_2"
+  find = "andThenBool rootSet ( Root:Root , R:Rec )"
+  replace = "andThenBool true"
+
+[[mutation]]
+id = "au006-seizure-own-root"
+expect = "kill"
+misunderstanding = "AU-006: the seizure source opens slots under slr_own"
+  [[mutation.edit]]
+  rule = "split_authorization--root_of_1"
+  find = "=> rootG"
+  replace = "=> rootOWN"
+
+[[mutation]]
+id = "au006-own-root-always-set"
+expect = "kill"
+misunderstanding = "AU-006: every record has slr_own"
+  [[mutation.edit]]
+  rule = "split_authorization--root_set_1"
+  find = "size(SlrOwn:List) >Int 0"
+  replace = "true"
+
+[[mutation]]
+id = "au006-g-root-always-set"
+expect = "kill"
+misunderstanding = "AU-006: every P2 record has slr_G"
+  [[mutation.edit]]
+  rule = "split_authorization--root_set_2"
+  find = "size(SlrG:List) >Int 0"
+  replace = "true"
+
+[[mutation]]
+id = "au012-unchecked"
+expect = "kill"
+misunderstanding = "AU-012: an authorize on a board-first record is accepted"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_record_code_1"
+  find = "anyBfRec ( Rs1:List , Rid:Int )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--bf_record_code_2"
+  find = "anyBfRec ( Rs1:List , Rid:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "au012-any-record"
+expect = "kill"
+misunderstanding = "AU-012: a call is board_first_record when any record is board-first"
+  [[mutation.edit]]
+  rule = "split_authorization--any_bf_rec_2"
+  find = "(X:Int ==Int Rid:Int) andThenBool BoardFirst:Bool"
+  replace = "BoardFirst:Bool"
+  [[mutation.edit]]
+  rule = "split_authorization--any_bf_rec_3"
+  find = "(X:Int ==Int Rid:Int) andThenBool BoardFirst:Bool"
+  replace = "BoardFirst:Bool"
+
+[[mutation]]
+id = "au008-unchecked"
+expect = "kill"
+misunderstanding = "AU-008: a nullifier may be used by two accepted authorize calls"
+  [[mutation.edit]]
+  rule = "split_authorization--nf_used_code_1"
+  find = "Nf:Nf in usedNfs ( Used:List )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--nf_used_code_2"
+  find = "Nf:Nf in usedNfs ( Used:List )"
+  replace = "false"
+
+[[mutation]]
+id = "au005-missing-record"
+expect = "kill"
+misunderstanding = "AU-005: a call for a record that does not exist holds the statement vacuously"
+  [[mutation.edit]]
+  rule = "split_authorization--statement_code_1"
+  find = "(notBool hasRid ( Rs1:List , Rid:Int )) orElseBool "
+  replace = ""
+
+[[mutation]]
+id = "au005-statement-unchecked"
+expect = "kill"
+misunderstanding = "AU-005 to AU-007: the statement is not checked"
+  [[mutation.edit]]
+  rule = "split_authorization--statement_code_1"
+  find = "anyBadStatement ( M:Mode , Holds:List , Rs1:List , C:Call )"
+  replace = "false"
+
+[[mutation]]
+id = "au027-before-recover"
+expect = "kill"
+misunderstanding = "AU-027: the recovery-exit source may be used before a recovery transition is recorded"
+  [[mutation.edit]]
+  rule = "split_authorization--recovery_code_1"
+  find = "(notBool Recovered:Bool) orElseBool "
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_authorization--recovery_code_2"
+  find = "(notBool Recovered:Bool) orElseBool "
+  replace = ""
+
+[[mutation]]
+id = "au027-any-destination"
+expect = "kill"
+misunderstanding = "AU-027: the recovery-exit source may pay a destination other than D_exit"
+  [[mutation.edit]]
+  rule = "split_authorization--recovery_code_1"
+  find = "orElseBool (notBool ToExit:Bool)"
+  replace = "orElseBool false"
+  [[mutation.edit]]
+  rule = "split_authorization--recovery_code_2"
+  find = "orElseBool (notBool ToExit:Bool)"
+  replace = "orElseBool false"
+
+[[mutation]]
+id = "au027-every-source"
+expect = "kill"
+misunderstanding = "AU-027: every source needs a recorded recovery and an output to D_exit"
+  [[mutation.edit]]
+  rule = "split_authorization--recovery_code_1"
+  find = "(Source:Source ==K srcRECOVERY) andThenBool"
+  replace = "true andThenBool"
+  [[mutation.edit]]
+  rule = "split_authorization--recovery_code_2"
+  find = "(Source:Source ==K srcRECOVERY) andThenBool"
+  replace = "true andThenBool"
+
+[[mutation]]
+id = "au004-auth-reused"
+expect = "kill"
+misunderstanding = "AU-004, ledger 5: a call may reuse an existing auth"
+  [[mutation.edit]]
+  rule = "split_authorization--fresh_auth_1"
+  find = "notBool authExists ( Bs:List , Auth:Int )"
+  replace = "true"
+
+[[mutation]]
+id = "au009-unchecked"
+expect = "kill"
+misunderstanding = "AU-009: a LOCKED record may spend another input than its pin"
+  [[mutation.edit]]
+  rule = "split_authorization--pin_code_1"
+  find = "anyPinMismatch ( Rs1:List , Rid:Int , Pin:Int )"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_authorization--pin_code_2"
+  find = "anyPinMismatch ( Rs1:List , Rid:Int , Pin:Int )"
+  replace = "false"
+
+[[mutation]]
+id = "au009-every-record"
+expect = "kill"
+misunderstanding = "AU-009: every record must spend its pin, not only a LOCKED one"
+  [[mutation.edit]]
+  rule = "split_authorization--any_pin_mismatch_2"
+  find = "(Rstate:RState ==K rsLOCKED)"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_authorization--any_pin_mismatch_3"
+  find = "(Rstate:RState ==K rsLOCKED)"
+  replace = "true"
+
+[[mutation]]
+id = "au009-locked-always"
+expect = "kill"
+misunderstanding = "AU-009: a LOCKED record cannot be authorized at all"
+  [[mutation.edit]]
+  rule = "split_authorization--any_pin_mismatch_2"
+  find = "(Rpin:List =/=K ListItem(Pin:Int))"
+  replace = "true"
+  [[mutation.edit]]
+  rule = "split_authorization--any_pin_mismatch_3"
+  find = "(Rpin:List =/=K ListItem(Pin:Int))"
+  replace = "true"
+
+[[mutation]]
+id = "au022-code-order"
+expect = "kill"
+misunderstanding = "AU-012, AU-022: board_first_record is listed before bad_carry"
+  [[mutation.edit]]
+  rule = "split_authorization--authorize_refusals_1"
+  find = "carryCode ( Q:Int , Carry:List ) bfRecordCode ( afterCarry ( Q:Int , Carry:List , Records:List ) , Rid:Int )"
+  replace = "bfRecordCode ( afterCarry ( Q:Int , Carry:List , Records:List ) , Rid:Int ) carryCode ( Q:Int , Carry:List )"

@@ -1,0 +1,7 @@
+# SH-017: one put entry per slot share in TEE mode
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { PutShares = { slots = [1, 2, 3] } },
+  { PutShares = { slots = [] } },
+]

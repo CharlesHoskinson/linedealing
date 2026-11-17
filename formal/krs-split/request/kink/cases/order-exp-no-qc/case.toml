@@ -1,0 +1,8 @@
+# Ledger 1, EN-023, RQ-007: exp_c_not_below_exp before no_qc on a POSTED request.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 60, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = false, p = 0 } },
+]

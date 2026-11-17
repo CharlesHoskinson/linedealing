@@ -5,10 +5,12 @@
 //! The armed initial state is expanded into public events. Its two honest header
 //! partials alone cannot open the Rust header (which needs three).
 //!
-//! State 2's premature generation-2 anchor is explicitly tested as a mismatch,
-//! then omitted from the generation-1 projection. No failed transition is silently
-//! accepted. Pool tests below are missing-rule probes, not full pool replays.
-//! See lanes/F-report.md for all unsupported traces and adapter assumptions.
+//! The trace is the item 26 re-export after the S1b fix: `doAnchorGen` needs a
+//! release of generation 1 (DESIGN §5.6), so the two honest nodes release
+//! variants 1 and 3 of generation 1 on slot 1 and no generation-2 anchor
+//! appears. The generation-2 guard is replayed by `fix__gen2AfterReleaseHolds`
+//! and `fix__gen2AnchorsHolds` in quint_split_replay.rs. No failed transition is
+//! silently accepted. The full trace replay of item 26 is quint_split_replay.rs.
 
 mod itf_split;
 
@@ -52,7 +54,7 @@ fn project(views: &BTreeMap<u16, SplitBoard>, model: &Value, refused: &BTreeSet<
             model["reqs"]["1"]["admitted"].as_bool().unwrap()
         );
         assert!(r.in_force());
-        assert_eq!(r.anchors.len(), 1, "generation 2 is the recorded mismatch");
+        assert_eq!(r.anchors.len(), 1, "the trace anchors generation 1 only");
         assert_eq!(r.anchors[&1].host_height, 1);
         assert_eq!(
             r.admit_votes
@@ -115,60 +117,19 @@ fn project(views: &BTreeMap<u16, SplitBoard>, model: &Value, refused: &BTreeSet<
 
 fn replay(anchored: bool) -> (BTreeMap<u16, SplitBoard>, Vec<Release>) {
     let states = trace(S1);
-    assert_eq!(states.len(), 5);
+    assert_eq!(states.len(), 4);
     let mut views: BTreeMap<_, _> = (1..=2)
         .map(|n| (n, bootstrap(&states[0], n, anchored)))
         .collect();
     let mut refused = BTreeSet::new();
     let mut releases = Vec::new();
-    let mut mismatches = Vec::new();
     project(&views, &states[0], &refused);
-    for (i, pair) in states.windows(2).enumerate() {
+    for pair in states.windows(2) {
         let (before, after) = (&pair[0], &pair[1]);
         let mut fields = changed(before, after);
         fields.remove("lastAction"); // Diagnostic label never selects the action.
-        if fields == BTreeSet::from(["reqs".into()]) {
-            let rids = changed(&before["reqs"], &after["reqs"]);
-            assert_eq!(rids.len(), 1);
-            let rid = rids.first().unwrap();
-            let b = &before["reqs"][rid];
-            let a = &after["reqs"][rid];
-            match changed(b, a)
-                .iter()
-                .map(String::as_str)
-                .collect::<Vec<_>>()
-                .as_slice()
-            {
-                ["st"] => {
-                    assert_eq!(b["st"]["tag"], "Unposted");
-                    assert_eq!(a["st"]["tag"], "Posted");
-                    for view in views.values_mut() {
-                        post(view, rid.parse().unwrap(), integer(&a["hdr"]["dd"]));
-                    }
-                }
-                ["anchors"] => {
-                    let gens = changed(&b["anchors"], &a["anchors"]);
-                    assert_eq!(gens, BTreeSet::from(["2".into()]));
-                    assert_eq!(b["anchors"]["2"], 0);
-                    assert_eq!(a["anchors"]["2"], 3);
-                    for (&honest, view) in &mut views {
-                        let event = Event::AnchorGen {
-                            eid: digest(rid.parse().unwrap()),
-                            generation: 2,
-                            node: honest,
-                            obs: Observation {
-                                host_height: 2,
-                                midnight_height: 0,
-                            },
-                            deadline_verified: true,
-                        };
-                        assert_eq!(apply(view, event), Err(SplitError::Generation));
-                        assert!(!view.request(&digest(1)).unwrap().anchors.contains_key(&2));
-                    }
-                    mismatches.push(i + 1);
-                }
-                delta => panic!("unhandled request delta at state {}: {delta:?}", i + 1),
-            }
+        if fields.is_empty() {
+            // doIdle: the model state does not change.
         } else {
             assert_eq!(
                 fields,
@@ -181,7 +142,7 @@ fn replay(anchored: bool) -> (BTreeMap<u16, SplitBoard>, Vec<Release>) {
             );
             let release = Release::from_diff(before, after);
             assert_eq!(release.generation, 1);
-            assert_eq!(release.slot, 3);
+            assert_eq!(release.slot, 1);
             assert_eq!(
                 changed(&before["nodes"], &after["nodes"]),
                 BTreeSet::from([release.node.to_string()])
@@ -202,7 +163,7 @@ fn replay(anchored: bool) -> (BTreeMap<u16, SplitBoard>, Vec<Release>) {
                 }
             }
             if anchored && !releases.is_empty() {
-                // Every honest view receives the SAME finalized entry (ticket 131).
+                // Every honest view receives the SAME finalized entry (ticket 111).
                 // The reducer consumes trusted evidence; it does not prove finality.
                 for (&honest, view) in &mut views {
                     let prior_release = !view.request(&digest(1)).unwrap().releases.is_empty();
@@ -233,18 +194,17 @@ fn replay(anchored: bool) -> (BTreeMap<u16, SplitBoard>, Vec<Release>) {
         }
         project(&views, after, &refused);
     }
-    assert_eq!(mismatches, vec![2]);
     assert_eq!(
         releases
             .iter()
             .map(|r| (r.node, r.ticket))
             .collect::<Vec<_>>(),
-        vec![(2, 131), (1, 111)]
+        vec![(1, 111), (2, 131)]
     );
     assert_eq!(
         refused,
         if anchored {
-            BTreeSet::from([1])
+            BTreeSet::from([2])
         } else {
             BTreeSet::new()
         }
@@ -262,15 +222,15 @@ fn s1_fork_confirms_two_honest_tickets_without_slot_anchor() {
 #[test]
 fn s1_slot_anchor_refuses_second_ticket_on_every_honest_view() {
     let (views, _) = replay(true);
-    assert!(views[&1].request(&digest(1)).unwrap().releases.is_empty());
-    assert_eq!(views[&2].request(&digest(1)).unwrap().releases.len(), 1);
+    assert_eq!(views[&1].request(&digest(1)).unwrap().releases.len(), 1);
+    assert!(views[&2].request(&digest(1)).unwrap().releases.is_empty());
 }
 
 #[test]
 fn s1_one_shared_view_refuses_conflicting_selection() {
     let (mut views, releases) = replay(false);
     assert_eq!(
-        apply(views.get_mut(&2).unwrap(), releases[1].event()),
+        apply(views.get_mut(&1).unwrap(), releases[1].event()),
         Err(SplitError::Selection)
     );
 }

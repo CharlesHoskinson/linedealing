@@ -1,0 +1,223 @@
+# Plausible misreadings of the checkpoint signer's rules (CP-002, CP-012 to CP-015),
+# as K patches of kink/definition.k.
+
+[[mutation]]
+id = "cp012-latest-root-only"
+expect = "kill"
+misunderstanding = "CP-012: only the latest landed bf_root is checked"
+  [[mutation.edit]]
+  rule = "split_checkpoint--landed_nfs_2"
+  find = "seconds ( Bf:List ) landedNfs ( Rest:List )"
+  replace = "seconds ( Bf:List ) landedNfs ( .List )"
+
+[[mutation]]
+id = "cp012-first-leaf-only"
+expect = "kill"
+misunderstanding = "CP-012: only the first leaf is checked against the landed roots"
+  [[mutation.edit]]
+  rule = "split_checkpoint--none_in_2_2"
+  find = "=> noneIn ( Rest:List , Ys:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp012-landed-not-read"
+expect = "kill"
+misunderstanding = "CP-012: the signer does not read the landed roots"
+  [[mutation.edit]]
+  rule = "sign-bf"
+  find = "signBfOk ( Chain:List , Leaves:List )"
+  replace = "signBfOk ( .List , Leaves:List )"
+
+[[mutation]]
+id = "cp013-first-leaf-only"
+expect = "kill"
+misunderstanding = "CP-013: only the first leaf is checked against the ended requests"
+  [[mutation.edit]]
+  rule = "split_checkpoint--all_in_2_1"
+  find = "=> allIn ( Rest:List , Ended:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp013-midnight-not-read"
+expect = "kill"
+misunderstanding = "CP-013: the signer does not read Midnight's VOID records"
+  [[mutation.edit]]
+  rule = "sign-settle"
+  find = "signSettleOk ( Leaves:List , Ended:List , Mv:List )"
+  replace = "signSettleOk ( Leaves:List , Ended:List , .List )"
+
+[[mutation]]
+id = "cp014-empty-min-h"
+expect = "kill"
+misunderstanding = "CP-002, CP-014: with no live request pending_min is h, not h + 1"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pending_fields_ok_1"
+  find = "headOr ( sortNat ( atOrAbove ( Lo:Int , Live:List ) ) , H:Int +Int 1 )"
+  replace = "headOr ( sortNat ( atOrAbove ( Lo:Int , Live:List ) ) , H:Int )"
+
+[[mutation]]
+id = "cp014-unsorted"
+expect = "kill"
+misunderstanding = "CP-014: pending_root commits the live indices in board order, not sorted"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pending_fields_ok_1"
+  find = "(sortNat ( atOrAbove ( Lo:Int , Live:List ) ) ==K Pending:List)"
+  replace = "(atOrAbove ( Lo:Int , Live:List ) ==K Pending:List)"
+
+[[mutation]]
+id = "cp014-count-unchecked"
+expect = "kill"
+misunderstanding = "CP-002, CP-014: pending_count is not checked"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pending_fields_ok_1"
+  find = " andThenBool (size(atOrAbove ( Lo:Int , Live:List )) ==Int PendingCount:Int)"
+  replace = ""
+
+[[mutation]]
+id = "cp014-min-unchecked"
+expect = "kill"
+misunderstanding = "CP-002, CP-014: pending_min is not checked"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pending_fields_ok_1"
+  find = "(headOr ( sortNat ( atOrAbove ( Lo:Int , Live:List ) ) , H:Int +Int 1 ) ==Int PendingMin:Int) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "cp014-sort-descending"
+expect = "kill"
+misunderstanding = "CP-014: the pending list is sorted high to low"
+  [[mutation.edit]]
+  rule = "split_checkpoint--insert_sorted_2_1"
+  find = "requires X:Int <=Int Y:Int"
+  replace = "requires X:Int >=Int Y:Int"
+  [[mutation.edit]]
+  rule = "split_checkpoint--insert_sorted_2_2"
+  find = "requires notBool (X:Int <=Int Y:Int)"
+  replace = "requires notBool (X:Int >=Int Y:Int)"
+
+[[mutation]]
+id = "cp014-signs-anything"
+expect = "kill"
+misunderstanding = "CP-014: the signer signs the pending fields it is given"
+  [[mutation.edit]]
+  rule = "sign-pending"
+  find = "signPendingOk ( Chain:List , P:Pool , Live:List )"
+  replace = "(signPendingOk ( Chain:List , P:Pool , Live:List ) orElseBool true)"
+
+[[mutation]]
+id = "cp015-rebind-allowed"
+expect = "kill"
+misunderstanding = "CP-015: a seat log may bind one slot key twice"
+  [[mutation.edit]]
+  rule = "split_checkpoint--sign_seat_root_ok"
+  find = "nodupB ( bindKeys ( Log:List ) ) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "cp015-reput-allowed"
+expect = "kill"
+misunderstanding = "CP-015: a seat log may put one digest twice"
+  [[mutation.edit]]
+  rule = "split_checkpoint--sign_seat_root_ok"
+  find = " andThenBool nodupB ( putDigests ( Log:List ) )"
+  replace = ""
+
+[[mutation]]
+id = "cp015-binding-by-digest"
+expect = "kill"
+misunderstanding = "CP-015: a second binding means a second binding of one digest, not of one slot key"
+  [[mutation.edit]]
+  rule = "split_checkpoint--bind_keys_2"
+  find = "ListItem(bind ( Nf:Int , _ )) Rest:List ) => ListItem(Nf:Int)"
+  replace = "ListItem(bind ( _ , D:Int )) Rest:List ) => ListItem(D:Int)"
+
+[[mutation]]
+id = "cp015-puts-count-as-bindings"
+expect = "kill"
+misunderstanding = "CP-015: a put entry takes its digest as a slot key"
+  [[mutation.edit]]
+  rule = "split_checkpoint--bind_keys_3"
+  find = "ListItem(put ( _ )) Rest:List ) => bindKeys ( Rest:List )"
+  replace = "ListItem(put ( D:Int )) Rest:List ) => ListItem(D:Int) bindKeys ( Rest:List )"
+
+[[mutation]]
+id = "cp015-signs-anything"
+expect = "kill"
+misunderstanding = "CP-015: the signer signs any seat log"
+  [[mutation.edit]]
+  rule = "sign-seat-root"
+  find = "signSeatRootOk ( Log:List )"
+  replace = "(signSeatRootOk ( Log:List ) orElseBool true)"
+
+# CP-014 (DECISIONS 71, finding F7): the floor of the latest landed checkpoint.
+
+[[mutation]]
+id = "cp014-old-listing"
+expect = "kill"
+misunderstanding = "CP-014 (DECISIONS 71): the signer lists every live index, as before DECISIONS 71, with no floor from the landed checkpoint"
+  [[mutation.edit]]
+  rule = "split_checkpoint--sign_pending_ok_1"
+  find = "floorOf ( Chain:List , Pool:Int )"
+  replace = "0"
+
+[[mutation]]
+id = "cp014-strict-floor"
+expect = "kill"
+misunderstanding = "CP-014 (DECISIONS 71): the list holds the indices strictly above the floor, so the index equal to the landed pending_min is dropped"
+  [[mutation.edit]]
+  rule = "split_checkpoint--at_or_above_2_1"
+  find = "Lo:Int <=Int X:Int"
+  replace = "Lo:Int <Int X:Int"
+  [[mutation.edit]]
+  rule = "split_checkpoint--at_or_above_2_2"
+  find = "Lo:Int <=Int X:Int"
+  replace = "Lo:Int <Int X:Int"
+
+[[mutation]]
+id = "cp014-floor-other-pool"
+expect = "kill"
+misunderstanding = "CP-014 (DECISIONS 71, ledger 19): the floor is the pending_min of the first pool the landed checkpoint lists, whatever its pool id"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pool_floor_2_1"
+  find = "requires Pool:Int ==Int Pid:Int"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pool_floor_2_2"
+  find = "requires notBool (Pool:Int ==Int Pid:Int)"
+  replace = "requires notBool true"
+
+[[mutation]]
+id = "cp014-floor-oldest-checkpoint"
+expect = "kill"
+misunderstanding = "CP-014 (DECISIONS 71, ledger 19): before any checkpoint has landed there is still a floor above 0, so a live index 0 is left out"
+  [[mutation.edit]]
+  rule = "split_checkpoint--floor_of_1"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "cp014-unlisted-pool-floor"
+expect = "kill"
+misunderstanding = "CP-014 (DECISIONS 71): a pool that the landed checkpoint does not list still has a floor above 0, so its live index 0 is left out"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pool_floor_1"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "cp014-floor-above-pmin"
+expect = "kill"
+misunderstanding = "CP-014 (DECISIONS 71): the list starts above the landed pending_min, not at it"
+  [[mutation.edit]]
+  rule = "split_checkpoint--floor_of_2"
+  find = "=> poolFloor ( cpPools ( C:Cp ) , Pid:Int )"
+  replace = "=> poolFloor ( cpPools ( C:Cp ) , Pid:Int ) +Int 1"
+
+[[mutation]]
+id = "cp014-empty-list-entry"
+expect = "kill"
+misunderstanding = "CP-002, CP-014: with no live index at or above the floor the pending list still holds an entry (the floor)"
+  [[mutation.edit]]
+  rule = "split_checkpoint--at_or_above_1"
+  find = "atOrAbove ( _ , .List ) => .List"
+  replace = "atOrAbove ( Lo:Int , .List ) => ListItem(Lo:Int)"

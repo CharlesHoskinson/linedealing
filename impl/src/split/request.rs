@@ -491,6 +491,24 @@ impl<S: SchnorrSuite> SchnorrSetup<S> {
         set: Vec<LeafId>,
         rng: &mut impl CryptoRngCore,
     ) -> Result<Self> {
+        Self::new_with_rngs(n, t, k, l, gate, set, rng, None)
+    }
+    /// As `new`, with optional separate randomness for nonce material.
+    /// Key draws (committee, actor shares, birth seed) come from `key_rng`.
+    /// Slots, transport keys, actor pools and actor secrets come from
+    /// `nonce_rng` when given, so a persisted key seed never fixes a nonce.
+    #[allow(clippy::too_many_arguments)]
+    pub fn new_with_rngs(
+        n: u16,
+        t: usize,
+        k: u8,
+        l: u8,
+        gate: Gate,
+        set: Vec<LeafId>,
+        key_rng: &mut impl CryptoRngCore,
+        nonce_rng: Option<&mut dyn CryptoRngCore>,
+    ) -> Result<Self> {
+        let rng = key_rng;
         let halves = schnorr::halves(k as u16, l as u16)?;
         if k > 8 || l > 2 || set.is_empty() {
             return Err(Error::Parameters);
@@ -513,6 +531,11 @@ impl<S: SchnorrSuite> SchnorrSetup<S> {
             vec![],
             vec![set[0].clone()],
         )?;
+        let mut nonce: &mut dyn CryptoRngCore = match nonce_rng {
+            Some(r) => r,
+            None => rng,
+        };
+        let rng = &mut nonce;
         let slots = CommitteeSlots::generate(
             n,
             u16::try_from(t).map_err(|_| Error::Parameters)?,

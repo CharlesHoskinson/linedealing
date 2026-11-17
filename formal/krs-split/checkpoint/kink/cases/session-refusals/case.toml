@@ -1,0 +1,13 @@
+# ledger 6: no session before the node is ready; ledger: a second session for one pool
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { OpenSession = { pool = 1 } },
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { ReadLedger = { ok = true, tickets = [], cov = [] } },
+  { OpenSession = { pool = 1 } },
+  { OpenSession = { pool = 2 } },
+  { OpenSession = { pool = 1 } },
+  { Boot = {} },
+  { OpenSession = { pool = 1 } },
+]

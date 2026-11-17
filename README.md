@@ -19,11 +19,17 @@ The owner of an existing address sends one message and goes offline. A committee
 | `formal/quint` | Quint model of the board rules, simulated at n = 4, 7 and 9, with a mutant check |
 | `impl/` | Rust prototype: three suites (BIP340 Schnorr, ECDSA secp256k1, Ed25519), the 196-byte dealing proof, complaints, resharing; 91 tests |
 | `impl/BENCHMARKS.md` | Measurements: per-core throughput, Criterion tables for n = 9 to 256, a 72-run simulation matrix |
+| `paper-split/` | The split-line dealing paper (`main.pdf`), its sources and the review record |
+| `design/enhancement/` | Split-line dealing: co-custody and operator blindness. `DESIGN.md` (protocol), `DECISIONS.md` (decision record), `HANDOFF.md` (committee rotation to new keychains), `RECOVERY-TRIGGER.md` (Midnight-provable committee-loss triggers), reviews and hardening rounds |
+| `openspec/` | OpenSpec change `add-split-line-dealing`: one capability spec per module with EARS requirements |
+| `formal/lean-split` | Lean 4 oracles of the split-line capabilities (envelope, request, slots, authorization, checkpoint, shard-holders, handoff) with theorems, mutants and refusal cases |
+| `formal/krs-split` | k-rust reference suites of those capabilities, compared with the Lean oracles, with golden vectors |
+| `formal/quint-spec`, `formal/quint` | Quint models written from the specs, replayed through the Lean oracles |
+| `formal/drwatt` | Stage gates (`requirements.json`, `checks.json`); `dw verify` re-runs every gate |
+| `formal/passport-shard` | Lean and Quint models of the shard passport |
+| `specs/refinement/` | Requirement traceability from spec to oracle, model and code |
+| `impl/src/split` | Rust prototype of split-line dealing |
 | `paper/` | The paper (`main.pdf`, 38 pages), its sources and the review record |
-| `paper-split/` | The paper split into parts, with its review record |
-| `design/council/` | Design council proposals and reviews |
-| `proto/` | Committee session simulator |
-| `experiments/` | Line-dealing check and cost scripts |
 
 ## Performance
 

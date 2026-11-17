@@ -1,0 +1,8 @@
+# EN-014: a bad dealing with too few proved partials needs more.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { CombineOp = { t = 2, dealing_ok = false, partials = [{ Part = { sender = 1, proof_ok = true } }, { Part = { sender = 2, proof_ok = false } }] } },
+]

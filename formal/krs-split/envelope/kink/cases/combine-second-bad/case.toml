@@ -1,0 +1,10 @@
+# EN-014, RQ-015: the first of the t partials is proved and the second is not; the tag
+# reads every chosen partial's proof, so the first round fails and the fallback has
+# fewer than t proved partials (need_more).
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { CombineOp = { t = 2, dealing_ok = true, partials = [{ Part = { sender = 1, proof_ok = true } }, { Part = { sender = 2, proof_ok = false } }] } },
+]

@@ -1,0 +1,12 @@
+# Ledger 1, EN-023, RQ-007, RQ-005: an expired request (exp = 100 <= 101 + delta_c) ordered
+# without a QC gets exp_c_not_below_exp, no_qc and terminal in code order; with a QC,
+# exp_c_not_below_exp and terminal.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 100, rtype = "Spend", profile = "PfP1" } },
+  { Tick = { h = 101 } },
+  { Order = { eid = 1, qc = false, p = 0 } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+]

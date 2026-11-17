@@ -1,0 +1,8 @@
+# CP-003: a checkpoint is due after 60 s of board time
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Due = { last = 100, now = 159 } },
+  { Due = { last = 100, now = 160 } },
+  { Due = { last = 0, now = 1000 } },
+]

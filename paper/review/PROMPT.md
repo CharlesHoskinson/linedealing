@@ -2,12 +2,12 @@
 
 You are an independent reviewer (program-committee standard, cryptography/security venue). Do not edit any file except your report. Do not run git.
 
-Paper: `paper/review/main.pdf` (sources in `src/`; read the .tex if the PDF is hard to parse).
+Paper: `/home/hoskinson/Projects/mpcexperiments/paper/review/main.pdf` (sources in `src/`; read the .tex if the PDF is hard to parse).
 Supporting material the paper must agree with (read as needed):
-- `design/SCHEME.md` (protocol), `design/PROOFS.md` (proofs; section 8 is the open list)
-- `research/PRIOR-ART.md`, `research/prior-art-review/REPORT.md`
-- `formal/lean/REPORT.md`, `formal/natural/REPORT.md`, `formal/quint/REPORT.md`
-- `impl/BENCHMARKS.md`
+- `/home/hoskinson/Projects/mpcexperiments/design/SCHEME.md` (protocol), `design/PROOFS.md` (proofs; section 8 is the open list)
+- `/home/hoskinson/Projects/mpcexperiments/research/PRIOR-ART.md`, `research/prior-art-review/REPORT.md`
+- `/home/hoskinson/Projects/mpcexperiments/formal/lean/REPORT.md`, `formal/natural/REPORT.md`, `formal/quint/REPORT.md`
+- `/home/hoskinson/Projects/mpcexperiments/impl/BENCHMARKS.md`
 Benchmark numbers in the paper come from macros that will be refreshed after one more measurement run; do not count stale numbers against the paper, but do flag any number that is inconsistent with BENCHMARKS.md or with the paper itself.
 
 ## Question

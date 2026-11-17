@@ -1,0 +1,9 @@
+# Ledger 8: seat operations are refused in NON_TEE mode.
+[inputs]
+params = { Params = { mode = "NonTee", w = 2 } }
+ops = [
+  { SeatPut = { key = 1 } },
+  { SeatBind = { key = 1, d = 7, slot_acks = 2, sealed_acks = 2 } },
+  { SeatRelease = { key = 1, d = 7 } },
+  { SeatBurn = { key = 1 } },
+]

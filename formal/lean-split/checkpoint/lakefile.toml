@@ -1,0 +1,20 @@
+name = "split_checkpoint_oracle"
+defaultTargets = ["SplitCheckpoint", "oracle"]
+
+# Every module under SplitCheckpoint/ (Spec, Tests, Audit) is built by default, so
+# `lake build --wfail` sees a `sorry` in any of them.
+[leanOptions]
+autoImplicit = false
+
+[[require]]
+name = "split_codec"
+path = "../codec"
+
+[[lean_lib]]
+name = "SplitCheckpoint"
+globs = ["SplitCheckpoint.+"]
+
+[[lean_exe]]
+name = "oracle"
+root = "Main"
+supportInterpreter = false

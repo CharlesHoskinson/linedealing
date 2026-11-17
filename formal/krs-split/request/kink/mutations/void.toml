@@ -1,0 +1,207 @@
+# Misreadings of the VOID count that completes a VOID end and of its tombstone reason
+# (RQ-045, RQ-050 to RQ-052, RQ-065, RQ-072 to RQ-074).
+
+[[mutation]]
+id = "void-f-posts"
+expect = "kill"
+misunderstanding = "RQ-045: f VOID posts end the request"
+  [[mutation.edit]]
+  rule = "split_request--void_count_1"
+  find = "(Fe:Int +Int 1) <=Int"
+  replace = "Fe:Int <=Int"
+  [[mutation.edit]]
+  rule = "split_request--void_count_2"
+  find = "(Fe:Int +Int 1) <=Int"
+  replace = "Fe:Int <=Int"
+
+[[mutation]]
+id = "void-reason-dropped"
+expect = "kill"
+misunderstanding = "RQ-045, RQ-065: a VOID end keeps reason NONE"
+  [[mutation.edit]]
+  rule = "split_request--end_void"
+  find = "endVoidAt ( R:Req , Reason:Reason ,"
+  replace = "endVoidAt ( R:Req , rsNONE ,"
+
+[[mutation]]
+id = "void-always-void"
+expect = "kill"
+misunderstanding = "RQ-050, RQ-051, RQ-052: a VOID end always settles VOID"
+  [[mutation.edit]]
+  rule = "split_request--end_void"
+  find = "endOutcome ( R:Req )"
+  replace = "ocVOID"
+
+[[mutation]]
+id = "void-expires"
+expect = "kill"
+misunderstanding = "RQ-045, RQ-064: the VOID count expires the request"
+  [[mutation.edit]]
+  rule = "split_request--end_void_at_1"
+  find = "phVOID"
+  replace = "phEXPIRED"
+
+[[mutation]]
+id = "void-last-unrecorded"
+expect = "kill"
+misunderstanding = "RQ-042, RQ-045: the completing VOID post is not recorded"
+  [[mutation.edit]]
+  rule = "split_request--void_count_1"
+  find = "endVoid ( C:Ctx , setVoidPosts ( R:Req , Ps:List ) ,"
+  replace = "endVoid ( C:Ctx , R:Req ,"
+
+[[mutation]]
+id = "h-is-terminal-2"
+expect = "kill"
+misunderstanding = "RQ-005: a VOID request is not terminal"
+  [[mutation.edit]]
+  rule = "split_request--is_terminal_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "void-mixed-post"
+expect = "kill"
+misunderstanding = "RQ-065, RQ-072: a node may post VOID with reason MIXED; the post is counted"
+  [[mutation.edit]]
+  rule = "split_request--void_mixed_1"
+  find = "Reason:Reason ==K rsMIXED"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--void_mixed_2"
+  find = "Reason:Reason ==K rsMIXED"
+  replace = "false"
+
+[[mutation]]
+id = "tomb-f-posts"
+expect = "kill"
+misunderstanding = "RQ-045, RQ-072: a reason that f reason posts carry names the tombstone"
+  [[mutation.edit]]
+  rule = "split_request--find_reason_2"
+  find = "(F:Int +Int 1) <=Int"
+  replace = "F:Int <=Int"
+  [[mutation.edit]]
+  rule = "split_request--find_reason_3"
+  find = "<Int (F:Int +Int 1)"
+  replace = "<Int F:Int"
+
+[[mutation]]
+id = "tomb-no-mixed"
+expect = "kill"
+misunderstanding = "RQ-072, RQ-065: posts with no common reason end the request with reason NONE, not MIXED"
+  [[mutation.edit]]
+  rule = "split_request--find_reason_1"
+  find = "=> rsMIXED"
+  replace = "=> rsNONE"
+
+[[mutation]]
+id = "tomb-all-epochs"
+expect = "kill"
+misunderstanding = "RQ-042, RQ-045: the tombstone reason counts the VOID posts of every epoch, not only those of the epoch that completes the count"
+  [[mutation.edit]]
+  rule = "split_request--epoch_reasons_3"
+  find = "=> epochReasons ( Rest:List , E:Int )"
+  replace = "=> ListItem(Reason:Reason) epochReasons ( Rest:List , E:Int )"
+  [[mutation.edit]]
+  rule = "split_request--epoch_reasons_3"
+  find = "voidPost ( Epoch:Int , _ , _ )"
+  replace = "voidPost ( Epoch:Int , _ , Reason:Reason )"
+
+[[mutation]]
+id = "tomb-keep-stalled"
+expect = "kill"
+misunderstanding = "RQ-073, RQ-074: STALLED posts stay reason posts after a RELEASE committed, so a released request can end with reason STALLED"
+  [[mutation.edit]]
+  rule = "split_request--reason_posts_1"
+  find = "=> dropStalled ( Counted:List )"
+  replace = "=> Counted:List"
+
+[[mutation]]
+id = "tomb-drop-stalled-always"
+expect = "kill"
+misunderstanding = "RQ-074, RQ-045: STALLED posts are never reason posts, even with any_release = false"
+  [[mutation.edit]]
+  rule = "split_request--reason_posts_2"
+  find = "=> Counted:List"
+  replace = "=> dropStalled ( Counted:List )"
+
+[[mutation]]
+id = "tomb-drop-every-reason"
+expect = "kill"
+misunderstanding = "RQ-074: after a RELEASE no post is a reason post, so every released VOID end is MIXED"
+  [[mutation.edit]]
+  rule = "split_request--drop_stalled_3"
+  find = "=> ListItem(X:Reason) dropStalled ( Rest:List )"
+  replace = "=> dropStalled ( Rest:List )"
+
+[[mutation]]
+id = "count-reason-empty-one"
+expect = "kill"
+misunderstanding = "RQ-045, RQ-072: every candidate reason counts one post more than carry it, so f posts with one reason name the tombstone"
+  [[mutation.edit]]
+  rule = "split_request--count_reason_1"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "count-reason-flat"
+expect = "kill"
+misunderstanding = "RQ-045: the posts that carry a reason are not counted, so every VOID end is MIXED"
+  [[mutation.edit]]
+  rule = "split_request--count_reason_2"
+  find = "=> 1 +Int countReason ( Rest:List , X:Reason )"
+  replace = "=> countReason ( Rest:List , X:Reason )"
+
+[[mutation]]
+id = "count-reason-any"
+expect = "kill"
+misunderstanding = "RQ-045, RQ-072: a reason counts every reason post, not only those that carry it, so the first post reason names a mixed tombstone"
+  [[mutation.edit]]
+  rule = "split_request--count_reason_3"
+  find = "=> countReason ( Rest:List , X:Reason )"
+  replace = "=> 1 +Int countReason ( Rest:List , X:Reason )"
+
+[[mutation]]
+id = "drop-stalled-keeps"
+expect = "kill"
+misunderstanding = "RQ-073, RQ-074: after a RELEASE a STALLED post is still a reason post"
+  [[mutation.edit]]
+  rule = "split_request--drop_stalled_2"
+  find = "=> dropStalled ( Rest:List )"
+  replace = "=> ListItem(X:Reason) dropStalled ( Rest:List )"
+
+[[mutation]]
+id = "drop-stalled-adds"
+expect = "kill"
+misunderstanding = "RQ-074: removing the STALLED posts leaves a SLOT_TAKEN reason post in their place"
+  [[mutation.edit]]
+  rule = "split_request--drop_stalled_1"
+  find = "=> .List"
+  replace = "=> ListItem(rsSLOT_TAKEN)"
+
+[[mutation]]
+id = "epoch-reasons-extra"
+expect = "kill"
+misunderstanding = "RQ-042, RQ-045: the counted posts of an epoch hold one MALFORMED post more than were posted"
+  [[mutation.edit]]
+  rule = "split_request--epoch_reasons_1"
+  find = "=> .List"
+  replace = "=> ListItem(rsMALFORMED)"
+
+[[mutation]]
+id = "epoch-reasons-skip"
+expect = "kill"
+misunderstanding = "RQ-045: the posts of the completing epoch are not reason posts, so every VOID end is MIXED"
+  [[mutation.edit]]
+  rule = "split_request--epoch_reasons_2"
+  find = "=> ListItem(Reason:Reason) epochReasons ( Rest:List , E:Int )"
+  replace = "=> epochReasons ( Rest:List , E:Int )"
+
+[[mutation]]
+id = "tomb-raw-posts"
+expect = "kill"
+misunderstanding = "RQ-074: the tombstone reason reads the counted posts, not the reason posts (STALLED posts kept after a RELEASE)"
+  [[mutation.edit]]
+  rule = "split_request--tomb_reason"
+  find = "reasonPosts ( Anyrel:Bool , Counted:List )"
+  replace = "Counted:List"

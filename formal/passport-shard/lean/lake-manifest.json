@@ -1,0 +1,14 @@
+{"version": "1.3.0",
+ "packagesDir": ".lake/packages",
+ "packages":
+ [{"type": "path",
+   "scope": "",
+   "name": "split_codec",
+   "manifestFile": "lake-manifest.json",
+   "inherited": false,
+   "dir": "../../lean-split/codec",
+   "copy": false,
+   "configFile": "lakefile.toml"}],
+ "name": "passport_shard_oracle",
+ "lakeDir": ".lake",
+ "fixedToolchain": false}

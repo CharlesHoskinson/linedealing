@@ -1,0 +1,130 @@
+{
+  "prefix": "HO",
+  "namespace": "SplitHandoff",
+  "spec": "openspec/changes/add-split-line-dealing/specs/split-handoff/spec.md",
+  "count": 68,
+  "proved": {
+    "HO-010": [
+      "ho_start_from_any"
+    ],
+    "HO-011": [
+      "ho_start_from_any"
+    ],
+    "HO-012": [
+      "ho_start_from_any"
+    ],
+    "HO-018": [
+      "ho_completes",
+      "ho063_signable_preserved"
+    ],
+    "HO-031": [
+      "ho_completes"
+    ],
+    "HO-032": [
+      "ho032_authority_switch"
+    ],
+    "HO-035": [
+      "ho035_abort_keeps_old"
+    ],
+    "HO-036": [
+      "ho036_owner_switch"
+    ],
+    "HO-044": [
+      "ho044_carried_slot_board_state",
+      "ho044_sweep_installs_board_state"
+    ],
+    "HO-055": [
+      "ho055_two_epochs",
+      "ho_exposure_bound"
+    ],
+    "HO-056": [
+      "ho056_xf_unchanged",
+      "ho056_run_xf"
+    ],
+    "HO-057": [
+      "ho057_user_untouched"
+    ],
+    "HO-058": [
+      "ho058_no_user_action"
+    ],
+    "HO-059": [
+      "ho059_one_owner"
+    ],
+    "HO-063": [
+      "ho063_signable_preserved",
+      "ho063_run_signable"
+    ],
+    "HO-064": [
+      "ho032_authority_switch",
+      "ho_completes"
+    ],
+    "HO-066": [
+      "ho066_armed_abort"
+    ],
+    "HO-067": [
+      "ho_no_source_after_arm"
+    ]
+  },
+  "exceptions": {
+    "HO-016": "node TEE behaviour: the seal-group DKG of the target roster is not modeled",
+    "HO-017": "node behaviour: the target node sends no partial, vote or signature before HANDED_OVER; the oracle has no node messages",
+    "HO-023": "node byte budget: the share β of board bytes per block is not modeled",
+    "HO-025": "node behaviour: the RELEASE-before-partial rule of the source node; the oracle has no partials",
+    "HO-026": "node witness log: release entries listed in a carry are not modeled",
+    "HO-027": "request state machine field any_release, held by split-request",
+    "HO-028": "ECDSA births and refills are not modeled; the slot inventory is fixed at genesis (ledger 26)",
+    "HO-054": "boot-counter rule of CP-009, held by split-checkpoint; joining seats are recorded as pending only",
+    "HO-060": "the slot-nullifier key k_nf is not modeled",
+    "HO-061": "NON_TEE k_nf transfer by f + 1 source dealers is not modeled",
+    "HO-062": "the recovery group's backup is outside the handoff state"
+  },
+  "ledger": {
+    "HO-001": "2",
+    "HO-002": "2",
+    "HO-003": "1, 4",
+    "HO-004": "1, 3",
+    "HO-005": "1",
+    "HO-006": "1",
+    "HO-007": "1",
+    "HO-008": "1, 7",
+    "HO-009": "1, 6",
+    "HO-010": "5, 6, 7",
+    "HO-011": "7",
+    "HO-012": "8, 9",
+    "HO-013": "10",
+    "HO-014": "10",
+    "HO-015": "11",
+    "HO-018": "26",
+    "HO-019": "1, 12",
+    "HO-020": "13",
+    "HO-021": "14",
+    "HO-024": "29",
+    "HO-028": "26",
+    "HO-029": "14",
+    "HO-030": "14",
+    "HO-031": "14, 15, 28",
+    "HO-032": "16",
+    "HO-033": "17, 28",
+    "HO-036": "21",
+    "HO-040": "23",
+    "HO-041": "23",
+    "HO-042": "22",
+    "HO-043": "21, 22",
+    "HO-045": "20",
+    "HO-046": "24",
+    "HO-047": "19",
+    "HO-048": "1, 19",
+    "HO-049": "1",
+    "HO-050": "24",
+    "HO-051": "24",
+    "HO-053": "23",
+    "HO-055": "27",
+    "HO-058": "25",
+    "HO-059": "21",
+    "HO-064": "15, 16",
+    "HO-065": "1, 17",
+    "HO-066": "17, 18",
+    "HO-067": "25",
+    "HO-068": "1, 24"
+  }
+}

@@ -1,0 +1,20 @@
+name = "split_envelope_oracle"
+defaultTargets = ["SplitEnvelope", "oracle"]
+
+# Every module under SplitEnvelope/ (Spec, Tests, Audit) is built by default, so
+# `lake build --wfail` sees a `sorry` in any of them.
+[leanOptions]
+autoImplicit = false
+
+[[require]]
+name = "split_codec"
+path = "../codec"
+
+[[lean_lib]]
+name = "SplitEnvelope"
+globs = ["SplitEnvelope.+"]
+
+[[lean_exe]]
+name = "oracle"
+root = "Main"
+supportInterpreter = false

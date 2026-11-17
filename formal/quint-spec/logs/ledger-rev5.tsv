@@ -1,0 +1,91 @@
+typecheck:splitspec.qnt	ok	2026-11-15T16:39:17-07:00
+typecheck:splitspec_test.qnt	ok	2026-11-15T16:39:35-07:00
+test:test_tee_p2	ok 37/37	2026-11-15T16:40:25-07:00
+test:test_nontee_p2	ok 4/4	2026-11-15T16:40:46-07:00
+test:test_m_restart_void_unspent	ok 2/2	2026-11-15T16:41:06-07:00
+test:test_m_d058_b_nontee	ok 1/1	2026-11-15T16:41:35-07:00
+test:test_m_d058_b	ok 1/1	2026-11-15T16:42:00-07:00
+test:test_m_replace_held	ok 1/1	2026-11-15T16:42:21-07:00
+test:test_m_ecdsa_prec_at_open	ok 1/1	2026-11-15T16:42:43-07:00
+test:test_m_committee_burn_reserved_only	ok 1/1	2026-11-15T16:43:01-07:00
+test:test_m_ecdsa_burn_by_namer	ok 1/1	2026-11-15T16:43:19-07:00
+test:test_m_settle_per_request	ok 1/1	2026-11-15T16:43:36-07:00
+test:test_m_root_omit	ok 1/1	2026-11-15T16:43:56-07:00
+test:test_m_no_jump	ok 1/1	2026-11-15T16:44:28-07:00
+test:test_m_cross_epoch	ok 1/1	2026-11-15T16:44:48-07:00
+test:test_m_ignore_revoke	ok 1/1	2026-11-15T16:45:18-07:00
+test:test_m_any_variant	ok 1/1	2026-11-15T16:45:40-07:00
+test:test_tee_p1	ok 5/5	2026-11-15T16:46:06-07:00
+test:test_m_send_before_record	ok 1/1	2026-11-15T16:46:21-07:00
+test:test_m_locked_void_unlocks	ok 1/1	2026-11-15T16:46:50-07:00
+test:test_m_completing_reason	ok 1/1	2026-11-15T16:47:09-07:00
+test:test_m_stalled_after_release	ok 1/1	2026-11-15T16:47:40-07:00
+test:test_m_exp_c_unchecked	ok 1/1	2026-11-15T16:48:10-07:00
+test:test_m_lapse_once	ok 1/1	2026-11-15T16:48:35-07:00
+test:test_m_late_expiry	ok 1/1	2026-11-15T16:48:55-07:00
+test:test_m_restart_clears_release	ok 1/1	2026-11-15T16:49:23-07:00
+replay:replay_f6_base	ok 5/5	2026-11-15T16:49:40-07:00
+replay:replay_f6_stalled_after_release	ok 1/1	2026-11-15T16:49:53-07:00
+design:tee_p2:init:0x14:10000:80	ok	2026-11-15T16:54:14-07:00
+design:tee_p2:init:0x2a3:10000:80	ok	2026-11-15T16:58:07-07:00
+design:tee_p2:initArmed:0x14:10000:80	ok	2026-11-15T17:02:53-07:00
+design:tee_p2:initArmed:0x2a3:10000:80	ok	2026-11-15T17:10:53-07:00
+design:tee_p1:init:0x14:10000:80	ok	2026-11-15T17:15:42-07:00
+design:tee_p1:init:0x2a3:10000:80	ok	2026-11-15T17:19:54-07:00
+design:tee_p1:initArmed:0x14:10000:80	ok	2026-11-15T17:24:37-07:00
+design:tee_p1:initArmed:0x2a3:10000:80	ok	2026-11-15T17:29:14-07:00
+design:nontee_p2:init:0x14:10000:80	ok	2026-11-15T17:33:48-07:00
+design:nontee_p2:init:0x2a3:10000:80	ok	2026-11-15T17:38:18-07:00
+design:nontee_p2:initArmed:0x14:10000:80	ok	2026-11-15T17:44:17-07:00
+design:nontee_p2:initArmed:0x2a3:10000:80	ok	2026-11-15T17:51:16-07:00
+design:nontee_p1:init:0x14:10000:80	ok	2026-11-15T17:58:57-07:00
+design:nontee_p1:init:0x2a3:10000:80	ok	2026-11-15T18:03:20-07:00
+design:nontee_p1:initArmed:0x14:10000:80	ok	2026-11-15T18:07:27-07:00
+design:nontee_p1:initArmed:0x2a3:10000:80	ok	2026-11-15T18:13:21-07:00
+c11:tee_p2:initArmed:0x14:10000:80	ok	2026-11-15T18:14:58-07:00
+c11:tee_p1:initArmed:0x14:10000:80	ok	2026-11-15T18:16:58-07:00
+c11:nontee_p2:initArmed:0x14:10000:80	ok	2026-11-15T18:18:38-07:00
+c11:nontee_p1:initArmed:0x14:10000:80	ok	2026-11-15T18:20:41-07:00
+c20:tee_p1:initArmed:0x2a3:10000:80	ok	2026-11-15T18:22:43-07:00
+c20:nontee_p2:initArmed:0x2a3:10000:80	ok	2026-11-15T18:24:10-07:00
+mutant:m_ecdsa_prec_at_open:inv_SL007_C13_ecdsaPrecOnlyInForce	KILLED Use --seed=0x5a6	2026-11-15T18:24:24-07:00
+mutant:m_committee_burn_reserved_only:inv_SL010_committeeBurnAtPrecEnd	KILLED Use --seed=0x1773	2026-11-15T18:24:37-07:00
+mutant:m_ecdsa_burn_by_namer:inv_SL011_SL028_ecdsaBurnOnlyByReserver	KILLED Use --seed=0x5a6	2026-11-15T18:24:51-07:00
+mutant:m_d058_b:inv_RQ068_C11_reEnded	KILLED Use --seed=0x1171	2026-11-15T18:25:10-07:00
+mutant:m_d058_b_nontee:inv_RQ068_C11_reEnded	KILLED Use --seed=0x11c2	2026-11-15T18:25:23-07:00
+mutant:m_replace_held:inv_RQ054_C11_heldLeafNeverReplaced	survived-random	2026-11-15T18:25:55-07:00
+mutant:m_restart_void_unspent:inv_RQ052_RQ068_C11_restartEndNeverVoid	KILLED Use --seed=0x14	2026-11-15T18:26:08-07:00
+mutant:m_settle_per_request:inv_CP005_batchedWrites	KILLED Use --seed=0x14	2026-11-15T18:26:19-07:00
+mutant:m_root_omit:inv_CP013_AU020_settledByRoot	KILLED Use --seed=0x9a1c	2026-11-15T18:26:31-07:00
+mutant:m_no_jump:inv_CP007_CP008_CP009_landedChain	KILLED Use --seed=0x14	2026-11-15T18:26:41-07:00
+mutant:m_cross_epoch:inv_RQ042_C13_voidNeedsHonestPost	KILLED Use --seed=0x14	2026-11-15T18:26:55-07:00
+mutant:m_ignore_revoke:inv_RQ059_C7_noReleaseAfterRevoke	KILLED Use --seed=0x15d1c	2026-11-15T18:27:10-07:00
+mutant:m_any_variant:inv_RQ058_C9_oneVariantPerGeneration	KILLED Use --seed=0x524b9	2026-11-15T18:27:32-07:00
+mutant:m_send_before_record:inv_RQ069_C11_sentNeverVoid	survived-random	2026-11-15T18:28:03-07:00
+mutant:m_locked_void_unlocks:inv_AU025_C11_releasedNeverUnspent	survived-random	2026-11-15T18:28:31-07:00
+mutant:m_completing_reason:inv_RQ045_RQ072_C13_C20_reasonHasHonestPost	KILLED Use --seed=0xcf6c	2026-11-15T18:28:46-07:00
+mutant:m_exp_c_unchecked:inv_EN023_expCBelowExp	KILLED Use --seed=0x1171	2026-11-15T18:28:58-07:00
+mutant:m_lapse_once:inv_SL005_SL010_lapsedPrecBurned	KILLED Use --seed=0x4302	2026-11-15T18:29:13-07:00
+mutant:m_stalled_after_release:inv_RQ073_C20_noStalledAfterRelease	survived-random	2026-11-15T18:29:49-07:00
+mutant:m_stalled_after_release_nontee:inv_RQ073_C20_noStalledAfterRelease	survived-random	2026-11-15T18:30:28-07:00
+mutant:m_late_expiry:inv_RQ046_urgentExpiry	KILLED Use --seed=0x14	2026-11-15T18:30:43-07:00
+mutant:m_restart_clears_release:inv_RQ076_C11_releaseMonotone	KILLED Use --seed=0x3b29d	2026-11-15T18:31:00-07:00
+mutant10k:m_stalled_after_release_nontee:inv_RQ073_C20_noStalledAfterRelease:0x14	survived-random	2026-11-15T18:32:52-07:00
+mutant10k:m_stalled_after_release_nontee:inv_RQ073_C20_noStalledAfterRelease:0x2a3	survived-random	2026-11-15T18:34:44-07:00
+mutant10k:m_stalled_after_release:inv_RQ073_C20_noStalledAfterRelease:0x14	survived-random	2026-11-15T18:36:36-07:00
+mutant10k:m_stalled_after_release:inv_RQ073_C20_noStalledAfterRelease:0x2a3	survived-random	2026-11-15T18:38:27-07:00
+traces:tee_p2:init	50 traces	2026-11-15T18:38:52-07:00
+traces:tee_p2:initArmed	50 traces	2026-11-15T18:39:13-07:00
+traces:tee_p2:refusals	20 traces	2026-11-15T18:39:33-07:00
+traces:tee_p1:init	50 traces	2026-11-15T18:40:02-07:00
+traces:tee_p1:initArmed	50 traces	2026-11-15T18:40:28-07:00
+traces:tee_p1:refusals	20 traces	2026-11-15T18:40:43-07:00
+traces:nontee_p2:init	50 traces	2026-11-15T18:41:10-07:00
+traces:nontee_p2:initArmed	50 traces	2026-11-15T18:41:48-07:00
+traces:nontee_p2:refusals	20 traces	2026-11-15T18:42:07-07:00
+traces:nontee_p1:init	50 traces	2026-11-15T18:42:33-07:00
+traces:nontee_p1:initArmed	50 traces	2026-11-15T18:42:57-07:00
+traces:nontee_p1:refusals	20 traces	2026-11-15T18:43:12-07:00
+testtraces:test_tee_p2	37 traces	2026-11-15T18:44:08-07:00
+testtraces:test_nontee_p2	4 traces	2026-11-15T18:44:37-07:00
+testtraces:test_tee_p1	5 traces	2026-11-15T18:45:02-07:00

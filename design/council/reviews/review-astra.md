@@ -102,7 +102,7 @@ VERDICT: changes_requested
 
    There are additional inconsistent equations: `U_i := k_i C_S + m K_i` encodes \(k_i x+mk_i\), not the claimed \(k_i(m+rx)\). Shifting \(\Gamma\) without updating its corresponding secret/ciphertext representation also breaks consistency.
 
-   The local [Trout++ paper](research/sources/eprint/2026-1455.pdf), Protocols 4–5, uses different masked products, commitments, and coordinated nonce randomization.
+   The local [Trout++ paper](/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2026-1455.pdf), Protocols 4–5, uses different masked products, commitments, and coordinated nonce randomization.
 
    **Required fix:** replace this section with a faithful specification of the actual protocol, including its ciphertext updates, proof relations, and combination formula. Verify both correctness and transcript privacy before claiming the ECDSA bridge works.
 
@@ -139,7 +139,7 @@ VERDICT: changes_requested
    \]
    The witness-dependent shift \(cr\) can therefore be comparable to the entire masking interval. The usual shifted-uniform argument gives potentially constant statistical distance, not the claimed \(2^{-\lambda}\).
 
-   The local [cgVSS proof](research/sources/eprint/2023-451.pdf), Figure 1, includes an additional statistical-hiding factor in the proof-randomness range. The candidate also changes its batching/challenge construction, so the original theorem cannot simply be inherited.
+   The local [cgVSS proof](/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2023-451.pdf), Figure 1, includes an additional statistical-hiding factor in the proof-randomness range. The candidate also changes its batching/challenge construction, so the original theorem cannot simply be inherited.
 
    **Required fix:** restore proven sampling bounds and specify the exact instantiated proof, or prove the modified construction. Recalculate response sizes afterward. This finding invalidates the supplied proof argument; it is not, by itself, a demonstrated practical key-extraction attack.
 

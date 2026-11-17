@@ -1,0 +1,13 @@
+# RQ-001: n = 7, f = 2 gives w = 4, t = 5, q = 5
+[inputs]
+params = { Params = { n = 7, f = 2, mode = "Tee", bb = 3, slot_anchor = false, d_rec = 0 } }
+ops = [
+  { ColdStart = { intact = 4, signers = 5 } },
+  { ColdStart = { intact = 4, signers = 4 } },
+  { Eks = { e = 1, acks = [4, 4, 4, 4, 4, 4, 4], sigs = 5 } },
+  { Eks = { e = 1, acks = [4, 4, 4, 4, 4, 4, 4], sigs = 4 } },
+  { Eks = { e = 1, acks = [4, 4, 4, 3, 4, 4, 4], sigs = 5 } },
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { ReadLedger = { ok = true, tickets = [{ P = [0, 1] }, { P = [1, 1] }, { P = [2, 1] }], cov = [] } },
+  { ReadLedger = { ok = true, tickets = [{ P = [0, 1] }, { P = [1, 1] }], cov = [] } },
+]

@@ -1,0 +1,18 @@
+# SL-006, SL-016: request 1 is in force and opens slot 1: it takes the precedence itself
+# and is not VOID. Request 2, in force, names slot 1 and a free slot 2: VOID SLOT_TAKEN at
+# the open, and it takes slot 2. Request 3, in force under the other root, names slot 1:
+# the precedence of request 1 is in force, so it is VOID. Request 4, in force, names only
+# the free slot 3 while slots 1 and 2 are held by others: it takes slot 3 and is not VOID.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealE = { pool = 1, leaf_set = 5, root = "Own", kcount = 3 } },
+  { InForce = { eid = 1, root = "Own" } },
+  { OpenE = { eid = 1, pos = 10, names = [{ Ek = { pool = 1, idx = 1 } }] } },
+  { InForce = { eid = 2, root = "Own" } },
+  { OpenE = { eid = 2, pos = 20, names = [{ Ek = { pool = 1, idx = 1 } }, { Ek = { pool = 1, idx = 2 } }] } },
+  { InForce = { eid = 3, root = "Gr" } },
+  { OpenE = { eid = 3, pos = 30, names = [{ Ek = { pool = 1, idx = 1 } }] } },
+  { InForce = { eid = 4, root = "Own" } },
+  { OpenE = { eid = 4, pos = 40, names = [{ Ek = { pool = 1, idx = 3 } }] } },
+]

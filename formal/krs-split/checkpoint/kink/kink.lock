@@ -1,0 +1,3209 @@
+# kink's verdicts of a corpus, one section per command: [run] (`run` on a mutation list),
+# [coverage] (`coverage`), [compare] (`compare`) and [query] (`query` on a pattern list). As a
+# lock (`--lock FILE`; krs keeps <corpus>/kink.lock), each command reads, checks (--locked) and
+# rewrites only its own section, and keeps the others as they are.
+schema = "kink-flow-verdicts"
+definition = "split-checkpoint-reference:main"
+
+[run]
+# The verdicts of kink's `run` command (`krs kink run`, `kink-flow run`): the next run tries
+# each `killer` first, a run without --locked rewrites this section, and `run --locked` checks
+# that it is current.
+version = 28
+profile = "z3"
+z3_version = "5.3.3.0 430d19e697e2ec9bad79ff210d41b4a7a5fcfa3e 430d19e"
+work_factor = 5
+
+[run.spec]
+outcome = "admitted"
+
+# Each [[run.mutation]] is a mutation of the list, by its id, and its verdict: killed (a
+# program's result differs on the mutant; `killer` names it), survived (every program agreed;
+# `horizon`, those that agreed only up to an observation horizon), equivalent or unkillable (no
+# program can tell the mutant apart), timeout, unknown or error (no verdict), invalid-mutation
+# or not-admitted (its author must fix it; `reason` says why).
+[[run.mutation]]
+id = "branches/cp012-repeat-nf"
+status = "killed"
+killer = "cases/sign-bf/case.toml"
+
+[[run.mutation]]
+id = "branches/cp012-landed-nf"
+status = "killed"
+killer = "cases/sign-bf/case.toml"
+
+[[run.mutation]]
+id = "branches/cp012-auth-distinct"
+status = "killed"
+killer = "cases/sign-bf/case.toml"
+
+[[run.mutation]]
+id = "branches/cp013-repeat-leaf"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "branches/cp013-distinct-enough"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "branches/cp013-subset"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "branches/cp013-size-enough"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "branches/cp013-other-requests"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "branches/cp013-void-overridden"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "branches/cp013-void-auth-excluded"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "branches/cp013-void-other-outcome"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "branches/cp013-first-void-only"
+status = "killed"
+killer = "cases/sign-settle-later-void/case.toml"
+
+[[run.mutation]]
+id = "branches/cp013-midnight-void-skipped"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "branches/ledger5-any-account"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "branches/ledger5-taken-slot-bound"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "branches/ledger5-free-slot-refused"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "branches/cp017-first-seat-only"
+status = "killed"
+killer = "cases/jump-kept/case.toml"
+
+[[run.mutation]]
+id = "branches/cp017-count-nothing"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "branches/cp017-count-zero"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "branches/ledger5-named-pool-skipped"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp040-unchecked"
+status = "killed"
+killer = "cases/land-every-code/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp040-equal-lowered"
+status = "killed"
+killer = "cases/land-pmin-lowered/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp040-rise-refused"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp040-new-pool-lowered"
+status = "killed"
+killer = "cases/jump-new-pool/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp040-prev-first-pool-only"
+status = "killed"
+killer = "cases/land-lowered/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp040-first-pool-only"
+status = "killed"
+killer = "cases/land-lowered/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp040-lowered-pool-skipped"
+status = "killed"
+killer = "cases/land-every-code/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp040-every-landing"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp041-unchecked"
+status = "killed"
+killer = "cases/marker-jump/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp009-only-moved"
+status = "killed"
+killer = "cases/jump-h/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp041-anchor-ignored"
+status = "killed"
+killer = "cases/marker-jump-anchor/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp041-candidate-value"
+status = "killed"
+killer = "cases/marker-carrier-at-cur/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp041-window-ignored"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp041-unmoved-refused"
+status = "killed"
+killer = "cases/jump-h-boundary/case.toml"
+
+[[run.mutation]]
+id = "decisions69/ledger1-jump-twice"
+status = "killed"
+killer = "cases/marker-jump/case.toml"
+
+[[run.mutation]]
+id = "decisions69/ledger1-pmin-after-jump"
+status = "killed"
+killer = "cases/land-every-code/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp011-carrier-at-cur"
+status = "killed"
+killer = "cases/marker-carrier-at-cur/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp011-carrier-any-seq"
+status = "killed"
+killer = "cases/marker-carrier-at-cur/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp011-carrier-any-statement"
+status = "killed"
+killer = "cases/jump-anchor/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp011-current-from-zero"
+status = "killed"
+killer = "cases/marker-carrier-at-cur/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp011-every-landed-carries"
+status = "killed"
+killer = "cases/jump-anchor/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp011-landed-carriers-ignored"
+status = "survived"
+
+[[run.mutation]]
+id = "decisions69/cp011-landed-carrier-keeps"
+status = "survived"
+
+[[run.mutation]]
+id = "decisions69/cp011-landed-carrier-found-ignored"
+status = "survived"
+
+[[run.mutation]]
+id = "decisions69/cp011-latest-landed-only"
+status = "survived"
+
+[[run.mutation]]
+id = "decisions69/cp021-generation-burns-again"
+status = "killed"
+killer = "cases/once-per-generation/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp021-open-before-marker-kept"
+status = "killed"
+killer = "cases/bind-open-restart/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp021-open-always-burns"
+status = "killed"
+killer = "cases/acct-refusals/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp021-open-pre-ignored"
+status = "killed"
+killer = "cases/bind-open-restart/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp021-open-after-marker-burns"
+status = "killed"
+killer = "cases/marker-stays-open/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp021-open-anchor-burns"
+status = "killed"
+killer = "cases/bind-open-restart-anchor/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp021-open-no-restart-burns"
+status = "killed"
+killer = "cases/acct-refusals/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp022-sessions-unburned"
+status = "killed"
+killer = "cases/survivor-session/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp022-anchor-drops-sessions"
+status = "killed"
+killer = "cases/survivor-session-anchor/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp022-every-pool-range"
+status = "killed"
+killer = "cases/survivor-session/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp022-new-range-last"
+status = "killed"
+killer = "cases/survivor-session/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp022-first-session-only"
+status = "killed"
+killer = "cases/survivor-session/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp022-phantom-session"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp042-no-reappend"
+status = "killed"
+killer = "cases/reappend/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp042-reappend-first"
+status = "killed"
+killer = "cases/reappend/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp042-reappend-duplicates"
+status = "killed"
+killer = "cases/reappend/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp042-board-not-appended"
+status = "killed"
+killer = "cases/reappend-unverified/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp042-board-newest-first"
+status = "killed"
+killer = "cases/reappend-unverified/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp042-tail-kept"
+status = "killed"
+killer = "cases/reappend-unverified/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp042-carried-stay-on-board"
+status = "killed"
+killer = "cases/reappend/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp043-ready-refused"
+status = "killed"
+killer = "cases/read-unverified-ready/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp043-stays-ready"
+status = "killed"
+killer = "cases/read-unverified-ready/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp043-release-any-waits"
+status = "killed"
+killer = "cases/covered/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp043-anchored-always-waits"
+status = "killed"
+killer = "cases/covered/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp043-release-code"
+status = "killed"
+killer = "cases/covered/case.toml"
+
+[[run.mutation]]
+id = "decisions69/cp021-restart-open-assumed"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp026-acct-id-zero"
+status = "killed"
+killer = "cases/acct-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp013-all-in-empty"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp013-all-in-skip"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp010-phantom-statement"
+status = "killed"
+killer = "cases/land-first-all/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp029-anchor-adds-pool"
+status = "killed"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp029-anchor-flag-inverted"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp029-anchor-adds-slot"
+status = "killed"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp006-no-acks-below"
+status = "killed"
+killer = "cases/params-even/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp011-whole-by-default"
+status = "killed"
+killer = "cases/jump-anchor/case.toml"
+
+[[run.mutation]]
+id = "helpers/sl012-window-plus-one"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp007-new-pool-lowered"
+status = "killed"
+killer = "cases/jump-new-pool/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp007-first-prev-pool"
+status = "killed"
+killer = "cases/land-lowered/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp025-bind-adds-pool"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp015-phantom-key"
+status = "killed"
+killer = "cases/sign-seat-root/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp015-restore-binds-seat"
+status = "killed"
+killer = "cases/sign-seat-root/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp015-release-binds-eid"
+status = "killed"
+killer = "cases/sign-seat-root/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp021-burn-adds-pool"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp020-burn-extra-range"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp021-burn-adds-slot"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp017-count-one-more"
+status = "killed"
+killer = "cases/jump-h/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp029-uncovered-burns"
+status = "killed"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp017-counters-unread"
+status = "killed"
+killer = "cases/jump-h/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp002-pools-unread"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp011-restart-seq-unread"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp010-restores-unread"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp001-seq-off-by-one"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp034-delta-plus-one"
+status = "killed"
+killer = "cases/recover/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp017-phantom-seat"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp017-seats-unread"
+status = "killed"
+killer = "cases/read-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp036-peers-start-zero"
+status = "killed"
+killer = "cases/order-floor/case.toml"
+
+[[run.mutation]]
+id = "helpers/ledger5-past-end-free"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp008-gap-always"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp026-acct-known"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp026-acct-never-known"
+status = "killed"
+killer = "cases/acct-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp010-statement-always"
+status = "killed"
+killer = "cases/land-first-all/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp024-session-known"
+status = "killed"
+killer = "cases/marker-closes/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp024-session-never-known"
+status = "killed"
+killer = "cases/session-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp036-floor-without-landing"
+status = "killed"
+killer = "cases/order-floor/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp036-checkpoint-height-plus-one"
+status = "killed"
+killer = "cases/order-floor/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp014-empty-min-off"
+status = "killed"
+killer = "cases/sign-pending/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp014-min-off"
+status = "killed"
+killer = "cases/sign-pending/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp014-insert-twice"
+status = "killed"
+killer = "cases/sign-pending/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp009-jump-by-default"
+status = "killed"
+killer = "cases/jump-h-boundary/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp009-jump-never"
+status = "killed"
+killer = "cases/jump-h/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp009-first-pool-only"
+status = "killed"
+killer = "cases/jump-second-pool/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp009-new-pool-jumps"
+status = "killed"
+killer = "cases/jump-new-pool/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp025-open-marker-zero"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp025-open-landed-flipped"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp012-phantom-nf"
+status = "killed"
+killer = "cases/sign-bf/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp011-initial-one"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp017-first-ticket-only"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp007-lowered-always"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp007-lowered-never"
+status = "killed"
+killer = "cases/land-lowered/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp025-mark-adds-pool"
+status = "killed"
+killer = "cases/marker-closes/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp010-missing-always"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp010-missing-never"
+status = "killed"
+killer = "cases/land-first-all/case.toml"
+
+[[run.mutation]]
+id = "helpers/rq001-n-minus-one"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp011-always-seq"
+status = "killed"
+killer = "cases/jump-anchor/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp011-kept-reset"
+status = "killed"
+killer = "cases/marker-carrier-at-cur/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp012-empty-dup"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp012-dup-skipped"
+status = "killed"
+killer = "cases/sign-bf/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp012-dup-first-only"
+status = "killed"
+killer = "cases/sign-bf-later-leaf/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp012-none-in-empty"
+status = "killed"
+killer = "cases/sign-bf/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp012-landed-allowed"
+status = "killed"
+killer = "cases/sign-bf/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp004-phantom-pending"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp004-carried-kept"
+status = "killed"
+killer = "cases/restore-pending/case.toml"
+
+[[run.mutation]]
+id = "helpers/refusal-code-no-rule"
+status = "killed"
+killer = "cases/acct-refusals/case.toml"
+
+[[run.mutation]]
+id = "helpers/refusal-always"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp024-phantom-burn"
+status = "killed"
+killer = "cases/marker-stays-open/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp024-other-pool-burns"
+status = "killed"
+killer = "cases/read-whole/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp015-phantom-put"
+status = "killed"
+killer = "cases/sign-seat-root/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp015-puts-unread"
+status = "killed"
+killer = "cases/sign-seat-root/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp015-bind-puts-digest"
+status = "killed"
+killer = "cases/sign-seat-root/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp015-restore-puts-counter"
+status = "killed"
+killer = "cases/sign-seat-root/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp015-release-puts-g"
+status = "killed"
+killer = "cases/sign-seat-root/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp033-refill-adds-pool"
+status = "killed"
+killer = "cases/non-tee-restart/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp033-refill-keeps-shares"
+status = "survived"
+
+[[run.mutation]]
+id = "helpers/cp037-plain-release-waits"
+status = "killed"
+killer = "cases/covered/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp031-phantom-slot"
+status = "killed"
+killer = "cases/reshare-on/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp031-anchor-reshares-none"
+status = "killed"
+killer = "cases/reshare-on/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp032-no-anchor-reshares"
+status = "killed"
+killer = "cases/reshare-off/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp017-no-tickets-outside"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp012-phantom-leaf"
+status = "killed"
+killer = "cases/sign-bf/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp012-nfs-unread"
+status = "killed"
+killer = "cases/sign-bf/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp024-burns-after-restart"
+status = "killed"
+killer = "cases/marker-closes/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp025-bind-past-end"
+status = "survived"
+
+[[run.mutation]]
+id = "helpers/cp025-bind-wrong-digest"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "helpers/ledger5-free-everywhere"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp014-sort-phantom"
+status = "killed"
+killer = "cases/sign-pending/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp014-no-sort"
+status = "killed"
+killer = "cases/sign-pending/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp013-void-empty"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "helpers/cp011-restart-seq-off"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "landing/cp007-lowered-unchecked"
+status = "killed"
+killer = "cases/land-lowered/case.toml"
+
+[[run.mutation]]
+id = "landing/cp007-equal-lowered"
+status = "killed"
+killer = "cases/land-pmin-lowered/case.toml"
+
+[[run.mutation]]
+id = "landing/cp007-first-pool-only"
+status = "killed"
+killer = "cases/land-lowered/case.toml"
+
+[[run.mutation]]
+id = "landing/cp001-seq-unchecked"
+status = "killed"
+killer = "cases/land-second-all/case.toml"
+
+[[run.mutation]]
+id = "landing/cp001-first-seq-any"
+status = "killed"
+killer = "cases/land-first-all/case.toml"
+
+[[run.mutation]]
+id = "landing/cp008-gap-at-h-plus-1"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "landing/cp008-first-unchecked"
+status = "killed"
+killer = "cases/land-first-all/case.toml"
+
+[[run.mutation]]
+id = "landing/cp008-later-unchecked"
+status = "killed"
+killer = "cases/land-second-all/case.toml"
+
+[[run.mutation]]
+id = "landing/cp008-first-pool-only"
+status = "killed"
+killer = "cases/land-first-gap/case.toml"
+
+[[run.mutation]]
+id = "landing/cp009-unchecked"
+status = "killed"
+killer = "cases/jump-h/case.toml"
+
+[[run.mutation]]
+id = "landing/cp009-anchor-ignored"
+status = "killed"
+killer = "cases/jump-anchor/case.toml"
+
+[[run.mutation]]
+id = "landing/cp009-kept-w"
+status = "killed"
+killer = "cases/jump-h/case.toml"
+
+[[run.mutation]]
+id = "landing/cp009-kept-ignored"
+status = "killed"
+killer = "cases/jump-kept/case.toml"
+
+[[run.mutation]]
+id = "landing/cp009-h-at-window-end"
+status = "killed"
+killer = "cases/jump-h-boundary/case.toml"
+
+[[run.mutation]]
+id = "landing/cp009-pending-min-unchecked"
+status = "killed"
+killer = "cases/jump-pending-min/case.toml"
+
+[[run.mutation]]
+id = "landing/cp009-pending-min-strict"
+status = "killed"
+killer = "cases/jump-pending-min/case.toml"
+
+[[run.mutation]]
+id = "landing/cp009-first-prev-pool"
+status = "killed"
+killer = "cases/jump-h/case.toml"
+
+[[run.mutation]]
+id = "landing/cp010-unchecked"
+status = "killed"
+killer = "cases/land-second-all/case.toml"
+
+[[run.mutation]]
+id = "landing/cp010-first-unchecked"
+status = "killed"
+killer = "cases/land-first-all/case.toml"
+
+[[run.mutation]]
+id = "landing/cp010-same-cp-only"
+status = "killed"
+killer = "cases/land-statement-earlier/case.toml"
+
+[[run.mutation]]
+id = "landing/cp010-earlier-only"
+status = "killed"
+killer = "cases/jump-anchor/case.toml"
+
+[[run.mutation]]
+id = "landing/cp010-latest-landed-only"
+status = "killed"
+killer = "cases/land-statement-earlier/case.toml"
+
+[[run.mutation]]
+id = "landing/cp010-seat-only"
+status = "killed"
+killer = "cases/land-statement-earlier/case.toml"
+
+[[run.mutation]]
+id = "landing/cp010-counter-only"
+status = "killed"
+killer = "cases/land-statement-wrong-seat/case.toml"
+
+[[run.mutation]]
+id = "landing/cp010-first-counter-only"
+status = "killed"
+killer = "cases/land-statement-earlier/case.toml"
+
+[[run.mutation]]
+id = "landing/land-code-order"
+status = "killed"
+killer = "cases/land-second-all/case.toml"
+
+[[run.mutation]]
+id = "landing/land-refuse-no-rule"
+status = "killed"
+killer = "cases/jump-h/case.toml"
+
+[[run.mutation]]
+id = "landing/cp011-never-set"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "landing/cp011-any-restore"
+status = "killed"
+killer = "cases/jump-anchor/case.toml"
+
+[[run.mutation]]
+id = "landing/cp011-above-only"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "landing/cp011-any-named-cp"
+status = "killed"
+killer = "cases/restart-seq-set/case.toml"
+
+[[run.mutation]]
+id = "landing/cp011-first-restore-only"
+status = "killed"
+killer = "cases/restart-seq-set/case.toml"
+
+[[run.mutation]]
+id = "landing/cp011-candidate-value"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "landing/cp003-no-write"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "landing/cp005-write-per-statement"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "landing/cp004-statements-stay"
+status = "killed"
+killer = "cases/restore-pending/case.toml"
+
+[[run.mutation]]
+id = "landing/cp004-first-statement-only"
+status = "killed"
+killer = "cases/restore-pending/case.toml"
+
+[[run.mutation]]
+id = "landing/cp034-landing-height-kept"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp019-boot-stays-ready"
+status = "killed"
+killer = "cases/acct-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/cp019-unverified-read"
+status = "killed"
+killer = "cases/read-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/cp018-non-tee-read"
+status = "killed"
+killer = "cases/read-non-tee/case.toml"
+
+[[run.mutation]]
+id = "node/cp018-empty-chain-read"
+status = "killed"
+killer = "cases/read-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/cp017-ticket-seat-any"
+status = "killed"
+killer = "cases/read-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/cp017-ticket-seat-twice"
+status = "killed"
+killer = "cases/read-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/cp017-seat-n-inside"
+status = "killed"
+killer = "cases/read-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/cp019-read-refuse-one-code"
+status = "killed"
+killer = "cases/read-non-tee/case.toml"
+
+[[run.mutation]]
+id = "node/cp029-covered-not-read"
+status = "killed"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[run.mutation]]
+id = "node/cp018-whole-at-w"
+status = "killed"
+killer = "cases/params-large/case.toml"
+
+[[run.mutation]]
+id = "node/cp017-missing-counter-one"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp017-latest-ticket-last"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp027-restart-not-open"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp022-survivor-no-burn"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-marker-reset"
+status = "killed"
+killer = "cases/read-whole-after-marker/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-landed-forgotten"
+status = "killed"
+killer = "cases/read-whole-after-marker/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-marker-first-read-kept"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-landed-kept-new-restart"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp028-partial-not-ready"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp017-partial-tickets-dropped"
+status = "killed"
+killer = "cases/oracle-run-with-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/cp023-no-union"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp029-anchor-burns-ranges"
+status = "killed"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[run.mutation]]
+id = "node/cp020-window-end-exclusive"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp020-pending-not-burned"
+status = "killed"
+killer = "cases/read-whole-after-marker/case.toml"
+
+[[run.mutation]]
+id = "node/cp020-first-pool-only"
+status = "killed"
+killer = "cases/read-whole/case.toml"
+
+[[run.mutation]]
+id = "node/cp021-accounts-kept"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp021-first-account-only"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp021-slots-kept"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp029-anchor-burns-accounts"
+status = "killed"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[run.mutation]]
+id = "node/cp029-other-account-binding"
+status = "killed"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[run.mutation]]
+id = "node/cp029-other-slot-binding"
+status = "killed"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[run.mutation]]
+id = "node/cp029-first-binding-only"
+status = "killed"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[run.mutation]]
+id = "node/cp029-slots-from-one"
+status = "killed"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[run.mutation]]
+id = "node/cp029-bound-rebound"
+status = "killed"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[run.mutation]]
+id = "node/cp029-burned-released"
+status = "killed"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[run.mutation]]
+id = "node/cp029-first-account-only"
+status = "killed"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[run.mutation]]
+id = "node/cp024-all-pools"
+status = "killed"
+killer = "cases/read-whole/case.toml"
+
+[[run.mutation]]
+id = "node/cp024-first-range-only"
+status = "killed"
+killer = "cases/read-whole-twice/case.toml"
+
+[[run.mutation]]
+id = "node/cp024-after-restart"
+status = "killed"
+killer = "cases/marker-closes/case.toml"
+
+[[run.mutation]]
+id = "node/ledger6-session-not-ready"
+status = "killed"
+killer = "cases/oracle-run-with-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/cp024-session-twice"
+status = "killed"
+killer = "cases/session-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/cp024-first-session-only"
+status = "killed"
+killer = "cases/session-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/ledger6-session-refuse-code"
+status = "killed"
+killer = "cases/oracle-run-with-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/cp026-no-burn-on-open"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp026-mark-equal-burns"
+status = "killed"
+killer = "cases/acct-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/cp026-mark-not-updated"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/cp026-oldest-restart-seq"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "node/ledger6-acct-not-ready"
+status = "killed"
+killer = "cases/acct-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/cp026-acct-twice"
+status = "killed"
+killer = "cases/acct-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/cp026-first-acct-only"
+status = "killed"
+killer = "cases/acct-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/ledger6-acct-refuse-code"
+status = "killed"
+killer = "cases/acct-refusals/case.toml"
+
+[[run.mutation]]
+id = "node/ledger6-bind-not-ready"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-bind-in-restart"
+status = "killed"
+killer = "cases/bind-open-restart-anchor/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-bind-until-end"
+status = "killed"
+killer = "cases/marker-stays-open/case.toml"
+
+[[run.mutation]]
+id = "node/ledger5-bind-any-slot"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "node/ledger5-rebind-bound"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "node/ledger5-slot-index-from-one"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-bind-no-change"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-bind-next-slot"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-bind-first-account"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-set-first-slot"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "node/ledger5-bind-refuse-code"
+status = "killed"
+killer = "cases/bind/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-marker-not-landed"
+status = "killed"
+killer = "cases/marker-closes/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-marks-not-written"
+status = "killed"
+killer = "cases/marker-closes/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-marks-first-only"
+status = "killed"
+killer = "cases/marker-closes/case.toml"
+
+[[run.mutation]]
+id = "node/cp027-marker-ends-restart"
+status = "killed"
+killer = "cases/marker-stays-open/case.toml"
+
+[[run.mutation]]
+id = "node/cp027-end-at-w"
+status = "killed"
+killer = "cases/marker-stays-open/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-marker-at-prev"
+status = "killed"
+killer = "cases/open-no-marker/case.toml"
+
+[[run.mutation]]
+id = "node/cp025-marker-without-restart"
+status = "killed"
+killer = "cases/restart-seq-set/case.toml"
+
+[[run.mutation]]
+id = "node/cp027-plain-landing-ends"
+status = "killed"
+killer = "cases/open-no-marker/case.toml"
+
+[[run.mutation]]
+id = "node/cp016-restore-not-pending"
+status = "killed"
+killer = "cases/restore-outside/case.toml"
+
+[[run.mutation]]
+id = "node/cp016-seat-n-inside"
+status = "killed"
+killer = "cases/restore-outside/case.toml"
+
+[[run.mutation]]
+id = "node/cp016-outside-code"
+status = "killed"
+killer = "cases/restore-outside/case.toml"
+
+[[run.mutation]]
+id = "node/cp004-may-reboot-always"
+status = "killed"
+killer = "cases/restore-outside/case.toml"
+
+[[run.mutation]]
+id = "node/cp033-no-new-pool"
+status = "killed"
+killer = "cases/non-tee-restart/case.toml"
+
+[[run.mutation]]
+id = "node/cp033-tee-code"
+status = "killed"
+killer = "cases/non-tee/case.toml"
+
+[[run.mutation]]
+id = "node/cp033-mode-swapped"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "ops/run-no-end"
+status = "killed"
+killer = "cases/acct-mark/case.toml"
+
+[[run.mutation]]
+id = "recovery/ledger9-recover-before-landing"
+status = "killed"
+killer = "cases/recover/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp034-recover-twice"
+status = "killed"
+killer = "cases/recover/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp035-early-unchecked"
+status = "killed"
+killer = "cases/recover/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp035-at-delta-early"
+status = "killed"
+killer = "cases/recover/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp034-no-record"
+status = "killed"
+killer = "cases/recover/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp035-refuse-code"
+status = "killed"
+killer = "cases/recover/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp030-t-intact-allowed"
+status = "killed"
+killer = "cases/cold-start/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp030-signers-unchecked"
+status = "killed"
+killer = "cases/cold-start/case.toml"
+
+[[run.mutation]]
+id = "recovery/ledger7-cold-start-twice"
+status = "killed"
+killer = "cases/cold-start/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp030-no-new-pool"
+status = "killed"
+killer = "cases/cold-start/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp030-refuse-code"
+status = "killed"
+killer = "cases/cold-start/case.toml"
+
+[[run.mutation]]
+id = "recovery/rq001-q-floor"
+status = "killed"
+killer = "cases/params-even/case.toml"
+
+[[run.mutation]]
+id = "recovery/rq001-t-minus-one"
+status = "killed"
+killer = "cases/cold-start/case.toml"
+
+[[run.mutation]]
+id = "recovery/rq001-w-n-minus-f"
+status = "killed"
+killer = "cases/eks/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp006-more-acks-allowed"
+status = "killed"
+killer = "cases/eks/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp006-acks-unchecked"
+status = "killed"
+killer = "cases/eks/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp006-sigs-unchecked"
+status = "killed"
+killer = "cases/eks/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp006-acks-above-w"
+status = "killed"
+killer = "cases/params-even/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp006-first-node-only"
+status = "killed"
+killer = "cases/params-large/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp006-event-record"
+status = "killed"
+killer = "cases/eks/case.toml"
+
+[[run.mutation]]
+id = "recovery/ledger8-eks-refuse-code"
+status = "killed"
+killer = "cases/eks/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp036-proof-ignored"
+status = "killed"
+killer = "cases/order-floor/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp036-peers-ignored"
+status = "killed"
+killer = "cases/order-floor/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp036-checkpoint-ignored"
+status = "killed"
+killer = "cases/order-floor/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp036-at-floor-below"
+status = "killed"
+killer = "cases/order-floor/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp036-last-peer"
+status = "killed"
+killer = "cases/order-floor/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp036-refuse-always"
+status = "killed"
+killer = "cases/order-floor/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp036-refuse-code"
+status = "killed"
+killer = "cases/oracle-run-with-refusals/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp016-covered-strict"
+status = "killed"
+killer = "cases/covered/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp016-covered-without-landing"
+status = "killed"
+killer = "cases/covered/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp016-covered-any"
+status = "killed"
+killer = "cases/covered/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp037-anchor-ignored"
+status = "killed"
+killer = "cases/covered/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp037-every-charter"
+status = "killed"
+killer = "cases/covered/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp031-log-read-ignored"
+status = "killed"
+killer = "cases/reshare-on/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp031-covered-ignored"
+status = "killed"
+killer = "cases/reshare-on/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp031-first-slot-only"
+status = "killed"
+killer = "cases/reshare-on/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp032-reshare-without-anchor"
+status = "killed"
+killer = "cases/reshare-off/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp003-strict"
+status = "killed"
+killer = "cases/due/case.toml"
+
+[[run.mutation]]
+id = "recovery/cp003-interval-30"
+status = "killed"
+killer = "cases/due/case.toml"
+
+[[run.mutation]]
+id = "signer/cp012-latest-root-only"
+status = "killed"
+killer = "cases/sign-bf/case.toml"
+
+[[run.mutation]]
+id = "signer/cp012-first-leaf-only"
+status = "killed"
+killer = "cases/sign-bf-later-leaf/case.toml"
+
+[[run.mutation]]
+id = "signer/cp012-landed-not-read"
+status = "killed"
+killer = "cases/sign-bf/case.toml"
+
+[[run.mutation]]
+id = "signer/cp013-first-leaf-only"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "signer/cp013-midnight-not-read"
+status = "killed"
+killer = "cases/sign-settle/case.toml"
+
+[[run.mutation]]
+id = "signer/cp014-empty-min-h"
+status = "killed"
+killer = "cases/sign-pending/case.toml"
+
+[[run.mutation]]
+id = "signer/cp014-unsorted"
+status = "killed"
+killer = "cases/sign-pending/case.toml"
+
+[[run.mutation]]
+id = "signer/cp014-count-unchecked"
+status = "killed"
+killer = "cases/sign-pending/case.toml"
+
+[[run.mutation]]
+id = "signer/cp014-min-unchecked"
+status = "killed"
+killer = "cases/sign-pending/case.toml"
+
+[[run.mutation]]
+id = "signer/cp014-sort-descending"
+status = "killed"
+killer = "cases/sign-pending/case.toml"
+
+[[run.mutation]]
+id = "signer/cp014-signs-anything"
+status = "killed"
+killer = "cases/sign-pending/case.toml"
+
+[[run.mutation]]
+id = "signer/cp015-rebind-allowed"
+status = "killed"
+killer = "cases/sign-seat-root/case.toml"
+
+[[run.mutation]]
+id = "signer/cp015-reput-allowed"
+status = "killed"
+killer = "cases/sign-seat-root/case.toml"
+
+[[run.mutation]]
+id = "signer/cp015-binding-by-digest"
+status = "killed"
+killer = "cases/sign-seat-root/case.toml"
+
+[[run.mutation]]
+id = "signer/cp015-puts-count-as-bindings"
+status = "killed"
+killer = "cases/sign-seat-root/case.toml"
+
+[[run.mutation]]
+id = "signer/cp015-signs-anything"
+status = "killed"
+killer = "cases/sign-seat-root/case.toml"
+
+[[run.mutation]]
+id = "signer/cp014-old-listing"
+status = "killed"
+killer = "cases/cp014-pending-floor/case.toml"
+
+[[run.mutation]]
+id = "signer/cp014-strict-floor"
+status = "killed"
+killer = "cases/cp014-pending-floor/case.toml"
+
+[[run.mutation]]
+id = "signer/cp014-floor-other-pool"
+status = "killed"
+killer = "cases/cp014-pending-no-floor/case.toml"
+
+[[run.mutation]]
+id = "signer/cp014-floor-oldest-checkpoint"
+status = "killed"
+killer = "cases/cp014-pending-floor/case.toml"
+
+[[run.mutation]]
+id = "signer/cp014-unlisted-pool-floor"
+status = "killed"
+killer = "cases/cp014-pending-no-floor/case.toml"
+
+[[run.mutation]]
+id = "signer/cp014-floor-above-pmin"
+status = "killed"
+killer = "cases/cp014-pending-floor/case.toml"
+
+[[run.mutation]]
+id = "signer/cp014-empty-list-entry"
+status = "killed"
+killer = "cases/cp014-pending-floor/case.toml"
+
+[coverage]
+# The verdicts of kink's `coverage` command (`krs kink coverage`, `kink-flow coverage`): the
+# next run tries each flip's `killer` first, a run without --locked rewrites this section, and
+# `coverage --locked` checks that it is current.
+version = 28
+profile = "z3"
+z3_version = "5.3.3.0 430d19e697e2ec9bad79ff210d41b4a7a5fcfa3e 430d19e"
+krs_annotation = 10
+
+[coverage.spec]
+outcome = "admitted"
+
+[coverage.settings]
+depth = 1
+mcdc = true
+work_factor = 5
+
+# Each family lists its obligations by id: `open`, those no program covers; `argued`, those an
+# argument of FLOW.toml ([[coverage.argued]]) stands in for, each with the `standing` it rests
+# on (text: its text alone; connected, checked-on-runs or proved: its invariant's checks hold;
+# unchecked: a check did not decide); `undecided`, those the records cannot decide.
+[coverage.rules]
+open = [
+]
+argued = [
+  { id = "rule:crate::chain_carries_2_1", standing = "text" },
+  { id = "rule:crate::chain_moves_1", standing = "text" },
+  { id = "rule:crate::refill_accts_2", standing = "text" },
+  { id = "rule:crate::set_bound_1", standing = "text" },
+]
+
+[coverage.requirements]
+open = [
+]
+argued = [
+  { id = "requirement:crate::chain_carries_2_1:held", standing = "text" },
+  { id = "requirement:crate::chain_carries_2_1:CarrierQual(c, cur):mcdc", standing = "text" },
+  { id = "requirement:crate::chain_carries_2_2:refuted", standing = "text" },
+  { id = "requirement:crate::chain_carries_2_2:CarrierQual(c, cur):mcdc", standing = "text" },
+  { id = "requirement:crate::chain_moves_1:held", standing = "text" },
+  { id = "requirement:crate::chain_moves_1:ChainCarries(chain, cur):mcdc", standing = "text" },
+  { id = "requirement:crate::chain_moves_2:refuted", standing = "text" },
+  { id = "requirement:crate::chain_moves_2:ChainCarries(chain, cur):mcdc", standing = "text" },
+]
+
+[coverage.syntax]
+open = [
+]
+argued = [
+  { id = "syntax:crate::SeatRootC::Sr", standing = "text" },
+]
+
+# Each [[coverage.flip]] is a condition flip: a mutant kink generates from the definition by
+# negating one condition (`negates`, as the source writes it) or toggling one bit of an encoding
+# (`toggles`) in the `rules` it lists, and runs as `run` runs a mutation. Its status:
+# distinguished (a program's result differs on it; `killer` names it), undistinguished (every
+# comparable program agreed), unreached (no program reaches the condition), argued (an
+# argument stands in for a program; its `standing`), equivalent (no program can tell it
+# apart), refused (the flipped definition is not admitted; `reason`), unknown (no verdict).
+[coverage.flips]
+run = true
+
+[[coverage.flip]]
+id = "flip--all_in_2_1+all_in_2_2--atom"
+negates = "list::contains(l, ended)"
+rules = [
+  "rule:crate::all_in_2_1",
+  "rule:crate::all_in_2_2",
+]
+status = "distinguished"
+killer = "cases/sign-settle/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_below_2_1+any_below_2_2--IntLess"
+negates = "x < w"
+rules = [
+  "rule:crate::any_below_2_1",
+  "rule:crate::any_below_2_2",
+]
+status = "distinguished"
+killer = "cases/params-large/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_whole_2_1+any_whole_2_2--whole"
+negates = "whole"
+rules = [
+  "rule:crate::any_whole_2_1",
+  "rule:crate::any_whole_2_2",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--any_whole_2_1+any_whole_2_2--IntLessEqual"
+negates = "cur <= cp_seq"
+rules = [
+  "rule:crate::any_whole_2_1",
+  "rule:crate::any_whole_2_2",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--at_or_above_2_1+at_or_above_2_2--IntLessEqual"
+negates = "lo <= x"
+rules = [
+  "rule:crate::at_or_above_2_1",
+  "rule:crate::at_or_above_2_2",
+]
+status = "distinguished"
+killer = "cases/cp014-pending-floor/case.toml"
+
+[[coverage.flip]]
+id = "flip--below_prev_2_1+below_prev_2_2--IntEqual"
+negates = "pool == pid"
+rules = [
+  "rule:crate::below_prev_2_1",
+  "rule:crate::below_prev_2_2",
+]
+status = "distinguished"
+killer = "cases/jump-new-pool/case.toml"
+
+[[coverage.flip]]
+id = "flip--below_prev_min_2_1+below_prev_min_2_2--IntEqual"
+negates = "pool == pid"
+rules = [
+  "rule:crate::below_prev_min_2_1",
+  "rule:crate::below_prev_min_2_2",
+]
+status = "distinguished"
+killer = "cases/jump-new-pool/case.toml"
+
+[[coverage.flip]]
+id = "flip--bind_acct+bind_acct_refuse--IntEqual"
+negates = "list::size(BindRefusals(ready, restarting, landed, accounts, aid, i)) == 0"
+rules = [
+  "rule:crate::bind_acct",
+  "rule:crate::bind_acct_refuse",
+]
+status = "distinguished"
+killer = "cases/bind/case.toml"
+
+[[coverage.flip]]
+id = "flip--bind_accts_2_1+bind_accts_2_2--IntEqual"
+negates = "id == aid"
+rules = [
+  "rule:crate::bind_accts_2_1",
+  "rule:crate::bind_accts_2_2",
+]
+status = "distinguished"
+killer = "cases/bind/case.toml"
+
+[[coverage.flip]]
+id = "flip--carrier_qual_1+carrier_qual_2--CpSeq"
+negates = "cur < CpSeq(c)"
+rules = [
+  "rule:crate::carrier_qual_1",
+  "rule:crate::carrier_qual_2",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--chain_carries_2_1+chain_carries_2_2--CarrierQual"
+negates = "CarrierQual(c, cur)"
+rules = [
+  "rule:crate::chain_carries_2_1",
+  "rule:crate::chain_carries_2_2",
+]
+status = "distinguished"
+killer = "cases/jump-h-boundary/case.toml"
+
+[[coverage.flip]]
+id = "flip--chain_moves_1+chain_moves_2--ChainCarries"
+negates = "ChainCarries(chain, cur)"
+rules = [
+  "rule:crate::chain_moves_1",
+  "rule:crate::chain_moves_2",
+]
+status = "distinguished"
+killer = "cases/jump-h-boundary/case.toml"
+
+[[coverage.flip]]
+id = "flip--cold_start+cold_start_refuse--TOf"
+negates = "TOf(params) <= intact"
+rules = [
+  "rule:crate::cold_start",
+  "rule:crate::cold_start_refuse",
+]
+status = "distinguished"
+killer = "cases/cold-start/case.toml"
+
+[[coverage.flip]]
+id = "flip--cold_start+cold_start_refuse--QOf"
+negates = "signers < QOf(params)"
+rules = [
+  "rule:crate::cold_start",
+  "rule:crate::cold_start_refuse",
+]
+status = "distinguished"
+killer = "cases/cold-start/case.toml"
+
+[[coverage.flip]]
+id = "flip--cold_start+cold_start_refuse--cold"
+negates = "cold"
+rules = [
+  "rule:crate::cold_start",
+  "rule:crate::cold_start_refuse",
+]
+status = "distinguished"
+killer = "cases/cold-start/case.toml"
+
+[[coverage.flip]]
+id = "flip--count_at_1+count_at_2--Lookup"
+negates = "Lookup(xs, from) == Lookup(ys, from)"
+rules = [
+  "rule:crate::count_at_1",
+  "rule:crate::count_at_2",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--count_eq_1+count_eq_2--IntLessEqual"
+negates = "n <= from"
+rules = [
+  "rule:crate::count_eq_1",
+  "rule:crate::count_eq_2",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--covered_slot_2_1+covered_slot_2_2--IntEqual"
+negates = "account == aid"
+rules = [
+  "rule:crate::covered_slot_2_1",
+  "rule:crate::covered_slot_2_2",
+]
+status = "distinguished"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[coverage.flip]]
+id = "flip--covered_slot_2_1+covered_slot_2_2--IntEqual-2"
+negates = "slot == i"
+rules = [
+  "rule:crate::covered_slot_2_1",
+  "rule:crate::covered_slot_2_2",
+]
+status = "distinguished"
+killer = "cases/read-whole-anchor/case.toml"
+
+[[coverage.flip]]
+id = "flip--eks+eks_refuse--NOf"
+negates = "list::size(acks) != NOf(params)"
+rules = [
+  "rule:crate::eks",
+  "rule:crate::eks_refuse",
+]
+status = "distinguished"
+killer = "cases/eks/case.toml"
+
+[[coverage.flip]]
+id = "flip--eks+eks_refuse--AnyBelow"
+negates = "AnyBelow(acks, WOf(params))"
+rules = [
+  "rule:crate::eks",
+  "rule:crate::eks_refuse",
+]
+status = "distinguished"
+killer = "cases/eks/case.toml"
+
+[[coverage.flip]]
+id = "flip--eks+eks_refuse--QOf"
+negates = "sigs < QOf(params)"
+rules = [
+  "rule:crate::eks",
+  "rule:crate::eks_refuse",
+]
+status = "distinguished"
+killer = "cases/eks/case.toml"
+
+[[coverage.flip]]
+id = "flip--free_at_2_1+free_at_2_2--IntEqual"
+negates = "i == 0"
+rules = [
+  "rule:crate::free_at_2_1",
+  "rule:crate::free_at_2_2",
+]
+status = "distinguished"
+killer = "cases/bind/case.toml"
+
+[[coverage.flip]]
+id = "flip--gap_2_1+gap_2_2--IntLess"
+negates = "h + 1 < pending_min"
+rules = [
+  "rule:crate::gap_2_1",
+  "rule:crate::gap_2_2",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--gen_burn_1+gen_burn_2--open"
+negates = "open"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--has_acct_2_1+has_acct_2_2--IntEqual"
+negates = "id == aid"
+rules = [
+  "rule:crate::has_acct_2_1",
+  "rule:crate::has_acct_2_2",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--has_restore_2_1+has_restore_2_2--IntEqual"
+negates = "seat == s"
+rules = [
+  "rule:crate::has_restore_2_1",
+  "rule:crate::has_restore_2_2",
+]
+status = "distinguished"
+killer = "cases/jump-kept/case.toml"
+
+[[coverage.flip]]
+id = "flip--has_restore_2_1+has_restore_2_2--IntEqual-2"
+negates = "boot_ctr == ctr"
+rules = [
+  "rule:crate::has_restore_2_1",
+  "rule:crate::has_restore_2_2",
+]
+status = "distinguished"
+killer = "cases/jump-anchor/case.toml"
+
+[[coverage.flip]]
+id = "flip--has_session_2_1+has_session_2_2--IntEqual"
+negates = "pool == pid"
+rules = [
+  "rule:crate::has_session_2_1",
+  "rule:crate::has_session_2_2",
+]
+status = "distinguished"
+killer = "cases/read-whole/case.toml"
+
+[[coverage.flip]]
+id = "flip--insert_sorted_2_1+insert_sorted_2_2--IntLessEqual"
+negates = "x <= y"
+rules = [
+  "rule:crate::insert_sorted_2_1",
+  "rule:crate::insert_sorted_2_2",
+]
+status = "distinguished"
+killer = "cases/sign-pending/case.toml"
+
+[[coverage.flip]]
+id = "flip--jump_any_2_1+jump_any_2_2--JumpPool"
+negates = "JumpPool(prev, pool, h, pending_min, bb)"
+rules = [
+  "rule:crate::jump_any_2_1",
+  "rule:crate::jump_any_2_2",
+]
+status = "distinguished"
+killer = "cases/jump-h-boundary/case.toml"
+
+[[coverage.flip]]
+id = "flip--jump_code_1+jump_code_2--JumpBad"
+negates = "JumpBad(p, c1, c2)"
+rules = [
+  "rule:crate::jump_code_1",
+  "rule:crate::jump_code_2",
+]
+status = "distinguished"
+killer = "cases/jump-anchor/case.toml"
+
+[[coverage.flip]]
+id = "flip--jump_pool_2_1+jump_pool_2_2--IntEqual"
+negates = "pool == pid"
+rules = [
+  "rule:crate::jump_pool_2_1",
+  "rule:crate::jump_pool_2_2",
+]
+status = "distinguished"
+killer = "cases/jump-new-pool/case.toml"
+
+[[coverage.flip]]
+id = "flip--keep_int_1+keep_int_2--open"
+negates = "open"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--keep_landed_1+keep_landed_2--open"
+negates = "open"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--land+land_refuse--IntEqual"
+negates = "list::size(LandRefusals(params, chain, chain, c)) == 0"
+rules = [
+  "rule:crate::land",
+  "rule:crate::land_refuse",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--land_marker+land_plain--IsMarker"
+negates = "IsMarker(restarting, marker, c)"
+rules = [
+  "rule:crate::land_marker",
+  "rule:crate::land_plain",
+]
+status = "distinguished"
+killer = "cases/acct-refusals/case.toml"
+
+[[coverage.flip]]
+id = "flip--lookup_2_1+lookup_2_2--IntEqual"
+negates = "a == key"
+rules = [
+  "rule:crate::lookup_2_1",
+  "rule:crate::lookup_2_2",
+]
+status = "distinguished"
+killer = "cases/jump-kept/case.toml"
+
+[[coverage.flip]]
+id = "flip--lowered_2_1+lowered_2_2--BelowPrev"
+negates = "BelowPrev(prev, pool, h)"
+rules = [
+  "rule:crate::lowered_2_1",
+  "rule:crate::lowered_2_2",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--missing_restore_2_1+missing_restore_2_2--HasRestore"
+negates = "HasRestore(rs, a, b)"
+rules = [
+  "rule:crate::missing_restore_2_1",
+  "rule:crate::missing_restore_2_2",
+]
+status = "distinguished"
+killer = "cases/jump-anchor/case.toml"
+
+[[coverage.flip]]
+id = "flip--moved_jump_1+moved_jump_2--AnchorOf"
+negates = "AnchorOf(p)"
+rules = [
+  "rule:crate::moved_jump_1",
+  "rule:crate::moved_jump_2",
+]
+status = "distinguished"
+killer = "cases/marker-jump-anchor/case.toml"
+
+[[coverage.flip]]
+id = "flip--moved_off_1+moved_off_2--NextRestartSeq"
+negates = "NextRestartSeq(chain, c2) != CpRestartSeq(c1)"
+rules = [
+  "rule:crate::moved_off_1",
+  "rule:crate::moved_off_2",
+]
+status = "distinguished"
+killer = "cases/jump-kept/case.toml"
+
+[[coverage.flip]]
+id = "flip--new_burn_1+new_burn_2--AnchorOf"
+negates = "AnchorOf(p)"
+rules = [
+  "rule:crate::new_burn_1",
+  "rule:crate::new_burn_2",
+]
+status = "distinguished"
+killer = "cases/marker-closes/case.toml"
+
+[[coverage.flip]]
+id = "flip--new_sessions_1+new_sessions_2--AnchorOf"
+negates = "AnchorOf(p)"
+rules = [
+  "rule:crate::new_sessions_1",
+  "rule:crate::new_sessions_2",
+]
+status = "distinguished"
+killer = "cases/survivor-session-anchor/case.toml"
+
+[[coverage.flip]]
+id = "flip--next_from_1+next_from_2--CarrierQual"
+negates = "CarrierQual(c2, cur)"
+rules = [
+  "rule:crate::next_from_1",
+  "rule:crate::next_from_2",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--non_tee_restart+non_tee_restart_refuse--NonTeeOf"
+negates = "NonTeeOf(params)"
+rules = [
+  "rule:crate::non_tee_restart",
+  "rule:crate::non_tee_restart_refuse",
+]
+status = "distinguished"
+killer = "cases/non-tee-restart/case.toml"
+
+[[coverage.flip]]
+id = "flip--none_in_2_1+none_in_2_2--atom"
+negates = "list::contains(x, ys)"
+rules = [
+  "rule:crate::none_in_2_1",
+  "rule:crate::none_in_2_2",
+]
+status = "distinguished"
+killer = "cases/sign-bf/case.toml"
+
+[[coverage.flip]]
+id = "flip--not_carried_2_1+not_carried_2_2--atom"
+negates = "list::contains(r, carried)"
+rules = [
+  "rule:crate::not_carried_2_1",
+  "rule:crate::not_carried_2_2",
+]
+status = "distinguished"
+killer = "cases/restore-pending/case.toml"
+
+[[coverage.flip]]
+id = "flip--open_acct+open_acct_refuse--IntEqual"
+negates = "list::size(AcctRefusals(ready, accounts, a)) == 0"
+rules = [
+  "rule:crate::open_acct",
+  "rule:crate::open_acct_refuse",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--open_session+open_session_refuse--IntEqual"
+negates = "list::size(SessionRefusals(ready, sessions, pool)) == 0"
+rules = [
+  "rule:crate::open_session",
+  "rule:crate::open_session_refuse",
+]
+status = "distinguished"
+killer = "cases/marker-closes/case.toml"
+
+[[coverage.flip]]
+id = "flip--opened_acct_1_1+opened_acct_1_2--IntLess"
+negates = "mark < rsq"
+rules = [
+  "rule:crate::opened_acct_1_1",
+  "rule:crate::opened_acct_1_2",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--opt_1+opt_2--b"
+negates = "b"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--order_req+order_req_refuse--BelowFloorOf"
+negates = "BelowFloorOf(chain, order_h, peers, proof)"
+rules = [
+  "rule:crate::order_req",
+  "rule:crate::order_req_refuse",
+]
+status = "distinguished"
+killer = "cases/oracle-run-with-refusals/case.toml"
+
+[[coverage.flip]]
+id = "flip--pmin_lowered_2_1+pmin_lowered_2_2--BelowPrevMin"
+negates = "BelowPrevMin(prev, pool, pending_min)"
+rules = [
+  "rule:crate::pmin_lowered_2_1",
+  "rule:crate::pmin_lowered_2_2",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--pool_burns_2_1+pool_burns_2_2--IntEqual"
+negates = "pool == pid"
+rules = [
+  "rule:crate::pool_burns_2_1",
+  "rule:crate::pool_burns_2_2",
+]
+status = "distinguished"
+killer = "cases/marker-stays-open/case.toml"
+
+[[coverage.flip]]
+id = "flip--pool_floor_2_1+pool_floor_2_2--IntEqual"
+negates = "pool == pid"
+rules = [
+  "rule:crate::pool_floor_2_1",
+  "rule:crate::pool_floor_2_2",
+]
+status = "distinguished"
+killer = "cases/cp014-pending-floor/case.toml"
+
+[[coverage.flip]]
+id = "flip--pre_burn_1+pre_burn_2--pre"
+negates = "pre"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--read_ledger+read_refuse+read_unverified--IntEqual"
+negates = "list::size(ReadRefusals(params, chain, ok, tk, ready)) == 0"
+rules = [
+  "rule:crate::read_ledger",
+  "rule:crate::read_refuse",
+  "rule:crate::read_unverified",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--read_ledger+read_unverified--ok"
+negates = "ok"
+rules = [
+  "rule:crate::read_ledger",
+  "rule:crate::read_unverified",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--read_partial+read_whole--WholeRestart"
+negates = "WholeRestart(params, tk, c)"
+rules = [
+  "rule:crate::read_partial",
+  "rule:crate::read_whole",
+]
+status = "distinguished"
+killer = "cases/acct-mark/case.toml"
+
+[[coverage.flip]]
+id = "flip--recover+recover_refuse--IntEqual"
+negates = "list::size(RecoverRefusals(params, chain, recovered, landmh, mh)) == 0"
+rules = [
+  "rule:crate::recover",
+  "rule:crate::recover_refuse",
+]
+status = "distinguished"
+killer = "cases/oracle-run-with-refusals/case.toml"
+
+[[coverage.flip]]
+id = "flip--release_anchor+release_anchor_refuse--ReleaseWaits"
+negates = "ReleaseWaits(anchor, ready)"
+rules = [
+  "rule:crate::release_anchor",
+  "rule:crate::release_anchor_refuse",
+]
+status = "distinguished"
+killer = "cases/covered/case.toml"
+
+[[coverage.flip]]
+id = "flip--release_ok_1+release_ok_2--anchor"
+negates = "anchor"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--reshare_list_2_1+reshare_list_2_2--covered"
+negates = "covered"
+rules = [
+  "rule:crate::reshare_list_2_1",
+  "rule:crate::reshare_list_2_2",
+]
+status = "distinguished"
+killer = "cases/reshare-on/case.toml"
+
+[[coverage.flip]]
+id = "flip--reshare_list_2_1+reshare_list_2_2--log_read"
+negates = "log_read"
+rules = [
+  "rule:crate::reshare_list_2_1",
+  "rule:crate::reshare_list_2_2",
+]
+status = "distinguished"
+killer = "cases/reshare-on/case.toml"
+
+[[coverage.flip]]
+id = "flip--reshare_of_1+reshare_of_2--AnchorOf"
+negates = "AnchorOf(p)"
+rules = [
+  "rule:crate::reshare_of_1",
+  "rule:crate::reshare_of_2",
+]
+status = "distinguished"
+killer = "cases/reshare-off/case.toml"
+
+[[coverage.flip]]
+id = "flip--restart_accts_1+restart_accts_2--AnchorOf"
+negates = "AnchorOf(p)"
+rules = [
+  "rule:crate::restart_accts_1",
+  "rule:crate::restart_accts_2",
+]
+status = "distinguished"
+killer = "cases/marker-closes/case.toml"
+
+[[coverage.flip]]
+id = "flip--restore_done+restore_done_outside--NOf"
+negates = "seat < NOf(params)"
+rules = [
+  "rule:crate::restore_done",
+  "rule:crate::restore_done_outside",
+]
+status = "distinguished"
+killer = "cases/restore-outside/case.toml"
+
+[[coverage.flip]]
+id = "flip--seat_outside_2_1+seat_outside_2_2--IntLessEqual"
+negates = "n <= a"
+rules = [
+  "rule:crate::seat_outside_2_1",
+  "rule:crate::seat_outside_2_2",
+]
+status = "distinguished"
+killer = "cases/marker-closes/case.toml"
+
+[[coverage.flip]]
+id = "flip--session_burns_1+session_burns_2--open"
+negates = "open"
+rules = [
+]
+status = "refused"
+reason = "not-judged"
+
+[[coverage.flip]]
+id = "flip--set_bound_2_1+set_bound_2_2--IntEqual"
+negates = "i == 0"
+rules = [
+  "rule:crate::set_bound_2_1",
+  "rule:crate::set_bound_2_2",
+]
+status = "distinguished"
+killer = "cases/bind/case.toml"
+
+[[coverage.flip]]
+id = "flip--settle_leaves_ok_1+settle_leaves_ok_2--AllIn"
+negates = "AllIn(leaves, ended)"
+rules = [
+  "rule:crate::settle_leaves_ok_1",
+  "rule:crate::settle_leaves_ok_2",
+]
+status = "distinguished"
+killer = "cases/sign-settle/case.toml"
+
+[[coverage.flip]]
+id = "flip--settle_sized_1+settle_sized_2--IntEqual"
+negates = "list::size(leaves) == list::size(ended)"
+rules = [
+  "rule:crate::settle_sized_1",
+  "rule:crate::settle_sized_2",
+]
+status = "distinguished"
+killer = "cases/sign-settle/case.toml"
+
+[[coverage.flip]]
+id = "flip--sign_bf_ok_1+sign_bf_ok_2--NodupB"
+negates = "NodupB(Seconds(leaves))"
+rules = [
+  "rule:crate::sign_bf_ok_1",
+  "rule:crate::sign_bf_ok_2",
+]
+status = "distinguished"
+killer = "cases/sign-bf/case.toml"
+
+[[coverage.flip]]
+id = "flip--sign_settle_ok_1+sign_settle_ok_2--NodupB"
+negates = "NodupB(leaves)"
+rules = [
+  "rule:crate::sign_settle_ok_1",
+  "rule:crate::sign_settle_ok_2",
+]
+status = "distinguished"
+killer = "cases/sign-settle/case.toml"
+
+[[coverage.flip]]
+id = "flip--slot_free_2_1+slot_free_2_2--IntEqual"
+negates = "id == aid"
+rules = [
+  "rule:crate::slot_free_2_1",
+  "rule:crate::slot_free_2_2",
+]
+status = "distinguished"
+killer = "cases/bind/case.toml"
+
+[[coverage.flip]]
+id = "flip--slot_free_in_1+slot_free_in_2--FreeAt"
+negates = "FreeAt(slots, i)"
+rules = [
+  "rule:crate::slot_free_in_1",
+  "rule:crate::slot_free_in_2",
+]
+status = "distinguished"
+killer = "cases/bind/case.toml"
+
+[[coverage.flip]]
+id = "flip--void_kept_2_1+void_kept_2_2--atom"
+negates = "list::contains(auth, mv)"
+rules = [
+  "rule:crate::void_kept_2_1",
+  "rule:crate::void_kept_2_2",
+]
+status = "distinguished"
+killer = "cases/sign-settle/case.toml"
+
+[[coverage.flip]]
+id = "flip--void_leaf_kept_1+void_leaf_kept_2--Void"
+negates = "out.ne::<K>(OutcomeC::Void)"
+rules = [
+  "rule:crate::void_leaf_kept_1",
+  "rule:crate::void_leaf_kept_2",
+]
+status = "distinguished"
+killer = "cases/sign-settle/case.toml"
+
+[compare]
+# The verdicts of kink's `compare` command (`krs kink compare`, `kink-flow compare`): a run
+# without --locked rewrites this section, and `compare --locked` checks that it is current.
+version = 28
+profile = "z3"
+z3_version = "5.3.3.0 430d19e697e2ec9bad79ff210d41b4a7a5fcfa3e 430d19e"
+protocol = "kink-implementation/1"
+
+[compare.spec]
+outcome = "admitted"
+
+# Each [[compare.verdict]] is one view of one implementation on one program, and its verdict:
+# equal (its end agrees with the definition's under the view), different (`difference`, the
+# first difference), could-not-apply (it declined the program; `reason`, its own words) or
+# not-compared (`reason` says why). `request_sha256` names the request it was given, and
+# `identity_sha256` its build (its `identity` file); a run that gave no answer keeps its rows.
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/acct-mark/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "cc347b8c7a336c2b7c078d0e8d7d954d0bf16485370bed6dc27e1ee418972de9"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/acct-refusals/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "f0e94ffdc9a8d0c9e6cce8a45635ccc9af07ae130877fe9dc1f2296bdd96d17a"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/bind-open-restart-anchor/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "981c7ecce2bbc0dfd1b50228a9fd82203c7522cb67506b82f9c6fa2c18b646f8"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/bind-open-restart/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c1abd1a0a5a71c9c76616f1f5e538756a287ddd7b4e43bbd520b15ba0c73cffd"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/bind/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "6e56b975ea281f45d63589a62f07b50c82883681ad5321a95908242f029a583b"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/cold-start/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "22e59dcf68c8bd1ba9a5853e930be9f86df0c2e3ba742e8dc69a201f137313b6"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/covered/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "9eb9de9c2dbd8b8e4ae0c91a3930a3f41646bca95f4f36c4882de3d3672f9477"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/cp014-f7-lands/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "2cca259f66f593c12b4b0bd07d305bc6b21f029fc0cbeafb750a64e4260cf713"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/cp014-pending-floor/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "8ee8db0c6bcd8b293d9f2cb527e064f4f128ebc4eb39766947aba39c7b2988f4"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/cp014-pending-no-floor/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "63ca7973575a81b2194ed5a5b422cda94ab25388bcfcec036cd43fa78179248a"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/due/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c473d3e06d9f80406de63efd63aa6fb8386dac4f0743447ed21b7d9bb0d83461"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/eks/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "6f53002e847920feaf65ee7fdfba7609c48f9540d73e01c6e92c90c5ce623cb7"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/jump-anchor/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "85ab962009bf5e9816f5c1958bdedbf339d8c89b57bd2825df793287a161c903"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/jump-h-boundary/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c2cba1e37a0d5206eac0ee6808627602ea0562a33d0ea3e8d6f4086244fac910"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/jump-h/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "7ef098a402846ceff4ce48c589eac657b0e48a7a333e9162536f85270b314118"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/jump-kept/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "1dd44c2add1969f052ef9c9ac6363709aa73c3901af6cfe2f21e9fdcfaaf383c"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/jump-new-pool/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "9aacec1408a85f7ab389516abbe55ccd99654f1fd096ce9855594ade2edcfa82"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/jump-ok/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "8a26748c8ca2b22ea926dec1ac132cd1f02733b62560d02ac3205ace9527e6be"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/jump-pending-min/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "52c2729ad5477278ac29119f8d0ad5d00dc8401469877315fee63e00a91ba02e"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/jump-second-pool/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "619790809017b4fcca3c7318428e0de741c1141387a95de2d9dd568a9241be59"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-every-code/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "283052e2e56e6a8cc31be7dbc66f23d82d44a4b5d730e815d8528523cf7b2e55"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-first-all/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "98daaa24d03bdf673bd2863ac2b83548ff4a9d9248f801f6f26f1f209dab1b22"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-first-gap/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "fba71e88ced5c85eebaa2e228c64154552256b5c3e1f482fe6c233c9ae4bf195"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-first-seq-one/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "76c60981809cc2f466312c91b23fcc87cbae5e1a1238abe4b645b5d60852d9d2"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-first/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "fbefb45d955cc3d2c180f5efaf3edbca352ee402330b37dc1c20ab19361169d7"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-lowered/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "36dff09be89695336a7353078f533395b70d2fd2b6a9f85174060bf45a671461"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-pmin-lowered/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "92e090df91ed918af1551834cc89674aa302b8e7e36afdd55e6749c2f574c73b"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-second-all/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "b539d51fdc1d7097acfac3b8127c286ad9098a4aa26f672eb1bcfc4582e2d8dd"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-second-ok/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "40956c09205573afb28862d53a458d1e5c1bb2c2f8b7f8078e6692e825701d4f"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-seq-skip/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "444bb7af04dc6cd9a9d2cda8a89b9ebd25c4e88b9f9eed52dc6ce5cfa7c38502"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-statement-earlier/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "b6e2195a967005d9e9b398bf58c7d2f6a7425bcbf32bbb0bbd5a84e8a1568984"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-statement-same-cp/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "076ece6b420c3ad5425dcb6894179f7dbc9d62c8c0737bc08c3aa9c219acd1d7"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-statement-wrong-ctr/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "ca0758e8df9a091182220c0d03e5691c0569e3070715bd192367dab924dd175d"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/land-statement-wrong-seat/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "aba523c88df733c1b04713c173d7b2d52f2daecd29b997d0c28b5c4fbfbf5775"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/marker-carrier-at-cur/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "9b8be2780fc2a0b5f65cc561a5a6df037681c1b4e511e74465a595b771b8f94f"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/marker-closes/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "eb3570eadded54e2d474db713f17b0bc741a0c12267b0e76addb529b42ee1e9f"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/marker-jump-anchor/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "daa2bdcce85e43f3ee1af57967b78e9fd85d0f95450daa20041c0195333adb39"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/marker-jump/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "1be670d2e2268ff2a82352d8807f7b0e228f8f0c65fe8b1c4199af8622e53f0d"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/marker-old-statement/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "a57d67c2c480af1dbbe71c3dea61b55a8d3b664ee6039ca685566254d3cef481"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/marker-seq-not-above/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "0201c333aa191a3d2a4a2de0c92215da2920b63e0ff461297e57ea0662d95362"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/marker-stays-open/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "b44ce5e3d291a640315db6c4b5754363ab019bf67554c78b4831055b8b39969b"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/non-tee-restart/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "5cb12d903382388e44e7f6f6c5c0965ebac1fc36acd9b925b959d505d48c7f68"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/non-tee/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "f571ca2f98be4ba415a9740ca6fcb8bae675da749545a4096b2c093855737347"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/once-per-generation/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "9874b59aa43263cf2e0fcad933d2c80310d5a3cc8fb27ad599695b6040940e28"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/open-acct-pre-marker-anchor/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "a4ad2fd2f09acfc805fc7b73dfea72692588ad106923f7a39e968ebcb59882b4"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/open-acct-pre-marker/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "4d0d788dc026c20fa736c1c8fc6400d645f9e43d5be55f7228899dee0c4fde49"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/open-no-marker/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "1c5618476326e5c3ac9090616f0f56357ad351018d7eae61a774ad3b78fb2fa3"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/oracle-run-with-refusals/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "47d9532516affdfbfa38f66ca6282d54909c7b3991f2424e54e72993fc2ebd1b"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/order-floor/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "ae50e7cc1294417abb2415bc173b099b9364ead27f7e83a24893969631cad4b7"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/params-even/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "4578e0ec761a8b08cf62ce6a2aa2d003950d8fa1e1ac99b44fa99a30e9aab738"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/params-large/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "80a74e5a38ce4f5b6483760272fd84bd5bc7276d80f3521fdcaac4ebf1894f9b"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/read-non-tee/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "e1f8f16c6a1fecb19556503631a765ab813865043cdee008907fe022451535c2"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/read-partial/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "62057f3d18da750a076f42070d9aa6b73c14c51c417dbdfa4134a8ca6b9f2dd3"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/read-refusals/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "bcc096c783a02a4318d554afe1e6c98195029052b1adf0fa1372c9e1dfdc22ce"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/read-unverified-ready/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "ad3e7c19c3442946c00ceb85acd191c3279e1172a34050f97702e0f0898dcff1"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/read-unverified-refusals/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "a41e3ca3516e26dbd318ff2164b7e1bc473803c8b8728ce189bcef195e1b31db"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/read-whole-after-marker/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "9f61edee963a2bea77378004a913e615b10457e6b122d853cffe86c5842330f5"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/read-whole-anchor/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "8d2799de92eafba9f5a1b8972e9daa05ae224ba44177311e7c7e00897cd78eeb"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/read-whole-twice/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "ebd1f671ccd8516dc0d410bdb5ebd3781c052cb88e8988f5e5d849ef9b6caa70"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/read-whole/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "320ce6d76a51829ee5c43740e7bcfaec1162d268db16f7a5cdc1d0746eb42fa0"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/reappend-carried/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "19403e69bb5ed5390a025b1385460d58d10aa4cc515dc8d8a88eac3499b2a4bb"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/reappend-unverified/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "8f898de9c82f5bef17dfe9d36f9e80b0d5e638c2895e4308e38a82b97198484f"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/reappend/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "fc6552c89f002e2da186460f2d1f01bd0a1ff6ecf8da0e9886802c93381f2e2e"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/recover/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "3c7a8c7cc4f7a8d130820872c290143015fd0c90679fb25169d593650fcc9a75"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/release-before-ready/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "af3d4f591249d258634bba4ae46b66e2248ea7f654d4a5e09869688ce8c8402f"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/reshare-off/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "a8c2672c2c81699fd49f98651de2f7c04c1cc5d811c218a2c70a954f44bf4c91"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/reshare-on/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "402bb36dcae3a941ea951355c3c097b5685b510c5909bd145ed0969be41c8631"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/restart-seq-set/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "975661325faf5e6d3c31666011d22bdc54597dd2068762f90a5624245d6baa14"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/restore-outside/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "96d45b2cde0400e4a84319f7f27df2d0bf66753a4acf18bc2fad11eadde2b2d7"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/restore-pending/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "0729691492d38c831f4d4a2d2facf88dbb8ac4c2f6d8155fd80cda05f3f961a0"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/session-refusals/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "a1398267891e57c4078a2ec8faf99780484fa3621931967c6e058b2b2c086c97"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/sign-bf-later-leaf/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "bae82dbbab429757f3cee930de24ae8c3ea633097d5110fba3ae4c4d0432a772"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/sign-bf/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "196249ace302719b90ebdd1faa12bf8503690d696eef3d656eb0da878e5b6575"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/sign-pending/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "84b9809eef449bb3d777594d471834f2f5e0b7024654bd9bf0edaee6e683e335"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/sign-seat-root/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "6adcfb36e7fbe5084f3b3cea8019617c573fcf19d25954dc126405c0e916b17e"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/sign-settle-later-void/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c188dc55dde8546e5481854a705005a45c690097e8dea625bf90bace8b2dc433"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/sign-settle/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "867093b0d7e0ca511acb13729f9f40776ebfccc5a418981da359457070ba25ab"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/survivor-session-anchor/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "9df35df109f09b6d858d7a9582b2c6244abb7794ac2da3680e1cbf1ce28fdf73"
+
+[[compare.verdict]]
+implementation = "lean-oracle"
+program = "cases/survivor-session/case.toml"
+view = "end"
+required = true
+verdict = "equal"
+request_sha256 = "c02e1ab19f6f6d6730e73bcf504aee92ab20dd2ee408e67b7ddc2bebccce79db"

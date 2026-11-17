@@ -1,0 +1,13 @@
+# RQ-045, RQ-072: at f = 2 two MALFORMED posts and one REVOKED post give MIXED (no reason
+# has f + 1 = 3 posts).
+[inputs]
+params = { Pm = { n = 7, f = 2, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 7, f = 2 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { Open = { eid = 1, kk = 2, ll = 1, collecting = false, npos = 0, rates = [10, 20] } },
+  { PostVoid = { eid = 1, epoch = 0, member = 0, reason = "Malformed" } },
+  { PostVoid = { eid = 1, epoch = 0, member = 1, reason = "Malformed" } },
+  { PostVoid = { eid = 1, epoch = 0, member = 2, reason = "Revoked" } },
+]

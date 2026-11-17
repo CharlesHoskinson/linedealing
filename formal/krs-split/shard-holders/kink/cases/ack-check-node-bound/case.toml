@@ -1,0 +1,9 @@
+# ledger 4: node n - 1 signs; node n is outside the capability; with a failed check both codes, sorted
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { AckCheckOp = { node = 3, cm_addr = 900, ack = { Ac = { x_recomputed = true, opening_ok = true, pop_u = true } } } },
+  { AckCheckOp = { node = 4, cm_addr = 900, ack = { Ac = { x_recomputed = true, opening_ok = true, pop_u = true } } } },
+  { AckCheckOp = { node = 4, cm_addr = 900, ack = { Ac = { x_recomputed = true, opening_ok = true, pop_u = false } } } },
+  { AckCheckOp = { node = 5, cm_addr = 900, ack = { Ac = { x_recomputed = false, opening_ok = true, pop_u = true } } } },
+]

@@ -1,0 +1,6 @@
+# CP-032: without slot anchors no ECDSA slot is reshared
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Reshare = { slots = [{ RSlotOf = { seat = 0, slot = 1, covered = false, log_read = true } }, { RSlotOf = { seat = 0, slot = 2, covered = true, log_read = true } }, { RSlotOf = { seat = 1, slot = 1, covered = false, log_read = false } }, { RSlotOf = { seat = 2, slot = 3, covered = true, log_read = false } }, { RSlotOf = { seat = 3, slot = 0, covered = false, log_read = true } }] } },
+]

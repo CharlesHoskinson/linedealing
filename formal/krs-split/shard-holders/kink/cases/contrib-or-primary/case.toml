@@ -1,0 +1,14 @@
+# SH-003, SH-004: an OR gate with a group primary; the escrow holder alone
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { FixCharter = { id = 8, gamma = { Or = { mid = 0, primary = { Group = { mid = 1, kk = 2, children = [{ Leaf = { mid = 1, actor = 1 } }, { Leaf = { mid = 2, actor = 2 } }] } }, escrow = { Leaf = { mid = 2, actor = 5 } } } } } },
+  { PostPool = { actor = 1, root = 1, key = 0 } },
+  { PostPool = { actor = 2, root = 1, key = 0 } },
+  { PostPool = { actor = 5, root = 1, key = 0 } },
+  { Contribute = { request = { Cr = { actor = 1, charter = 8, s_set = [1, 2], initiator = 1, weight = { Qv = { num = 2, den = 1 } }, pairs = [0], slot = { Committee = {} }, exp_c = 10, height = 5, policy_ok = true, recompute_ok = true, seizure_settled = false } } } },
+  { Contribute = { request = { Cr = { actor = 2, charter = 8, s_set = [1, 2], initiator = 1, weight = { Qv = { num = -1, den = 1 } }, pairs = [0], slot = { Committee = {} }, exp_c = 10, height = 5, policy_ok = true, recompute_ok = true, seizure_settled = false } } } },
+  { Contribute = { request = { Cr = { actor = 1, charter = 8, s_set = [1, 2, 5], initiator = 1, weight = { Qv = { num = 2, den = 1 } }, pairs = [1], slot = { Committee = {} }, exp_c = 10, height = 5, policy_ok = true, recompute_ok = true, seizure_settled = false } } } },
+  { Contribute = { request = { Cr = { actor = 5, charter = 8, s_set = [5], initiator = 5, weight = { Qv = { num = 1, den = 1 } }, pairs = [0], slot = { Committee = {} }, exp_c = 10, height = 5, policy_ok = true, recompute_ok = true, seizure_settled = true } } } },
+  { Contribute = { request = { Cr = { actor = 1, charter = 8, s_set = [1], initiator = 1, weight = { Qv = { num = 1, den = 1 } }, pairs = [2], slot = { Committee = {} }, exp_c = 10, height = 5, policy_ok = true, recompute_ok = true, seizure_settled = false } } } },
+]

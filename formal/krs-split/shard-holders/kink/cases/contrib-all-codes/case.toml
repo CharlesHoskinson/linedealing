@@ -1,0 +1,8 @@
+# SH-015, SH-018, SH-019, SH-021, SH-026, SH-022 and SH-023 together, in code order
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { FixCharter = { id = 8, gamma = { Or = { mid = 0, primary = { Or = { mid = 1, primary = { Leaf = { mid = 1, actor = 2 } }, escrow = { Leaf = { mid = 2, actor = 1 } } } }, escrow = { Leaf = { mid = 2, actor = 3 } } } } } },
+  { PostPool = { actor = 9, root = 1, key = 0 } },
+  { Contribute = { request = { Cr = { actor = 1, charter = 8, s_set = [1, 1], initiator = 1, weight = { Qv = { num = 0, den = 0 } }, pairs = [3, 3], slot = { Ecdsa = { id = 1, leaf_set = [7, 7, 7], under_g = true } }, exp_c = 1, height = 2, policy_ok = false, recompute_ok = false, seizure_settled = false } } } },
+]

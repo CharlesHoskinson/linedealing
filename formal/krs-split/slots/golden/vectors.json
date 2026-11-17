@@ -1,0 +1,7033 @@
+{
+  "header": {
+    "sources": {
+      "../../lean-split/slots/SplitSlots/Spec.lean": "5f59abdd57e4c1178d4822e15578e9754a1ce26480db2143d9b60feb716dce15",
+      "../scripts/oracle_adapter.py": "440bf47eb96838c6c72e0b03b675669e8fb9b9befabdfeea771a78ac52f0a194",
+      "schema.json": "5b249bbbd9ae5ad40cf91bc89b4deb7baeb135a621cca847d884c23b6d22973e"
+    },
+    "toolchain": "leanprover/lean4:v4.35.0"
+  },
+  "schema": "formal-golden-vectors/1",
+  "vectors": [
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [],
+        "obs": [
+          {
+            "Gate": {
+              "pass": true
+            }
+          },
+          {
+            "Gate": {
+              "pass": true
+            }
+          },
+          {
+            "Gate": {
+              "pass": false
+            }
+          },
+          {
+            "Gate": {
+              "pass": false
+            }
+          },
+          {
+            "Gate": {
+              "pass": false
+            }
+          },
+          {
+            "Gate": {
+              "pass": true
+            }
+          },
+          {
+            "Gate": {
+              "pass": true
+            }
+          },
+          {
+            "Gate": {
+              "pass": true
+            }
+          },
+          {
+            "Gate": {
+              "pass": true
+            }
+          },
+          {
+            "Gate": {
+              "pass": false
+            }
+          }
+        ],
+        "opened": [],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "AnchorGate": {
+              "covered": [],
+              "d": 2,
+              "nf": 1,
+              "on": false
+            }
+          },
+          {
+            "AnchorGate": {
+              "covered": [
+                {
+                  "P": [
+                    1,
+                    2
+                  ]
+                }
+              ],
+              "d": 2,
+              "nf": 1,
+              "on": true
+            }
+          },
+          {
+            "AnchorGate": {
+              "covered": [
+                {
+                  "P": [
+                    1,
+                    2
+                  ]
+                },
+                {
+                  "P": [
+                    1,
+                    3
+                  ]
+                }
+              ],
+              "d": 2,
+              "nf": 1,
+              "on": true
+            }
+          },
+          {
+            "AnchorGate": {
+              "covered": [
+                {
+                  "P": [
+                    1,
+                    3
+                  ]
+                }
+              ],
+              "d": 2,
+              "nf": 1,
+              "on": true
+            }
+          },
+          {
+            "AnchorGate": {
+              "covered": [],
+              "d": 2,
+              "nf": 1,
+              "on": true
+            }
+          },
+          {
+            "AnchorGate": {
+              "covered": [
+                {
+                  "P": [
+                    2,
+                    5
+                  ]
+                },
+                {
+                  "P": [
+                    1,
+                    2
+                  ]
+                },
+                {
+                  "P": [
+                    3,
+                    3
+                  ]
+                }
+              ],
+              "d": 2,
+              "nf": 1,
+              "on": true
+            }
+          },
+          {
+            "AnchorGate": {
+              "covered": [
+                {
+                  "P": [
+                    1,
+                    2
+                  ]
+                },
+                {
+                  "P": [
+                    2,
+                    3
+                  ]
+                }
+              ],
+              "d": 2,
+              "nf": 1,
+              "on": true
+            }
+          },
+          {
+            "AnchorGate": {
+              "covered": [
+                {
+                  "P": [
+                    2,
+                    2
+                  ]
+                },
+                {
+                  "P": [
+                    1,
+                    2
+                  ]
+                }
+              ],
+              "d": 2,
+              "nf": 1,
+              "on": true
+            }
+          },
+          {
+            "AnchorGate": {
+              "covered": [
+                {
+                  "P": [
+                    1,
+                    2
+                  ]
+                }
+              ],
+              "d": 2,
+              "nf": 1,
+              "on": false
+            }
+          },
+          {
+            "AnchorGate": {
+              "covered": [
+                {
+                  "P": [
+                    2,
+                    5
+                  ]
+                },
+                {
+                  "P": [
+                    1,
+                    2
+                  ]
+                },
+                {
+                  "P": [
+                    1,
+                    3
+                  ]
+                }
+              ],
+              "d": 2,
+              "nf": 1,
+              "on": true
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/anchor-gate/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [],
+        "obs": [
+          {
+            "Complaint": {
+              "failing": []
+            }
+          },
+          {
+            "Complaint": {
+              "failing": []
+            }
+          },
+          {
+            "Complaint": {
+              "failing": [
+                1,
+                3
+              ]
+            }
+          }
+        ],
+        "opened": [],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "Batch": {
+              "polys": []
+            }
+          },
+          {
+            "Batch": {
+              "polys": [
+                true,
+                true
+              ]
+            }
+          },
+          {
+            "Batch": {
+              "polys": [
+                false,
+                true,
+                false
+              ]
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/batch/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Burned",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Burned",
+              "idx": 2,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [],
+              "pool": 2,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 1,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealE": {
+              "kcount": 2,
+              "leaf_set": 5,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "DealE": {
+              "kcount": 1,
+              "leaf_set": 5,
+              "pool": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "BurnPool": {
+              "pool": 1
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "BurnPool": {
+              "pool": 3
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/burn-pool/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Unnamed",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [],
+              "prec": [],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Burned",
+              "epoch": 3,
+              "idx": 2,
+              "namers": [],
+              "prec": [],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Burned",
+              "epoch": 3,
+              "idx": 3,
+              "namers": [],
+              "prec": [],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Burned",
+              "epoch": 3,
+              "idx": 4,
+              "namers": [],
+              "prec": [],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Unnamed",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [],
+              "prec": [],
+              "suite": "Ed25519"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Unnamed",
+              "epoch": 3,
+              "idx": 2,
+              "namers": [],
+              "prec": [],
+              "suite": "Ed25519"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Unnamed",
+              "epoch": 4,
+              "idx": 1,
+              "namers": [],
+              "prec": [],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Unnamed",
+              "epoch": 4,
+              "idx": 2,
+              "namers": [],
+              "prec": [],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "OutsideCapability"
+              ]
+            }
+          },
+          "Ok"
+        ],
+        "opened": [],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 4,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 2,
+              "suite": "Ed25519"
+            }
+          },
+          {
+            "DealC": {
+              "epoch": 4,
+              "kcount": 2,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "BurnRange": {
+              "epoch": 3,
+              "hi": 3,
+              "lo": 2,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "BurnRange": {
+              "epoch": 3,
+              "hi": 4,
+              "lo": 4,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "BurnRange": {
+              "epoch": 3,
+              "hi": 2,
+              "lo": 3,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "BurnRange": {
+              "epoch": 4,
+              "hi": 9,
+              "lo": 1,
+              "suite": "Ed25519"
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/burn-range/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Burned",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [
+          1
+        ],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [
+          10
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 1,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "EndReq": {
+              "eid": 1
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/committee-end-unused/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Burned",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Burned",
+              "epoch": 3,
+              "idx": 2,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "prec": [
+                2
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [
+          1,
+          2
+        ],
+        "eslots": [],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 1,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          }
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 2,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "ClaimOp": {
+              "eid": 1
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 1
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 1
+            }
+          },
+          {
+            "ClaimOp": {
+              "eid": 1
+            }
+          },
+          {
+            "ClaimOp": {
+              "eid": 1
+            }
+          },
+          {
+            "EndReq": {
+              "eid": 2
+            }
+          },
+          {
+            "EndReq": {
+              "eid": 1
+            }
+          },
+          {
+            "EndReq": {
+              "eid": 1
+            }
+          },
+          {
+            "ClaimOp": {
+              "eid": 1
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 1
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 3
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Gr"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/committee-life/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Reserved",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Burned",
+              "epoch": 3,
+              "idx": 2,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 3,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "prec": [
+                2
+              ],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Claimed",
+              "epoch": 3,
+              "idx": 4,
+              "namers": [
+                {
+                  "P": [
+                    3,
+                    30
+                  ]
+                }
+              ],
+              "prec": [
+                3
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 3,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          30
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          3,
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 4,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                },
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 3,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 3,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 4,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 30
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 3,
+              "root": "Own"
+            }
+          },
+          {
+            "BurnRange": {
+              "epoch": 3,
+              "hi": 2,
+              "lo": 2,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 1
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 3
+            }
+          },
+          {
+            "ClaimOp": {
+              "eid": 3
+            }
+          },
+          {
+            "ClaimOp": {
+              "eid": 2
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 3
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/committee-reserve-claimed/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Unnamed",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [],
+              "prec": [],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Unnamed",
+              "epoch": 3,
+              "idx": 2,
+              "namers": [],
+              "prec": [],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Unnamed",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [],
+              "prec": [],
+              "suite": "Ed25519"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Unnamed",
+              "epoch": 3,
+              "idx": 3,
+              "namers": [],
+              "prec": [],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Unnamed",
+              "epoch": 4,
+              "idx": 1,
+              "namers": [],
+              "prec": [],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 2,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 1,
+              "suite": "Ed25519"
+            }
+          },
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 1,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "DealC": {
+              "epoch": 4,
+              "kcount": 1,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 0,
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/deal-c-pools/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Reserved",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                1
+              ],
+              "reserver": [
+                1
+              ],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Burned",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "pool": 2,
+              "prec": [
+                2
+              ],
+              "reserver": [
+                2
+              ],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Claimed",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    3,
+                    30
+                  ]
+                }
+              ],
+              "pool": 3,
+              "prec": [
+                3
+              ],
+              "reserver": [
+                3
+              ],
+              "root": "Own"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 3,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          30
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          3,
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealE": {
+              "kcount": 1,
+              "leaf_set": 5,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "DealE": {
+              "kcount": 1,
+              "leaf_set": 5,
+              "pool": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 2
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 1
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 2
+            }
+          },
+          {
+            "ClaimOp": {
+              "eid": 2
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 2
+            }
+          },
+          {
+            "BurnPool": {
+              "pool": 2
+            }
+          },
+          {
+            "ClaimOp": {
+              "eid": 2
+            }
+          },
+          {
+            "DealE": {
+              "kcount": 1,
+              "leaf_set": 5,
+              "pool": 3,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 3,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 3,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 3
+                  }
+                }
+              ],
+              "pos": 30
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 3
+            }
+          },
+          {
+            "ClaimOp": {
+              "eid": 3
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 3
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/ecdsa-claim-burned/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 2,
+              "leaf_set": 5,
+              "namers": [],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 1,
+              "leaf_set": 6,
+              "namers": [],
+              "pool": 2,
+              "prec": [],
+              "reserver": [],
+              "root": "Gr"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 3,
+              "leaf_set": 7,
+              "namers": [],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Gr"
+            }
+          }
+        ],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealE": {
+              "kcount": 2,
+              "leaf_set": 5,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "DealE": {
+              "kcount": 1,
+              "leaf_set": 6,
+              "pool": 2,
+              "root": "Gr"
+            }
+          },
+          {
+            "DealE": {
+              "kcount": 1,
+              "leaf_set": 7,
+              "pool": 1,
+              "root": "Gr"
+            }
+          },
+          {
+            "DealE": {
+              "kcount": 0,
+              "leaf_set": 8,
+              "pool": 1,
+              "root": "Own"
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/ecdsa-deal/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [
+          1
+        ],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Named",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                1
+              ],
+              "reserver": [],
+              "root": "Own"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 1,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          10
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealE": {
+              "kcount": 1,
+              "leaf_set": 5,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "EndReq": {
+              "eid": 1
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/ecdsa-end-unreserved/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Named",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                },
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                1
+              ],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "pool": 2,
+              "prec": [],
+              "reserver": [],
+              "root": "Gr"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 1,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealE": {
+              "kcount": 1,
+              "leaf_set": 5,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "DealE": {
+              "kcount": 1,
+              "leaf_set": 5,
+              "pool": 2,
+              "root": "Gr"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                },
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 2
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/ecdsa-in-force-open/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [
+          1,
+          2
+        ],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Burned",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                1
+              ],
+              "reserver": [
+                1
+              ],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Burned",
+              "idx": 2,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                1
+              ],
+              "reserver": [
+                1
+              ],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Named",
+              "idx": 3,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                2
+              ],
+              "reserver": [],
+              "root": "Own"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 2,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealE": {
+              "kcount": 3,
+              "leaf_set": 5,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                },
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 3,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "ClaimOp": {
+              "eid": 1
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 1
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 1
+            }
+          },
+          {
+            "ClaimOp": {
+              "eid": 2
+            }
+          },
+          {
+            "ClaimOp": {
+              "eid": 1
+            }
+          },
+          {
+            "EndReq": {
+              "eid": 2
+            }
+          },
+          {
+            "EndReq": {
+              "eid": 1
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/ecdsa-life/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Named",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                },
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                },
+                {
+                  "P": [
+                    3,
+                    40
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                1
+              ],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Named",
+              "idx": 2,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                },
+                {
+                  "P": [
+                    4,
+                    30
+                  ]
+                },
+                {
+                  "P": [
+                    3,
+                    40
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                3
+              ],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Named",
+              "idx": 1,
+              "leaf_set": 6,
+              "namers": [
+                {
+                  "P": [
+                    4,
+                    30
+                  ]
+                }
+              ],
+              "pool": 2,
+              "prec": [
+                4
+              ],
+              "reserver": [],
+              "root": "Gr"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 3,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 2,
+              "root": "Gr"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 4,
+              "root": "Gr"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          40
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          "Ok",
+          {
+            "Void": {
+              "reason": "VSlotTaken"
+            }
+          },
+          {
+            "Void": {
+              "reason": "VSlotTaken"
+            }
+          }
+        ],
+        "opened": [
+          3,
+          4,
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealE": {
+              "kcount": 2,
+              "leaf_set": 5,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "DealE": {
+              "kcount": 1,
+              "leaf_set": 6,
+              "pool": 2,
+              "root": "Gr"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                },
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "InForce": {
+              "eid": 3,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Gr"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 4,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 1
+                  }
+                },
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 2
+                  }
+                }
+              ],
+              "pos": 30
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 3,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                },
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 40
+            }
+          },
+          {
+            "InForce": {
+              "eid": 4,
+              "root": "Gr"
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/ecdsa-precedence/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 2,
+              "leaf_set": 5,
+              "namers": [],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          }
+        ],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [
+          10
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "OutsideCapability"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule",
+                "OutsideCapability"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          }
+        ],
+        "opened": [
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealE": {
+              "kcount": 2,
+              "leaf_set": 5,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 3,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 2
+                  }
+                }
+              ],
+              "pos": 30
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 4,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 9,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 40
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 5,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 1
+                  }
+                },
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 50
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 6,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 2
+                  }
+                },
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 2
+                  }
+                }
+              ],
+              "pos": 60
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 7,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                },
+                {
+                  "Ek": {
+                    "idx": 9,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 70
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/ecdsa-refusals/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Named",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                },
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                2
+              ],
+              "reserver": [],
+              "root": "Own"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 1,
+              "root": "Gr"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 2,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealE": {
+              "kcount": 1,
+              "leaf_set": 5,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Gr"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/ecdsa-root-mismatch/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Named",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                2
+              ],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Named",
+              "idx": 2,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                },
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                1
+              ],
+              "reserver": [],
+              "root": "Own"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 2,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Void": {
+              "reason": "VSlotTaken"
+            }
+          }
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealE": {
+              "kcount": 2,
+              "leaf_set": 5,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                },
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/ecdsa-void-later/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [],
+        "obs": [],
+        "opened": [],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/empty/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [],
+        "obs": [
+          {
+            "Verdicts": {
+              "vs": [
+                "PoolUnlisted"
+              ]
+            }
+          },
+          {
+            "Verdicts": {
+              "vs": [
+                "AboveWindow",
+                "InWindow",
+                "InWindow",
+                "InWindow",
+                "SlotTaken",
+                "InWindow",
+                "SlotTaken",
+                "SlotTaken",
+                "SlotTaken"
+              ]
+            }
+          },
+          {
+            "Verdicts": {
+              "vs": [
+                "SlotTaken",
+                "AboveWindow",
+                "InWindow"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "OutsideCapability"
+              ]
+            }
+          },
+          {
+            "Verdicts": {
+              "vs": [
+                "PoolUnlisted",
+                "PoolUnlisted",
+                "PoolUnlisted"
+              ]
+            }
+          },
+          {
+            "Verdicts": {
+              "vs": [
+                "InWindow"
+              ]
+            }
+          },
+          {
+            "Verdicts": {
+              "vs": [
+                "AboveWindow",
+                "InWindow",
+                "SlotTaken"
+              ]
+            }
+          }
+        ],
+        "opened": [],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "Judge": {
+              "bw": 200,
+              "eid": 1,
+              "h": 100,
+              "idxs": [
+                150
+              ],
+              "listed": false,
+              "pending": [],
+              "pending_min": 90
+            }
+          },
+          {
+            "Judge": {
+              "bw": 200,
+              "eid": 1,
+              "h": 100,
+              "idxs": [
+                301,
+                300,
+                150,
+                101,
+                100,
+                95,
+                96,
+                89,
+                97
+              ],
+              "listed": true,
+              "pending": [
+                {
+                  "P": [
+                    95,
+                    1
+                  ]
+                },
+                {
+                  "P": [
+                    96,
+                    2
+                  ]
+                }
+              ],
+              "pending_min": 90
+            }
+          },
+          {
+            "Judge": {
+              "bw": 1,
+              "eid": 1,
+              "h": 100,
+              "idxs": [
+                95,
+                102,
+                101
+              ],
+              "listed": true,
+              "pending": [
+                {
+                  "P": [
+                    95,
+                    1
+                  ]
+                }
+              ],
+              "pending_min": 96
+            }
+          },
+          {
+            "Judge": {
+              "bw": 0,
+              "eid": 1,
+              "h": 0,
+              "idxs": [
+                1
+              ],
+              "listed": true,
+              "pending": [],
+              "pending_min": 0
+            }
+          },
+          {
+            "Judge": {
+              "bw": 200,
+              "eid": 1,
+              "h": 100,
+              "idxs": [
+                301,
+                95,
+                89
+              ],
+              "listed": false,
+              "pending": [
+                {
+                  "P": [
+                    95,
+                    1
+                  ]
+                }
+              ],
+              "pending_min": 90
+            }
+          },
+          {
+            "Judge": {
+              "bw": 200,
+              "eid": 1,
+              "h": 100,
+              "idxs": [
+                150
+              ],
+              "listed": true,
+              "pending": [
+                {
+                  "P": [
+                    150,
+                    1
+                  ]
+                }
+              ],
+              "pending_min": 90
+            }
+          },
+          {
+            "Judge": {
+              "bw": 200,
+              "eid": 1,
+              "h": 100,
+              "idxs": [
+                301,
+                150,
+                99
+              ],
+              "listed": true,
+              "pending": [],
+              "pending_min": 400
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/judge/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Burned",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Burned",
+              "epoch": 3,
+              "idx": 2,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                },
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 3,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "prec": [
+                2
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [
+          5,
+          1
+        ],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          }
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 3,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                },
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                },
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 3,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "Lapse": {
+              "eid": 1
+            }
+          },
+          {
+            "Lapse": {
+              "eid": 1
+            }
+          },
+          {
+            "Lapse": {
+              "eid": 5
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 5,
+              "root": "Gr"
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/lapse-burns-prec/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                },
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [
+          2
+        ],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 1,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [
+          3
+        ],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 1,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "Lapse": {
+              "eid": 1
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "EndReq": {
+              "eid": 2
+            }
+          },
+          {
+            "Lapse": {
+              "eid": 2
+            }
+          },
+          {
+            "DealE": {
+              "kcount": 1,
+              "leaf_set": 5,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "Lapse": {
+              "eid": 3
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/lapse-refused/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [
+          2
+        ],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Burned",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                2
+              ],
+              "reserver": [
+                2
+              ],
+              "root": "Own"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 2,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 1,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "DealE": {
+              "kcount": 1,
+              "leaf_set": 5,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "Reserve": {
+              "eid": 2
+            }
+          },
+          {
+            "ClaimOp": {
+              "eid": 2
+            }
+          },
+          {
+            "EndReq": {
+              "eid": 2
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/mixed-open/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Burned",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "prec": [],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Burned",
+              "epoch": 3,
+              "idx": 2,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "prec": [],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 3,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 2,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 3,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "BurnRange": {
+              "epoch": 3,
+              "hi": 2,
+              "lo": 1,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                },
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 3,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/open-c-burned/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Unnamed",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [],
+              "prec": [],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Ed25519"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [
+          10
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 1,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 1,
+              "suite": "Ed25519"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Ed25519"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/open-c-other-pool/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 2,
+              "namers": [
+                {
+                  "P": [
+                    9,
+                    80
+                  ]
+                }
+              ],
+              "prec": [
+                9
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [
+          80
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "OutsideCapability"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule",
+                "OutsideCapability"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "OutsideCapability"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          }
+        ],
+        "opened": [
+          9,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 2,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 3,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 5
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 4,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 9,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 30
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 5,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Ed25519"
+                  }
+                }
+              ],
+              "pos": 40
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 6,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 4,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 50
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 7,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                },
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 60
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 8,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 9,
+                    "suite": "Bip340"
+                  }
+                },
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 9,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 70
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 5
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 9,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 80
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 10,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                },
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                },
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 90
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 11,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                },
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 9,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 100
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/open-c-refusals/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "prec": [
+                2
+              ],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 2,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                },
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 2,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Void": {
+              "reason": "VSlotTaken"
+            }
+          }
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 2,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                },
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/open-c-void-later/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                },
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 2,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                },
+                {
+                  "P": [
+                    3,
+                    30
+                  ]
+                }
+              ],
+              "prec": [
+                2
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 3,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          30
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Void": {
+              "reason": "VSlotTaken"
+            }
+          },
+          {
+            "Void": {
+              "reason": "VSlotTaken"
+            }
+          }
+        ],
+        "opened": [
+          3,
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 2,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                },
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 3,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 30
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 3,
+              "root": "Own"
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/open-c-void/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [],
+        "obs": [
+          {
+            "Qualified": {
+              "ds": [
+                [
+                  1,
+                  3
+                ]
+              ]
+            }
+          },
+          {
+            "Qualified": {
+              "ds": []
+            }
+          },
+          {
+            "Qualified": {
+              "ds": []
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "OutsideCapability"
+              ]
+            }
+          },
+          {
+            "Qualified": {
+              "ds": [
+                [
+                  1,
+                  2
+                ]
+              ]
+            }
+          }
+        ],
+        "opened": [],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "Qualify": {
+              "dealers": [
+                {
+                  "Dlr": {
+                    "complained": false,
+                    "dealer": 1
+                  }
+                },
+                {
+                  "Dlr": {
+                    "complained": true,
+                    "dealer": 2
+                  }
+                },
+                {
+                  "Dlr": {
+                    "complained": false,
+                    "dealer": 3
+                  }
+                },
+                {
+                  "Dlr": {
+                    "complained": false,
+                    "dealer": 4
+                  }
+                }
+              ],
+              "t": 2
+            }
+          },
+          {
+            "Qualify": {
+              "dealers": [
+                {
+                  "Dlr": {
+                    "complained": false,
+                    "dealer": 1
+                  }
+                },
+                {
+                  "Dlr": {
+                    "complained": true,
+                    "dealer": 2
+                  }
+                },
+                {
+                  "Dlr": {
+                    "complained": false,
+                    "dealer": 3
+                  }
+                }
+              ],
+              "t": 3
+            }
+          },
+          {
+            "Qualify": {
+              "dealers": [],
+              "t": 1
+            }
+          },
+          {
+            "Qualify": {
+              "dealers": [
+                {
+                  "Dlr": {
+                    "complained": false,
+                    "dealer": 1
+                  }
+                }
+              ],
+              "t": 0
+            }
+          },
+          {
+            "Qualify": {
+              "dealers": [
+                {
+                  "Dlr": {
+                    "complained": false,
+                    "dealer": 1
+                  }
+                },
+                {
+                  "Dlr": {
+                    "complained": false,
+                    "dealer": 2
+                  }
+                }
+              ],
+              "t": 2
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/qualify/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          {
+            "Released": {
+              "d": 3
+            }
+          },
+          {
+            "Released": {
+              "d": 3
+            }
+          },
+          "Ok",
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          }
+        ],
+        "opened": [],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": [
+          {
+            "Ss": {
+              "current": true,
+              "key": 4,
+              "signed": [
+                3
+              ],
+              "st": {
+                "Bound": {
+                  "d": 3
+                }
+              }
+            }
+          },
+          {
+            "Ss": {
+              "current": false,
+              "key": 5,
+              "signed": [],
+              "st": {
+                "Bound": {
+                  "d": 1
+                }
+              }
+            }
+          },
+          {
+            "Ss": {
+              "current": false,
+              "key": 6,
+              "signed": [],
+              "st": {
+                "Bound": {
+                  "d": 1
+                }
+              }
+            }
+          }
+        ]
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "SeatPut": {
+              "key": 4
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 3,
+              "key": 4,
+              "sealed_acks": 1,
+              "slot_acks": 1
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 3,
+              "key": 4,
+              "sealed_acks": 1,
+              "slot_acks": 3
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 3,
+              "key": 4
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 3,
+              "key": 4,
+              "sealed_acks": 3,
+              "slot_acks": 1
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 3,
+              "key": 4
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 3,
+              "key": 4,
+              "sealed_acks": 3,
+              "slot_acks": 2
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 3,
+              "key": 4
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 3,
+              "key": 4
+            }
+          },
+          {
+            "SeatPut": {
+              "key": 5
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 1,
+              "key": 5,
+              "sealed_acks": 1,
+              "slot_acks": 2
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 1,
+              "key": 5
+            }
+          },
+          {
+            "SeatPut": {
+              "key": 6
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 1,
+              "key": 6,
+              "sealed_acks": 2,
+              "slot_acks": 1
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 1,
+              "key": 6
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/seat-current-later/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [],
+        "obs": [
+          "Ok",
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Released": {
+              "d": 7
+            }
+          },
+          {
+            "Released": {
+              "d": 7
+            }
+          },
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Released": {
+              "d": 9
+            }
+          },
+          "Ok"
+        ],
+        "opened": [],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": [
+          {
+            "Ss": {
+              "current": true,
+              "key": 1,
+              "signed": [
+                7
+              ],
+              "st": "SBurned"
+            }
+          },
+          {
+            "Ss": {
+              "current": true,
+              "key": 2,
+              "signed": [],
+              "st": {
+                "Bound": {
+                  "d": 7
+                }
+              }
+            }
+          },
+          {
+            "Ss": {
+              "current": true,
+              "key": 3,
+              "signed": [
+                9
+              ],
+              "st": "SBurned"
+            }
+          }
+        ]
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "SeatPut": {
+              "key": 1
+            }
+          },
+          {
+            "SeatPut": {
+              "key": 2
+            }
+          },
+          {
+            "SeatPut": {
+              "key": 2
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 7,
+              "key": 1,
+              "sealed_acks": 2,
+              "slot_acks": 2
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 7,
+              "key": 1,
+              "sealed_acks": 1,
+              "slot_acks": 1
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 7,
+              "key": 2,
+              "sealed_acks": 2,
+              "slot_acks": 2
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 7,
+              "key": 1
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 7,
+              "key": 1
+            }
+          },
+          {
+            "SeatBurn": {
+              "key": 1
+            }
+          },
+          {
+            "SeatPut": {
+              "key": 3
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 9,
+              "key": 3,
+              "sealed_acks": 2,
+              "slot_acks": 2
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 9,
+              "key": 3
+            }
+          },
+          {
+            "SeatBurn": {
+              "key": 3
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/seat-life/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [],
+        "obs": [
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          }
+        ],
+        "opened": [],
+        "params": {
+          "Params": {
+            "mode": "NonTee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "SeatPut": {
+              "key": 1
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 7,
+              "key": 1,
+              "sealed_acks": 2,
+              "slot_acks": 2
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 7,
+              "key": 1
+            }
+          },
+          {
+            "SeatBurn": {
+              "key": 1
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "NonTee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/seat-non-tee/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [],
+        "obs": [
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "SlotBound"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          "Ok",
+          {
+            "Released": {
+              "d": 5
+            }
+          },
+          "Ok",
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          },
+          {
+            "Refused": {
+              "codes": [
+                "NoRule"
+              ]
+            }
+          }
+        ],
+        "opened": [],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": [
+          {
+            "Ss": {
+              "current": true,
+              "key": 1,
+              "signed": [],
+              "st": "SBurned"
+            }
+          },
+          {
+            "Ss": {
+              "current": false,
+              "key": 2,
+              "signed": [],
+              "st": "Free"
+            }
+          },
+          {
+            "Ss": {
+              "current": true,
+              "key": 3,
+              "signed": [
+                5
+              ],
+              "st": {
+                "Bound": {
+                  "d": 5
+                }
+              }
+            }
+          }
+        ]
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "SeatPut": {
+              "key": 1
+            }
+          },
+          {
+            "SeatPut": {
+              "key": 1
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 7,
+              "key": 1,
+              "sealed_acks": 2,
+              "slot_acks": 2
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 8,
+              "key": 1,
+              "sealed_acks": 2,
+              "slot_acks": 2
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 8,
+              "key": 1
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 7,
+              "key": 2
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 7,
+              "key": 2,
+              "sealed_acks": 2,
+              "slot_acks": 2
+            }
+          },
+          {
+            "SeatBurn": {
+              "key": 2
+            }
+          },
+          {
+            "SeatPut": {
+              "key": 2
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 7,
+              "key": 2
+            }
+          },
+          {
+            "SeatPut": {
+              "key": 3
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 5,
+              "key": 3,
+              "sealed_acks": 2,
+              "slot_acks": 1
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 5,
+              "key": 3
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 5,
+              "key": 3,
+              "sealed_acks": 1,
+              "slot_acks": 2
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 5,
+              "key": 3
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 5,
+              "key": 3,
+              "sealed_acks": 2,
+              "slot_acks": 2
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 5,
+              "key": 3
+            }
+          },
+          {
+            "SeatBurn": {
+              "key": 1
+            }
+          },
+          {
+            "SeatBurn": {
+              "key": 1
+            }
+          },
+          {
+            "SeatRelease": {
+              "d": 7,
+              "key": 1
+            }
+          },
+          {
+            "SeatBind": {
+              "d": 7,
+              "key": 1,
+              "sealed_acks": 2,
+              "slot_acks": 2
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/seat-refusals/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 2,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "prec": [
+                2
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 2,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/sl005-late-open-no-lapse/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Burned",
+              "epoch": 3,
+              "idx": 2,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "prec": [
+                2
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [
+          2
+        ],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 2,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Lapse": {
+              "eid": 2
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/sl005-late-open/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                },
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [],
+        "lapsed": [
+          2
+        ],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 1,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "Lapse": {
+              "eid": 2
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/sl005-not-holder/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                },
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 5,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          20
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Void": {
+              "reason": "VSlotTaken"
+            }
+          },
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 1,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 5,
+              "root": "Own"
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/sl016-copied-in-force/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Named",
+              "idx": 1,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                },
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                },
+                {
+                  "P": [
+                    3,
+                    30
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                1
+              ],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Named",
+              "idx": 2,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                2
+              ],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Named",
+              "idx": 3,
+              "leaf_set": 5,
+              "namers": [
+                {
+                  "P": [
+                    4,
+                    40
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                4
+              ],
+              "reserver": [],
+              "root": "Own"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 3,
+              "root": "Gr"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 4,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          40
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Void": {
+              "reason": "VSlotTaken"
+            }
+          },
+          "Ok",
+          {
+            "Void": {
+              "reason": "VSlotTaken"
+            }
+          },
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealE": {
+              "kcount": 3,
+              "leaf_set": 5,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "InForce": {
+              "eid": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                },
+                {
+                  "Ek": {
+                    "idx": 2,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "InForce": {
+              "eid": 3,
+              "root": "Gr"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 3,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 1,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 30
+            }
+          },
+          {
+            "InForce": {
+              "eid": 4,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 4,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 3,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 40
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/sl016-ecdsa-own-prec/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [],
+        "ended": [],
+        "eslots": [
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 1,
+              "leaf_set": 50,
+              "namers": [],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 2,
+              "leaf_set": 50,
+              "namers": [],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 3,
+              "leaf_set": 50,
+              "namers": [],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 4,
+              "leaf_set": 50,
+              "namers": [],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 5,
+              "leaf_set": 50,
+              "namers": [],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Unnamed",
+              "idx": 6,
+              "leaf_set": 50,
+              "namers": [],
+              "pool": 1,
+              "prec": [],
+              "reserver": [],
+              "root": "Own"
+            }
+          },
+          {
+            "Es": {
+              "bstat": "Named",
+              "idx": 7,
+              "leaf_set": 50,
+              "namers": [
+                {
+                  "P": [
+                    5,
+                    10
+                  ]
+                },
+                {
+                  "P": [
+                    6,
+                    20
+                  ]
+                },
+                {
+                  "P": [
+                    8,
+                    30
+                  ]
+                }
+              ],
+              "pool": 1,
+              "prec": [
+                6
+              ],
+              "reserver": [],
+              "root": "Own"
+            }
+          }
+        ],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 6,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 8,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [],
+        "lastpos": [
+          30
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Void": {
+              "reason": "VSlotTaken"
+            }
+          }
+        ],
+        "opened": [
+          8,
+          6,
+          5
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealE": {
+              "kcount": 7,
+              "leaf_set": 50,
+              "pool": 1,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 5,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 7,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 6,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 7,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "InForce": {
+              "eid": 6,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenE": {
+              "eid": 8,
+              "names": [
+                {
+                  "Ek": {
+                    "idx": 7,
+                    "pool": 1
+                  }
+                }
+              ],
+              "pos": 30
+            }
+          },
+          {
+            "InForce": {
+              "eid": 8,
+              "root": "Own"
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/sl016-ecdsa-taken-in-force/case.toml"
+    },
+    {
+      "cells": {
+        "cslots": [
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 1,
+              "namers": [
+                {
+                  "P": [
+                    1,
+                    10
+                  ]
+                },
+                {
+                  "P": [
+                    2,
+                    20
+                  ]
+                },
+                {
+                  "P": [
+                    3,
+                    30
+                  ]
+                }
+              ],
+              "prec": [
+                1
+              ],
+              "suite": "Bip340"
+            }
+          },
+          {
+            "Cs": {
+              "bstat": "Named",
+              "epoch": 3,
+              "idx": 2,
+              "namers": [
+                {
+                  "P": [
+                    4,
+                    40
+                  ]
+                }
+              ],
+              "prec": [
+                4
+              ],
+              "suite": "Bip340"
+            }
+          }
+        ],
+        "ended": [],
+        "eslots": [],
+        "forces": [
+          {
+            "Frc": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "Frc": {
+              "eid": 4,
+              "root": "Own"
+            }
+          }
+        ],
+        "lapsed": [
+          3
+        ],
+        "lastpos": [
+          40
+        ],
+        "obs": [
+          "Ok",
+          "Ok",
+          "Ok",
+          {
+            "Void": {
+              "reason": "VSlotTaken"
+            }
+          },
+          "Ok",
+          "Ok",
+          "Ok",
+          "Ok"
+        ],
+        "opened": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        },
+        "seat": []
+      },
+      "end": "final",
+      "inputs": {
+        "ops": [
+          {
+            "DealC": {
+              "epoch": 3,
+              "kcount": 2,
+              "suite": "Bip340"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 1,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 10
+            }
+          },
+          {
+            "InForce": {
+              "eid": 2,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 2,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 20
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 3,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 1,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 30
+            }
+          },
+          {
+            "Lapse": {
+              "eid": 3
+            }
+          },
+          {
+            "InForce": {
+              "eid": 4,
+              "root": "Own"
+            }
+          },
+          {
+            "OpenC": {
+              "eid": 4,
+              "names": [
+                {
+                  "Ck": {
+                    "epoch": 3,
+                    "idx": 2,
+                    "suite": "Bip340"
+                  }
+                }
+              ],
+              "pos": 40
+            }
+          }
+        ],
+        "params": {
+          "Params": {
+            "mode": "Tee",
+            "w": 2
+          }
+        }
+      },
+      "program": "cases/sl016-in-force-first/case.toml"
+    }
+  ]
+}

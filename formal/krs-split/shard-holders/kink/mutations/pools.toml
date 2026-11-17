@@ -1,0 +1,195 @@
+# Plausible misreadings of SH-013 (nonce pools and fresh pool keys), SH-014 (refill)
+# and ledger 4 (a key index outside N_pk), as K patches.
+
+[[mutation]]
+id = "sh013-key-reuse-ok"
+expect = "kill"
+misunderstanding = "SH-013: a pool key may sign a second pool"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pool_refusals"
+  find = "opt ( tr ( A:Int , Root:Int , Key:Int ) in Keys:List , rSH013 )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh013-key-per-actor"
+expect = "kill"
+misunderstanding = "SH-013: a pool key is fresh per root, whichever actor used it before"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pool_refusals"
+  find = "tr ( A:Int , Root:Int , Key:Int ) in Keys:List"
+  replace = "(tr ( A:Int , Root:Int , Key:Int ) in Keys:List orBool tr ( A:Int -Int 1 , Root:Int , Key:Int ) in Keys:List)"
+
+[[mutation]]
+id = "sh013-key-ignores-root"
+expect = "kill"
+misunderstanding = "SH-013: key index idx is used once per actor across all its roots"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pool_refusals"
+  find = "tr ( A:Int , Root:Int , Key:Int ) in Keys:List"
+  replace = "(tr ( A:Int , Root:Int , Key:Int ) in Keys:List orBool tr ( A:Int , 1 , Key:Int ) in Keys:List)"
+
+[[mutation]]
+id = "sh013-npk-1023"
+expect = "kill"
+misunderstanding = "SH-013 (ledger 4): a pool-key root holds 1023 keys"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pool_refusals"
+  find = "1024 <=Int Key:Int"
+  replace = "1023 <=Int Key:Int"
+
+[[mutation]]
+id = "sh013-npk-unbounded"
+expect = "kill"
+misunderstanding = "SH-013 (ledger 4): a key index of any size is inside the root"
+  [[mutation.edit]]
+  rule = "split_shard_holders--pool_refusals"
+  find = "opt ( 1024 <=Int Key:Int , rOutsideCapability )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh013-npool-63"
+expect = "kill"
+misunderstanding = "SH-013: a pool holds 63 pairs"
+  [[mutation.edit]]
+  rule = "post-pool"
+  find = "dealtCount ( Dealt:List , Actor:Int ) , 64 )"
+  replace = "dealtCount ( Dealt:List , Actor:Int ) , 63 )"
+
+[[mutation]]
+id = "sh013-numbering-restarts"
+expect = "kill"
+misunderstanding = "SH-013: each pool numbers its pairs from 0"
+  [[mutation.edit]]
+  rule = "post-pool"
+  find = "mkPairs ( Actor:Int , dealtCount ( Dealt:List , Actor:Int ) , 64 )"
+  replace = "mkPairs ( Actor:Int , 0 , 64 )"
+
+[[mutation]]
+id = "sh013-pool-prepended"
+expect = "kill"
+misunderstanding = "SH-013: a new pool goes before the dealt pairs"
+  [[mutation.edit]]
+  rule = "post-pool"
+  find = "Dealt:List => Dealt:List mkPairs"
+  replace = "Dealt:List => mkPairs"
+  [[mutation.edit]]
+  rule = "post-pool"
+  find = "Actor:Int ) , 64 ) </dealt>"
+  replace = "Actor:Int ) , 64 ) Dealt:List </dealt>"
+
+[[mutation]]
+id = "sh013-key-appended"
+expect = "kill"
+misunderstanding = "SH-013: a used pool key goes last in the key list"
+  [[mutation.edit]]
+  rule = "post-pool"
+  find = "Keys:List => ListItem(tr ( Actor:Int , Root:Int , Key:Int )) Keys:List"
+  replace = "Keys:List => Keys:List ListItem(tr ( Actor:Int , Root:Int , Key:Int ))"
+
+[[mutation]]
+id = "sh013-refused-codes-first"
+expect = "kill"
+misunderstanding = "SH-013 (ledger 2): a refused pool reports only SH-013"
+  [[mutation.edit]]
+  rule = "post-pool-refused"
+  find = "ListItem(oRefused ( poolRefusals ( Keys:List , Actor:Int , Root:Int , Key:Int ) ))"
+  replace = "ListItem(oRefused ( ListItem(rSH013) ))"
+
+[[mutation]]
+id = "sh013-mkpairs-extra"
+expect = "kill"
+misunderstanding = "SH-013: a pool carries one pair more than N_pool"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mk_pairs_1"
+  find = "=> .List"
+  replace = "=> ListItem(pr ( 0 , 0 ))"
+
+[[mutation]]
+id = "sh013-mkpairs-same-index"
+expect = "kill"
+misunderstanding = "SH-013: every pair of a pool has the same index"
+  [[mutation.edit]]
+  rule = "split_shard_holders--mk_pairs_2"
+  find = "mkPairs ( A:Int , Base:Int +Int 1 , N:Int -Int 1 )"
+  replace = "mkPairs ( A:Int , Base:Int , N:Int -Int 1 )"
+
+[[mutation]]
+id = "sh013-count-all-actors"
+expect = "kill"
+misunderstanding = "SH-013: the pair numbering counts every actor's dealt pairs"
+  [[mutation.edit]]
+  rule = "split_shard_holders--dealt_count_2_2"
+  find = "=> dealtCount ( Rest:List , A:Int )"
+  replace = "=> 1 +Int dealtCount ( Rest:List , A:Int )"
+
+[[mutation]]
+id = "sh013-count-own-skipped"
+expect = "kill"
+misunderstanding = "SH-013: the actor's own dealt pairs are not counted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--dealt_count_2_1"
+  find = "=> 1 +Int dealtCount ( Rest:List , A:Int )"
+  replace = "=> dealtCount ( Rest:List , A:Int )"
+
+[[mutation]]
+id = "sh013-count-base-one"
+expect = "kill"
+misunderstanding = "SH-013: the first pair of the first pool has index 1"
+  [[mutation.edit]]
+  rule = "split_shard_holders--dealt_count_1"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "sh014-refill-at-nh"
+expect = "kill"
+misunderstanding = "SH-014: the actor refills when it holds N_h unused pairs or fewer"
+  [[mutation.edit]]
+  rule = "split_shard_holders--needs_refill_1"
+  find = "<Int NH:Int"
+  replace = "<=Int NH:Int"
+
+[[mutation]]
+id = "sh014-refill-before-step"
+expect = "kill"
+misunderstanding = "SH-014 (ledger 9): the refill flag is computed before the contribution marks its pairs used"
+  [[mutation.edit]]
+  rule = "contribute"
+  find = "refillAfter ( Params:Params , Dealt:List , usedAfter ( Used:List , C:Contrib ) , C:Contrib )"
+  replace = "refillAfter ( Params:Params , Dealt:List , Used:List , C:Contrib )"
+
+[[mutation]]
+id = "sh014-refill-counts-used"
+expect = "kill"
+misunderstanding = "SH-014: used pairs still count toward N_h"
+  [[mutation.edit]]
+  rule = "split_shard_holders--unused_count_2_2"
+  find = "=> unusedCount ( Rest:List , Used:List , A:Int )"
+  replace = "=> #if Xa:Int ==Int A:Int #then 1 +Int unusedCount ( Rest:List , Used:List , A:Int ) #else unusedCount ( Rest:List , Used:List , A:Int ) #fi"
+
+[[mutation]]
+id = "sh014-refill-unused-skipped"
+expect = "kill"
+misunderstanding = "SH-014: the actor's unused pairs are not counted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--unused_count_2_1"
+  find = "=> 1 +Int unusedCount ( Rest:List , Used:List , A:Int )"
+  replace = "=> unusedCount ( Rest:List , Used:List , A:Int )"
+
+[[mutation]]
+id = "sh014-refill-base-one"
+expect = "kill"
+misunderstanding = "SH-014: the unused count starts at one"
+  [[mutation.edit]]
+  rule = "split_shard_holders--unused_count_1"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "sh014-refill-other-actor"
+expect = "kill"
+misunderstanding = "SH-014: the refill flag is computed for the initiator, not the contributing actor"
+  [[mutation.edit]]
+  rule = "split_shard_holders--refill_after_1"
+  find = "contrib ( Actor:Int , _ , _ , _ ,"
+  replace = "contrib ( _ , _ , _ , Actor:Int ,"

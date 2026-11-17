@@ -1,0 +1,16 @@
+# SL-006, SL-007, SL-016: the earliest in-force namer under the root takes precedence.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealE = { pool = 1, leaf_set = 5, root = "Own", kcount = 2 } },
+  { DealE = { pool = 2, leaf_set = 6, root = "Gr", kcount = 1 } },
+  { OpenE = { eid = 1, pos = 10, names = [{ Ek = { pool = 1, idx = 1 } }] } },
+  { OpenE = { eid = 2, pos = 20, names = [{ Ek = { pool = 1, idx = 1 } }, { Ek = { pool = 1, idx = 2 } }] } },
+  { InForce = { eid = 3, root = "Own" } },
+  { InForce = { eid = 2, root = "Gr" } },
+  { InForce = { eid = 2, root = "Own" } },
+  { InForce = { eid = 1, root = "Own" } },
+  { OpenE = { eid = 4, pos = 30, names = [{ Ek = { pool = 1, idx = 2 } }, { Ek = { pool = 2, idx = 1 } }] } },
+  { OpenE = { eid = 3, pos = 40, names = [{ Ek = { pool = 1, idx = 1 } }, { Ek = { pool = 1, idx = 2 } }] } },
+  { InForce = { eid = 4, root = "Gr" } },
+]

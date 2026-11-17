@@ -1,0 +1,68 @@
+design:tee_p2:init:0x14:10000:80	ok	2026-11-15T01:50:01-07:00
+c11:tee_p2:initArmed:0x14:10000:80	VIOLATION Use --seed=0x4c7363	2026-11-15T01:54:21-07:00
+c11:tee_p1:initArmed:0x14:10000:80	VIOLATION Use --seed=0x1dbed	2026-11-15T01:54:49-07:00
+c11:nontee_p2:initArmed:0x14:10000:80	ok (finding not reached)	2026-11-15T01:58:34-07:00
+design:tee_p2:init:0x2a3:10000:80	ok	2026-11-15T02:01:02-07:00
+design:tee_p2:initArmed:0x14:10000:80	ok	2026-11-15T02:02:05-07:00
+c11:nontee_p1:initArmed:0x14:10000:80	VIOLATION Use --seed=0xf180ad	2026-11-15T02:02:56-07:00
+mutant:m_ecdsa_prec_at_open:inv_SL007_C13_ecdsaPrecOnlyInForce	KILLED Use --seed=0x319d	2026-11-15T02:03:11-07:00
+mutant:m_committee_burn_reserved_only:inv_SL010_committeeBurnAtPrecEnd	KILLED Use --seed=0x141d	2026-11-15T02:03:25-07:00
+mutant:m_ecdsa_burn_by_namer:inv_SL011_SL028_ecdsaBurnOnlyByReserver	KILLED Use --seed=0x319d	2026-11-15T02:03:41-07:00
+mutant:m_d058_b:inv_RQ068_C11_reEnded	KILLED Use --seed=0x14	2026-11-15T02:03:55-07:00
+mutant:m_d058_b_nontee:inv_RQ068_C11_reEnded	KILLED Use --seed=0x7090	2026-11-15T02:04:15-07:00
+mutant:m_replace_held:inv_RQ054_C11_heldLeafNeverReplaced	survived-random	2026-11-15T02:05:00-07:00
+mutant:m_restart_void_unspent:inv_RQ052_RQ068_C11_restartEndNeverVoid	KILLED Use --seed=0x1c27	2026-11-15T02:05:13-07:00
+mutant:m_settle_per_request:inv_CP005_batchedWrites	KILLED Use --seed=0x14	2026-11-15T02:05:25-07:00
+mutant:m_root_omit:inv_CP013_AU020_settledByRoot	KILLED Use --seed=0x141d	2026-11-15T02:05:36-07:00
+mutant:m_no_jump:inv_CP007_CP008_CP009_landedChain	KILLED Use --seed=0x141d	2026-11-15T02:05:50-07:00
+mutant:m_cross_epoch:inv_RQ042_C13_voidNeedsHonestPost	KILLED Use --seed=0x14	2026-11-15T02:06:08-07:00
+mutant:m_ignore_revoke:inv_RQ059_C7_noReleaseAfterRevoke	KILLED Use --seed=0x24212	2026-11-15T02:06:29-07:00
+mutant:m_any_variant:inv_RQ058_C9_oneVariantPerGeneration	KILLED Use --seed=0x93f18	2026-11-15T02:06:49-07:00
+traces:tee_p2:init	50 traces	2026-11-15T02:07:19-07:00
+design:tee_p2:initArmed:0x2a3:10000:80	ok	2026-11-15T02:07:35-07:00
+traces:tee_p2:initArmed	50 traces	2026-11-15T02:07:47-07:00
+traces:tee_p2:refusals	20 traces	2026-11-15T02:08:07-07:00
+design:tee_p1:init:0x14:10000:80	ok	2026-11-15T02:08:25-07:00
+traces:tee_p1:init	50 traces	2026-11-15T02:08:40-07:00
+traces:tee_p1:initArmed	50 traces	2026-11-15T02:09:20-07:00
+traces:tee_p1:refusals	20 traces	2026-11-15T02:09:42-07:00
+traces:nontee_p2:init	50 traces	2026-11-15T02:10:19-07:00
+traces:nontee_p2:initArmed	50 traces	2026-11-15T02:10:46-07:00
+traces:nontee_p2:refusals	20 traces	2026-11-15T02:11:03-07:00
+traces:nontee_p1:init	50 traces	2026-11-15T02:11:41-07:00
+traces:nontee_p1:initArmed	50 traces	2026-11-15T02:12:02-07:00
+traces:nontee_p1:refusals	20 traces	2026-11-15T02:12:16-07:00
+design:tee_p1:init:0x2a3:10000:80	ok	2026-11-15T02:13:39-07:00
+design:tee_p1:initArmed:0x14:10000:80	ok	2026-11-15T02:14:26-07:00
+design:nontee_p2:init:0x14:10000:80	ok	2026-11-15T02:20:27-07:00
+design:nontee_p2:init:0x2a3:10000:80	ok	2026-11-15T02:20:53-07:00
+design:nontee_p2:initArmed:0x14:10000:80	ok	2026-11-15T02:24:41-07:00
+design:nontee_p2:initArmed:0x2a3:10000:80	ok	2026-11-15T02:25:03-07:00
+design:nontee_p1:init:0x2a3:10000:80	ok	2026-11-15T02:35:55-07:00
+design:nontee_p1:init:0x14:10000:80	ok	2026-11-15T02:36:00-07:00
+design:nontee_p1:initArmed:0x2a3:10000:80	ok	2026-11-15T02:43:34-07:00
+design:nontee_p1:initArmed:0x14:10000:80	ok	2026-11-15T02:45:36-07:00
+design:tee_p1:initArmed:0x2a3:10000:80	ok	2026-11-15T03:00:42-07:00
+typecheck:splitspec.qnt	ok	2026-11-15T03:05:13-07:00
+typecheck:splitspec_test.qnt	ok	2026-11-15T03:05:28-07:00
+c20:tee_p1:initArmed:0x2a3:10000:80	VIOLATION Use --seed=0x4887c5	2026-11-15T03:07:16-07:00
+c20:nontee_p2:initArmed:0x2a3:10000:80	VIOLATION Use --seed=0x476170	2026-11-15T03:08:18-07:00
+testtraces:test_tee_p2	26 traces	2026-11-15T03:08:38-07:00
+testtraces:test_nontee_p2	2 traces	2026-11-15T03:08:53-07:00
+test:test_tee_p2	ok 26/26	2026-11-15T03:09:15-07:00
+testtraces:test_tee_p1	2 traces	2026-11-15T03:09:16-07:00
+test:test_nontee_p2	ok 2/2	2026-11-15T03:09:40-07:00
+test:test_m_restart_void_unspent	ok 1/1	2026-11-15T03:10:03-07:00
+test:test_m_d058_b_nontee	ok 1/1	2026-11-15T03:10:20-07:00
+test:test_m_d058_b	ok 1/1	2026-11-15T03:10:37-07:00
+test:test_m_replace_held	ok 1/1	2026-11-15T03:10:48-07:00
+test:test_m_ecdsa_prec_at_open	ok 1/1	2026-11-15T03:11:06-07:00
+test:test_m_committee_burn_reserved_only	ok 1/1	2026-11-15T03:11:26-07:00
+test:test_m_ecdsa_burn_by_namer	ok 1/1	2026-11-15T03:11:49-07:00
+test:test_m_settle_per_request	ok 1/1	2026-11-15T03:12:07-07:00
+test:test_m_root_omit	ok 1/1	2026-11-15T03:12:26-07:00
+test:test_m_no_jump	ok 1/1	2026-11-15T03:12:39-07:00
+test:test_m_cross_epoch	ok 1/1	2026-11-15T03:13:00-07:00
+test:test_m_ignore_revoke	ok 1/1	2026-11-15T03:13:12-07:00
+test:test_m_any_variant	ok 1/1	2026-11-15T03:13:26-07:00
+test:test_tee_p1	ok 2/2	2026-11-15T03:13:54-07:00

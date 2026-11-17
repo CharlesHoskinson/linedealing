@@ -1,0 +1,96 @@
+{
+  "capability": "split-shard-holders",
+  "types": {
+    "NN": {"tuple": "P", "items": ["int", "int"], "names": ["a", "b"]},
+    "NNN": {"tuple": "T3", "items": ["int", "int", "int"], "names": ["a", "b", "c"]},
+    "Ctx": {"tuple": "C5", "items": ["int", "int", "int", "int", "int"], "names": ["a", "b", "c", "d", "e"]},
+    "Mode": {"enum": {"TEE": "Tee", "NON_TEE": "NonTee"}},
+    "Profile": {"enum": {"P0": "P0", "P1": "P1", "P2": "P2"}},
+    "Gate": {"variant": {"tag": "gate", "cases": {
+      "LEAF": ["Leaf", [["mid", "mid", "int"], ["actor", "actor", "int"]]],
+      "AND": ["And", [["mid", "mid", "int"], ["children", "children", {"list": {"ref": "Gate"}}]]],
+      "GROUP": ["Group", [["mid", "mid", "int"], ["k", "kk", "int"], ["children", "children", {"list": {"ref": "Gate"}}]]],
+      "OR": ["Or", [["mid", "mid", "int"], ["primary", "primary", {"ref": "Gate"}], ["escrow", "escrow", {"ref": "Gate"}]]]}}},
+    "Q": {"record": "Qv", "fields": [["num", "num", "int"], ["den", "den", "int"]]},
+    "ActorProof": {"record": "Ap", "fields": [
+      ["slot", "slot", "int"], ["x_a", "x_a", "int"], ["ctx", "ctx", {"ref": "Ctx"}], ["valid", "valid", "bool"],
+      ["network_created", "network_created", "bool"], ["pop_U", "pop_u", "bool"], ["delta", "delta", "bool"]]},
+    "BirthCheck": {"record": "Bc", "fields": [
+      ["x_f", "x_f", "int"], ["charter_id", "charter_id", "int"], ["chain_id", "chain_id", "int"],
+      ["actors", "actors", {"list": {"ref": "ActorProof"}}], ["dealer_ok", "dealer_ok", "bool"],
+      ["x_recomputed", "x_recomputed", "bool"], ["encoding_ok", "encoding_ok", "bool"],
+      ["opening_ok", "opening_ok", "bool"]]},
+    "RecordReq": {"record": "Rr", "fields": [
+      ["cm_addr", "cm_addr", "int"], ["profile", "profile", {"ref": "Profile"}], ["charter", "charter", "int"],
+      ["signers", "signers", {"list": "int"}], ["owner_reg", "owner_reg", "bool"],
+      ["escrow_acks", "escrow_acks", "int"], ["escrow_quorum", "escrow_quorum", "int"],
+      ["guardian_acks", "guardian_acks", "int"], ["q_g", "q_g", "int"],
+      ["network_created", "network_created", "bool"]]},
+    "AckCheck": {"record": "Ac", "fields": [
+      ["x_recomputed", "x_recomputed", "bool"], ["opening_ok", "opening_ok", "bool"], ["pop_u", "pop_u", "bool"]]},
+    "SlotRef": {"variant": {"tag": "kind", "cases": {
+      "committee": ["Committee", []],
+      "ecdsa": ["Ecdsa", [["id", "id", "int"], ["leaf_set", "leaf_set", {"list": "int"}], ["under_G", "under_g", "bool"]]]}}},
+    "Contrib": {"record": "Cr", "fields": [
+      ["actor", "actor", "int"], ["charter", "charter", "int"], ["S", "s_set", {"list": "int"}],
+      ["initiator", "initiator", "int"], ["weight", "weight", {"ref": "Q"}], ["pairs", "pairs", {"list": "int"}],
+      ["slot", "slot", {"ref": "SlotRef"}], ["exp_c", "exp_c", "int"], ["height", "height", "int"],
+      ["policy_ok", "policy_ok", "bool"], ["recompute_ok", "recompute_ok", "bool"],
+      ["seizure_settled", "seizure_settled", "bool"]]},
+    "Params": {"record": "Pm", "fields": [
+      ["n", "n", "int"], ["f", "f", "int"], ["mode", "mode", {"ref": "Mode"}], ["N_h", "n_h", "int"]]},
+    "Rec": {"record": "Rv", "fields": [
+      ["cm_addr", "cm_addr", "int"], ["profile", "profile", {"ref": "Profile"}], ["charter", "charter", "int"],
+      ["sigs", "sigs", {"list": "int"}], ["network_created", "network_created", "bool"], ["acked", "acked", "bool"]]},
+    "Charter": {"record": "Ch", "fields": [["id", "id", "int"], ["gamma", "gamma", {"ref": "Gate"}]]},
+    "CheckedSlot": {"record": "Cs", "fields": [["slot", "slot", "int"], ["check_ok", "check_ok", "bool"]]},
+    "Refusal": {"enum": {
+      "SH-001": "Sh001", "SH-002": "Sh002", "SH-013": "Sh013", "SH-015": "Sh015", "SH-018": "Sh018",
+      "SH-019": "Sh019", "SH-021": "Sh021", "SH-026": "Sh026", "SH-035": "Sh035", "SH-036": "Sh036",
+      "ack_refused": "AckRefused", "bad_request": "BadRequest",
+      "birth_refused": "BirthRefused", "no-rule": "NoRule", "no_ack_certificate": "NoAckCertificate",
+      "no_birth_certificate": "NoBirthCertificate",
+      "no_escrow_certificate": "NoEscrowCertificate", "outside-capability": "OutsideCapability",
+      "policy_refused": "PolicyRefused"}},
+    "Op": {"variant": {"tag": "op", "cases": {
+      "fix_charter": ["FixCharter", [["id", "id", "int"], ["gamma", "gamma", {"ref": "Gate"}]]],
+      "birth_check": ["BirthCheckOp", [["node", "node", "int"], ["cm_addr", "cm_addr", "int"],
+                                       ["birth", "birth", {"ref": "BirthCheck"}]]],
+      "submit_record": ["SubmitRecord", [["record", "record", {"ref": "RecordReq"}]]],
+      "post_pool": ["PostPool", [["actor", "actor", "int"], ["root", "root", "int"], ["key", "key", "int"]]],
+      "contribute": ["Contribute", [["request", "request", {"ref": "Contrib"}]]],
+      "session": ["Session", [["slots", "slots", {"list": {"ref": "CheckedSlot"}}]]],
+      "put_shares": ["PutShares", [["slots", "slots", {"list": "int"}]]],
+      "holder_open": ["HolderOpen", [["cm_addr", "cm_addr", "int"], ["x_match", "x_match", "bool"]]],
+      "ack_check": ["AckCheckOp", [["node", "node", "int"], ["cm_addr", "cm_addr", "int"],
+                                   ["ack", "ack", {"ref": "AckCheck"}]]],
+      "acknowledge": ["Acknowledge", [["cm_addr", "cm_addr", "int"], ["signers", "signers", {"list": "int"}]]],
+      "pay": ["Pay", [["cm_addr", "cm_addr", "int"]]]}}},
+    "Obs": {"keyed": {
+      "ok": ["Ok", null],
+      "birth_ok": ["BirthOk", null],
+      "refused": ["Refused", [[null, "codes", {"list": {"ref": "Refusal"}}]]],
+      "contributed": ["Contributed", [["refill", "refill", "bool"]]],
+      "session": ["SessionEnd", [["kept", "kept", {"list": "int"}], ["complained", "complained", {"list": "int"}]]],
+      "puts": ["Puts", [[null, "entries", {"list": "int"}]]],
+      "ack_envelope": ["AckEnvelope", null],
+      "ack_ok": ["AckOk", null],
+      "paid": ["Paid", null]}}
+  },
+  "inputs": [
+    ["params", {"ref": "Params"}],
+    ["ops", {"list": {"ref": "Op"}}]
+  ],
+  "state": [
+    ["params", "params", {"ref": "Params"}],
+    ["charters", "charters", {"list": {"ref": "Charter"}}],
+    ["birth_ok", "births", {"list": {"ref": "NN"}}],
+    ["records", "records", {"list": {"ref": "Rec"}}],
+    ["dealt", "dealt", {"list": {"ref": "NN"}}],
+    ["used", "used", {"list": {"ref": "NN"}}],
+    ["pool_keys", "keys", {"list": {"ref": "NNN"}}],
+    ["ecdsa_used", "slotsused", {"list": {"ref": "NN"}}],
+    ["ack_ok", "acks", {"list": {"ref": "NN"}}]
+  ],
+  "obs": {"ref": "Obs"}
+}

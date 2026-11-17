@@ -1,0 +1,20 @@
+name = "passport_shard_oracle"
+defaultTargets = ["PassportShard", "oracle"]
+
+# Every module under PassportShard/ (Spec, Theorems, Tests, Audit) is built by
+# default, so `lake build --wfail` sees a `sorry` in any of them.
+[leanOptions]
+autoImplicit = false
+
+[[require]]
+name = "split_codec"
+path = "../../lean-split/codec"
+
+[[lean_lib]]
+name = "PassportShard"
+globs = ["PassportShard.+"]
+
+[[lean_exe]]
+name = "oracle"
+root = "Main"
+supportInterpreter = false

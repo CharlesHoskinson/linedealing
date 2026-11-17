@@ -2,7 +2,7 @@
 
 You are an independent reviewer of a cryptographic proof document. Do not edit any file except your report. Do not run git.
 
-Bundle (frozen copies; read from here): `design/proofs-review/bundle/`
+Bundle (frozen copies; read from here): `/home/hoskinson/Projects/mpcexperiments/design/proofs-review/bundle/`
 - `PROOFS.md`: the document under review.
 - `SCHEME.md`: the protocol it proves things about.
 - `PROOF-CHECK.md`: an earlier check that listed gaps the proofs try to close.
@@ -17,6 +17,6 @@ Are the theorems in PROOFS.md correct as stated, and do the proofs establish the
 - If you cannot judge a part, say "insufficient evidence" for that part, not approval.
 
 ## Output
-Write the report to design/proofs-review/review-cand-c.md with this shape:
+Write the report to /home/hoskinson/Projects/mpcexperiments/design/proofs-review/review-cand-c.md with this shape:
 VERDICT: approved | changes_requested | insufficient_evidence
 then a numbered list of findings, each: severity (BLOCKING / NON-BLOCKING), location, claim, reason, suggested fix.

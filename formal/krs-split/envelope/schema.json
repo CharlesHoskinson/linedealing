@@ -1,0 +1,64 @@
+{
+  "capability": "split-envelope",
+  "types": {
+    "NN": {"tuple": "P", "items": ["int", "int"], "names": ["a", "b"]},
+    "Mode": {"enum": {"TEE": "Tee", "NON_TEE": "NonTee"}},
+    "Suite": {"enum": {"BIP340": "Bip340", "ED25519": "Ed25519", "ECDSA": "Ecdsa"}},
+    "RType": {"enum": {"SPEND": "Spend", "EXIT": "Exit", "SEIZURE": "Seizure", "BIRTH": "Birth",
+                       "REFILL": "Refill", "P0": "P0", "CONTRIB": "Contrib"}},
+    "Params": {"record": "Params", "fields": [["mode", "mode", {"ref": "Mode"}], ["delta_c", "delta_c", "int"]]},
+    "PubPart": {"record": "Pub", "fields": [
+      ["version", "version", "int"], ["epoch", "epoch", "int"], ["keylist_hash", "keylist_hash", "int"],
+      ["exp", "exp", "int"], ["size_class", "size_class", "int"], ["auth_ref", "auth_ref", "int"],
+      ["reserved", "reserved", "int"]]},
+    "Envelope": {"record": "Env", "fields": [
+      ["size", "size", "int"], ["pub", "pubpart", {"ref": "PubPart"}], ["hd", "hd", "int"],
+      ["dd", "dd", "int"], ["proof_ctx", "proof_ctx", {"ref": "NN"}], ["proof_valid", "proof_valid", "bool"],
+      ["type", "rtype", {"ref": "RType"}]]},
+    "Layout": {"record": "Lay", "fields": [
+      ["body_0", "body_0", "int"], ["bodies", "bodies", {"list": "int"}], ["capsules", "capsules", {"list": "int"}]]},
+    "Slot": {"record": "SlotOf", "fields": [["g", "g", "int"], ["j", "j", "int"], ["l", "l", "int"]]},
+    "Header": {"record": "Hdr", "fields": [
+      ["suite", "suite", {"ref": "Suite"}], ["K", "kk", "int"], ["L", "ll", "int"], ["tickets", "tickets", "int"],
+      ["slots", "slots", {"list": {"ref": "Slot"}}], ["R_A", "r_a", {"list": "int"}],
+      ["R_ecdsa", "r_ecdsa", {"list": "int"}], ["pairs", "pairs", {"list": "int"}],
+      ["layout", "layout", {"ref": "Layout"}], ["n_capsules", "n_capsules", "int"],
+      ["region_outside", "region_outside", "bool"], ["length_mismatch", "length_mismatch", "bool"],
+      ["has_ic", "has_ic", "bool"], ["has_r_tkc", "has_r_tkc", "bool"], ["tkc", "tkc", "int"],
+      ["auth_tkc", "auth_tkc", "int"], ["recompute_mismatch", "recompute_mismatch", "bool"]]},
+    "Partial": {"record": "Part", "fields": [["sender", "sender", "int"], ["proof_ok", "proof_ok", "bool"]]},
+    "Refusal": {"enum": {"bad_epoch": "BadEpoch", "bad_proof": "BadProof", "bad_shape": "BadShape",
+                         "dd_reused": "DdReused", "exp_c_not_below_exp": "ExpCNotBelowExp", "expired": "Expired", "no-rule": "NoRule",
+                         "outside-capability": "OutsideCapability"}},
+    "Fault": {"enum": {"EN-009": "En009", "EN-010": "En010", "EN-011": "En011", "EN-012": "En012", "EN-013": "En013"}},
+    "Combine": {"enum": {"opened": "Opened", "need_more": "NeedMore", "dealer_fault": "DealerFault"}},
+    "Op": {"variant": {"tag": "op", "cases": {
+      "submit": ["Submit", [["envelope", "e", {"ref": "Envelope"}]]],
+      "tick": ["Tick", [["height", "h", "int"]]],
+      "set_epochs": ["SetEpochs", [["epochs", "es", {"list": {"ref": "NN"}}]]],
+      "order_check": ["OrderCheck", [["exp", "exp", "int"], ["height", "b", "int"]]],
+      "header": ["HeaderOp", [["header", "hdr", {"ref": "Header"}]]],
+      "combine": ["CombineOp", [["t", "t", "int"], ["dealing_ok", "dealing_ok", "bool"],
+                                ["partials", "partials", {"list": {"ref": "Partial"}}]]]}}},
+    "Obs": {"keyed": {
+      "accepted": ["Accepted", [[null, "eid", {"ref": "NN"}]]],
+      "refused": ["Refused", [[null, "codes", {"list": {"ref": "Refusal"}}]]],
+      "ok": ["Ok", null],
+      "faults": ["Faults", [[null, "fs", {"list": {"ref": "Fault"}}]]],
+      "combined": ["Combined", [[null, "c", {"ref": "Combine"}]]]}}
+  },
+  "inputs": [
+    ["params", {"ref": "Params"}],
+    ["height", "int"],
+    ["epochs", {"list": {"ref": "NN"}}],
+    ["ops", {"list": {"ref": "Op"}}]
+  ],
+  "state": [
+    ["params", "params", {"ref": "Params"}],
+    ["height", "height", "int"],
+    ["epochs", "epochs", {"list": {"ref": "NN"}}],
+    ["seen", "seen", {"list": {"ref": "NN"}}],
+    ["accepted", "accepted", {"list": {"ref": "NN"}}]
+  ],
+  "obs": {"ref": "Obs"}
+}

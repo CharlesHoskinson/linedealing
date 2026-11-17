@@ -1,0 +1,37 @@
+     Running tests/e1_initiator_leaf_counterexample.rs (target/release/deps/e1_initiator_leaf_counterexample-a5902a67e7ca101e)
+
+running 4 tests
+test e1::e1_bip340_one_binding_two_weights_counterexample ... ok
+test e1::e1_bip340_initiator_leaf_separates_the_binding_regression ... FAILED
+test e1::e1_ed25519_one_binding_two_weights_counterexample ... ok
+test e1::e1_ed25519_initiator_leaf_separates_the_binding_regression ... FAILED
+
+failures:
+
+---- e1::e1_bip340_initiator_leaf_separates_the_binding_regression stdout ----
+
+thread 'e1::e1_bip340_initiator_leaf_separates_the_binding_regression' (1728862) panicked at tests/../../tests/quint-regressions/splitline/e1_initiator_leaf_counterexample.rs:176:5:
+assertion `left != right` failed: one binding factor for member 1 under two weights
+  left: Scalar(Uint(0x053CFFC9C6A4621065399FC2A4DE26D86ED53E77D46FF77CDF4051D50C504F6D))
+ right: Scalar(Uint(0x053CFFC9C6A4621065399FC2A4DE26D86ED53E77D46FF77CDF4051D50C504F6D))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- e1::e1_ed25519_initiator_leaf_separates_the_binding_regression stdout ----
+
+thread 'e1::e1_ed25519_initiator_leaf_separates_the_binding_regression' (1728864) panicked at tests/../../tests/quint-regressions/splitline/e1_initiator_leaf_counterexample.rs:176:5:
+assertion `left != right` failed: one binding factor for member 1 under two weights
+  left: Scalar{
+	bytes: [242, 132, 202, 53, 241, 215, 211, 145, 65, 162, 148, 111, 173, 44, 11, 110, 224, 15, 154, 161, 158, 127, 35, 224, 216, 156, 38, 186, 128, 52, 109, 12],
+}
+ right: Scalar{
+	bytes: [242, 132, 202, 53, 241, 215, 211, 145, 65, 162, 148, 111, 173, 44, 11, 110, 224, 15, 154, 161, 158, 127, 35, 224, 216, 156, 38, 186, 128, 52, 109, 12],
+}
+
+
+failures:
+    e1::e1_bip340_initiator_leaf_separates_the_binding_regression
+    e1::e1_ed25519_initiator_leaf_separates_the_binding_regression
+
+test result: FAILED. 2 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+error: test failed, to rerun pass `--test e1_initiator_leaf_counterexample`

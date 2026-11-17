@@ -1,0 +1,15 @@
+# RQ-020 (ledger 8): a frame ordered at 150 above exp_c = 100 while the target is ORDERED is
+# refused with late_contribution and never held, so COLLECTING attaches nothing.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { Tick = { h = 150 } },
+  { FrameOp = { eid = 1, fr = { Fr = { position = 0, token_ok = true, lengths_ok = true, height = 0, cid = 77 } } } },
+  { Open = { eid = 1, kk = 2, ll = 1, collecting = true, npos = 2, rates = [10, 20] } },
+  { VoteOpened = { eid = 1, node = 0, hash = 7 } },
+  { VoteOpened = { eid = 1, node = 1, hash = 7 } },
+  { VoteOpened = { eid = 1, node = 2, hash = 7 } },
+]

@@ -1,4 +1,4 @@
-//! Timing harness for a 9-node committee (open ECDSA, one slot).
+//! Timing harness for a 9-node committee (open ECDSA, one slot), thread CPU time.
 //! Run: cargo test --offline --release --test bench9 -- --ignored --nocapture
 mod common;
 use common::*;
@@ -7,7 +7,8 @@ use k256::ecdsa::{
     VerifyingKey,
 };
 use line_dealing::message::*;
-use std::time::Instant;
+#[path = "../benches/support/cputime.rs"]
+mod cputime;
 
 fn keys_n(n: u16) -> Vec<k256::ProjectivePoint> {
     (1..=n).map(|i| G * node_secret(i)).collect()
@@ -50,11 +51,11 @@ impl AcceptanceContext for BenchCtx {
 
 fn time<T>(label: &str, iters: u32, mut f: impl FnMut() -> T) -> f64 {
     let _ = f();
-    let start = Instant::now();
+    let start = cputime::thread_ns();
     for _ in 0..iters {
         std::hint::black_box(f());
     }
-    let us = start.elapsed().as_secs_f64() * 1e6 / iters as f64;
+    let us = cputime::ms_since(start) * 1e3 / iters as f64;
     println!("{label:<44} {us:>10.1} us");
     us
 }

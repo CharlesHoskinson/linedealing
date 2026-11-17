@@ -1,0 +1,408 @@
+# Misreadings of the helper functions that the header checks (EN-009 to EN-013), the
+# current-epoch list (EN-005) and the PRF combination (EN-014, RQ-015) read. Every
+# helper equation is a rule of the definition, so each one is a mutation target.
+
+[[mutation]]
+id = "en009-any-nonzero-empty"
+expect = "kill"
+misunderstanding = "EN-009: an unused region with no entries left counts as a nonzero entry"
+  [[mutation.edit]]
+  rule = "split_envelope--any_nonzero_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "en009-first-unused-only"
+expect = "kill"
+misunderstanding = "EN-009: only the first unused body or capsule entry must be zero"
+  [[mutation.edit]]
+  rule = "split_envelope--any_nonzero_2_1"
+  find = "=> anyNonzero ( Rest:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "en009-nonzero-needs-two"
+expect = "kill"
+misunderstanding = "EN-009: an unused region is bad only when two of its entries are nonzero"
+  [[mutation.edit]]
+  rule = "split_envelope--any_nonzero_2_2"
+  find = "=> true"
+  replace = "=> anyNonzero ( Rest:List )"
+
+[[mutation]]
+id = "en016-schnorr-k-bodies"
+expect = "kill"
+misunderstanding = "EN-016, EN-009: a Schnorr header holds K variant bodies, as an ECDSA header does"
+  [[mutation.edit]]
+  rule = "split_envelope--body_count_1"
+  find = "=> sumMin ( Kk:Int , gOf ( Kk:Int ) )"
+  replace = "=> Kk:Int"
+
+[[mutation]]
+id = "en016-ecdsa-generation-bodies"
+expect = "kill"
+misunderstanding = "EN-016, EN-009: an ECDSA header holds Σ min(v, G) variant bodies, as a Schnorr header does"
+  [[mutation.edit]]
+  rule = "split_envelope--body_count_2"
+  find = "=> Kk:Int"
+  replace = "=> sumMin ( Kk:Int , gOf ( Kk:Int ) )"
+
+[[mutation]]
+id = "en009-drop-past-end"
+expect = "kill"
+misunderstanding = "EN-009: a region whose entries are all used still has one nonzero entry past its end"
+  [[mutation.edit]]
+  rule = "split_envelope--drop_n_1"
+  find = "=> .List"
+  replace = "=> ListItem(1)"
+
+[[mutation]]
+id = "en009-skip-one-used"
+expect = "kill"
+misunderstanding = "EN-009: only the first entry of a region is a used one; every later entry must be zero"
+  [[mutation.edit]]
+  rule = "split_envelope--drop_n_2"
+  find = "=> dropN ( N:Int -Int 1 , Rest:List )"
+  replace = "=> Rest:List"
+
+[[mutation]]
+id = "en009-skip-one-unused"
+expect = "kill"
+misunderstanding = "EN-009: the first unused entry of a region is a pad and need not be zero"
+  [[mutation.edit]]
+  rule = "split_envelope--drop_n_3"
+  find = "=> ListItem(X:Int) Rest:List"
+  replace = "=> Rest:List"
+
+[[mutation]]
+id = "en011-slot-extra-index"
+expect = "kill"
+misunderstanding = "EN-011: the committee slot indices compared for repeats include one more index than the slots name"
+  [[mutation.edit]]
+  rule = "split_envelope--ells_1"
+  find = "=> .List"
+  replace = "=> ListItem(11)"
+
+[[mutation]]
+id = "en011-first-slot-only"
+expect = "kill"
+misunderstanding = "EN-011: only the first committee slot's index is compared with the others"
+  [[mutation.edit]]
+  rule = "split_envelope--ells_2"
+  find = "=> ListItem(L:Int) ells ( Rest:List )"
+  replace = "=> ListItem(L:Int)"
+
+[[mutation]]
+id = "en009-fault-code"
+expect = "kill"
+misunderstanding = "EN-009, EN-010: a layout fault is reported as an EN-010 count fault"
+  [[mutation.edit]]
+  rule = "split_envelope--f009_1"
+  find = "=> ListItem(en009)"
+  replace = "=> ListItem(en010)"
+
+[[mutation]]
+id = "en009-always"
+expect = "kill"
+misunderstanding = "EN-009: the layout requirement is listed as failed on every header"
+  [[mutation.edit]]
+  rule = "split_envelope--f009_2"
+  find = "=> .List"
+  replace = "=> ListItem(en009)"
+
+[[mutation]]
+id = "en010-fault-code"
+expect = "kill"
+misunderstanding = "EN-010, EN-011: a count fault is reported as an EN-011 distinctness fault"
+  [[mutation.edit]]
+  rule = "split_envelope--f010_1"
+  find = "=> ListItem(en010)"
+  replace = "=> ListItem(en011)"
+
+[[mutation]]
+id = "en010-always"
+expect = "kill"
+misunderstanding = "EN-010: the count requirement is listed as failed on every header"
+  [[mutation.edit]]
+  rule = "split_envelope--f010_2"
+  find = "=> .List"
+  replace = "=> ListItem(en010)"
+
+[[mutation]]
+id = "en011-fault-code"
+expect = "kill"
+misunderstanding = "EN-011, EN-012: a repeated value is reported as an EN-012 commitment fault"
+  [[mutation.edit]]
+  rule = "split_envelope--f011_1"
+  find = "=> ListItem(en011)"
+  replace = "=> ListItem(en012)"
+
+[[mutation]]
+id = "en011-always"
+expect = "kill"
+misunderstanding = "EN-011: the distinctness requirement is listed as failed on every header"
+  [[mutation.edit]]
+  rule = "split_envelope--f011_2"
+  find = "=> .List"
+  replace = "=> ListItem(en011)"
+
+[[mutation]]
+id = "en012-fault-code"
+expect = "kill"
+misunderstanding = "EN-012, EN-013: a commitment fault is reported as an EN-013 recomputation fault"
+  [[mutation.edit]]
+  rule = "split_envelope--f012_1"
+  find = "=> ListItem(en012)"
+  replace = "=> ListItem(en013)"
+
+[[mutation]]
+id = "en012-always"
+expect = "kill"
+misunderstanding = "EN-012: the commitment requirement is listed as failed on every header"
+  [[mutation.edit]]
+  rule = "split_envelope--f012_2"
+  find = "=> .List"
+  replace = "=> ListItem(en012)"
+
+[[mutation]]
+id = "en013-fault-code"
+expect = "kill"
+misunderstanding = "EN-013, EN-012: a recomputation fault is reported as an EN-012 commitment fault"
+  [[mutation.edit]]
+  rule = "split_envelope--f013_1"
+  find = "=> ListItem(en013)"
+  replace = "=> ListItem(en012)"
+
+[[mutation]]
+id = "en013-always"
+expect = "kill"
+misunderstanding = "EN-013: the recomputation requirement is listed as failed on every header"
+  [[mutation.edit]]
+  rule = "split_envelope--f013_2"
+  find = "=> .List"
+  replace = "=> ListItem(en013)"
+
+[[mutation]]
+id = "en005-extra-epoch"
+expect = "kill"
+misunderstanding = "EN-005: the epochs compared for repeats include one more epoch than the list names"
+  [[mutation.edit]]
+  rule = "split_envelope--firsts_1"
+  find = "=> .List"
+  replace = "=> ListItem(5)"
+
+[[mutation]]
+id = "en005-epochs-not-compared"
+expect = "kill"
+misunderstanding = "EN-005: the epoch numbers of a new current-epoch list are not compared for repeats"
+  [[mutation.edit]]
+  rule = "split_envelope--firsts_2"
+  find = "=> ListItem(A:Int) firsts ( Rest:List )"
+  replace = "=> firsts ( Rest:List )"
+
+[[mutation]]
+id = "en010-empty-grid-fails"
+expect = "kill"
+misunderstanding = "EN-010: a grid with every row checked still fails at its end"
+  [[mutation.edit]]
+  rule = "split_envelope--grid_all_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "en010-last-generation-only"
+expect = "kill"
+misunderstanding = "EN-010: only the row of generation G must be covered by slots"
+  [[mutation.edit]]
+  rule = "split_envelope--grid_all_2"
+  find = "=> gridAll ( G:Int -Int 1 , L:Int , Slots:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "en010-row-gap-passes"
+expect = "kill"
+misunderstanding = "EN-010: a generation whose row misses a column still passes the grid check"
+  [[mutation.edit]]
+  rule = "split_envelope--grid_all_3"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "en010-empty-row-fails"
+expect = "kill"
+misunderstanding = "EN-010: a grid row with every column checked still fails at its end"
+  [[mutation.edit]]
+  rule = "split_envelope--grid_row_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "en010-last-column-only"
+expect = "kill"
+misunderstanding = "EN-010: only column j = L of each generation must be covered by a slot"
+  [[mutation.edit]]
+  rule = "split_envelope--grid_row_2"
+  find = "=> gridRow ( G:Int , J:Int -Int 1 , Slots:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "en010-column-gap-passes"
+expect = "kill"
+misunderstanding = "EN-010: a column of a generation that no slot names still passes its row"
+  [[mutation.edit]]
+  rule = "split_envelope--grid_row_3"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "en010-missing-cell-covered"
+expect = "kill"
+misunderstanding = "EN-010: a grid cell that no slot names counts as covered"
+  [[mutation.edit]]
+  rule = "split_envelope--has_cell_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "en011-empty-list-repeats"
+expect = "kill"
+misunderstanding = "EN-011: a list is free of repeats only when it is not empty at its end"
+  [[mutation.edit]]
+  rule = "split_envelope--nodup_b_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "en011-first-entry-only"
+expect = "kill"
+misunderstanding = "EN-011, EN-005: only the first entry of a list is compared with the later ones"
+  [[mutation.edit]]
+  rule = "split_envelope--nodup_b_2"
+  find = "=> (notBool X:KItem in Rest:List) andThenBool nodupB ( Rest:List )"
+  replace = "=> notBool X:KItem in Rest:List"
+
+[[mutation]]
+id = "en014-tag-empty-fails"
+expect = "kill"
+misunderstanding = "EN-014: the tag check fails after every chosen partial proved"
+  [[mutation.edit]]
+  rule = "split_envelope--all_proved_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "en014-tag-first-proof-only"
+expect = "kill"
+misunderstanding = "EN-014: the tag opens when the first chosen partial is proved, whatever the others"
+  [[mutation.edit]]
+  rule = "split_envelope--all_proved_2"
+  find = "=> ProofOk:Bool andThenBool allProved ( Rest:List )"
+  replace = "=> ProofOk:Bool"
+
+[[mutation]]
+id = "rq015-fallback-opens-void"
+expect = "kill"
+misunderstanding = "RQ-015, EN-014: after the fallback, t proved partials that open the tag still make the request VOID"
+  [[mutation.edit]]
+  rule = "split_envelope--combine_proved_2"
+  find = "=> opened"
+  replace = "=> dealer_fault"
+
+[[mutation]]
+id = "en014-proved-extra"
+expect = "kill"
+misunderstanding = "EN-014, RQ-015: the fallback counts one proved partial more than it holds"
+  [[mutation.edit]]
+  rule = "split_envelope--proved_1"
+  find = "=> .List"
+  replace = "=> ListItem(partial ( 9 , true ))"
+
+[[mutation]]
+id = "en014-proved-dropped"
+expect = "kill"
+misunderstanding = "EN-014, RQ-015: the fallback drops the partials whose proof holds"
+  [[mutation.edit]]
+  rule = "split_envelope--proved_2"
+  find = "=> ListItem(P:Partial) proved ( Rest:List )"
+  replace = "=> proved ( Rest:List )"
+
+[[mutation]]
+id = "en014-unproved-kept"
+expect = "kill"
+misunderstanding = "EN-014, RQ-015: the fallback keeps a partial whose proof fails"
+  [[mutation.edit]]
+  rule = "split_envelope--proved_3"
+  find = "=> proved ( Rest:List )"
+  replace = "=> ListItem(partial ( 0 , false )) proved ( Rest:List )"
+
+[[mutation]]
+id = "en010-ecdsa-is-schnorr"
+expect = "kill"
+misunderstanding = "EN-010, EN-016: an ECDSA header is counted as a Schnorr header"
+  [[mutation.edit]]
+  rule = "split_envelope--schnorr_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "en010-schnorr-is-ecdsa"
+expect = "kill"
+misunderstanding = "EN-010, EN-016: a Schnorr header is counted as an ECDSA header"
+  [[mutation.edit]]
+  rule = "split_envelope--schnorr_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "en014-extra-sender"
+expect = "kill"
+misunderstanding = "EN-014: the senders compared for repeats include one more sender than the partials name"
+  [[mutation.edit]]
+  rule = "split_envelope--senders_1"
+  find = "=> .List"
+  replace = "=> ListItem(2)"
+
+[[mutation]]
+id = "en014-senders-not-compared"
+expect = "kill"
+misunderstanding = "EN-014: the senders of the partials are not compared for repeats"
+  [[mutation.edit]]
+  rule = "split_envelope--senders_2"
+  find = "=> ListItem(Sender:Int) senders ( Rest:List )"
+  replace = "=> senders ( Rest:List )"
+
+[[mutation]]
+id = "en016-count-from-one"
+expect = "kill"
+misunderstanding = "EN-016, EN-010: the sum of min(v, G) starts from 1, not 0"
+  [[mutation.edit]]
+  rule = "split_envelope--sum_min_1"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "en014-first-t-padded"
+expect = "kill"
+misunderstanding = "EN-014: the first t partials are padded with a partial whose proof fails when exactly t are at hand"
+  [[mutation.edit]]
+  rule = "split_envelope--take_n_1"
+  find = "=> .List"
+  replace = "=> ListItem(partial ( 0 , false ))"
+
+[[mutation]]
+id = "en014-first-t-empty"
+expect = "kill"
+misunderstanding = "EN-014: the tag is checked over none of the partials"
+  [[mutation.edit]]
+  rule = "split_envelope--take_n_2"
+  find = "=> ListItem(P:Partial) takeN ( T:Int -Int 1 , Rest:List )"
+  replace = "=> takeN ( T:Int -Int 1 , Rest:List )"
+
+[[mutation]]
+id = "en014-first-t-plus-one"
+expect = "survive"
+misunderstanding = "EN-014: the tag is checked over the first t + 1 partials. Argued equivalent, as en014-first-round-all: with at least t partials, the first round opens on the first t + 1 only if it would open on the first t, and when it does not open the fallback over the proved partials decides; the fallback also takes the first t + 1 proved partials, which open exactly when the dealing is good, as the first t do (allProved holds on proved partials). So both readings give opened when the dealing is good and at least t partials are proved, dealer_fault when it is bad and at least t are proved, and need_more otherwise. Tried: every combine case of the corpus, including combine-second-bad and combine-fallback-open."
+  [[mutation.edit]]
+  rule = "split_envelope--take_n_3"
+  find = "ListItem(_P:Partial) _ ) => .List"
+  replace = "ListItem(P:Partial) _ ) => ListItem(P:Partial)"

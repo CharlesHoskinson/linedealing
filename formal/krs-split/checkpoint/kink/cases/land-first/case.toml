@@ -1,0 +1,6 @@
+# CP-007, CP-008, ledger 2: the first checkpoint has seq 0 and pending_min = h + 1
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }, { PoolOf = { pool = 2, h = 50, pending_min = 40, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [{ Sr = [0, [{ Bind = { nf = 1, e = 2 } }, { Put = { digest = 3 } }]] }, { Sr = [1, []] }], restores = [] } }, mh = 900 } },
+]

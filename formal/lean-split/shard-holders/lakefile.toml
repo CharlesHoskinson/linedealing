@@ -1,0 +1,20 @@
+name = "split_shard_holders_oracle"
+defaultTargets = ["SplitShardHolders", "oracle"]
+
+# Every module under SplitShardHolders/ (Spec, Tests, Audit) is built by default, so
+# `lake build --wfail` sees a `sorry` in any of them.
+[leanOptions]
+autoImplicit = false
+
+[[require]]
+name = "split_codec"
+path = "../codec"
+
+[[lean_lib]]
+name = "SplitShardHolders"
+globs = ["SplitShardHolders.+"]
+
+[[lean_exe]]
+name = "oracle"
+root = "Main"
+supportInterpreter = false

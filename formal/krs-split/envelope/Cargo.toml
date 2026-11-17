@@ -1,0 +1,20 @@
+[package]
+name = "split-envelope-reference"
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.99"
+publish = false
+
+# The KRS facade, pinned to the k-rust revision in
+# ~/Projects/software-factory/plugins/formal/UPSTREAM.md. The `krs` binary used on this
+# package must be built from the same revision; ../gates.sh writes the local [patch].
+[dependencies]
+k = { package = "krs", git = "https://github.com/midnightntwrk/k-rust", rev = "8aaaac1c1cfd88a50fa58115030b3f28f43f67bf" }
+
+[package.metadata.krs]
+k-namespace = "SPLIT-ENVELOPE"
+
+[package.metadata.krs.definitions.main]
+
+[workspace]
+resolver = "3"

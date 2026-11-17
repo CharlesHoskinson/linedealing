@@ -1,0 +1,13 @@
+# SL-006, SL-016 (oracle pin `ecdsaTaken`): ECDSA slot 7 has precedence for request 6 in
+# force; request 8 names it before its authorization is in force (not VOID) and is VOID
+# SLOT_TAKEN when its authorization comes into force.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealE = { pool = 1, leaf_set = 50, root = "Own", kcount = 7 } },
+  { OpenE = { eid = 5, pos = 10, names = [{ Ek = { pool = 1, idx = 7 } }] } },
+  { OpenE = { eid = 6, pos = 20, names = [{ Ek = { pool = 1, idx = 7 } }] } },
+  { InForce = { eid = 6, root = "Own" } },
+  { OpenE = { eid = 8, pos = 30, names = [{ Ek = { pool = 1, idx = 7 } }] } },
+  { InForce = { eid = 8, root = "Own" } },
+]

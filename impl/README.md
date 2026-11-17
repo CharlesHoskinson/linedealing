@@ -9,7 +9,7 @@ All dependencies are pinned in Cargo.lock and available in the local Cargo cache
 Run from this directory:
 
 ```sh
-export CARGO_TARGET_DIR=impl/target
+export CARGO_TARGET_DIR=/home/hoskinson/Projects/mpcexperiments-wt-rust/impl/target
 cargo test --offline --release -j 4
 cargo clippy --offline --all-targets -j 4 -- -D warnings
 cargo fmt --check
@@ -87,7 +87,7 @@ The board models transfer and erasure decisions. An application must connect tho
 Criterion covers six operations: owner deal and encrypt, public Step A, decrypt and verify shares, partial, verify partial, and combine. The matrix has 288 cases: three suites, both modes, four committee sizes, both threshold profiles, and six operations. Sealed messages contain eight variants. Open messages contain one generation and one input.
 
 ```sh
-export CARGO_TARGET_DIR=impl/target
+export CARGO_TARGET_DIR=/home/hoskinson/Projects/mpcexperiments-wt-rust/impl/target
 cargo bench --offline -j 4 --bench protocol -- --test
 cargo bench --offline -j 4 --bench protocol -- --noplot
 LD_BENCH_N=9 cargo bench --offline -j 4 --bench protocol -- --noplot
@@ -106,7 +106,7 @@ Measured results and exact commands are in [BENCHMARKS.md](BENCHMARKS.md).
 ## Committee simulation
 
 ```sh
-export CARGO_TARGET_DIR=impl/target
+export CARGO_TARGET_DIR=/home/hoskinson/Projects/mpcexperiments-wt-rust/impl/target
 cargo run --offline --release -j 4 --bin committee-sim -- --requests 16 --suite ecdsa --mode open --threshold 3 --latency-ms 25 --batch-size 16 --board-ms 1 --seed 42
 cargo run --offline --release -j 4 --bin committee-sim -- --help
 bash run-simulation-matrix.sh > simulation-results.txt

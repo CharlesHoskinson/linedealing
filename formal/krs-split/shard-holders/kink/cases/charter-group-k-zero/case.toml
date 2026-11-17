@@ -1,0 +1,6 @@
+# SH-001: a group with k = 0
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { FixCharter = { id = 8, gamma = { Group = { mid = 0, kk = 0, children = [{ Leaf = { mid = 1, actor = 1 } }] } } } },
+]

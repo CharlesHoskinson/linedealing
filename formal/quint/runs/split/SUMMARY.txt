@@ -1,0 +1,124 @@
+model 8f1d3fb5d52ca314d5710652f3bbf422fce69b024270b5ab587c338eb3bfc3f1  2026-11-15T19:10:35-07:00
+JOB                                EXPECT    GOT       DETAIL
+tc_splitline                       exit0     exit0     PASS 
+tc_splitline_instances             exit0     exit0     PASS 
+tc_splitline_test                  exit0     exit0     PASS 
+tc_splitline_pools                 exit0     exit0     PASS 
+tc_splitline_pools_test            exit0     exit0     PASS 
+pl_design_pstep                    ok        ok        PASS [ok] No violation found (278887ms at 72 traces/second).
+pl_design_pstepRestart             ok        ok        PASS [ok] No violation found (325167ms at 62 traces/second).
+pl_design_pstepRecover             ok        ok        PASS [ok] No violation found (238022ms at 84 traces/second).
+pl_anchor_pstep                    ok        ok        PASS [ok] No violation found (260712ms at 77 traces/second).
+pl_anchor_pstepRestart             ok        ok        PASS [ok] No violation found (380356ms at 53 traces/second).
+pl_anchor_pstepRecover             ok        ok        PASS [ok] No violation found (208089ms at 96 traces/second).
+pm_shared_pool                     violation violation PASS [violation] Found an issue (246ms at 8 traces/second).
+pm_bind_per_slot                   violation violation PASS [violation] Found an issue (426ms at 21 traces/second).
+pm_partial_before_bind             violation violation PASS [violation] Found an issue (366ms at 3 traces/second).
+pm_no_pending_burn                 violation violation PASS [violation] Found an issue (11716ms at 251 traces/second).
+pm_no_account_burn                 violation violation PASS [violation] Found an issue (135345ms at 134 traces/second).
+test_pt_design                     ok        ok        PASS   9 passing (5952ms)
+test_pt_seald                      ok        ok        PASS   3 passing (2226ms)
+test_pt_acct_race                  ok        ok        PASS   1 passing (488ms)
+test_pt_window_bind                ok        ok        PASS   1 passing (578ms)
+test_pt_anchor                     ok        ok        PASS   1 passing (419ms)
+test_pt_no_window_burn             ok        ok        PASS   1 passing (447ms)
+test_pt_no_pending_burn            ok        ok        PASS   1 passing (342ms)
+test_pt_window                     ok        ok        PASS   1 passing (1357ms)
+test_pt_no_account_burn            ok        ok        PASS   1 passing (495ms)
+test_pt_reshare_no_anchor          ok        ok        PASS   1 passing (416ms)
+test_pt_reshare_all                ok        ok        PASS   1 passing (1464ms)
+sl_n4_init                         ok        ok        PASS [ok] No violation found (1551024ms at 1 traces/second).
+sl_n4_schnorr                      ok        ok        PASS [ok] No violation found (2626811ms at 1 traces/second).
+sl_n4_ecdsa                        ok        ok        PASS [ok] No violation found (2658836ms at 1 traces/second).
+sl_n4_ecdsa_cold                   ok        ok        PASS [ok] No violation found (1529843ms at 1 traces/second).
+sl_n4_tee_init                     ok        ok        PASS [ok] No violation found (487147ms at 4 traces/second).
+sl_n4_tee_schnorr                  ok        ok        PASS [ok] No violation found (1883059ms at 1 traces/second).
+sl_n4_tee_ecdsa                    ok        ok        PASS [ok] No violation found (2072155ms at 1 traces/second).
+sl_n4_tee_ecdsa_cold               ok        ok        PASS [ok] No violation found (1754156ms at 1 traces/second).
+sl_n7_init                         ok        ok        PASS [ok] No violation found (1056019ms at 0 traces/second).
+sl_n7_schnorr                      ok        ok        PASS [ok] No violation found (1960295ms at 0 traces/second).
+sl_n7_ecdsa                        ok        ok        PASS [ok] No violation found (1976703ms at 0 traces/second).
+sl_n7_ecdsa_cold                   ok        ok        PASS [ok] No violation found (1566981ms at 0 traces/second).
+sl_n7_tee_init                     ok        ok        PASS [ok] No violation found (283537ms at 1 traces/second).
+sl_n7_tee_schnorr                  ok        ok        PASS [ok] No violation found (1164091ms at 0 traces/second).
+sl_n7_tee_ecdsa                    ok        ok        PASS [ok] No violation found (1449408ms at 0 traces/second).
+sl_n7_tee_ecdsa_cold               ok        ok        PASS [ok] No violation found (1828307ms at 0 traces/second).
+sl_n9_init                         ok        ok        PASS [ok] No violation found (480612ms at 0 traces/second).
+sl_n9_schnorr                      ok        ok        PASS [ok] No violation found (1062129ms at 0 traces/second).
+sl_n9_ecdsa                        ok        ok        PASS [ok] No violation found (1543777ms at 0 traces/second).
+sl_n9_ecdsa_cold                   ok        ok        PASS [ok] No violation found (1615321ms at 0 traces/second).
+sl_n9_tee_init                     ok        ok        PASS [ok] No violation found (192781ms at 0 traces/second).
+sl_n9_tee_schnorr                  ok        ok        PASS [ok] No violation found (592447ms at 0 traces/second).
+sl_n9_tee_ecdsa                    ok        ok        PASS [ok] No violation found (920641ms at 0 traces/second).
+sl_n9_tee_ecdsa_cold               ok        ok        PASS [ok] No violation found (1621804ms at 0 traces/second).
+q1_sl_n4_b2                        violation violation PASS [violation] Found an issue (3567ms at 3 traces/second).
+q1_sl_n4_b2_anchor                 ok        ok        PASS [ok] No violation found (302058ms at 1 traces/second).
+test_q1_n7_b3                      ok        ok        PASS   1 passing (1936ms)
+q1_sl_n7_b3_anchor                 ok        ok        PASS [ok] No violation found (1509527ms at 0 traces/second).
+q1_sl_n7_b4                        violation violation PASS [violation] Found an issue (578935ms at 0 traces/second).
+q1_sl_n7_b4_anchor                 ok        ok        PASS [ok] No violation found (1896253ms at 0 traces/second).
+q1_sl_n9_b3                        ok        ok        PASS [ok] No violation found (1043718ms at 0 traces/second).
+q1_sl_n9_b3_anchor                 ok        ok        PASS [ok] No violation found (1828112ms at 0 traces/second).
+q1_sl_n9_b4                        ok        ok        PASS [ok] No violation found (1172585ms at 0 traces/second).
+q1_sl_n9_b4_anchor                 ok        ok        PASS [ok] No violation found (1830656ms at 0 traces/second).
+test_q1_n9_b5                      ok        ok        PASS   1 passing (655ms)
+q1_sl_n9_b5_anchor                 ok        ok        PASS [ok] No violation found (1759701ms at 0 traces/second).
+q1_sl_n9_b6                        violation violation PASS [violation] Found an issue (591402ms at 0 traces/second).
+q1_sl_n9_b6_anchor                 ok        ok        PASS [ok] No violation found (1944910ms at 0 traces/second).
+test_mt_m_burn                     ok        ok        PASS   1 passing (1359ms)
+test_mt_m_precedence               ok        ok        PASS   1 passing (651ms)
+test_mt_m_distinct                 ok        ok        PASS   1 passing (797ms)
+m_gens3                            violation violation PASS [violation] Found an issue (333754ms at 1 traces/second).
+m_ecdsa_shared                     violation violation PASS [violation] Found an issue (1097ms at 1 traces/second).
+test_mt_m_bf_p2                    ok        ok        PASS   1 passing (660ms)
+test_mt_m_inclusion                ok        ok        PASS   1 passing (735ms)
+m_direct_call                      violation violation PASS [violation] Found an issue (485ms at 2 traces/second).
+m_partial_qc                       violation violation PASS [violation] Found an issue (484ms at 2 traces/second).
+test_mt_m_no_collect               ok        ok        PASS   1 passing (529ms)
+test_rt_m_leafset                  ok        ok        PASS   1 passing (1114ms)
+test_mt_m_cold_old                 ok        ok        PASS   1 passing (688ms)
+m_dd                               violation violation PASS [violation] Found an issue (1664ms at 2 traces/second).
+m_ra                               violation violation PASS [violation] Found an issue (3493ms at 3 traces/second).
+test_rt_m_slot_root                ok        ok        PASS   1 passing (621ms)
+m_settle_unspent                   violation violation PASS [violation] Found an issue (1727ms at 1 traces/second).
+m_auth_ref                         violation violation PASS [violation] Found an issue (712ms at 3 traces/second).
+m_stall_local                      violation violation PASS [violation] Found an issue (37199ms at 3 traces/second).
+test_mt_m_hold0                    ok        ok        PASS   1 passing (527ms)
+neg_mt_design                      testfail  testfail  PASS     1) mt_design::mutant_scenarios::burnBroken failed after 1 test(s)
+m_bf_pending                       violation violation PASS [violation] Found an issue (296ms at 3 traces/second).
+neg_wk_m_witkey                    testfail  testfail  PASS     1) wk_m_witkey::witkey_scenarios::witkeyReleaseHolds failed after 
+test_wk_design                     ok        ok        PASS   1 passing (547ms)
+m_open_final                       violation violation PASS [violation] Found an issue (629ms at 11 traces/second).
+m_cold_void                        violation violation PASS [violation] Found an issue (639ms at 2 traces/second).
+m_g5                               violation violation PASS [violation] Found an issue (631ms at 3 traces/second).
+m_g5_burn                          violation violation PASS [violation] Found an issue (1809ms at 3 traces/second).
+m_cold_old_c16                     violation violation PASS [violation] Found an issue (468ms at 2 traces/second).
+test_gt_design                     ok        ok        PASS   4 passing (2328ms)
+test_gt_m_g5                       ok        ok        PASS   2 passing (2005ms)
+neg_gt_design_broken               testfail  testfail  PASS     1) gt_design::g5_scenarios::g5VoidBroken failed after 1 test(s)
+neg_gt_m_g5_holds                  testfail  testfail  PASS     1) gt_m_g5::g5_scenarios::g5VoidHolds failed after 1 test(s)
+neg_pt_design_broken               testfail  testfail  PASS     1) pt_design::pools_scenarios::windowBurnBroken failed after 1 tes
+neg_pt_design_acct                 testfail  testfail  PASS     1) pt_design::pools_scenarios::acctEarliestBroken failed after 1 t
+test_fix_design                    ok        ok        PASS   9 passing (5470ms)
+test_w5_mutant                     ok        ok        PASS   1 passing (1122ms)
+test_rt_design                     ok        ok        PASS   2 passing (1257ms)
+neg_rt_design_broken               testfail  testfail  PASS     1) rt_design::rule_scenarios::leafSetBroken failed after 1 test(s)
+tc_splitline_birth                 exit0     exit0     PASS 
+test_pg1_design                    ok        ok        PASS   2 passing (1571ms)
+test_pg1_m_open                    ok        ok        PASS   1 passing (807ms)
+neg_pg1_design_broken              testfail  testfail  PASS     1) pg1_design::pg1_scenarios::pg1OpenVoidBroken failed after 1 tes
+neg_pg1_m_open_refused             testfail  testfail  PASS     1) pg1_m_open::pg1_scenarios::pg1OpenVoidRefusedHolds failed after
+birth_design                       ok        ok        PASS [ok] No violation found (2470ms at 2024 traces/second).
+birth_m_fund_on_final              violation violation PASS [violation] Found an issue (57ms at 18 traces/second).
+birth_m_ack_no_pop                 violation violation PASS [violation] Found an issue (86ms at 23 traces/second).
+test_bt_design                     ok        ok        PASS   4 passing (327ms)
+test_bt_fund_on_final              ok        ok        PASS   1 passing (41ms)
+test_bt_ack_no_pop                 ok        ok        PASS   1 passing (106ms)
+neg_bt_design_broken               testfail  testfail  PASS     1) bt_design::birth_scenarios::badEcFundBroken failed after 1 test
+test_pt_acct_named                 ok        ok        PASS   1 passing (463ms)
+bc_typecheck                       exit0     exit0     PASS 
+bc_tests                           ok        ok        PASS   4 passing (978ms)
+bc_design                          ok        ok        PASS [ok] No violation found (284981ms at 70 traces/second).
+bc_mut11                           violation violation PASS [violation] Found an issue (3832ms at 104 traces/second).
+counterexample_vectors             exit0     exit0     PASS 
+export_traces                      exit0     exit0     PASS 

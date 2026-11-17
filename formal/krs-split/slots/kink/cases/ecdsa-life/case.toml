@@ -1,0 +1,17 @@
+# SL-008, SL-009, SL-011: reserve sets the reserver; claim; the reserver's end burns.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealE = { pool = 1, leaf_set = 5, root = "Own", kcount = 3 } },
+  { InForce = { eid = 1, root = "Own" } },
+  { InForce = { eid = 2, root = "Own" } },
+  { OpenE = { eid = 1, pos = 10, names = [{ Ek = { pool = 1, idx = 1 } }, { Ek = { pool = 1, idx = 2 } }] } },
+  { OpenE = { eid = 2, pos = 20, names = [{ Ek = { pool = 1, idx = 3 } }] } },
+  { ClaimOp = { eid = 1 } },
+  { Reserve = { eid = 1 } },
+  { Reserve = { eid = 1 } },
+  { ClaimOp = { eid = 2 } },
+  { ClaimOp = { eid = 1 } },
+  { EndReq = { eid = 2 } },
+  { EndReq = { eid = 1 } },
+]

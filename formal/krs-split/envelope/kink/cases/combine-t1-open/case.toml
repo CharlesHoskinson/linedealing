@@ -1,0 +1,8 @@
+# EN-014 boundary: t = 1 is inside the capability; one correct partial opens the tag.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { CombineOp = { t = 1, dealing_ok = true, partials = [{ Part = { sender = 1, proof_ok = true } }] } },
+]

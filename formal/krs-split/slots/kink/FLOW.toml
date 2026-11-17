@@ -1,0 +1,203 @@
+# Reference suite for split-slots. The programs are typed cases: cases/*/case.toml.
+# `krs kink coverage` must leave no obligation open, `krs kink run` must kill every
+# mutation or carry an argued survivor, and `krs kink compare` checks the reference
+# definition against the Lean oracle (corpus end equivalence: equal ends on every program).
+
+[spec]
+krs = { package = "split-slots-reference", definition = "main" }
+
+# Unique-cause MC/DC on every guard.
+[coverage]
+mcdc = true
+
+# Equations and conditions no reachable state enters; each argument names the requirement
+# that rules the state out.
+[[coverage.argued]]
+item = "rule:crate::assign_with_1"
+argument = "SL-006: assignE runs only from an open by a request in force under the slot's root or from in_force of a namer under that root, so the namers in force are never empty"
+
+[[coverage.argued]]
+item = "rule:crate::c_step_7"
+argument = "mapC runs only for open_c, lapse, reserve, claim, end and burn_range; the step map is called only by the rules of the operations the step function has equations for, so the owise equation never runs"
+
+[[coverage.argued]]
+item = "rule:crate::e_step_7"
+argument = "mapE runs only for open_e, in_force, reserve, claim, end and burn_pool; the step map is called only by the rules of the operations the step function has equations for, so the owise equation never runs"
+
+[[coverage.argued]]
+item = "rule:crate::s_step_4"
+argument = "mapS runs only for seat_bind, seat_release and seat_burn; the step map is called only by the rules of the operations the step function has equations for, so the owise equation never runs"
+
+[[coverage.argued]]
+item = "rule:crate::eid_of_1"
+argument = "SL-004, SL-006, Q-003: a slot takes prec from a list of one namer only. Header order gives each namer a higher board position than the ones before it, a committee slot takes prec at its first open, and an ECDSA slot takes prec as soon as one namer is in force under its root, so lowest never runs on two namers; lowest never runs on an empty list either"
+
+[[coverage.argued]]
+item = "rule:crate::pick_2_1"
+argument = "SL-004, SL-006, Q-003: a slot takes prec from a list of one namer only. Header order gives each namer a higher board position than the ones before it, a committee slot takes prec at its first open, and an ECDSA slot takes prec as soon as one namer is in force under its root, so lowest never runs on two namers"
+
+[[coverage.argued]]
+item = "rule:crate::pick_2_2"
+argument = "SL-004, SL-006, Q-003: a slot takes prec from a list of one namer only. Header order gives each namer a higher board position than the ones before it, a committee slot takes prec at its first open, and an ECDSA slot takes prec as soon as one namer is in force under its root, so lowest never runs on two namers"
+
+[[coverage.argued]]
+item = "rule:crate::pos_of_1"
+argument = "SL-004, SL-006, Q-003: a slot takes prec from a list of one namer only. Header order gives each namer a higher board position than the ones before it, a committee slot takes prec at its first open, and an ECDSA slot takes prec as soon as one namer is in force under its root, so lowest never runs on two namers; posOf is read only when two namers are compared"
+
+[[coverage.argued]]
+item = "requirement:crate::pick_2_1:held"
+argument = "SL-004, SL-006, Q-003: a slot takes prec from a list of one namer only. Header order gives each namer a higher board position than the ones before it, a committee slot takes prec at its first open, and an ECDSA slot takes prec as soon as one namer is in force under its root, so lowest never runs on two namers"
+
+[[coverage.argued]]
+item = "requirement:crate::pick_2_1:refuted"
+argument = "SL-004, SL-006, Q-003: a slot takes prec from a list of one namer only. Header order gives each namer a higher board position than the ones before it, a committee slot takes prec at its first open, and an ECDSA slot takes prec as soon as one namer is in force under its root, so lowest never runs on two namers"
+
+[[coverage.argued]]
+item = "requirement:crate::pick_2_1:PosOf(b) < PosOf(a):mcdc"
+argument = "SL-004, SL-006, Q-003: a slot takes prec from a list of one namer only. Header order gives each namer a higher board position than the ones before it, a committee slot takes prec at its first open, and an ECDSA slot takes prec as soon as one namer is in force under its root, so lowest never runs on two namers"
+
+[[coverage.argued]]
+item = "requirement:crate::pick_2_2:held"
+argument = "SL-004, SL-006, Q-003: a slot takes prec from a list of one namer only. Header order gives each namer a higher board position than the ones before it, a committee slot takes prec at its first open, and an ECDSA slot takes prec as soon as one namer is in force under its root, so lowest never runs on two namers"
+
+[[coverage.argued]]
+item = "requirement:crate::pick_2_2:refuted"
+argument = "SL-004, SL-006, Q-003: a slot takes prec from a list of one namer only. Header order gives each namer a higher board position than the ones before it, a committee slot takes prec at its first open, and an ECDSA slot takes prec as soon as one namer is in force under its root, so lowest never runs on two namers"
+
+[[coverage.argued]]
+item = "requirement:crate::pick_2_2:PosOf(b) < PosOf(a):mcdc"
+argument = "SL-004, SL-006, Q-003: a slot takes prec from a list of one namer only. Header order gives each namer a higher board position than the ones before it, a committee slot takes prec at its first open, and an ECDSA slot takes prec as soon as one namer is in force under its root, so lowest never runs on two namers"
+
+[[coverage.argued]]
+item = "flip--pick_2_1+pick_2_2--PosOf"
+argument = "SL-004, SL-006, Q-003: a slot takes prec from a list of one namer only. Header order gives each namer a higher board position than the ones before it, a committee slot takes prec at its first open, and an ECDSA slot takes prec as soon as one namer is in force under its root, so lowest never runs on two namers"
+
+[[coverage.argued]]
+item = "rule:crate::s_bind_2_2"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "rule:crate::s_bind_3"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "rule:crate::s_release_1_2"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "rule:crate::s_release_2"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "rule:crate::s_release_3"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_bind_2_1:refuted"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_bind_2_1:d2 == d:mcdc"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_bind_2_2:held"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_bind_2_2:d2 == d:mcdc"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_release_1_1:refuted"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_release_1_1:d2 == d:false"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_release_1_1:current:false"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_release_1_1:d2 == d:mcdc"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_release_1_1:current:mcdc"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_release_1_2:held"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_release_1_2:d2 == d:false"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_release_1_2:current:false"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_release_1_2:d2 == d:mcdc"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "requirement:crate::s_release_1_2:current:mcdc"
+argument = "SL-018 to SL-020, ledger 6: the refusals of the seat operation leave only a free or bound(d) slot for a bind of d and only a current bound(d) slot for a release of d, so the slot step never meets another state"
+
+[[coverage.argued]]
+item = "rule:crate::set_prec_e_1_2"
+argument = "SL-006, ledger 3: an ECDSA slot without prec is UNNAMED or BURNED, and assignE skips BURNED, so setPrecE always meets UNNAMED"
+
+[[coverage.argued]]
+item = "requirement:crate::set_prec_e_1_1:refuted"
+argument = "SL-006, ledger 3: an ECDSA slot without prec is UNNAMED or BURNED, and assignE skips BURNED, so setPrecE always meets UNNAMED"
+
+[[coverage.argued]]
+item = "requirement:crate::set_prec_e_1_1:bstat.eq::<K>(BStatC::Unnamed):mcdc"
+argument = "SL-006, ledger 3: setPrecE always meets UNNAMED (see set_prec_e_1_2)"
+
+[[coverage.argued]]
+item = "requirement:crate::set_prec_e_1_2:held"
+argument = "SL-006, ledger 3: setPrecE always meets UNNAMED (see set_prec_e_1_2)"
+
+[[coverage.argued]]
+item = "requirement:crate::set_prec_e_1_2:bstat.eq::<K>(BStatC::Unnamed):mcdc"
+argument = "SL-006, ledger 3: setPrecE always meets UNNAMED (see set_prec_e_1_2)"
+
+[[coverage.argued]]
+item = "requirement:crate::open_slot_1_1:list::size(prec) == 0:mcdc"
+argument = "SL-004, SL-017: a committee slot with prec is NAMED or later, never UNNAMED, because naming sets prec and NAMED together; so prec is never present with bstat UNNAMED"
+
+[[coverage.argued]]
+item = "requirement:crate::open_slot_1_2:list::size(prec) == 0:mcdc"
+argument = "SL-004, SL-017: a committee slot with prec is never UNNAMED (see open_slot_1_1)"
+
+[[coverage.argued]]
+item = "requirement:crate::verdict_of_4:h + bw < l:mcdc"
+argument = "SL-012: B is a natural number at least 1 (judge refuses B = 0), so h + B < l implies h < l; no index has h + B < l with h < l false"
+
+[[coverage.argued]]
+item = "requirement:crate::verdict_of_5:h + bw < l:mcdc"
+argument = "SL-012: B is at least 1, so h + B < l implies h < l (see verdict_of_4)"
+
+[budget]
+time_ms = 600000
+
+[[program]]
+cases = "cases/*/case.toml"
+
+# Spec anchor: the Lean oracle (formal/lean-split/slots, `lake build oracle`), through
+# the schema-driven adapter that translates the KRS typed encoding to the oracle's JSON
+# and back. No identity: the answers depend on the adapter, the schema and the binary,
+# and one identity file cannot cover all three, so kink caches none (practice 26).
+[[implementation]]
+name = "lean-oracle"
+command = ["python3", "-I", "../../scripts/oracle_adapter.py", "../schema.json",
+           "../../../lean-split/slots/.lake/build/bin/oracle"]
+given = "inputs"
+omits = ["k", "ops"]
+views = [{ name = "end", required = true }]

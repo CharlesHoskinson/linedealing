@@ -8,6 +8,11 @@ description = "Throwaway discovery prototype: deterministic simulation of Verite
 [dependencies]
 sha2 = "=0.10.9"
 
+[features]
+# Item 22 C-01/C-02 fix (D-039): SS-146 pending floor monotone, SS-147 jump on a restart marker.
+default = ["d039"]
+d039 = []
+
 [profile.release]
 debug = false
 

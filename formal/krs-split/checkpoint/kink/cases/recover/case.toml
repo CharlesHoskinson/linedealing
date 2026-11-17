@@ -1,0 +1,11 @@
+# CP-034, CP-035, ledger 9: no recover before a landing or before Δ_rec; at exactly Δ_rec it is accepted (ledger 14), once
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Recover = { mh = 5000 } },
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { Recover = { mh = 1029 } },
+  { Recover = { mh = 1030 } },
+  { Recover = { mh = 1030 } },
+  { Recover = { mh = 1000 } },
+]

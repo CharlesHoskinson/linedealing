@@ -1,0 +1,830 @@
+# One mutation per helper-function equation of kink/definition.k (the `mutations`
+# gate fails on an untargeted equation). Each names the EARS ID that the equation serves.
+
+[[mutation]]
+id = "cp026-acct-id-zero"
+expect = "kill"
+misunderstanding = "CP-026: an account pool is known by slot 0's id, so every pool counts as pool 0"
+  [[mutation.edit]]
+  rule = "split_checkpoint--acct_id_1"
+  find = "=> Id:Int"
+  replace = "=> 0"
+
+[[mutation]]
+id = "cp013-all-in-empty"
+expect = "kill"
+misunderstanding = "CP-013: an empty settle_root never matches the ended requests"
+  [[mutation.edit]]
+  rule = "split_checkpoint--all_in_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp013-all-in-skip"
+expect = "kill"
+misunderstanding = "CP-013: a leaf that did not end is skipped, not refused"
+  [[mutation.edit]]
+  rule = "split_checkpoint--all_in_2_2"
+  find = "=> false"
+  replace = "=> allIn ( Rest:List , Ended:List )"
+
+[[mutation]]
+id = "cp010-phantom-statement"
+expect = "kill"
+misunderstanding = "CP-010: seat 0's boot counter 1 has a standing RestoreDone"
+  [[mutation.edit]]
+  rule = "split_checkpoint--all_restores_1"
+  find = "=> .List"
+  replace = "=> ListItem(rd ( 0 , 1 , 0 , false ))"
+
+[[mutation]]
+id = "cp029-anchor-adds-pool"
+expect = "kill"
+misunderstanding = "CP-029: anchoring adds an account pool"
+  [[mutation.edit]]
+  rule = "split_checkpoint--anchor_accts_1"
+  find = "=> .List"
+  replace = "=> ListItem(acct ( 9 , .List , 0 , false ))"
+
+[[mutation]]
+id = "cp029-anchor-flag-inverted"
+expect = "kill"
+misunderstanding = "CP-009, CP-029, CP-031: slot_anchor is read inverted"
+  [[mutation.edit]]
+  rule = "split_checkpoint--anchor_of_1"
+  find = "=> SlotAnchor:Bool"
+  replace = "=> notBool SlotAnchor:Bool"
+
+[[mutation]]
+id = "cp029-anchor-adds-slot"
+expect = "kill"
+misunderstanding = "CP-029: anchoring adds a free slot"
+  [[mutation.edit]]
+  rule = "split_checkpoint--anchor_slots_1"
+  find = "=> .List"
+  replace = "=> ListItem(free)"
+
+[[mutation]]
+id = "cp006-no-acks-below"
+expect = "kill"
+misunderstanding = "CP-006: the key set is never complete"
+  [[mutation.edit]]
+  rule = "split_checkpoint--any_below_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp011-whole-by-default"
+expect = "kill"
+misunderstanding = "CP-011: every landing sets restart_seq to its seq"
+  [[mutation.edit]]
+  rule = "split_checkpoint--any_whole_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sl012-window-plus-one"
+expect = "kill"
+misunderstanding = "CP-009, CP-020, CP-039: the window is B + 1"
+  [[mutation.edit]]
+  rule = "split_checkpoint--b_of_1"
+  find = "=> Bb:Int"
+  replace = "=> Bb:Int +Int 1"
+
+[[mutation]]
+id = "cp007-new-pool-lowered"
+expect = "kill"
+misunderstanding = "CP-007: a pool that the previous checkpoint lacks is h_lowered"
+  [[mutation.edit]]
+  rule = "split_checkpoint--below_prev_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp007-first-prev-pool"
+expect = "kill"
+misunderstanding = "CP-007: a pool is compared only with the first pool of the previous checkpoint"
+  [[mutation.edit]]
+  rule = "split_checkpoint--below_prev_2_2"
+  find = "=> belowPrev ( Rest:List , Pid:Int , H:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp025-bind-adds-pool"
+expect = "kill"
+misunderstanding = "CP-025: a bind adds an account pool"
+  [[mutation.edit]]
+  rule = "split_checkpoint--bind_accts_1"
+  find = "=> .List"
+  replace = "=> ListItem(acct ( 9 , .List , 0 , false ))"
+
+[[mutation]]
+id = "cp015-phantom-key"
+expect = "kill"
+misunderstanding = "CP-015: slot key 1 is always bound"
+  [[mutation.edit]]
+  rule = "split_checkpoint--bind_keys_1"
+  find = "=> .List"
+  replace = "=> ListItem(1)"
+
+[[mutation]]
+id = "cp015-restore-binds-seat"
+expect = "kill"
+misunderstanding = "CP-015, CP-016: a RestoreDone entry binds its seat as a slot key"
+  [[mutation.edit]]
+  rule = "split_checkpoint--bind_keys_4"
+  find = "ListItem(restoreEntry ( _ )) Rest:List ) => bindKeys ( Rest:List )"
+  replace = "ListItem(restoreEntry ( rd ( S:Int , _ , _ , _ ) )) Rest:List ) => ListItem(S:Int) bindKeys ( Rest:List )"
+
+[[mutation]]
+id = "cp015-release-binds-eid"
+expect = "kill"
+misunderstanding = "CP-015, CP-037: a release entry binds its eid as a slot key"
+  [[mutation.edit]]
+  rule = "split_checkpoint--bind_keys_5"
+  find = "ListItem(releaseEntry ( _ , _ )) Rest:List ) => bindKeys ( Rest:List )"
+  replace = "ListItem(releaseEntry ( E:Int , _ )) Rest:List ) => ListItem(E:Int) bindKeys ( Rest:List )"
+
+[[mutation]]
+id = "cp021-burn-adds-pool"
+expect = "kill"
+misunderstanding = "CP-021: burning adds an account pool"
+  [[mutation.edit]]
+  rule = "split_checkpoint--burn_accts_1"
+  find = "=> .List"
+  replace = "=> ListItem(acct ( 9 , .List , 0 , false ))"
+
+[[mutation]]
+id = "cp020-burn-extra-range"
+expect = "kill"
+misunderstanding = "CP-020: index 0 of pool 0 always burns"
+  [[mutation.edit]]
+  rule = "split_checkpoint--burn_ranges_1"
+  find = "=> .List"
+  replace = "=> ListItem(rg ( 0 , 0 , 0 ))"
+
+[[mutation]]
+id = "cp021-burn-adds-slot"
+expect = "kill"
+misunderstanding = "CP-021: burning adds a slot"
+  [[mutation.edit]]
+  rule = "split_checkpoint--burn_slots_1"
+  find = "=> .List"
+  replace = "=> ListItem(burnedSlot)"
+
+[[mutation]]
+id = "cp017-count-one-more"
+expect = "kill"
+misunderstanding = "CP-017, CP-018: the count of continuous seats starts at 1"
+  [[mutation.edit]]
+  rule = "split_checkpoint--count_eq_1"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "cp029-uncovered-burns"
+expect = "kill"
+misunderstanding = "CP-029: a free slot without a covered binding burns"
+  [[mutation.edit]]
+  rule = "split_checkpoint--covered_slot_1"
+  find = "=> free"
+  replace = "=> burnedSlot"
+
+[[mutation]]
+id = "cp017-counters-unread"
+expect = "kill"
+misunderstanding = "CP-009, CP-010, CP-017: a checkpoint's boot counters are not read"
+  [[mutation.edit]]
+  rule = "split_checkpoint--cp_counters_1"
+  find = "=> BootCounters:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "cp002-pools-unread"
+expect = "kill"
+misunderstanding = "CP-002, CP-007, CP-008: a checkpoint's pools are not read"
+  [[mutation.edit]]
+  rule = "split_checkpoint--cp_pools_1"
+  find = "=> Pools:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "cp011-restart-seq-unread"
+expect = "kill"
+misunderstanding = "CP-011, CP-025: a landed checkpoint's restart_seq is read as 0"
+  [[mutation.edit]]
+  rule = "split_checkpoint--cp_restart_seq_1"
+  find = "=> RestartSeq:Int"
+  replace = "=> 0"
+
+[[mutation]]
+id = "cp010-restores-unread"
+expect = "kill"
+misunderstanding = "CP-010, CP-011: a checkpoint's RestoreDone statements are not read"
+  [[mutation.edit]]
+  rule = "split_checkpoint--cp_restores_1"
+  find = "=> Restores:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "cp001-seq-off-by-one"
+expect = "kill"
+misunderstanding = "CP-001, ledger 2: seq is read one too high"
+  [[mutation.edit]]
+  rule = "split_checkpoint--cp_seq_1"
+  find = "=> Seq:Int"
+  replace = "=> Seq:Int +Int 1"
+
+[[mutation]]
+id = "cp034-delta-plus-one"
+expect = "kill"
+misunderstanding = "CP-034, CP-035: Δ_rec is one block longer"
+  [[mutation.edit]]
+  rule = "split_checkpoint--d_rec_of_1"
+  find = "=> DRec:Int"
+  replace = "=> DRec:Int +Int 1"
+
+[[mutation]]
+id = "cp017-phantom-seat"
+expect = "kill"
+misunderstanding = "CP-017: seat 0 always has a ticket"
+  [[mutation.edit]]
+  rule = "split_checkpoint--firsts_1"
+  find = "=> .List"
+  replace = "=> ListItem(0)"
+
+[[mutation]]
+id = "cp017-seats-unread"
+expect = "kill"
+misunderstanding = "CP-017: the tickets' seats are not read"
+  [[mutation.edit]]
+  rule = "split_checkpoint--firsts_2"
+  find = "=> ListItem(A:Int) firsts ( Rest:List )"
+  replace = "=> firsts ( Rest:List )"
+
+[[mutation]]
+id = "cp036-peers-start-zero"
+expect = "kill"
+misunderstanding = "CP-036: the floor is 0 after the peer heights are read"
+  [[mutation.edit]]
+  rule = "split_checkpoint--fold_max_1"
+  find = "=> Acc:Int"
+  replace = "=> 0"
+
+[[mutation]]
+id = "ledger5-past-end-free"
+expect = "kill"
+misunderstanding = "ledger 5 (CP-025): a slot past the end of the pool is free"
+  [[mutation.edit]]
+  rule = "split_checkpoint--free_at_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp008-gap-always"
+expect = "kill"
+misunderstanding = "CP-008: every checkpoint has a gap"
+  [[mutation.edit]]
+  rule = "split_checkpoint--gap_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp026-acct-known"
+expect = "kill"
+misunderstanding = "CP-026: every account pool is already open"
+  [[mutation.edit]]
+  rule = "split_checkpoint--has_acct_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp026-acct-never-known"
+expect = "kill"
+misunderstanding = "CP-026: an open account pool is not found"
+  [[mutation.edit]]
+  rule = "split_checkpoint--has_acct_2_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp010-statement-always"
+expect = "kill"
+misunderstanding = "CP-010: every boot counter has its RestoreDone"
+  [[mutation.edit]]
+  rule = "split_checkpoint--has_restore_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp024-session-known"
+expect = "kill"
+misunderstanding = "CP-024: every pool already has a session"
+  [[mutation.edit]]
+  rule = "split_checkpoint--has_session_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp024-session-never-known"
+expect = "kill"
+misunderstanding = "CP-024: an existing session is not found"
+  [[mutation.edit]]
+  rule = "split_checkpoint--has_session_2_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp036-floor-without-landing"
+expect = "kill"
+misunderstanding = "CP-036: before any landing the checkpoint height is 10"
+  [[mutation.edit]]
+  rule = "split_checkpoint--head_height_1"
+  find = "=> 0"
+  replace = "=> 10"
+
+[[mutation]]
+id = "cp036-checkpoint-height-plus-one"
+expect = "kill"
+misunderstanding = "CP-036: the floor is one above the latest checkpoint height"
+  [[mutation.edit]]
+  rule = "split_checkpoint--head_height_2"
+  find = "=> BoardHeight:Int"
+  replace = "=> BoardHeight:Int +Int 1"
+
+[[mutation]]
+id = "cp014-empty-min-off"
+expect = "kill"
+misunderstanding = "CP-002, CP-014: with no live request pending_min is h + 2"
+  [[mutation.edit]]
+  rule = "split_checkpoint--head_or_1"
+  find = "=> D:Int"
+  replace = "=> D:Int +Int 1"
+
+[[mutation]]
+id = "cp014-min-off"
+expect = "kill"
+misunderstanding = "CP-014: pending_min is one above the lowest live index"
+  [[mutation.edit]]
+  rule = "split_checkpoint--head_or_2"
+  find = "=> X:Int"
+  replace = "=> X:Int +Int 1"
+
+[[mutation]]
+id = "cp014-insert-twice"
+expect = "kill"
+misunderstanding = "CP-014: each live index enters the sorted list twice"
+  [[mutation.edit]]
+  rule = "split_checkpoint--insert_sorted_1"
+  find = "=> ListItem(X:Int)"
+  replace = "=> ListItem(X:Int) ListItem(X:Int)"
+
+[[mutation]]
+id = "cp009-jump-by-default"
+expect = "kill"
+misunderstanding = "CP-009: with fewer than w + 1 kept counters every checkpoint is a jump"
+  [[mutation.edit]]
+  rule = "split_checkpoint--jump_any_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp009-jump-never"
+expect = "kill"
+misunderstanding = "CP-009: a pool inside the window is no jump"
+  [[mutation.edit]]
+  rule = "split_checkpoint--jump_any_2_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp009-first-pool-only"
+expect = "kill"
+misunderstanding = "CP-009: only the first pool of cp2 is checked"
+  [[mutation.edit]]
+  rule = "split_checkpoint--jump_any_2_2"
+  find = "=> jumpAny ( Prev:List , Rest:List , Bb:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp009-new-pool-jumps"
+expect = "kill"
+misunderstanding = "CP-009: a pool that cp1 lacks is a jump"
+  [[mutation.edit]]
+  rule = "split_checkpoint--jump_pool_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp025-open-marker-zero"
+expect = "kill"
+misunderstanding = "CP-023, CP-025: a read during the open restart resets the marker to 0"
+  [[mutation.edit]]
+  rule = "split_checkpoint--keep_int_1"
+  find = "=> Old:Int"
+  replace = "=> 0"
+
+[[mutation]]
+id = "cp025-open-landed-flipped"
+expect = "kill"
+misunderstanding = "CP-025: a read during the open restart flips the landed flag"
+  [[mutation.edit]]
+  rule = "split_checkpoint--keep_landed_1"
+  find = "=> Old:Bool"
+  replace = "=> notBool Old:Bool"
+
+[[mutation]]
+id = "cp012-phantom-nf"
+expect = "kill"
+misunderstanding = "CP-012: nf 5 is always landed"
+  [[mutation.edit]]
+  rule = "split_checkpoint--landed_nfs_1"
+  find = "=> .List"
+  replace = "=> ListItem(5)"
+
+[[mutation]]
+id = "cp011-initial-one"
+expect = "kill"
+misunderstanding = "CP-011, CP-026: restart_seq starts at 1"
+  [[mutation.edit]]
+  rule = "split_checkpoint--latest_restart_seq_1"
+  find = "=> 0"
+  replace = "=> 1"
+
+[[mutation]]
+id = "cp017-first-ticket-only"
+expect = "kill"
+misunderstanding = "CP-017: only the first ticket is read"
+  [[mutation.edit]]
+  rule = "split_checkpoint--lookup_2_2"
+  find = "=> lookup ( Rest:List , Key:Int )"
+  replace = "=> 0"
+
+[[mutation]]
+id = "cp007-lowered-always"
+expect = "kill"
+misunderstanding = "CP-007: every later checkpoint is h_lowered"
+  [[mutation.edit]]
+  rule = "split_checkpoint--lowered_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp007-lowered-never"
+expect = "kill"
+misunderstanding = "CP-007: a lowered pool is not refused"
+  [[mutation.edit]]
+  rule = "split_checkpoint--lowered_2_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp025-mark-adds-pool"
+expect = "kill"
+misunderstanding = "CP-025: marking adds an account pool"
+  [[mutation.edit]]
+  rule = "split_checkpoint--mark_accts_1"
+  find = "=> .List"
+  replace = "=> ListItem(acct ( 9 , .List , 0 , false ))"
+
+[[mutation]]
+id = "cp010-missing-always"
+expect = "kill"
+misunderstanding = "CP-010: every checkpoint lacks a statement"
+  [[mutation.edit]]
+  rule = "split_checkpoint--missing_restore_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp010-missing-never"
+expect = "kill"
+misunderstanding = "CP-010: a missing statement is not refused"
+  [[mutation.edit]]
+  rule = "split_checkpoint--missing_restore_2_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "rq001-n-minus-one"
+expect = "kill"
+misunderstanding = "RQ-001, CP-017: the committee has n − 1 seats"
+  [[mutation.edit]]
+  rule = "split_checkpoint--n_of_1"
+  find = "=> N:Int"
+  replace = "=> N:Int -Int 1"
+
+[[mutation]]
+id = "cp011-always-seq"
+expect = "kill"
+misunderstanding = "CP-011: every landing sets restart_seq to its seq"
+  [[mutation.edit]]
+  rule = "split_checkpoint--next_restart_seq"
+  find = "nextFrom ( Chain:List , C2:Cp , latestRestartSeq ( Chain:List ) )"
+  replace = "cpSeq ( C2:Cp )"
+
+[[mutation]]
+id = "cp011-kept-reset"
+expect = "kill"
+misunderstanding = "CP-011: a landing that carries no qualifying statement resets restart_seq to 0 instead of keeping it"
+  [[mutation.edit]]
+  rule = "split_checkpoint--chain_moves_2"
+  find = "=> Cur:Int"
+  replace = "=> 0"
+
+[[mutation]]
+id = "cp012-empty-dup"
+expect = "kill"
+misunderstanding = "CP-012, CP-013, CP-015: every list holds a repeat"
+  [[mutation.edit]]
+  rule = "split_checkpoint--nodup_b_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp012-dup-skipped"
+expect = "kill"
+misunderstanding = "CP-012, CP-013, CP-015: a repeated element is skipped"
+  [[mutation.edit]]
+  rule = "split_checkpoint--nodup_b_2_1"
+  find = "=> false"
+  replace = "=> nodupB ( Rest:List )"
+
+[[mutation]]
+id = "cp012-dup-first-only"
+expect = "kill"
+misunderstanding = "CP-012, CP-013, CP-015: only the first element is checked for a repeat"
+  [[mutation.edit]]
+  rule = "split_checkpoint--nodup_b_2_2"
+  find = "=> nodupB ( Rest:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp012-none-in-empty"
+expect = "kill"
+misunderstanding = "CP-012: an empty bf_root is never signed"
+  [[mutation.edit]]
+  rule = "split_checkpoint--none_in_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp012-landed-allowed"
+expect = "kill"
+misunderstanding = "CP-012: a landed nf is allowed"
+  [[mutation.edit]]
+  rule = "split_checkpoint--none_in_2_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp004-phantom-pending"
+expect = "kill"
+misunderstanding = "CP-004: a landing adds a pending statement"
+  [[mutation.edit]]
+  rule = "split_checkpoint--not_carried_1"
+  find = "=> .List"
+  replace = "=> ListItem(rd ( 9 , 9 , 9 , false ))"
+
+[[mutation]]
+id = "cp004-carried-kept"
+expect = "kill"
+misunderstanding = "CP-004: a carried statement stays pending"
+  [[mutation.edit]]
+  rule = "split_checkpoint--not_carried_2_1"
+  find = "=> notCarried ( Rest:List , Carried:List )"
+  replace = "=> ListItem(R:Restore) notCarried ( Rest:List , Carried:List )"
+
+[[mutation]]
+id = "refusal-code-no-rule"
+expect = "kill"
+misunderstanding = "CP-007 to CP-036: every refusal is no-rule"
+  [[mutation.edit]]
+  rule = "split_checkpoint--opt_1"
+  find = "=> ListItem(R:Refusal)"
+  replace = "=> ListItem(noRule)"
+
+[[mutation]]
+id = "refusal-always"
+expect = "kill"
+misunderstanding = "CP-007 to CP-036: a passed check also refuses"
+  [[mutation.edit]]
+  rule = "split_checkpoint--opt_2"
+  find = "=> .List"
+  replace = "=> ListItem(noRule)"
+
+[[mutation]]
+id = "cp024-phantom-burn"
+expect = "kill"
+misunderstanding = "CP-024: a session opens with index 0 of pool 0 burned"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pool_burns_1"
+  find = "=> .List"
+  replace = "=> ListItem(rg ( 0 , 0 , 0 ))"
+
+[[mutation]]
+id = "cp024-other-pool-burns"
+expect = "kill"
+misunderstanding = "CP-024: a session opens with the burns of other pools"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pool_burns_2_2"
+  find = "=> poolBurns ( Rest:List , Pid:Int )"
+  replace = "=> ListItem(R:Range) poolBurns ( Rest:List , Pid:Int )"
+
+[[mutation]]
+id = "cp015-phantom-put"
+expect = "kill"
+misunderstanding = "CP-015: digest 7 is always put"
+  [[mutation.edit]]
+  rule = "split_checkpoint--put_digests_1"
+  find = "=> .List"
+  replace = "=> ListItem(7)"
+
+[[mutation]]
+id = "cp015-puts-unread"
+expect = "kill"
+misunderstanding = "CP-015: put entries are not read"
+  [[mutation.edit]]
+  rule = "split_checkpoint--put_digests_2"
+  find = "=> ListItem(Digest:Int) putDigests"
+  replace = "=> putDigests"
+
+[[mutation]]
+id = "cp015-bind-puts-digest"
+expect = "kill"
+misunderstanding = "CP-015: a binding also puts its digest"
+  [[mutation.edit]]
+  rule = "split_checkpoint--put_digests_3"
+  find = "ListItem(bind ( _ , _ )) Rest:List ) => putDigests ( Rest:List )"
+  replace = "ListItem(bind ( _ , D:Int )) Rest:List ) => ListItem(D:Int) putDigests ( Rest:List )"
+
+[[mutation]]
+id = "cp015-restore-puts-counter"
+expect = "kill"
+misunderstanding = "CP-015, CP-016: a RestoreDone entry puts its boot counter as a digest"
+  [[mutation.edit]]
+  rule = "split_checkpoint--put_digests_4"
+  find = "ListItem(restoreEntry ( _ )) Rest:List ) => putDigests ( Rest:List )"
+  replace = "ListItem(restoreEntry ( rd ( _ , C:Int , _ , _ ) )) Rest:List ) => ListItem(C:Int) putDigests ( Rest:List )"
+
+[[mutation]]
+id = "cp015-release-puts-g"
+expect = "kill"
+misunderstanding = "CP-015, CP-037: a release entry puts its g as a digest"
+  [[mutation.edit]]
+  rule = "split_checkpoint--put_digests_5"
+  find = "ListItem(releaseEntry ( _ , _ )) Rest:List ) => putDigests ( Rest:List )"
+  replace = "ListItem(releaseEntry ( _ , G:Int )) Rest:List ) => ListItem(G:Int) putDigests ( Rest:List )"
+
+[[mutation]]
+id = "cp033-refill-adds-pool"
+expect = "kill"
+misunderstanding = "CP-033: a non-TEE restart adds an account pool"
+  [[mutation.edit]]
+  rule = "split_checkpoint--refill_accts_1"
+  find = "=> .List"
+  replace = "=> ListItem(acct ( 9 , .List , 0 , false ))"
+
+[[mutation]]
+id = "cp033-refill-keeps-shares"
+expect = "survive"
+misunderstanding = "CP-033: a non-TEE restart keeps the slot shares. Survives by construction: a non-TEE node is never ready (the TEE ledger read is no rule for it, ledger 3, and ledger 6 refuses open_account before ready), so it holds no account pool when it restarts"
+  [[mutation.edit]]
+  rule = "split_checkpoint--refill_accts_2"
+  find = "ListItem(acct ( Id:Int , burnSlots ( Slots:List ) , Mark:Int , true ))"
+  replace = "ListItem(acct ( Id:Int , Slots:List , Mark:Int , true ))"
+
+[[mutation]]
+id = "cp037-plain-release-waits"
+expect = "kill"
+misunderstanding = "CP-037: a charter without anchor_before_release never releases"
+  [[mutation.edit]]
+  rule = "split_checkpoint--release_ok_2"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp031-phantom-slot"
+expect = "kill"
+misunderstanding = "CP-031: slot 9 of seat 9 is always reshared"
+  [[mutation.edit]]
+  rule = "split_checkpoint--reshare_list_1"
+  find = "=> .List"
+  replace = "=> ListItem(pr ( 9 , 9 ))"
+
+[[mutation]]
+id = "cp031-anchor-reshares-none"
+expect = "kill"
+misunderstanding = "CP-031: with slot anchors no slot is reshared"
+  [[mutation.edit]]
+  rule = "split_checkpoint--reshare_of_1"
+  find = "=> reshareList ( Slots:List )"
+  replace = "=> .List"
+
+[[mutation]]
+id = "cp032-no-anchor-reshares"
+expect = "kill"
+misunderstanding = "CP-032: without slot anchors the uncovered slots are reshared"
+  [[mutation.edit]]
+  rule = "split_checkpoint--reshare_of_2"
+  find = "reshareOf ( P:Params , _ ) => .List"
+  replace = "reshareOf ( P:Params , Slots:List ) => reshareList ( Slots:List )"
+
+[[mutation]]
+id = "cp017-no-tickets-outside"
+expect = "kill"
+misunderstanding = "CP-017: every ticket list holds a seat outside the committee"
+  [[mutation.edit]]
+  rule = "split_checkpoint--seat_outside_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp012-phantom-leaf"
+expect = "kill"
+misunderstanding = "CP-012: every bf_root holds nf 77"
+  [[mutation.edit]]
+  rule = "split_checkpoint--seconds_1"
+  find = "=> .List"
+  replace = "=> ListItem(77)"
+
+[[mutation]]
+id = "cp012-nfs-unread"
+expect = "kill"
+misunderstanding = "CP-012: the leaves' nf are not read"
+  [[mutation.edit]]
+  rule = "split_checkpoint--seconds_2"
+  find = "=> ListItem(B:Int) seconds"
+  replace = "=> seconds"
+
+[[mutation]]
+id = "cp024-burns-after-restart"
+expect = "kill"
+misunderstanding = "CP-024, CP-027: a session opened outside a restart opens with every burn"
+  [[mutation.edit]]
+  rule = "split_checkpoint--session_burns_2"
+  find = "sessionBurns ( Open:Bool , _ , _ ) => .List"
+  replace = "sessionBurns ( Open:Bool , Burn:List , _ ) => Burn:List"
+
+[[mutation]]
+id = "cp025-bind-past-end"
+expect = "survive"
+misunderstanding = "CP-025: a bind past the end of the pool adds a free slot. Survives by construction: bind_account is refused unless slot i is free (ledger 5), so the bind never runs past the end"
+  [[mutation.edit]]
+  rule = "split_checkpoint--set_bound_1"
+  find = "=> .List"
+  replace = "=> ListItem(free)"
+
+[[mutation]]
+id = "cp025-bind-wrong-digest"
+expect = "kill"
+misunderstanding = "CP-025: the slot is bound to another digest"
+  [[mutation.edit]]
+  rule = "split_checkpoint--set_bound_2_1"
+  find = "=> ListItem(bound ( D:Int )) Rest:List"
+  replace = "=> ListItem(bound ( D:Int +Int 1 )) Rest:List"
+
+[[mutation]]
+id = "ledger5-free-everywhere"
+expect = "kill"
+misunderstanding = "ledger 5 (CP-025): a slot of an unknown account pool is free"
+  [[mutation.edit]]
+  rule = "split_checkpoint--slot_free_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp014-sort-phantom"
+expect = "kill"
+misunderstanding = "CP-014: the sorted list always holds index 0"
+  [[mutation.edit]]
+  rule = "split_checkpoint--sort_nat_1"
+  find = "=> .List"
+  replace = "=> ListItem(0)"
+
+[[mutation]]
+id = "cp014-no-sort"
+expect = "kill"
+misunderstanding = "CP-014: the live indices are not sorted"
+  [[mutation.edit]]
+  rule = "split_checkpoint--sort_nat_2"
+  find = "=> insertSorted ( X:Int , sortNat ( Rest:List ) )"
+  replace = "=> ListItem(X:Int) sortNat ( Rest:List )"
+
+[[mutation]]
+id = "cp013-void-empty"
+expect = "kill"
+misunderstanding = "CP-013: no settle_root keeps the VOID records"
+  [[mutation.edit]]
+  rule = "split_checkpoint--void_kept_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp011-restart-seq-off"
+expect = "kill"
+misunderstanding = "CP-011: the contract sets restart_seq one above the value it computes"
+  [[mutation.edit]]
+  rule = "split_checkpoint--with_restart_seq_1"
+  find = "V:Int , SeatRoots"
+  replace = "V:Int +Int 1 , SeatRoots"

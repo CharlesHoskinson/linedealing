@@ -1,2 +1,2 @@
-    Checking line-dealing v0.1.0 (impl)
+    Checking line-dealing v0.1.0 (/home/hoskinson/Projects/mpcexperiments-wt-rust/impl)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.60s

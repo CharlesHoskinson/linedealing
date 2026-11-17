@@ -1,0 +1,11 @@
+# CP-011: a whole_restart RestoreDone naming a checkpoint at or above restart_seq sets it to seq; the candidate's value is not read (ledger 4)
+# Each checkpoint that moves restart_seq jumps the window (h >= previous h + B, pending_min > previous h + B), so CP-041 lands it.
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 7, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { Land = { c = { CpOf = { seq = 1, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 110, pending_min = 111, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 9, seat_roots = [], restores = [{ Rd = { seat = 0, boot_ctr = 0, cp_seq = 0, whole = false } }, { Rd = { seat = 1, boot_ctr = 0, cp_seq = 0, whole = true } }] } }, mh = 1000 } },
+  { Land = { c = { CpOf = { seq = 2, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 120, pending_min = 121, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [{ Rd = { seat = 2, boot_ctr = 0, cp_seq = 1, whole = true } }] } }, mh = 1000 } },
+  { Land = { c = { CpOf = { seq = 3, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 125, pending_min = 121, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [{ Rd = { seat = 3, boot_ctr = 0, cp_seq = 0, whole = true } }] } }, mh = 1000 } },
+  { Land = { c = { CpOf = { seq = 4, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 125, pending_min = 121, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [{ Rd = { seat = 3, boot_ctr = 0, cp_seq = 2, whole = false } }] } }, mh = 1000 } },
+]

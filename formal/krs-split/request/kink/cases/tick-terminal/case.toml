@@ -1,0 +1,9 @@
+# RQ-046, RQ-056: a later tick leaves an expired request as it is.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 100, rtype = "Spend", profile = "PfP1" } },
+  { Tick = { h = 101 } },
+  { Tick = { h = 200 } },
+]

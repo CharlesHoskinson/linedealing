@@ -1,0 +1,132 @@
+    Finished `release` profile [optimized] target(s) in 0.02s
+     Running tests/sessions_bench.rs (/home/hoskinson/Projects/veritee/wt-seald-sessions/target/release/deps/sessions_bench-a0756c39d4cce9e2)
+
+running 5 tests
+test bench_daemon_in_process_transport ... 
+Sessions daemon level (Node + Runtime + FileSessionsBoard + peer RPC: InProcessTransport, no socket). daemon iters=20 dir=/home/hoskinson/.cache/loop-verify/item33/quiet/seald-tmp
+
+### Daemon operations, InProcessTransport, no socket
+
+Clocks: thread CPU = CLOCK_THREAD_CPUTIME_ID of the calling thread; wall = Instant (CLOCK_MONOTONIC).
+
+| n | f | t | w | operation | samples | thread CPU median (us) | thread CPU p90 (us) | wall median (us) | wall p90 (us) |
+|---|---|---|---|---|---|---|---|---|---|
+| 4 | 1 | 3 | 2 | create (session_open, new account-pool session) | 20 | 77.9 | 89.3 | 78.2 | 89.7 |
+| 4 | 1 | 3 | 2 | session_put (1 entry, overwrite) | 20 | 85.5 | 86.9 | 85.8 | 87.2 |
+| 4 | 1 | 3 | 2 | session_get (1 entry) | 20 | 73.2 | 73.6 | 73.5 | 74.1 |
+| 4 | 1 | 3 | 2 | slot_get (one share) | 20 | 73.9 | 74.4 | 74.3 | 74.7 |
+| 4 | 1 | 3 | 2 | session_checkpoint (t partials + w witnesses over peer RPC) | 20 | 12801.9 | 13490.7 | 97738.0 | 108981.4 |
+| 4 | 1 | 3 | 2 | committee_checkpoint (1 Midnight write each, asserted) | 20 | 2557.7 | 2766.2 | 27257.4 | 33486.9 |
+| 4 | 1 | 3 | 2 | restore after reboot of seat 0 (session_open) | 20 | 16332.4 | 17068.5 | 101500.8 | 108187.8 |
+| 4 | 1 | 3 | 2 | restore after whole-committee restart, burn [1,10] (per seat) | 16 | 15329.8 | 16571.6 | 105451.7 | 125984.2 |
+| 7 | 2 | 5 | 4 | create (session_open, new account-pool session) | 20 | 86.8 | 101.2 | 87.1 | 101.6 |
+| 7 | 2 | 5 | 4 | session_put (1 entry, overwrite) | 20 | 94.4 | 98.1 | 94.7 | 98.4 |
+| 7 | 2 | 5 | 4 | session_get (1 entry) | 20 | 81.8 | 82.2 | 82.1 | 82.5 |
+| 7 | 2 | 5 | 4 | slot_get (one share) | 20 | 82.5 | 83.1 | 82.9 | 83.4 |
+| 7 | 2 | 5 | 4 | session_checkpoint (t partials + w witnesses over peer RPC) | 20 | 25406.8 | 26490.4 | 189975.2 | 199388.2 |
+| 7 | 2 | 5 | 4 | committee_checkpoint (1 Midnight write each, asserted) | 20 | 4679.3 | 5053.7 | 48412.6 | 53230.7 |
+| 7 | 2 | 5 | 4 | restore after reboot of seat 0 (session_open) | 20 | 30870.0 | 32750.0 | 205696.6 | 225873.4 |
+| 7 | 2 | 5 | 4 | restore after whole-committee restart, burn [1,10] (per seat) | 28 | 28754.4 | 31058.3 | 211281.2 | 230520.2 |
+ok
+test bench_daemon_socket_transport ... 
+Sessions daemon level (Node + Runtime + FileSessionsBoard + peer RPC: AttestPeerTransport over a Unix socket). daemon iters=20 dir=/home/hoskinson/.cache/loop-verify/item33/quiet/seald-tmp
+
+### Daemon operations, AttestPeerTransport over a Unix socket
+
+Clocks: thread CPU = CLOCK_THREAD_CPUTIME_ID of the calling thread; wall = Instant (CLOCK_MONOTONIC).
+
+| n | f | t | w | operation | samples | thread CPU median (us) | thread CPU p90 (us) | wall median (us) | wall p90 (us) |
+|---|---|---|---|---|---|---|---|---|---|
+| 4 | 1 | 3 | 2 | create (session_open, new account-pool session) | 20 | 75.3 | 89.6 | 75.6 | 90.0 |
+| 4 | 1 | 3 | 2 | session_put (1 entry, overwrite) | 20 | 85.4 | 87.2 | 85.7 | 87.5 |
+| 4 | 1 | 3 | 2 | session_get (1 entry) | 20 | 72.7 | 72.9 | 73.0 | 73.2 |
+| 4 | 1 | 3 | 2 | slot_get (one share) | 20 | 73.6 | 73.9 | 73.8 | 74.2 |
+| 4 | 1 | 3 | 2 | session_checkpoint (t partials + w witnesses over peer RPC) | 20 | 4371.0 | 4647.7 | 101492.5 | 116063.2 |
+| 4 | 1 | 3 | 2 | committee_checkpoint (1 Midnight write each, asserted) | 20 | 2271.7 | 2440.6 | 26417.9 | 31082.9 |
+| 4 | 1 | 3 | 2 | restore after reboot of seat 0 (session_open) | 20 | 7208.4 | 7701.6 | 107822.1 | 113690.7 |
+| 4 | 1 | 3 | 2 | restore after whole-committee restart, burn [1,10] (per seat) | 16 | 5688.0 | 5905.7 | 108035.9 | 121170.9 |
+| 7 | 2 | 5 | 4 | create (session_open, new account-pool session) | 20 | 87.3 | 110.1 | 87.6 | 110.5 |
+| 7 | 2 | 5 | 4 | session_put (1 entry, overwrite) | 20 | 95.4 | 96.3 | 95.7 | 96.6 |
+| 7 | 2 | 5 | 4 | session_get (1 entry) | 20 | 82.6 | 82.7 | 82.8 | 83.0 |
+| 7 | 2 | 5 | 4 | slot_get (one share) | 20 | 83.2 | 84.2 | 83.5 | 84.5 |
+| 7 | 2 | 5 | 4 | session_checkpoint (t partials + w witnesses over peer RPC) | 20 | 7318.6 | 7572.1 | 198718.1 | 214566.5 |
+| 7 | 2 | 5 | 4 | committee_checkpoint (1 Midnight write each, asserted) | 20 | 4311.6 | 4694.3 | 51849.0 | 56151.7 |
+| 7 | 2 | 5 | 4 | restore after reboot of seat 0 (session_open) | 20 | 11013.1 | 11628.5 | 222413.3 | 234049.9 |
+| 7 | 2 | 5 | 4 | restore after whole-committee restart, burn [1,10] (per seat) | 28 | 9398.1 | 10031.9 | 210493.1 | 231071.5 |
+ok
+test bench_ledger_writes_per_checkpoint ... 
+Board entries and Midnight checkpoints: FileSessionsBoard + LedgerCheckpointSink over MockLedger. dir=/home/hoskinson/.cache/loop-verify/item33/quiet/seald-tmp
+
+### Midnight writes per checkpoint
+
+Clocks: thread CPU = CLOCK_THREAD_CPUTIME_ID; wall = Instant (CLOCK_MONOTONIC). Each append and publish fsyncs.
+
+| n | puts per checkpoint | checkpoints | Midnight writes during puts | Midnight writes per checkpoint | append CPU median (us) | append CPU p90 (us) | append wall median (us) | append wall p90 (us) | publish CPU median (us) | publish CPU p90 (us) | publish wall median (us) | publish wall p90 (us) | covered entries at end |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 4 | 1 | 50 | 0 | 1 | 637.2 | 763.1 | 7887.2 | 10480.6 | 2193.0 | 2603.1 | 28968.1 | 34270.2 | 50 |
+| 4 | 10 | 50 | 0 | 1 | 1701.5 | 2603.8 | 10297.5 | 12432.2 | 3436.8 | 4346.1 | 31239.0 | 34629.8 | 500 |
+| 4 | 100 | 10 | 0 | 1 | 2596.9 | 3540.5 | 11857.8 | 14534.5 | 4105.1 | 4609.5 | 33129.4 | 35840.9 | 1000 |
+| 4 | 1000 | 3 | 0 | 1 | 4892.1 | 7117.2 | 16423.2 | 20988.5 | 7720.2 | 10519.1 | 39145.1 | 44521.1 | 3000 |
+| 7 | 1 | 50 | 0 | 1 | 624.5 | 770.4 | 8109.0 | 10379.2 | 3442.9 | 4062.8 | 50463.2 | 57556.6 | 50 |
+| 7 | 10 | 50 | 0 | 1 | 1713.8 | 2539.3 | 10353.1 | 13250.0 | 4995.4 | 5884.8 | 52633.7 | 60545.6 | 500 |
+| 7 | 100 | 10 | 0 | 1 | 2603.7 | 3655.9 | 12181.7 | 15056.0 | 5698.7 | 6510.0 | 57210.3 | 60913.1 | 1000 |
+| 7 | 1000 | 3 | 0 | 1 | 4897.8 | 7027.8 | 16566.2 | 20484.6 | 8639.8 | 11722.3 | 57140.6 | 57501.5 | 3000 |
+
+### Midnight transactions at scale (DERIVED from the measured W, not measured)
+
+tx = ceil(ops / P) x W, with W = 1 Midnight write per checkpoint (measured above).
+
+| ops | P = 1 | P = 10 | P = 100 | P = 1000 | one write per op (removed design) |
+|---|---|---|---|---|---|
+| 1000 | 1000 | 100 | 10 | 1 | 1000 |
+| 100000 | 100000 | 10000 | 1000 | 100 | 100000 |
+| 10000000 | 10000000 | 1000000 | 100000 | 10000 | 10000000 |
+ok
+test bench_service_operations ... 
+Sessions service, in-process host. iters=50 warmup=10 dir=/home/hoskinson/.cache/loop-verify/item33/quiet/seald-tmp
+
+### Service operations (seat 0, sequential pool, B = 10)
+
+Clocks: thread CPU = CLOCK_THREAD_CPUTIME_ID of the calling thread; wall = Instant (CLOCK_MONOTONIC).
+
+| n | f | t | w | operation | samples | thread CPU median (us) | thread CPU p90 (us) | wall median (us) | wall p90 (us) |
+|---|---|---|---|---|---|---|---|---|---|
+| 4 | 1 | 3 | 2 | create (first session_open) | 50 | 12.8 | 13.6 | 13.1 | 14.0 |
+| 4 | 1 | 3 | 2 | session_put (1 entry, overwrite) | 50 | 19.8 | 20.2 | 20.0 | 20.5 |
+| 4 | 1 | 3 | 2 | session_get (1 entry) | 50 | 8.1 | 8.2 | 8.3 | 8.5 |
+| 4 | 1 | 3 | 2 | slot_get (one share) | 50 | 8.8 | 8.9 | 9.0 | 9.2 |
+| 4 | 1 | 3 | 2 | session_checkpoint (seal, fsync, w acks) | 50 | 2672.5 | 2963.0 | 12069.0 | 13717.4 |
+| 4 | 1 | 3 | 2 | restore after reboot of seat 0 (new Service + open) | 50 | 3659.7 | 4063.6 | 16383.6 | 18019.6 |
+| 4 | 1 | 3 | 2 | restore after whole-committee restart, burn [1,10] | 50 | 3634.6 | 3997.9 | 15820.3 | 18449.0 |
+| 7 | 2 | 5 | 4 | create (first session_open) | 50 | 13.7 | 14.3 | 14.0 | 14.6 |
+| 7 | 2 | 5 | 4 | session_put (1 entry, overwrite) | 50 | 20.9 | 22.1 | 21.1 | 22.5 |
+| 7 | 2 | 5 | 4 | session_get (1 entry) | 50 | 9.4 | 9.5 | 9.6 | 9.8 |
+| 7 | 2 | 5 | 4 | slot_get (one share) | 50 | 10.0 | 10.1 | 10.2 | 10.4 |
+| 7 | 2 | 5 | 4 | session_checkpoint (seal, fsync, w acks) | 50 | 3631.2 | 3919.6 | 12244.6 | 13857.2 |
+| 7 | 2 | 5 | 4 | restore after reboot of seat 0 (new Service + open) | 50 | 4764.2 | 5261.5 | 17353.8 | 19012.2 |
+| 7 | 2 | 5 | 4 | restore after whole-committee restart, burn [1,10] | 50 | 4745.7 | 5107.9 | 17292.3 | 21109.9 |
+
+### Ledger writes by the service path
+
+| n | session_checkpoint calls | Midnight writes (MockLedger records) | board statements appended |
+|---|---|---|---|
+| 4 | 60 | 0 | 0 |
+| 7 | 60 | 0 | 0 |
+ok
+test bench_threshold_key_derivation ... 
+### Threshold PRF key derivation (one record header)
+
+Clocks: thread CPU = CLOCK_THREAD_CPUTIME_ID of the calling thread; wall = Instant (CLOCK_MONOTONIC).
+
+| n | f | t | w | operation | samples | thread CPU median (us) | thread CPU p90 (us) | wall median (us) | wall p90 (us) |
+|---|---|---|---|---|---|---|---|---|---|
+| 4 | 1 | 3 | 2 | prove_partial (one peer, DLEQ proof) | 50 | 114.5 | 115.9 | 114.7 | 116.2 |
+| 4 | 1 | 3 | 2 | session_key: verify t proofs + combine t | 50 | 450.5 | 456.0 | 450.8 | 456.3 |
+| 4 | 1 | 3 | 2 | derive_key: t proofs + verify + combine, one thread | 50 | 796.2 | 800.2 | 796.5 | 800.5 |
+| 7 | 2 | 5 | 4 | prove_partial (one peer, DLEQ proof) | 50 | 114.4 | 117.4 | 114.7 | 117.7 |
+| 7 | 2 | 5 | 4 | session_key: verify t proofs + combine t | 50 | 749.3 | 751.3 | 749.6 | 751.6 |
+| 7 | 2 | 5 | 4 | derive_key: t proofs + verify + combine, one thread | 50 | 1324.2 | 1328.1 | 1324.5 | 1328.4 |
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 300.79s
+

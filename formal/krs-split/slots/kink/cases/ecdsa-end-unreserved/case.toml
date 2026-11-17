@@ -1,0 +1,9 @@
+# SL-011: an end burns only the slots its request reserved.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealE = { pool = 1, leaf_set = 5, root = "Own", kcount = 1 } },
+  { InForce = { eid = 1, root = "Own" } },
+  { OpenE = { eid = 1, pos = 10, names = [{ Ek = { pool = 1, idx = 1 } }] } },
+  { EndReq = { eid = 1 } },
+]

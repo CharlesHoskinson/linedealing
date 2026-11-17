@@ -1,0 +1,12 @@
+# CP-020, SL-028: a restart burns lo..hi of one pool only.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealC = { suite = "Bip340", epoch = 3, kcount = 4 } },
+  { DealC = { suite = "Ed25519", epoch = 3, kcount = 2 } },
+  { DealC = { suite = "Bip340", epoch = 4, kcount = 2 } },
+  { BurnRange = { suite = "Bip340", epoch = 3, lo = 2, hi = 3 } },
+  { BurnRange = { suite = "Bip340", epoch = 3, lo = 4, hi = 4 } },
+  { BurnRange = { suite = "Bip340", epoch = 3, lo = 3, hi = 2 } },
+  { BurnRange = { suite = "Ed25519", epoch = 4, lo = 1, hi = 9 } },
+]

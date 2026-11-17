@@ -1,0 +1,33 @@
+   Compiling line-dealing v0.1.0 (/home/hoskinson/Projects/mpcexperiments/.claude/worktrees/agent-aa07a19511251ee4b/impl)
+    Finished `release` profile [optimized] target(s) in 6.62s
+     Running tests/split_envelope.rs (target/release/deps/split_envelope-1b902a2ae93aa7bd)
+
+running 1 test
+n=9 K=8 L=2 suite=2 tee=false: S=6 base=11422 extraTEE=0 perActor=790
+n=9 K=8 L=2 suite=2 tee=true: S=5 base=11422 extraTEE=377 perActor=943
+n=9 K=8 L=1 suite=2 tee=false: S=11 base=7532 extraTEE=0 perActor=760
+n=9 K=8 L=1 suite=2 tee=true: S=10 base=7532 extraTEE=377 perActor=853
+n=9 K=5 L=2 suite=2 tee=false: S=14 base=7387 extraTEE=0 perActor=649
+n=9 K=5 L=2 suite=2 tee=true: S=12 base=7387 extraTEE=281 perActor=754
+n=9 K=3 L=2 suite=1 tee=false: S=26 base=2887 extraTEE=0 perActor=525
+n=9 K=3 L=2 suite=1 tee=true: S=24 base=2887 extraTEE=217 perActor=558
+n=9 K=1 L=1 suite=1 tee=false: S=33 base=1547 extraTEE=0 perActor=455
+n=9 K=1 L=1 suite=1 tee=true: S=31 base=1547 extraTEE=153 perActor=488
+n=9 K=1 L=1 suite=2 tee=false: S=32 base=1708 extraTEE=0 perActor=459
+n=9 K=1 L=1 suite=2 tee=true: S=30 base=1708 extraTEE=153 perActor=496
+n=17 K=8 L=2 suite=2 tee=false: S=6 base=11843 extraTEE=0 perActor=790
+n=17 K=8 L=2 suite=2 tee=true: S=4 base=11843 extraTEE=377 perActor=943
+n=17 K=8 L=1 suite=2 tee=false: S=11 base=7953 extraTEE=0 perActor=760
+n=17 K=8 L=1 suite=2 tee=true: S=9 base=7953 extraTEE=377 perActor=853
+n=17 K=5 L=2 suite=2 tee=false: S=13 base=7808 extraTEE=0 perActor=649
+n=17 K=5 L=2 suite=2 tee=true: S=11 base=7808 extraTEE=281 perActor=754
+n=17 K=3 L=2 suite=1 tee=false: S=25 base=3308 extraTEE=0 perActor=525
+n=17 K=3 L=2 suite=1 tee=true: S=23 base=3308 extraTEE=217 perActor=558
+n=17 K=1 L=1 suite=1 tee=false: S=32 base=1968 extraTEE=0 perActor=455
+n=17 K=1 L=1 suite=1 tee=true: S=30 base=1968 extraTEE=153 perActor=488
+n=17 K=1 L=1 suite=2 tee=false: S=31 base=2129 extraTEE=0 perActor=459
+n=17 K=1 L=1 suite=2 tee=true: S=29 base=2129 extraTEE=153 perActor=496
+test reference_and_real_serialization_budgets_cover_every_grid_and_committee ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 14 filtered out; finished in 7.21s
+

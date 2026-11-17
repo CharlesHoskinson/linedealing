@@ -1,0 +1,12 @@
+# RQ-072 scenario: at f = 1 one post MALFORMED and the completing post REVOKED end the
+# request VOID with reason MIXED.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { Open = { eid = 1, kk = 2, ll = 1, collecting = false, npos = 0, rates = [10, 20] } },
+  { PostVoid = { eid = 1, epoch = 0, member = 0, reason = "Malformed" } },
+  { PostVoid = { eid = 1, epoch = 0, member = 1, reason = "Revoked" } },
+]

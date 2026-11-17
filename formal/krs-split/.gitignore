@@ -1,0 +1,5 @@
+# Facade patch written by scripts/krs-in.sh, build output and kink report caches.
+.cargo/
+target/
+.kink-*.json
+__pycache__/

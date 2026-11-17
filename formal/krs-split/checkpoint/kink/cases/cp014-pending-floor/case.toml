@@ -1,0 +1,12 @@
+# CP-014 (DECISIONS 71, finding F7; Lean pin_pending_floor): before any landing there is no floor, so live
+# indices 0, 1 and 2 give pending_min = 0, count 3. After a checkpoint lands pool 1 with pending_min = 2,
+# the signer lists only the indices at or above the floor (2 itself stays): pending_min = 2, count 1;
+# the old listing (pending_min = 1, count 2) is no longer signed.
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { SignPending = { p = { PoolOf = { pool = 1, h = 2, pending_min = 0, pending = [0, 1, 2], pending_count = 3 } }, live = [2, 0, 1] } },
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 2, pending_min = 2, pending = [2], pending_count = 1 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { SignPending = { p = { PoolOf = { pool = 1, h = 2, pending_min = 2, pending = [2], pending_count = 1 } }, live = [1, 2] } },
+  { SignPending = { p = { PoolOf = { pool = 1, h = 2, pending_min = 1, pending = [1, 2], pending_count = 2 } }, live = [1, 2] } },
+]

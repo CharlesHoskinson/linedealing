@@ -1,0 +1,8 @@
+# SL-004: an open changes only the slots it names.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealC = { suite = "Bip340", epoch = 3, kcount = 1 } },
+  { DealC = { suite = "Ed25519", epoch = 3, kcount = 1 } },
+  { OpenC = { eid = 1, pos = 10, names = [{ Ck = { suite = "Ed25519", epoch = 3, idx = 1 } }] } },
+]

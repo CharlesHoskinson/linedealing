@@ -1,0 +1,487 @@
+# Misreadings of the DECISIONS 69 rules (CP-011 carriers, CP-021 generations, CP-022
+# sessions, CP-040 to CP-043), as K patches of kink/definition.k.
+
+# --- CP-040: pending_min lowered -------------------------------------------------
+
+[[mutation]]
+id = "cp040-unchecked"
+expect = "kill"
+misunderstanding = "CP-040: a later checkpoint may lower pending_min for a pool"
+  [[mutation.edit]]
+  rule = "split_checkpoint--land_refusals_2"
+  find = "opt ( pminLowered ( cpPools ( C1:Cp ) , cpPools ( C2:Cp ) ) , pendingMinLowered )"
+  replace = ".List"
+
+[[mutation]]
+id = "cp040-equal-lowered"
+expect = "kill"
+misunderstanding = "CP-040: pending_min must rise, so an equal pending_min is also pending_min_lowered"
+  [[mutation.edit]]
+  rule = "split_checkpoint--below_prev_min_2_1"
+  find = "Pm:Int <Int Pm1:Int"
+  replace = "Pm:Int <=Int Pm1:Int"
+
+[[mutation]]
+id = "cp040-rise-refused"
+expect = "kill"
+misunderstanding = "CP-040: the comparison is reversed, a pending_min above the previous one is refused"
+  [[mutation.edit]]
+  rule = "split_checkpoint--below_prev_min_2_1"
+  find = "Pm:Int <Int Pm1:Int"
+  replace = "Pm1:Int <Int Pm:Int"
+
+[[mutation]]
+id = "cp040-new-pool-lowered"
+expect = "kill"
+misunderstanding = "CP-040, ledger 11: a pool that the previous checkpoint lacks counts as lowered"
+  [[mutation.edit]]
+  rule = "split_checkpoint--below_prev_min_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp040-prev-first-pool-only"
+expect = "kill"
+misunderstanding = "CP-040: only the first pool of the previous checkpoint is looked up"
+  [[mutation.edit]]
+  rule = "split_checkpoint--below_prev_min_2_2"
+  find = "=> belowPrevMin ( Rest:List , Pid:Int , Pm:Int )"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp040-first-pool-only"
+expect = "kill"
+misunderstanding = "CP-040: only the first pool of the candidate is compared with the previous checkpoint"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pmin_lowered_2_2"
+  find = "=> pminLowered ( Prev:List , Rest:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp040-lowered-pool-skipped"
+expect = "kill"
+misunderstanding = "CP-040: a lowered pool is skipped and the check goes on with the next pool"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pmin_lowered_2_1"
+  find = "=> true"
+  replace = "=> pminLowered ( Prev:List , Rest:List )"
+
+[[mutation]]
+id = "cp040-every-landing"
+expect = "kill"
+misunderstanding = "CP-040: a candidate whose pools are all checked is still pending_min_lowered"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pmin_lowered_1"
+  find = "=> false"
+  replace = "=> true"
+
+# --- CP-041: restart_seq moved inside the window -----------------------------------
+
+[[mutation]]
+id = "cp041-unchecked"
+expect = "kill"
+misunderstanding = "CP-041: a checkpoint that moves restart_seq is checked only by CP-009"
+  [[mutation.edit]]
+  rule = "split_checkpoint--jump_code_2"
+  find = "=> movedJump ( P:Params , Chain:List , C1:Cp , C2:Cp )"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp009-only-moved"
+expect = "kill"
+misunderstanding = "CP-009: the kept-counter check never refuses; only CP-041 gives restart_jump"
+  [[mutation.edit]]
+  rule = "split_checkpoint--jump_code_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp041-anchor-ignored"
+expect = "kill"
+misunderstanding = "CP-041: the moved restart_seq is checked with slot_anchor on too"
+  [[mutation.edit]]
+  rule = "split_checkpoint--moved_jump_1"
+  find = "requires anchorOf ( P:Params )"
+  replace = "requires false"
+  [[mutation.edit]]
+  rule = "split_checkpoint--moved_jump_2"
+  find = "requires notBool anchorOf ( P:Params )"
+  replace = "requires true"
+
+[[mutation]]
+id = "cp041-candidate-value"
+expect = "kill"
+misunderstanding = "CP-041, ledger 4: the restart_seq of cp2 is the value the candidate carries, not the one the contract sets"
+  [[mutation.edit]]
+  rule = "split_checkpoint--moved_off_1"
+  find = "nextRestartSeq ( Chain:List , C2:Cp ) =/=Int"
+  replace = "cpRestartSeq ( C2:Cp ) =/=Int"
+  [[mutation.edit]]
+  rule = "split_checkpoint--moved_off_2"
+  find = "nextRestartSeq ( Chain:List , C2:Cp ) =/=Int"
+  replace = "cpRestartSeq ( C2:Cp ) =/=Int"
+
+[[mutation]]
+id = "cp041-window-ignored"
+expect = "kill"
+misunderstanding = "CP-041: every checkpoint that moves restart_seq is refused, whatever its h and pending_min"
+  [[mutation.edit]]
+  rule = "split_checkpoint--moved_off_1"
+  find = "=> jumpAny ( cpPools ( C1:Cp ) , cpPools ( C2:Cp ) , bOf ( P:Params ) )"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp041-unmoved-refused"
+expect = "kill"
+misunderstanding = "CP-041: a checkpoint that keeps restart_seq is refused restart_jump too"
+  [[mutation.edit]]
+  rule = "split_checkpoint--moved_off_2"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "ledger1-jump-twice"
+expect = "kill"
+misunderstanding = "Ledger 1, CP-009, CP-041: a candidate that fails both checks gets restart_jump twice"
+  [[mutation.edit]]
+  rule = "split_checkpoint--land_refusals_2"
+  find = "opt ( jumpCode ( P:Params , Chain:List , C1:Cp , C2:Cp ) , restartJump )"
+  replace = "opt ( jumpBad ( P:Params , C1:Cp , C2:Cp ) , restartJump ) opt ( movedJump ( P:Params , Chain:List , C1:Cp , C2:Cp ) , restartJump )"
+
+[[mutation]]
+id = "ledger1-pmin-after-jump"
+expect = "kill"
+misunderstanding = "Ledger 1, CP-040: pending_min_lowered sorts after restart_jump"
+  [[mutation.edit]]
+  rule = "split_checkpoint--land_refusals_2"
+  find = "opt ( pminLowered ( cpPools ( C1:Cp ) , cpPools ( C2:Cp ) ) , pendingMinLowered ) opt ( jumpCode ( P:Params , Chain:List , C1:Cp , C2:Cp ) , restartJump )"
+  replace = "opt ( jumpCode ( P:Params , Chain:List , C1:Cp , C2:Cp ) , restartJump ) opt ( pminLowered ( cpPools ( C1:Cp ) , cpPools ( C2:Cp ) ) , pendingMinLowered )"
+
+# --- CP-011: the carriers of a qualifying RestoreDone (ledger 15) -----------------
+
+[[mutation]]
+id = "cp011-carrier-at-cur"
+expect = "kill"
+misunderstanding = "CP-011, ledger 15: a carrier counts while its seq is at or above restart_seq, so the checkpoint that moved the marker moves it again"
+  [[mutation.edit]]
+  rule = "split_checkpoint--carrier_qual_1"
+  find = "Cur:Int <Int cpSeq ( C:Cp )"
+  replace = "Cur:Int <=Int cpSeq ( C:Cp )"
+  [[mutation.edit]]
+  rule = "split_checkpoint--carrier_qual_2"
+  find = "Cur:Int <Int cpSeq ( C:Cp )"
+  replace = "Cur:Int <=Int cpSeq ( C:Cp )"
+
+[[mutation]]
+id = "cp011-carrier-any-seq"
+expect = "kill"
+misunderstanding = "CP-011, ledger 15: a candidate carries a qualifying statement whatever its seq"
+  [[mutation.edit]]
+  rule = "split_checkpoint--carrier_qual_2"
+  find = "=> false"
+  replace = "=> anyWhole ( cpRestores ( C:Cp ) , Cur:Int )"
+
+[[mutation]]
+id = "cp011-carrier-any-statement"
+expect = "kill"
+misunderstanding = "CP-011: a checkpoint with seq above restart_seq moves it with no qualifying statement"
+  [[mutation.edit]]
+  rule = "split_checkpoint--carrier_qual_1"
+  find = "=> anyWhole ( cpRestores ( C:Cp ) , Cur:Int )"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp011-current-from-zero"
+expect = "kill"
+misunderstanding = "CP-011: a statement qualifies against restart_seq 0, not the current restart_seq"
+  [[mutation.edit]]
+  rule = "split_checkpoint--next_restart_seq"
+  find = "nextFrom ( Chain:List , C2:Cp , latestRestartSeq ( Chain:List ) )"
+  replace = "nextFrom ( Chain:List , C2:Cp , 0 )"
+
+[[mutation]]
+id = "cp011-every-landed-carries"
+expect = "kill"
+misunderstanding = "CP-011: an empty landed chain still counts as a carrier, so every landing moves restart_seq"
+  [[mutation.edit]]
+  rule = "split_checkpoint--chain_carries_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "cp011-landed-carriers-ignored"
+expect = "survive"
+misunderstanding = "CP-011, ledger 15: only the candidate counts as a carrier, not a landed checkpoint. Equivalent from init: a landed checkpoint whose seq is above restart_seq landed after the last move and did not move restart_seq, so its statements did not qualify against the same restart_seq then and do not now (restart_seq only rises; seq 0 never passes cur < seq). The oracle reaches this branch only from a --step state (Tests.lean pin_marker_follows)."
+  [[mutation.edit]]
+  rule = "split_checkpoint--next_from_2"
+  find = "=> chainMoves ( Chain:List , C2:Cp , Cur:Int )"
+  replace = "=> Cur:Int"
+
+[[mutation]]
+id = "cp011-landed-carrier-keeps"
+expect = "survive"
+misunderstanding = "CP-011, ledger 15: a landed carrier leaves restart_seq unchanged. Equivalent from init: no landed checkpoint with seq above restart_seq carries a qualifying statement (see cp011-landed-carriers-ignored); the branch fires only from a --step state."
+  [[mutation.edit]]
+  rule = "split_checkpoint--chain_moves_1"
+  find = "=> cpSeq ( C2:Cp )"
+  replace = "=> Cur:Int"
+
+[[mutation]]
+id = "cp011-landed-carrier-found-ignored"
+expect = "survive"
+misunderstanding = "CP-011, ledger 15: a qualifying landed carrier is not found. Equivalent from init: the equation fires only for a landed checkpoint with seq above restart_seq that carries a qualifying statement, which no run from init lands (see cp011-landed-carriers-ignored)."
+  [[mutation.edit]]
+  rule = "split_checkpoint--chain_carries_2_1"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "cp011-latest-landed-only"
+expect = "survive"
+misunderstanding = "CP-011, ledger 15: only the latest landed checkpoint counts as a carrier. Equivalent from init: no landed checkpoint at any depth qualifies (see cp011-landed-carriers-ignored)."
+  [[mutation.edit]]
+  rule = "split_checkpoint--chain_carries_2_2"
+  find = "=> chainCarries ( Rest:List , Cur:Int )"
+  replace = "=> false"
+
+# --- CP-021, CP-027: account pools burn once per restart generation ---------------
+
+[[mutation]]
+id = "cp021-generation-burns-again"
+expect = "kill"
+misunderstanding = "CP-021, CP-027, ledger 12: a second whole read of an open restart burns the account pools again"
+  [[mutation.edit]]
+  rule = "split_checkpoint--gen_burn_1"
+  find = "=> Accts:List"
+  replace = "=> burnAccts ( Accts:List )"
+
+[[mutation]]
+id = "cp021-open-before-marker-kept"
+expect = "kill"
+misunderstanding = "CP-021: an account pool opened after the classification and before the marker keeps its slots"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pre_burn_1"
+  find = "burnSlots ( Slots:List )"
+  replace = "Slots:List"
+
+[[mutation]]
+id = "cp021-open-always-burns"
+expect = "kill"
+misunderstanding = "CP-021: every account pool opened burns, outside a restart too"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pre_burn_2"
+  find = "=> acct ( Id:Int , Slots:List ,"
+  replace = "=> acct ( Id:Int , burnSlots ( Slots:List ) ,"
+
+[[mutation]]
+id = "cp021-open-pre-ignored"
+expect = "kill"
+misunderstanding = "CP-021: opening an account pool reads only its mark (CP-026), not the open restart"
+  [[mutation.edit]]
+  rule = "split_checkpoint--opened_acct_1_2"
+  find = "=> preBurn ( Pre:Bool ,"
+  replace = "=> preBurn ( false ,"
+
+[[mutation]]
+id = "cp021-open-after-marker-burns"
+expect = "kill"
+misunderstanding = "CP-021, CP-025: an account pool opened after the marker landed, while the restart is open, still burns"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pre_marker"
+  find = "(Open:Bool andThenBool (notBool Landed:Bool)) andThenBool"
+  replace = "Open:Bool andThenBool"
+
+[[mutation]]
+id = "cp021-open-anchor-burns"
+expect = "kill"
+misunderstanding = "CP-021, CP-029: with slot anchors an account pool opened before the marker burns"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pre_marker"
+  find = " andThenBool (notBool anchorOf ( P:Params ))"
+  replace = ""
+
+[[mutation]]
+id = "cp021-open-no-restart-burns"
+expect = "kill"
+misunderstanding = "CP-021: an account pool opened before any marker burns, though no restart is open"
+  [[mutation.edit]]
+  rule = "split_checkpoint--pre_marker"
+  find = "(Open:Bool andThenBool (notBool Landed:Bool))"
+  replace = "(notBool Landed:Bool)"
+
+# --- CP-022: open sessions burn at once ---------------------------------------------
+
+[[mutation]]
+id = "cp022-sessions-unburned"
+expect = "kill"
+misunderstanding = "CP-022: a node that did not reboot burns only for sessions it creates later (CP-024), not in its open sessions"
+  [[mutation.edit]]
+  rule = "split_checkpoint--new_sessions_2"
+  find = "=> burnSessions ( burnRanges ( bOf ( P:Params ) , cpPools ( C:Cp ) ) , Sessions:List )"
+  replace = "=> Sessions:List"
+
+[[mutation]]
+id = "cp022-anchor-drops-sessions"
+expect = "kill"
+misunderstanding = "CP-022, CP-029: with slot anchors a whole read closes the open sessions"
+  [[mutation.edit]]
+  rule = "split_checkpoint--new_sessions_1"
+  find = "=> Sessions:List"
+  replace = "=> .List"
+
+[[mutation]]
+id = "cp022-every-pool-range"
+expect = "kill"
+misunderstanding = "CP-022: each open session takes the ranges of every pool, not of its own"
+  [[mutation.edit]]
+  rule = "split_checkpoint--burn_sessions_2"
+  find = "poolBurns ( Rs:List , Pool:Int ) Burned:List"
+  replace = "Rs:List Burned:List"
+
+[[mutation]]
+id = "cp022-new-range-last"
+expect = "kill"
+misunderstanding = "CP-022, CP-023: the newer ranges go after the session's earlier burns"
+  [[mutation.edit]]
+  rule = "split_checkpoint--burn_sessions_2"
+  find = "poolBurns ( Rs:List , Pool:Int ) Burned:List"
+  replace = "Burned:List poolBurns ( Rs:List , Pool:Int )"
+
+[[mutation]]
+id = "cp022-first-session-only"
+expect = "kill"
+misunderstanding = "CP-022: only the newest open session burns"
+  [[mutation.edit]]
+  rule = "split_checkpoint--burn_sessions_2"
+  find = "burnSessions ( Rs:List , Rest:List )"
+  replace = "Rest:List"
+
+[[mutation]]
+id = "cp022-phantom-session"
+expect = "kill"
+misunderstanding = "CP-022: a whole read opens a session of its own"
+  [[mutation.edit]]
+  rule = "split_checkpoint--burn_sessions_1"
+  find = "=> .List"
+  replace = "=> ListItem(sess ( 0 , .List ))"
+
+# --- CP-042: the board loses its uncovered tail -------------------------------------
+
+[[mutation]]
+id = "cp042-no-reappend"
+expect = "kill"
+misunderstanding = "CP-042: a verified ledger read does not append the lost statements again"
+  [[mutation.edit]]
+  rule = "read-ledger"
+  find = "reappend ( Board:List , Waiting:List )"
+  replace = "Board:List"
+
+[[mutation]]
+id = "cp042-reappend-first"
+expect = "kill"
+misunderstanding = "CP-042: the statements appended again go before the statements still on the board"
+  [[mutation.edit]]
+  rule = "split_checkpoint--reappend"
+  find = "Board:List notCarried ( Waiting:List , Board:List )"
+  replace = "notCarried ( Waiting:List , Board:List ) Board:List"
+
+[[mutation]]
+id = "cp042-reappend-duplicates"
+expect = "kill"
+misunderstanding = "CP-042: every RAM statement is appended again, also one still on the board"
+  [[mutation.edit]]
+  rule = "split_checkpoint--reappend"
+  find = "notCarried ( Waiting:List , Board:List )"
+  replace = "Waiting:List"
+
+[[mutation]]
+id = "cp042-board-not-appended"
+expect = "kill"
+misunderstanding = "CP-042, CP-016: a RestoreDone is kept in RAM only, not appended to the board"
+  [[mutation.edit]]
+  rule = "restore-done"
+  find = "Board:List ListItem(R:Restore)"
+  replace = "Board:List"
+
+[[mutation]]
+id = "cp042-board-newest-first"
+expect = "kill"
+misunderstanding = "CP-042, CP-016: the board is newest first, like the RAM list"
+  [[mutation.edit]]
+  rule = "restore-done"
+  find = "Board:List ListItem(R:Restore)"
+  replace = "ListItem(R:Restore) Board:List"
+
+[[mutation]]
+id = "cp042-tail-kept"
+expect = "kill"
+misunderstanding = "CP-042: losing the uncovered tail leaves the board's statements"
+  [[mutation.edit]]
+  rule = "lose-tail"
+  find = "Board:List => .List"
+  replace = "Board:List"
+
+[[mutation]]
+id = "cp042-carried-stay-on-board"
+expect = "kill"
+misunderstanding = "CP-042, CP-004: a landing that carries a statement leaves it on the board"
+  [[mutation.edit]]
+  rule = "land"
+  find = "notCarried ( Board:List , cpRestores ( C:Cp ) )"
+  replace = "Board:List"
+
+# --- CP-043: a later view that does not verify --------------------------------------
+
+[[mutation]]
+id = "cp043-ready-refused"
+expect = "kill"
+misunderstanding = "CP-043: an unverified read on a ready node is refused ledger_unverified and leaves it ready"
+  [[mutation.edit]]
+  rule = "split_checkpoint--read_refusals"
+  find = "(notBool Ok:Bool) andThenBool (notBool Ready:Bool)"
+  replace = "notBool Ok:Bool"
+
+[[mutation]]
+id = "cp043-stays-ready"
+expect = "kill"
+misunderstanding = "CP-043: a ready node keeps answering after a later view does not verify"
+  [[mutation.edit]]
+  rule = "read-unverified"
+  find = "Ready:Bool => false"
+  replace = "Ready:Bool"
+
+[[mutation]]
+id = "cp043-release-any-waits"
+expect = "kill"
+misunderstanding = "CP-043, CP-037: a node that is not ready refuses every release, also one with no anchor"
+  [[mutation.edit]]
+  rule = "split_checkpoint--release_waits"
+  find = "Anchor:Bool andThenBool (notBool Ready:Bool)"
+  replace = "notBool Ready:Bool"
+
+[[mutation]]
+id = "cp043-anchored-always-waits"
+expect = "kill"
+misunderstanding = "CP-043, CP-037: an anchored release is refused ledger_unverified on a ready node too"
+  [[mutation.edit]]
+  rule = "split_checkpoint--release_waits"
+  find = "Anchor:Bool andThenBool (notBool Ready:Bool)"
+  replace = "Anchor:Bool"
+
+[[mutation]]
+id = "cp043-release-code"
+expect = "kill"
+misunderstanding = "CP-043, ledger 6: the anchored release of a node that is not ready is refused no-rule"
+  [[mutation.edit]]
+  rule = "release-anchor-refuse"
+  find = "ListItem(ledgerUnverified)"
+  replace = "ListItem(noRule)"
+
+[[mutation]]
+id = "cp021-restart-open-assumed"
+expect = "kill"
+misunderstanding = "CP-021: a whole read without slot anchors treats every restart as already open and burns no account slot"
+  [[mutation.edit]]
+  rule = "split_checkpoint--restart_accts_2"
+  find = "=> genBurn ( Open:Bool , Accts:List )"
+  replace = "=> genBurn ( true , Accts:List )"

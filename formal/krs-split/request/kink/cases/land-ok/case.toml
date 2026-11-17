@@ -1,0 +1,9 @@
+# RQ-054, RQ-068: a checkpoint lands at the board height.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Tick = { h = 30 } },
+  { LandCp = { h = 20 } },
+  { LandCp = { h = 30 } },
+]

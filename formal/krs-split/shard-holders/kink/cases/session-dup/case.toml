@@ -1,0 +1,6 @@
+# ledger 4: a session that names a slot twice
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { Session = { slots = [{ Cs = { slot = 1, check_ok = true } }, { Cs = { slot = 1, check_ok = false } }] } },
+]

@@ -1,0 +1,8 @@
+# EN-023: the ordering block b = 880 with delta_c 20 gives exp_c = 900 = exp: refused exp_c_not_below_exp.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 20 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { OrderCheck = { exp = 900, b = 880 } },
+]

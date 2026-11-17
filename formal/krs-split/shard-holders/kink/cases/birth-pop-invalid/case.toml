@@ -1,0 +1,6 @@
+# SH-007: pop_a does not verify
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { BirthCheckOp = { node = 0, cm_addr = 77, birth = { Bc = { x_f = 5, charter_id = 8, chain_id = 1, actors = [{ Ap = { slot = 0, x_a = 11, ctx = { C5 = [5, 11, 0, 8, 1] }, valid = false, network_created = false, pop_u = false, delta = false } }], dealer_ok = true, x_recomputed = true, encoding_ok = true, opening_ok = true } } } },
+]

@@ -1,0 +1,15 @@
+# RQ-027: the anchor height is entry f + 1 of the OBS heights sorted highest first (n = 7, f = 1).
+[inputs]
+params = { Pm = { n = 7, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 7, f = 1 } }]
+ops = [
+  { HostFee = { h = 40, m = 15 } },
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { Open = { eid = 1, kk = 3, ll = 1, collecting = false, npos = 0, rates = [10, 20, 30] } },
+  { VoteAdmit = { eid = 1, node = 0, hash = 7, h = 20 } },
+  { VoteAdmit = { eid = 1, node = 1, hash = 7, h = 50 } },
+  { VoteAdmit = { eid = 1, node = 2, hash = 7, h = 10 } },
+  { VoteAdmit = { eid = 1, node = 3, hash = 7, h = 40 } },
+  { VoteAdmit = { eid = 1, node = 4, hash = 7, h = 30 } },
+]

@@ -7,10 +7,7 @@ use line_dealing::{
         ecdsa::Slot,
         envelope::{self, Public},
         group::{Secp, Suite},
-        request::{
-            ecdsa::{EcdsaRequest, EcdsaVariant},
-            SchnorrSetup,
-        },
+        request::{ecdsa::EcdsaRequest, SchnorrSetup},
         schnorr::{self, ActorPool, SchnorrSuite},
     },
 };
@@ -70,12 +67,14 @@ pub fn fresh_pool<S: SchnorrSuite>(setup: &SchnorrSetup<S>, position: u8) -> Act
     .unwrap()
 }
 
+/// Fault bound f = floor((n - 1) / 3) and threshold t = n - f: 9 -> 7, 17 -> 12,
+/// 5 -> 4, 33 -> 23.
+pub fn faults(n: u16) -> u16 {
+    assert!(n >= 4, "unsupported committee size");
+    (n - 1) / 3
+}
 pub fn threshold(n: u16) -> u16 {
-    match n {
-        9 => 7,
-        17 => 12,
-        _ => panic!("unsupported committee size"),
-    }
+    n - faults(n)
 }
 
 pub fn ecdsa(n: u16, other_actors: u16) -> (EcdsaRequest, Vec<Scalar>) {
@@ -96,7 +95,6 @@ pub fn ecdsa(n: u16, other_actors: u16) -> (EcdsaRequest, Vec<Scalar>) {
     let slots = (1..=6)
         .map(|id| Slot::ideal(id, &committee, &shares, tweak, &set, &mut rng).unwrap())
         .collect();
-    use line_dealing::builder::{OutPoint, SpendKind, Utxo, UtxoTransaction};
     let mut script = vec![0, 20];
     script.extend(
         line_dealing::wire::address_for(
@@ -105,40 +103,7 @@ pub fn ecdsa(n: u16, other_actors: u16) -> (EcdsaRequest, Vec<Scalar>) {
         )
         .unwrap(),
     );
-    let variants = (1..=3)
-        .map(|v| {
-            EcdsaVariant::bitcoin(&UtxoTransaction {
-                inputs: (0..2)
-                    .map(|j| Utxo {
-                        outpoint: OutPoint {
-                            txid: [17; 32],
-                            vout: j,
-                        },
-                        value: 100_000,
-                        script_pubkey: script.clone(),
-                        confirmations: 6,
-                    })
-                    .collect(),
-                outputs: vec![
-                    line_dealing::wire::Output {
-                        amount: 50_000,
-                        script: script.clone(),
-                    },
-                    line_dealing::wire::Output {
-                        amount: 150_000 - v as u128 * 1000,
-                        script: script.clone(),
-                    },
-                ],
-                fee: v as u64 * 1000,
-                vsize: 200,
-                signed_vsize: None,
-                anchor_height: 100,
-                lock_time: 0,
-                spend_kind: SpendKind::P2wpkh,
-            })
-            .unwrap()
-        })
-        .collect();
+    let variants = line_dealing::split::request::ecdsa::fixture_variants(&script, 3, 2).unwrap();
     let secrets: Vec<_> = (1..=n).map(|i| Scalar::from(u64::from(i) + 100)).collect();
     let keys: Vec<_> = secrets.iter().map(|s| Secp::generator_mul(*s)).collect();
     let public = Public::new(1, envelope::keylist_hash(&keys).unwrap(), 100);

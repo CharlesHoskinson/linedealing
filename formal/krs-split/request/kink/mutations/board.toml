@@ -1,0 +1,203 @@
+# Plausible misreadings of the board events (RQ-001 to RQ-004, RQ-042, RQ-046, RQ-054,
+# RQ-068, ledgers 2 and 4) and of the run itself, as K patches of kink/definition.k.
+
+[[mutation]]
+id = "post-phase-ordered"
+expect = "kill"
+misunderstanding = "RQ-003, RQ-064: a posted request starts ORDERED"
+  [[mutation.edit]]
+  rule = "split_request--new_req"
+  find = "phPOSTED"
+  replace = "phORDERED"
+
+[[mutation]]
+id = "post-collecting"
+expect = "kill"
+misunderstanding = "RQ-002: a new request has collecting = true until its header opens"
+  [[mutation.edit]]
+  rule = "split_request--new_req"
+  find = "rsNONE , false , 0"
+  replace = "rsNONE , true , 0"
+
+[[mutation]]
+id = "post-replaces"
+expect = "kill"
+misunderstanding = "RQ-003: a post replaces the requests the board holds"
+  [[mutation.edit]]
+  rule = "post"
+  find = "=> Requests:List ListItem(newReq ("
+  replace = "=> ListItem(newReq ("
+
+[[mutation]]
+id = "post-dup-accepted"
+expect = "kill"
+misunderstanding = "Ledger 2, RQ-003: a second post of a held eid is answered ok and ignored"
+  [[mutation.edit]]
+  rule = "post-dup"
+  find = "ListItem(refused ( ListItem(rfNoRule) ))"
+  replace = "ListItem(obsOk)"
+
+[[mutation]]
+id = "tick-no-expiry"
+expect = "kill"
+misunderstanding = "RQ-046: the board height moves, but no request expires at the tick"
+  [[mutation.edit]]
+  rule = "tick"
+  find = "<requests> Requests:List => expireAll ( H:Int , Requests:List ) </requests>"
+  replace = "<requests> Requests:List </requests>"
+
+[[mutation]]
+id = "tick-back-ok"
+expect = "kill"
+misunderstanding = "Ledger 4: the board height may go down"
+  [[mutation.edit]]
+  rule = "tick-back"
+  find = "ListItem(refused ( ListItem(rfNoRule) ))"
+  replace = "ListItem(obsOk)"
+
+[[mutation]]
+id = "expire-at-exp"
+expect = "kill"
+misunderstanding = "RQ-046: the request expires when the board reaches exp, not when it passes it"
+  [[mutation.edit]]
+  rule = "split_request--expire_1"
+  find = "(getExp ( R:Req ) <Int H:Int)"
+  replace = "(getExp ( R:Req ) <=Int H:Int)"
+  [[mutation.edit]]
+  rule = "split_request--expire_2"
+  find = "(getExp ( R:Req ) <Int H:Int)"
+  replace = "(getExp ( R:Req ) <=Int H:Int)"
+
+[[mutation]]
+id = "expire-terminal"
+expect = "kill"
+misunderstanding = "RQ-046, RQ-056: an ended request expires again at a later tick"
+  [[mutation.edit]]
+  rule = "split_request--expire_1"
+  find = "(notBool isTerminal ( getPhase ( R:Req ) )) andThenBool "
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_request--expire_2"
+  find = "(notBool isTerminal ( getPhase ( R:Req ) )) andThenBool "
+  replace = ""
+
+[[mutation]]
+id = "rotate-replaces"
+expect = "kill"
+misunderstanding = "RQ-042: a ROTATE replaces the registered epochs, so the old epoch stops serving"
+  [[mutation.edit]]
+  rule = "rotate"
+  find = "=> Epochs:List ListItem(ep ("
+  replace = "=> ListItem(ep ("
+
+[[mutation]]
+id = "rotate-refused-ok"
+expect = "kill"
+misunderstanding = "RQ-001: a ROTATE outside the committee domain is answered ok and ignored"
+  [[mutation.edit]]
+  rule = "rotate-refused"
+  find = "ListItem(refused ( rotateCodes ( Epochs:List , E:Int , N:Int , F:Int ) ))"
+  replace = "ListItem(obsOk)"
+
+[[mutation]]
+id = "rotate-again"
+expect = "kill"
+misunderstanding = "RQ-042, ledger 5: a ROTATE of a registered epoch registers it again"
+  [[mutation.edit]]
+  rule = "split_request--rotate_codes_2"
+  find = "(size(findEpoch ( Es:List , E:Int )) =/=Int 0)"
+  replace = "false"
+  [[mutation.edit]]
+  rule = "split_request--rotate_codes_3"
+  find = "(size(findEpoch ( Es:List , E:Int )) =/=Int 0)"
+  replace = "false"
+
+[[mutation]]
+id = "committee-f-zero"
+expect = "kill"
+misunderstanding = "RQ-001: f = 0 is a committee"
+  [[mutation.edit]]
+  rule = "split_request--committee_ok"
+  find = "(1 <=Int F:Int)"
+  replace = "(0 <=Int F:Int)"
+
+[[mutation]]
+id = "committee-3f"
+expect = "kill"
+misunderstanding = "RQ-001: n >= 3f is enough"
+  [[mutation.edit]]
+  rule = "split_request--committee_ok"
+  find = "((3 *Int F:Int) +Int 1) <=Int N:Int"
+  replace = "(3 *Int F:Int) <=Int N:Int"
+
+[[mutation]]
+id = "land-no-move"
+expect = "kill"
+misunderstanding = "RQ-054, RQ-068: a landed checkpoint does not move the covered height"
+  [[mutation.edit]]
+  rule = "land-checkpoint"
+  find = "<cpheight> Cpheight:Int => H:Int </cpheight>"
+  replace = "<cpheight> Cpheight:Int </cpheight>"
+
+[[mutation]]
+id = "land-back-outside"
+expect = "kill"
+misunderstanding = "Ledger 4, RQ-054: a checkpoint that goes back or past the board is outside the capability"
+  [[mutation.edit]]
+  rule = "land-checkpoint-refused"
+  find = "ListItem(refused ( ListItem(rfNoRule) ))"
+  replace = "ListItem(refused ( ListItem(rfOutsideCapability) ))"
+
+[[mutation]]
+id = "fee-append"
+expect = "kill"
+misunderstanding = "RQ-027: every fee report is appended, even for a known host height"
+  [[mutation.edit]]
+  rule = "host-fee"
+  find = "feeMeds ( Hostmed:List , H:Int , M:Int )"
+  replace = "Hostmed:List ListItem(med ( H:Int , M:Int ))"
+
+[[mutation]]
+id = "fee-differs-ok"
+expect = "kill"
+misunderstanding = "RQ-027: a second, different median for one host height is answered ok and ignored"
+  [[mutation.edit]]
+  rule = "host-fee-refused"
+  find = "ListItem(refused ( feeCodes ( lookupMed ( Hostmed:List , H:Int ) , M:Int ) ))"
+  replace = "ListItem(obsOk)"
+
+[[mutation]]
+id = "done-waits"
+expect = "kill"
+misunderstanding = "runOps: a run with no operation left has no end; the node waits for more operations instead of answering"
+  [[mutation.edit]]
+  rule = "done"
+  find = "<ops> .List </ops>"
+  replace = "<ops> .List </ops> requires false"
+
+[[mutation]]
+id = "unknown-no-rule"
+expect = "kill"
+misunderstanding = "RQ-004: an event for an eid the machine does not hold is refused with no-rule"
+  [[mutation.edit]]
+  rule = "split_request--targeted_2"
+  find = "ListItem(rfUnknownRequest)"
+  replace = "ListItem(rfNoRule)"
+
+[[mutation]]
+id = "q-floor"
+expect = "kill"
+misunderstanding = "RQ-001: q = floor((n + f)/2)"
+  [[mutation.edit]]
+  rule = "split_request--q_of"
+  find = "((N:Int +Int F:Int) +Int 2) /Int 2"
+  replace = "(N:Int +Int F:Int) /Int 2"
+
+[[mutation]]
+id = "expired-not-terminal"
+expect = "kill"
+misunderstanding = "RQ-005, RQ-064: EXPIRED is not a terminal phase"
+  [[mutation.edit]]
+  rule = "split_request--is_terminal_3"
+  find = "phEXPIRED ) => true"
+  replace = "phEXPIRED ) => false"

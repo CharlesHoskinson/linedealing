@@ -1,0 +1,10 @@
+# SL-006, ledger 2: a namer in force under another root does not take the slot.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealE = { pool = 1, leaf_set = 5, root = "Own", kcount = 1 } },
+  { OpenE = { eid = 1, pos = 10, names = [{ Ek = { pool = 1, idx = 1 } }] } },
+  { OpenE = { eid = 2, pos = 20, names = [{ Ek = { pool = 1, idx = 1 } }] } },
+  { InForce = { eid = 1, root = "Gr" } },
+  { InForce = { eid = 2, root = "Own" } },
+]

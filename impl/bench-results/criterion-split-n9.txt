@@ -1,0 +1,233 @@
+    Finished `bench` profile [optimized] target(s) in 0.05s
+     Running benches/split.rs (target/release/deps/split-0a0ea3ff0651d7cf)
+Benchmarking split/n9/slot_deal_message
+Benchmarking split/n9/slot_deal_message: Warming up for 1.0000 s
+Benchmarking split/n9/slot_deal_message: Collecting 50 samples in estimated 7.4194 s (3825 iterations)
+Benchmarking split/n9/slot_deal_message: Analyzing
+split/n9/slot_deal_message
+                        time:   [1.9668 ms 1.9674 ms 1.9680 ms]
+Found 10 outliers among 50 measurements (20.00%)
+  3 (6.00%) low severe
+  6 (12.00%) high mild
+  1 (2.00%) high severe
+Benchmarking split/n9/slot_batch_verify
+Benchmarking split/n9/slot_batch_verify: Warming up for 1.0000 s
+Benchmarking split/n9/slot_batch_verify: Collecting 50 samples in estimated 5.7073 s (8925 iterations)
+Benchmarking split/n9/slot_batch_verify: Analyzing
+split/n9/slot_batch_verify
+                        time:   [647.24 µs 647.42 µs 647.63 µs]
+Found 5 outliers among 50 measurements (10.00%)
+  1 (2.00%) low severe
+  4 (8.00%) high mild
+Benchmarking split/n9/slot_fallback_verify
+Benchmarking split/n9/slot_fallback_verify: Warming up for 1.0000 s
+Benchmarking split/n9/slot_fallback_verify: Collecting 50 samples in estimated 5.1328 s (11k iterations)
+Benchmarking split/n9/slot_fallback_verify: Analyzing
+split/n9/slot_fallback_verify
+                        time:   [437.91 µs 438.07 µs 438.22 µs]
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high mild
+Benchmarking split/n9/slot_lazy_eval
+Benchmarking split/n9/slot_lazy_eval: Warming up for 1.0000 s
+Benchmarking split/n9/slot_lazy_eval: Collecting 50 samples in estimated 5.0081 s (790k iterations)
+Benchmarking split/n9/slot_lazy_eval: Analyzing
+split/n9/slot_lazy_eval time:   [6.0670 µs 6.0713 µs 6.0754 µs]
+Benchmarking split/n9/vote_batch_verify_q_single_verify_strict
+Benchmarking split/n9/vote_batch_verify_q_single_verify_strict: Warming up for 1.0000 s
+Benchmarking split/n9/vote_batch_verify_q_single_verify_strict: Collecting 50 samples in estimated 5.1492 s (32k iterations)
+Benchmarking split/n9/vote_batch_verify_q_single_verify_strict: Analyzing
+split/n9/vote_batch_verify_q_single_verify_strict
+                        time:   [161.65 µs 161.71 µs 161.76 µs]
+Found 2 outliers among 50 measurements (4.00%)
+  1 (2.00%) high mild
+  1 (2.00%) high severe
+Benchmarking split/n9/contribution_seal
+Benchmarking split/n9/contribution_seal: Warming up for 1.0000 s
+Benchmarking split/n9/contribution_seal: Collecting 50 samples in estimated 5.9367 s (7650 iterations)
+Benchmarking split/n9/contribution_seal: Analyzing
+split/n9/contribution_seal
+                        time:   [771.68 µs 772.43 µs 773.36 µs]
+Found 4 outliers among 50 measurements (8.00%)
+  1 (2.00%) high mild
+  3 (6.00%) high severe
+
+Benchmarking split/n9/combine_ecdsa/actors0
+Benchmarking split/n9/combine_ecdsa/actors0: Warming up for 1.0000 s
+Benchmarking split/n9/combine_ecdsa/actors0: Collecting 50 samples in estimated 5.0587 s (8925 iterations)
+Benchmarking split/n9/combine_ecdsa/actors0: Analyzing
+split/n9/combine_ecdsa/actors0
+                        time:   [565.14 µs 565.29 µs 565.44 µs]
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high mild
+
+Benchmarking split/n9/combine_ecdsa/actors2
+Benchmarking split/n9/combine_ecdsa/actors2: Warming up for 1.0000 s
+Benchmarking split/n9/combine_ecdsa/actors2: Collecting 50 samples in estimated 5.4754 s (7650 iterations)
+Benchmarking split/n9/combine_ecdsa/actors2: Analyzing
+split/n9/combine_ecdsa/actors2
+                        time:   [714.89 µs 715.02 µs 715.16 µs]
+
+Benchmarking split/n9/combine_bip340/actors0
+Benchmarking split/n9/combine_bip340/actors0: Warming up for 1.0000 s
+Benchmarking split/n9/combine_bip340/actors0: Collecting 50 samples in estimated 5.0913 s (13k iterations)
+Benchmarking split/n9/combine_bip340/actors0: Analyzing
+split/n9/combine_bip340/actors0
+                        time:   [398.70 µs 398.86 µs 399.03 µs]
+Found 5 outliers among 50 measurements (10.00%)
+  1 (2.00%) low severe
+  2 (4.00%) high mild
+  2 (4.00%) high severe
+Benchmarking split/n9/open_body_reconstruct_combine_bip340/actors0
+Benchmarking split/n9/open_body_reconstruct_combine_bip340/actors0: Warming up for 1.0000 s
+Benchmarking split/n9/open_body_reconstruct_combine_bip340/actors0: Collecting 50 samples in estimated 5.4335 s (6375 iterations)
+Benchmarking split/n9/open_body_reconstruct_combine_bip340/actors0: Analyzing
+split/n9/open_body_reconstruct_combine_bip340/actors0
+                        time:   [848.02 µs 848.24 µs 848.46 µs]
+Benchmarking split/n9/wallet_build_request
+Benchmarking split/n9/wallet_build_request: Warming up for 1.0000 s
+
+Warning: Unable to complete 50 samples in 5.0s. You may wish to increase target time to 10.0s, enable flat sampling, or reduce sample count to 20.
+Benchmarking split/n9/wallet_build_request: Collecting 50 samples in estimated 9.9781 s (1275 iterations)
+Benchmarking split/n9/wallet_build_request: Analyzing
+split/n9/wallet_build_request
+                        time:   [7.8111 ms 7.8137 ms 7.8167 ms]
+Found 9 outliers among 50 measurements (18.00%)
+  7 (14.00%) high mild
+  2 (4.00%) high severe
+Benchmarking split/n9/pi_check
+Benchmarking split/n9/pi_check: Warming up for 1.0000 s
+Benchmarking split/n9/pi_check: Collecting 50 samples in estimated 5.1035 s (24k iterations)
+Benchmarking split/n9/pi_check: Analyzing
+split/n9/pi_check       time:   [210.63 µs 210.68 µs 210.73 µs]
+Found 3 outliers among 50 measurements (6.00%)
+  1 (2.00%) high mild
+  2 (4.00%) high severe
+Benchmarking split/n9/outer_share_check
+Benchmarking split/n9/outer_share_check: Warming up for 1.0000 s
+Benchmarking split/n9/outer_share_check: Collecting 50 samples in estimated 5.2359 s (19k iterations)
+Benchmarking split/n9/outer_share_check: Analyzing
+split/n9/outer_share_check
+                        time:   [272.80 µs 272.90 µs 273.00 µs]
+Benchmarking split/n9/header_partial
+Benchmarking split/n9/header_partial: Warming up for 1.0000 s
+Benchmarking split/n9/header_partial: Collecting 50 samples in estimated 5.0101 s (69k iterations)
+Benchmarking split/n9/header_partial: Analyzing
+split/n9/header_partial time:   [72.299 µs 72.343 µs 72.402 µs]
+Found 7 outliers among 50 measurements (14.00%)
+  1 (2.00%) high mild
+  6 (12.00%) high severe
+Benchmarking split/n9/header_combine_open
+Benchmarking split/n9/header_combine_open: Warming up for 1.0000 s
+Benchmarking split/n9/header_combine_open: Collecting 50 samples in estimated 5.2130 s (23k iterations)
+Benchmarking split/n9/header_combine_open: Analyzing
+split/n9/header_combine_open
+                        time:   [225.45 µs 225.55 µs 225.69 µs]
+Found 3 outliers among 50 measurements (6.00%)
+  1 (2.00%) high mild
+  2 (4.00%) high severe
+Benchmarking split/n9/release_ticket_checks
+Benchmarking split/n9/release_ticket_checks: Warming up for 1.0000 s
+Benchmarking split/n9/release_ticket_checks: Collecting 50 samples in estimated 5.0527 s (60k iterations)
+Benchmarking split/n9/release_ticket_checks: Analyzing
+split/n9/release_ticket_checks
+                        time:   [83.503 µs 83.533 µs 83.564 µs]
+Benchmarking split/n9/own_signature_partials
+Benchmarking split/n9/own_signature_partials: Warming up for 1.0000 s
+Benchmarking split/n9/own_signature_partials: Collecting 50 samples in estimated 5.0000 s (25M iterations)
+Benchmarking split/n9/own_signature_partials: Analyzing
+split/n9/own_signature_partials
+                        time:   [197.16 ns 197.21 ns 197.25 ns]
+Found 5 outliers among 50 measurements (10.00%)
+  3 (6.00%) high mild
+  2 (4.00%) high severe
+Benchmarking split/n9/variant_key
+Benchmarking split/n9/variant_key: Warming up for 1.0000 s
+Benchmarking split/n9/variant_key: Collecting 50 samples in estimated 5.1063 s (18k iterations)
+Benchmarking split/n9/variant_key: Analyzing
+split/n9/variant_key    time:   [286.23 µs 286.34 µs 286.48 µs]
+Found 5 outliers among 50 measurements (10.00%)
+  3 (6.00%) high mild
+  2 (4.00%) high severe
+Benchmarking split/n9/combine_failure_path
+Benchmarking split/n9/combine_failure_path: Warming up for 1.0000 s
+Benchmarking split/n9/combine_failure_path: Collecting 50 samples in estimated 7.1282 s (3825 iterations)
+Benchmarking split/n9/combine_failure_path: Analyzing
+split/n9/combine_failure_path
+                        time:   [1.8603 ms 1.8608 ms 1.8615 ms]
+Found 6 outliers among 50 measurements (12.00%)
+  2 (4.00%) high mild
+  4 (8.00%) high severe
+
+Benchmarking split/n9/combine_bip340/actors2
+Benchmarking split/n9/combine_bip340/actors2: Warming up for 1.0000 s
+Benchmarking split/n9/combine_bip340/actors2: Collecting 50 samples in estimated 5.6114 s (8925 iterations)
+Benchmarking split/n9/combine_bip340/actors2: Analyzing
+split/n9/combine_bip340/actors2
+                        time:   [628.64 µs 628.84 µs 629.05 µs]
+Found 5 outliers among 50 measurements (10.00%)
+  1 (2.00%) low severe
+  1 (2.00%) low mild
+  2 (4.00%) high mild
+  1 (2.00%) high severe
+Benchmarking split/n9/open_body_reconstruct_combine_bip340/actors2
+Benchmarking split/n9/open_body_reconstruct_combine_bip340/actors2: Warming up for 1.0000 s
+Benchmarking split/n9/open_body_reconstruct_combine_bip340/actors2: Collecting 50 samples in estimated 6.5639 s (5100 iterations)
+Benchmarking split/n9/open_body_reconstruct_combine_bip340/actors2: Analyzing
+split/n9/open_body_reconstruct_combine_bip340/actors2
+                        time:   [1.2845 ms 1.2849 ms 1.2854 ms]
+Found 3 outliers among 50 measurements (6.00%)
+  1 (2.00%) high mild
+  2 (4.00%) high severe
+Benchmarking split/n9/actor_contribution_work
+Benchmarking split/n9/actor_contribution_work: Warming up for 1.0000 s
+Benchmarking split/n9/actor_contribution_work: Collecting 50 samples in estimated 5.3121 s (450 iterations)
+Benchmarking split/n9/actor_contribution_work: Analyzing
+split/n9/actor_contribution_work
+                        time:   [10.856 ms 10.861 ms 10.867 ms]
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high mild
+Benchmarking split/n9/contrib_frame_open
+Benchmarking split/n9/contrib_frame_open: Warming up for 1.0000 s
+Benchmarking split/n9/contrib_frame_open: Collecting 50 samples in estimated 5.8238 s (6375 iterations)
+Benchmarking split/n9/contrib_frame_open: Analyzing
+split/n9/contrib_frame_open
+                        time:   [911.15 µs 911.40 µs 911.67 µs]
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high mild
+
+Benchmarking split/n9/combine_ed25519/actors0
+Benchmarking split/n9/combine_ed25519/actors0: Warming up for 1.0000 s
+Benchmarking split/n9/combine_ed25519/actors0: Collecting 50 samples in estimated 5.0958 s (19k iterations)
+Benchmarking split/n9/combine_ed25519/actors0: Analyzing
+split/n9/combine_ed25519/actors0
+                        time:   [266.63 µs 266.70 µs 266.78 µs]
+Found 6 outliers among 50 measurements (12.00%)
+  2 (4.00%) high mild
+  4 (8.00%) high severe
+Benchmarking split/n9/open_body_reconstruct_combine_ed25519/actors0
+Benchmarking split/n9/open_body_reconstruct_combine_ed25519/actors0: Warming up for 1.0000 s
+Benchmarking split/n9/open_body_reconstruct_combine_ed25519/actors0: Collecting 50 samples in estimated 5.6189 s (7650 iterations)
+Benchmarking split/n9/open_body_reconstruct_combine_ed25519/actors0: Analyzing
+split/n9/open_body_reconstruct_combine_ed25519/actors0
+                        time:   [732.98 µs 733.21 µs 733.44 µs]
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high severe
+
+Benchmarking split/n9/combine_ed25519/actors2
+Benchmarking split/n9/combine_ed25519/actors2: Warming up for 1.0000 s
+Benchmarking split/n9/combine_ed25519/actors2: Collecting 50 samples in estimated 5.1645 s (10k iterations)
+Benchmarking split/n9/combine_ed25519/actors2: Analyzing
+split/n9/combine_ed25519/actors2
+                        time:   [507.28 µs 507.51 µs 507.75 µs]
+Found 2 outliers among 50 measurements (4.00%)
+  2 (4.00%) high mild
+Benchmarking split/n9/open_body_reconstruct_combine_ed25519/actors2
+Benchmarking split/n9/open_body_reconstruct_combine_ed25519/actors2: Warming up for 1.0000 s
+Benchmarking split/n9/open_body_reconstruct_combine_ed25519/actors2: Collecting 50 samples in estimated 6.5724 s (5100 iterations)
+Benchmarking split/n9/open_body_reconstruct_combine_ed25519/actors2: Analyzing
+split/n9/open_body_reconstruct_combine_ed25519/actors2
+                        time:   [1.2869 ms 1.2874 ms 1.2880 ms]
+Found 3 outliers among 50 measurements (6.00%)
+  1 (2.00%) low severe
+  2 (4.00%) high mild
+

@@ -1,7 +1,7 @@
 % Figures of the evaluation section. A macro whose value carries the mark
 % \est is an estimate: an operation count or byte count times a unit cost or
 % field size. Every other macro is a measurement of the split-line prototype
-% (criterion medians on one Cortex-X925 core, or byte counts of serialized
+% (criterion medians of thread CPU time on one Cortex-X925 core, or byte counts of serialized
 % prototype objects). The macro names keep the prefix est for both kinds.
 \newcommand{\est}[1]{#1\ensuremath{^{\ast}}}
 
@@ -9,19 +9,19 @@
 \newcommand{\estFrameUsedNine}{11{,}422\,B}
 \newcommand{\estFrameUsedSeventeen}{11{,}843\,B}
 \newcommand{\estActorBytes}{790\,B}
-\newcommand{\estActorBytesTEE}{\est{943\,B}}
+\newcommand{\estActorBytesTEE}{943\,B}
 \newcommand{\estContribFrameNine}{2{,}818\,B}
 \newcommand{\estContribFrameSeventeen}{3{,}239\,B}
 \newcommand{\estEmbedded}{1{,}711\,B}
-\newcommand{\estBoardNine}{about 47\,KB}
-\newcommand{\estBoardSeventeen}{about 110\,KB}
-\newcommand{\estPoolPost}{\est{4.3\,KB}}
+\newcommand{\estBoardNine}{46{,}701\,B}
+\newcommand{\estBoardSeventeen}{108{,}964\,B}
+\newcommand{\estPoolPost}{4{,}224\,B}
 
 % Largest signing set |S| per 16 KiB frame: non-TEE / TEE
-\newcommand{\estSetsEightTwoNine}{7 / 5}
-\newcommand{\estSetsEightTwoSeventeen}{6 / 5}
-\newcommand{\estSetsEightOneNine}{10 / 9}
-\newcommand{\estSetsEightOneSeventeen}{10 / 8}
+\newcommand{\estSetsEightTwoNine}{6 / 5}
+\newcommand{\estSetsEightTwoSeventeen}{6 / 4}
+\newcommand{\estSetsEightOneNine}{11 / 10}
+\newcommand{\estSetsEightOneSeventeen}{11 / 9}
 \newcommand{\estSetsFiveTwoNine}{14 / 12}
 \newcommand{\estSetsFiveTwoSeventeen}{13 / 11}
 \newcommand{\estSetsThreeTwoNine}{26 / 24}
@@ -29,54 +29,54 @@
 \newcommand{\estSetsOneOne}{29 to 33}
 
 % Node CPU per request, secp256k1, TEE mode (n = 9 / n = 17)
-\newcommand{\estCpuPi}{0.252\,ms}
-\newcommand{\estCpuPiSeventeen}{0.253\,ms}
-\newcommand{\estCpuOuterShare}{0.329\,ms}
-\newcommand{\estCpuOuterShareSeventeen}{0.319\,ms}
-\newcommand{\estCpuHeaderKey}{0.356\,ms}
-\newcommand{\estCpuHeaderKeySeventeen}{0.536\,ms}
-\newcommand{\estCpuTickets}{0.102\,ms}
-\newcommand{\estCpuTicketsSeventeen}{0.100\,ms}
+\newcommand{\estCpuPi}{0.211\,ms}
+\newcommand{\estCpuPiSeventeen}{0.213\,ms}
+\newcommand{\estCpuOuterShare}{0.273\,ms}
+\newcommand{\estCpuOuterShareSeventeen}{0.278\,ms}
+\newcommand{\estCpuHeaderKey}{0.298\,ms}
+\newcommand{\estCpuHeaderKeySeventeen}{0.442\,ms}
+\newcommand{\estCpuTickets}{0.084\,ms}
+\newcommand{\estCpuTicketsSeventeen}{0.083\,ms}
 \newcommand{\estCpuPartials}{0.0002\,ms}
 \newcommand{\estCpuPartialsSeventeen}{0.0002\,ms}
-\newcommand{\estCpuVariantPartial}{0.086\,ms}
-\newcommand{\estCpuVariantPartialSeventeen}{0.085\,ms}
-\newcommand{\estCpuVariantKey}{0.342\,ms}
-\newcommand{\estCpuVariantKeySeventeen}{0.517\,ms}
-\newcommand{\estCpuCombine}{0.487\,ms}
-\newcommand{\estCpuCombineSeventeen}{0.495\,ms}
-\newcommand{\estCpuVotes}{0.178\,ms}
-\newcommand{\estCpuVotesSeventeen}{0.453\,ms}
-\newcommand{\estCpuFailure}{1.086\,ms}
-\newcommand{\estCpuFailureSeventeen}{1.994\,ms}
-\newcommand{\estCpuPathNine}{2.18 to 2.36\,ms}
-\newcommand{\estCpuPathSeventeen}{2.47 to 2.93\,ms}
-\newcommand{\estSlotDealNine}{2.298\,ms}
-\newcommand{\estSlotDealSeventeen}{3.995\,ms}
-\newcommand{\estSlotCheckNine}{0.714\,ms}
-\newcommand{\estSlotCheckSeventeen}{1.033\,ms}
-\newcommand{\estCpuSlotsNine}{6.23\,ms}
-\newcommand{\estCpuSlotsSeventeen}{14.49\,ms}
-\newcommand{\estCpuTotalNine}{8.41 to 8.59\,ms}
-\newcommand{\estCpuTotalSeventeen}{16.96 to 17.41\,ms}
-\newcommand{\estRateNine}{116 to 119}
-\newcommand{\estRateSeventeen}{57 to 59}
-\newcommand{\estCombinerNine}{1.056\,ms}
-\newcommand{\estCombinerSeventeen}{1.181\,ms}
-\newcommand{\estNonTeeSaveNine}{1.056\,ms}
-\newcommand{\estNonTeeSaveSeventeen}{1.181\,ms}
+\newcommand{\estCpuVariantPartial}{0.072\,ms}
+\newcommand{\estCpuVariantPartialSeventeen}{0.072\,ms}
+\newcommand{\estCpuVariantKey}{0.286\,ms}
+\newcommand{\estCpuVariantKeySeventeen}{0.430\,ms}
+\newcommand{\estCpuCombine}{0.399\,ms}
+\newcommand{\estCpuCombineSeventeen}{0.411\,ms}
+\newcommand{\estCpuVotes}{0.162\,ms}
+\newcommand{\estCpuVotesSeventeen}{0.324\,ms}
+\newcommand{\estCpuFailure}{1.012\,ms}
+\newcommand{\estCpuFailureSeventeen}{1.690\,ms}
+\newcommand{\estCpuPathNine}{1.79 to 1.95\,ms}
+\newcommand{\estCpuPathSeventeen}{2.09 to 2.42\,ms}
+\newcommand{\estSlotDealNine}{1.967\,ms}
+\newcommand{\estSlotDealSeventeen}{3.437\,ms}
+\newcommand{\estSlotCheckNine}{0.647\,ms}
+\newcommand{\estSlotCheckSeventeen}{0.841\,ms}
+\newcommand{\estCpuSlotsNine}{5.56\,ms}
+\newcommand{\estCpuSlotsSeventeen}{11.92\,ms}
+\newcommand{\estCpuTotalNine}{7.34 to 7.51\,ms}
+\newcommand{\estCpuTotalSeventeen}{14.01 to 14.34\,ms}
+\newcommand{\estRateNine}{133 to 136}
+\newcommand{\estRateSeventeen}{70 to 71}
+\newcommand{\estCombinerNine}{0.848\,ms}
+\newcommand{\estCombinerSeventeen}{1.006\,ms}
+\newcommand{\estNonTeeSaveNine}{0.848\,ms}
+\newcommand{\estNonTeeSaveSeventeen}{1.006\,ms}
 \newcommand{\estBoardFirstCheck}{\est{1.4\,ms}}
-\newcommand{\estWalletNine}{9.593\,ms}
-\newcommand{\estWalletSeventeen}{9.855\,ms}
-\newcommand{\estActorWork}{12.858\,ms}
-\newcommand{\estFrameOpen}{1.045\,ms}
+\newcommand{\estWalletNine}{7.813\,ms}
+\newcommand{\estWalletSeventeen}{8.217\,ms}
+\newcommand{\estActorWork}{10.857\,ms}
+\newcommand{\estFrameOpen}{0.911\,ms}
 \newcommand{\estActorRelease}{0.22\,ms}
 
-% Latency, post to broadcast, with a peer hop of 50 ms
-\newcommand{\estLatMidOne}{\est{$F_M + 1.2$\,s}}
-\newcommand{\estLatMidHalf}{\est{$F_M + 0.7$\,s}}
-\newcommand{\estLatBfOne}{\est{2.25\,s}}
-\newcommand{\estLatBfHalf}{\est{1.25\,s}}
+% Latency, post to broadcast, with a peer round of 50 ms
+\newcommand{\estLatMidOne}{$F_M + 1.201$\,s}
+\newcommand{\estLatMidHalf}{$F_M + 0.701$\,s}
+\newcommand{\estLatBfOne}{2.252\,s}
+\newcommand{\estLatBfHalf}{1.252\,s}
 
 % Ticket circuit
 \newcommand{\estCircuitRows}{\est{190{,}000}}

@@ -1,0 +1,21 @@
+# RQ-004: every event that names an eid the board does not hold is refused with unknown_request.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { Open = { eid = 9, kk = 2, ll = 1, collecting = false, npos = 0, rates = [10, 20] } },
+  { Complaint = { eid = 9 } },
+  { FrameOp = { eid = 9, fr = { Fr = { position = 0, token_ok = true, lengths_ok = true, height = 0, cid = 77 } } } },
+  { Detach = { eid = 9, position = 0 } },
+  { VoteOpened = { eid = 9, node = 0, hash = 7 } },
+  { VoteAdmit = { eid = 9, node = 0, hash = 7, h = 50 } },
+  { Obs2 = { eid = 9, gen1_missed = true, heights = [60, 60, 60] } },
+  { PostFinal = { eid = 9, epoch = 0, member = 0, ct = 5 } },
+  { PostVoid = { eid = 9, epoch = 0, member = 0, reason = "Stalled" } },
+  { RestartBurn = { eid = 9 } },
+  { Confirm = { eid = 9 } },
+  { Carry = { eid = 9 } },
+  { Order = { eid = 9, qc = true, p = 0 } },
+]

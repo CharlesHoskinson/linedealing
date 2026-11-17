@@ -1,0 +1,35 @@
+{
+  "prefix": "CP",
+  "namespace": "SplitCheckpoint",
+  "spec": "openspec/changes/add-split-line-dealing/specs/split-checkpoint/spec.md",
+  "count": 43,
+  "proved": {
+    "CP-007": ["cp007_cp008_run_chainOk"],
+    "CP-008": ["cp007_cp008_run_chainOk", "chainOk_head_nogap"],
+    "CP-014": ["cp014_pmin_floor", "cp014_cp040_floor_kept"],
+    "CP-020": ["C16_restart_burns_range", "C16_run_window_burned"],
+    "CP-021": ["C16_acct_burned"],
+    "CP-022": ["cp022_sessions_burned"],
+    "CP-023": ["apply_burn_mono", "runOps_burn_mono"],
+    "CP-024": ["C16_session_burned"],
+    "CP-025": ["cp025_no_bind"],
+    "CP-028": ["cp028_partial_no_burn"],
+    "CP-031": ["cp031_reshare_safe"],
+    "CP-032": ["cp032_no_reshare"],
+    "CP-038": ["C16_run_window_burned", "C16_session_burned", "C16_acct_burned"],
+    "CP-039": ["C16_bounded_loss", "cp041_jump"],
+    "CP-040": ["cp040_run_pmin", "cp014_cp040_floor_kept"],
+    "CP-041": ["cp041_jump"],
+    "CP-042": ["cp042_reappend"],
+    "CP-043": ["cp043_keep_view", "cp043_not_ready"]
+  },
+  "exceptions": {
+  },
+  "ledger": {
+    "CP-001": "13", "CP-014": "19",
+    "CP-007": "1, 11", "CP-008": "1", "CP-009": "1, 11", "CP-010": "1, 10",
+    "CP-011": "2, 4, 15", "CP-018": "3", "CP-019": "6", "CP-021": "12", "CP-022": "12, 16", "CP-025": "5",
+    "CP-027": "12", "CP-030": "7", "CP-006": "8", "CP-033": "3", "CP-034": "9", "CP-035": "14",
+    "CP-039": "17", "CP-040": "1, 11", "CP-041": "1, 4, 11", "CP-042": "18", "CP-043": "6"
+  }
+}

@@ -1,30 +1,92 @@
+    Finished `release` profile [optimized] target(s) in 0.01s
+     Running tests/bench9.rs (target/release/deps/bench9-9b328afc7b968c88)
+
+running 1 test
+test bench_committee_of_9 ... 
 == n = 7, f = 2, t = 3
+owner: deal + encrypt (one slot)                  742.9 us
 owner message size                                 1333 bytes
-=> per-node CPU per request                      2173.4 us  (18 post checks)
-=> combiner extra per request                     105.0 us
-=> one core, CPU bound                              439 req/s
+node: decode + Step A public checks               314.5 us
+node: decrypt + verify own shares                 106.9 us
+node: signing package (lock digest, R)              6.9 us
+node: partial signature                            85.3 us
+combiner: verify one partial                       85.1 us
+combiner: combine t partials                      100.4 us
+node: verify one signed board post                 51.1 us
+=> per-node CPU per request                      1432.9 us  (18 post checks)
+=> combiner extra per request                     100.4 us
+=> one core, CPU bound                              652 req/s
+
 == n = 7, f = 2, t = 5
+owner: deal + encrypt (one slot)                  859.3 us
 owner message size                                 1465 bytes
-=> per-node CPU per request                      2624.7 us  (20 post checks)
-=> combiner extra per request                     127.3 us
-=> one core, CPU bound                              363 req/s
+node: decode + Step A public checks               351.5 us
+node: decrypt + verify own shares                 108.8 us
+node: signing package (lock digest, R)              7.3 us
+node: partial signature                            86.8 us
+combiner: verify one partial                       86.7 us
+combiner: combine t partials                      121.9 us
+node: verify one signed board post                 51.1 us
+=> per-node CPU per request                      1575.5 us  (20 post checks)
+=> combiner extra per request                     121.9 us
+=> one core, CPU bound                              589 req/s
+
 == n = 9, f = 2, t = 3
+owner: deal + encrypt (one slot)                  820.9 us
 owner message size                                 1461 bytes
-=> per-node CPU per request                      2330.8 us  (21 post checks)
-=> combiner extra per request                     105.7 us
-=> one core, CPU bound                              410 req/s
+node: decode + Step A public checks               315.7 us
+node: decrypt + verify own shares                 106.9 us
+node: signing package (lock digest, R)              6.9 us
+node: partial signature                            85.4 us
+combiner: verify one partial                       85.4 us
+combiner: combine t partials                      100.4 us
+node: verify one signed board post                 51.1 us
+=> per-node CPU per request                      1587.1 us  (21 post checks)
+=> combiner extra per request                     100.4 us
+=> one core, CPU bound                              593 req/s
+
 == n = 9, f = 2, t = 7
+owner: deal + encrypt (one slot)                 1052.4 us
 owner message size                                 1725 bytes
-=> per-node CPU per request                      3320.0 us  (25 post checks)
-=> combiner extra per request                     151.0 us
-=> one core, CPU bound                              288 req/s
+node: decode + Step A public checks               390.0 us
+node: decrypt + verify own shares                 110.8 us
+node: signing package (lock digest, R)              7.7 us
+node: partial signature                            88.3 us
+combiner: verify one partial                       88.3 us
+combiner: combine t partials                      144.0 us
+node: verify one signed board post                 51.1 us
+=> per-node CPU per request                      1874.1 us  (25 post checks)
+=> combiner extra per request                     144.0 us
+=> one core, CPU bound                              496 req/s
+
 == n = 10, f = 3, t = 4
+owner: deal + encrypt (one slot)                  921.5 us
 owner message size                                 1591 bytes
-=> per-node CPU per request                      2734.0 us  (25 post checks)
-=> combiner extra per request                     116.6 us
-=> one core, CPU bound                              351 req/s
+node: decode + Step A public checks               334.6 us
+node: decrypt + verify own shares                 107.8 us
+node: signing package (lock digest, R)              7.1 us
+node: partial signature                            86.2 us
+combiner: verify one partial                       86.3 us
+combiner: combine t partials                      111.2 us
+node: verify one signed board post                 51.1 us
+=> per-node CPU per request                      1812.2 us  (25 post checks)
+=> combiner extra per request                     111.2 us
+=> one core, CPU bound                              520 req/s
+
 == n = 10, f = 3, t = 7
+owner: deal + encrypt (one slot)                 1091.5 us
 owner message size                                 1789 bytes
-=> per-node CPU per request                      3424.2 us  (28 post checks)
-=> combiner extra per request                     147.8 us
-=> one core, CPU bound                              280 req/s
+node: decode + Step A public checks               389.9 us
+node: decrypt + verify own shares                 110.9 us
+node: signing package (lock digest, R)              7.7 us
+node: partial signature                            88.3 us
+combiner: verify one partial                       88.2 us
+combiner: combine t partials                      143.8 us
+node: verify one signed board post                 51.1 us
+=> per-node CPU per request                      2026.4 us  (28 post checks)
+=> combiner extra per request                     143.8 us
+=> one core, CPU bound                              461 req/s
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.20s
+

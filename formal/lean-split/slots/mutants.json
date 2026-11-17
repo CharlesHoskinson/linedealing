@@ -1,0 +1,21 @@
+[
+  {"name": "SL-004 precedence to a later namer", "file": "SplitSlots/Spec.lean", "old": "if x.prec = none ∧ x.bstat = .UNNAMED then { x with namers := ns, prec := lowest ns, bstat := .NAMED }", "new": "if x.bstat ≠ .BURNED then { x with namers := ns, prec := some eid, bstat := .NAMED }"},
+  {"name": "SL-005 lapse burns nothing", "file": "SplitSlots/Spec.lean", "old": "| .lapse eid, x => if x.prec == some eid then burnC x else x", "new": "| .lapse eid, x => x"},
+  {"name": "SL-010 end burns nothing", "file": "SplitSlots/Spec.lean", "old": "| .endReq eid, x => if x.prec == some eid then burnC x else x", "new": "| .endReq eid, x => x"},
+  {"name": "SL-011 ECDSA burn by prec", "file": "SplitSlots/Spec.lean", "old": "| .endReq eid, x => if x.reserver == some eid then burnE x else x", "new": "| .endReq eid, x => if x.prec == some eid then burnE x else x"},
+  {"name": "SL-007 unauthorized namer treated as in force", "file": "SplitSlots/Spec.lean", "old": "if s.inForce.contains (eid, x.root) then assignE s.inForce x1 else x1", "new": "assignE (s.inForce ++ [(eid, x.root)]) x1"},
+  {"name": "SL-006 root of the authorization ignored", "file": "SplitSlots/Spec.lean", "old": "lowest (x.namers.filter (fun n => inf.contains (n.1, x.root)))", "new": "lowest (x.namers.filter (fun n => inf.any (·.1 == n.1)))"},
+  {"name": "SL-008 reserver not set", "file": "SplitSlots/Spec.lean", "old": "{ x with bstat := .RESERVED, reserver := some eid }", "new": "{ x with bstat := .RESERVED }"},
+  {"name": "SL-009 claim from NAMED", "file": "SplitSlots/Spec.lean", "old": "| .claim eid, x => if x.prec == some eid && x.bstat == .RESERVED then", "new": "| .claim eid, x => if x.prec == some eid && x.bstat == .NAMED then"},
+  {"name": "SL-019 sealed acks ignored", "file": "SplitSlots/Spec.lean", "old": "current := decide (w ≤ sa) && decide (w ≤ va) }", "new": "current := decide (w ≤ sa) }"},
+  {"name": "SL-020 other digest released", "file": "SplitSlots/Spec.lean", "old": "| .bound d' => if d' != d then [.slotBound] else opt (!x.current) .noRule", "new": "| .bound _ => opt (!x.current) .noRule"},
+  {"name": "SL-021 any ticket signed", "file": "SplitSlots/Spec.lean", "old": "| .bound d' => if d' == d && x.current then", "new": "| .bound _ => if x.current then"},
+  {"name": "SL-014 window edge exclusive", "file": "SplitSlots/Spec.lean", "old": "else if h + B < l then .aboveWindow", "new": "else if h + B ≤ l then .aboveWindow"},
+  {"name": "SL-013 pending below pending_min", "file": "SplitSlots/Spec.lean", "old": "else if pmin ≤ l ∧ pending.contains (l, eid) then .inWindow", "new": "else if pending.contains (l, eid) then .inWindow"},
+  {"name": "SL-022 dealing restarts at 1", "file": "SplitSlots/Spec.lean", "old": "{ suite := su, epoch := e, idx := top + i + 1,", "new": "{ suite := su, epoch := e, idx := i + 1,"},
+  {"name": "SL-025 complained dealers counted", "file": "SplitSlots/Spec.lean", "old": "let ok := (dealers.filter (fun d => !d.2)).map (·.1)", "new": "let ok := dealers.map (·.1)"},
+  {"name": "SL-005 a header that opens after the lapse takes a live precedence (revision 2, F4)", "file": "SplitSlots/Spec.lean", "old": "if names.contains x.key then burnIfLapsed lapsed (openSlot eid pos x) else x", "new": "if names.contains x.key then openSlot eid pos x else x"},
+  {"name": "SL-005 late open burns only the opener's own lapse, read before the lapse list", "file": "SplitSlots/Spec.lean", "old": "  | some e => if lapsed.contains e then burnC x else x", "new": "  | some e => if lapsed.contains e && x.namers.length > 1 then burnC x else x"},
+  {"name": "SL-016 SLOT_TAKEN at the open without the authorization in force (before DECISIONS 68)", "file": "SplitSlots/Spec.lean", "old": "if inForceAny s eid && s.opened.contains eid && takenFor s eid", "new": "if s.opened.contains eid && takenFor s eid"},
+  {"name": "SL-016 no SLOT_TAKEN when the authorization comes into force after the open", "file": "SplitSlots/Spec.lean", "old": "  | .inForce eid r => slotTakenAt (exec s (.inForce eid r)) eid\n", "new": ""}
+]

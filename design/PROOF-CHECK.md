@@ -1,15 +1,15 @@
 # Verification of SCHEME.md (line dealing) against the local papers
 
-Scope: `design/SCHEME.md` sections 2, 3, 6, 9, 10, 12 and `design/FINDINGS-LEDGER.md`, checked against local copies. Paper text was treated as data. Page numbers are the printed page numbers of each PDF. Items marked "reviewer's" are my own reasoning and are not in any paper.
+Scope: `/home/hoskinson/Projects/mpcexperiments/design/SCHEME.md` sections 2, 3, 6, 9, 10, 12 and `/home/hoskinson/Projects/mpcexperiments/design/FINDINGS-LEDGER.md`, checked against local copies. Paper text was treated as data. Page numbers are the printed page numbers of each PDF. Items marked "reviewer's" are my own reasoning and are not in any paper.
 
 ## 0. Reading record
 
 | Source | Local path | What was read |
 |---|---|---|
-| Groth, Shoup, *On the security of ECDSA with additive key derivation and presignatures*, ePrint 2021/1330, version of 27 April 2022, 51 pages. SCHEME.md calls it [GS22]; the signing-service paper cites it as [GS21] | `research/sources/groth-shoup-2021-1330.pdf` and `.txt` | Pages 1 to 48 in full: EC-GGM (section 2), all game definitions, Theorems 1 to 9 with proofs, Appendices A to D. Reference list not read |
-| Komlo, Goldberg, FROST, ePrint 2020/852, version of 22 December 2020, 35 pages | `research/sources/eprint/2020-852.pdf` | In full, including Appendix A and the changelog |
-| Crites, Komlo, Maller, *Fully Adaptive Schnorr Threshold Signatures*, ePrint 2023/445, 53 pages | `research/sources/eprint/2023-445.pdf` | Read in part. Abstract, sections 1, 2, 3, 4.1, 5, 6, 7, and Appendix A from p. 32 to the simulator analysis on p. 40. Not read: a few lines on pp. 9 to 10, the end of section 4.2, the forking analysis that ends Appendix A, Appendices B and C (pp. 41 to 53) |
-| Groth, Shoup, *Design and analysis of a distributed ECDSA signing service*, ePrint 2022/506, version of 16 February 2023, 99 pages. Byte-identical to `research/sources/shoup-tecdsa.pdf` | `research/sources/eprint/2022-506.pdf` | Read in part. Abstract, section 1 up to 1.1, section 1.2 up to "Communication costs", section 2 (all), section 4 from the decryption-algorithm definition (p. 25) to the end of 4.4, section 8.9.4. Not read: 1.1, 1.3, 3, 5 to 7, 8.1 to 8.9.3, 9, 10, appendices. Every statement below about this paper is limited to the parts read |
+| Groth, Shoup, *On the security of ECDSA with additive key derivation and presignatures*, ePrint 2021/1330, version of 27 April 2022, 51 pages. SCHEME.md calls it [GS22]; the signing-service paper cites it as [GS21] | `/home/hoskinson/Projects/mpcexperiments/research/sources/groth-shoup-2021-1330.pdf` and `.txt` | Pages 1 to 48 in full: EC-GGM (section 2), all game definitions, Theorems 1 to 9 with proofs, Appendices A to D. Reference list not read |
+| Komlo, Goldberg, FROST, ePrint 2020/852, version of 22 December 2020, 35 pages | `/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2020-852.pdf` | In full, including Appendix A and the changelog |
+| Crites, Komlo, Maller, *Fully Adaptive Schnorr Threshold Signatures*, ePrint 2023/445, 53 pages | `/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2023-445.pdf` | Read in part. Abstract, sections 1, 2, 3, 4.1, 5, 6, 7, and Appendix A from p. 32 to the simulator analysis on p. 40. Not read: a few lines on pp. 9 to 10, the end of section 4.2, the forking analysis that ends Appendix A, Appendices B and C (pp. 41 to 53) |
+| Groth, Shoup, *Design and analysis of a distributed ECDSA signing service*, ePrint 2022/506, version of 16 February 2023, 99 pages. Byte-identical to `/home/hoskinson/Projects/mpcexperiments/research/sources/shoup-tecdsa.pdf` | `/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2022-506.pdf` | Read in part. Abstract, section 1 up to 1.1, section 1.2 up to "Communication costs", section 2 (all), section 4 from the decryption-algorithm definition (p. 25) to the end of 4.4, section 8.9.4. Not read: 1.1, 1.3, 3, 5 to 7, 8.1 to 8.9.3, 9, 10, appendices. Every statement below about this paper is limited to the parts read |
 
 ## 1. Verdicts
 
@@ -75,7 +75,7 @@ To close: obtain and read [10] Bellare, Crites, Komlo, Maller, Tessaro, Zhu (CRY
 
 ## 4. Question 3: multiplicative re-randomization
 
-**Verdict: GAP. It blocks no claim of SCHEME.md**, which does not use re-randomization. The question comes from `design/council/proposals/cand-3c91.md` line 241.
+**Verdict: GAP. It blocks no claim of SCHEME.md**, which does not use re-randomization. The question comes from `/home/hoskinson/Projects/mpcexperiments/design/council/proposals/cand-3c91.md` line 241.
 
 - Theorem 5 (p. 31) is for `R = R' + δG` only. Its proof uses the additive term: equation (8) (p. 32) has `− c_ℓ δ_ℓ` on the left, so the left side vanishes with probability `1/q` and the ratio case disappears. With `R = δR'` the substitution is `R_k ↦ δ_k⁻¹ s_k⁻¹(h_k + t_k D)`. Then `δ_k` merges with `s_k`, and the left side of (8) has no `δ` term. The proof does not transfer line by line.
 - The requirement on `δ`: it is chosen after the signing request is fixed and is unpredictable (2021/1330 p. 30; note 2, p. 33). 2022/506 p. 11: "It is essential that δ is chosen after the adversary has made his signing request"; p. 14 note 4: the beacon seed is generated after the request is paired with a quadruple. SCHEME.md has no such source. A `δ` hashed from the request is discussed and not analysed (2021/1330 p. 6; p. 30 note 2).
@@ -110,22 +110,22 @@ Internal points, not from the papers:
 
 Upgrade to "read in full":
 
-- [GS22] Groth, Shoup, ePrint 2021/1330: `research/sources/groth-shoup-2021-1330.pdf` (pages 1 to 48; reference list excepted).
-- Komlo, Goldberg, FROST, ePrint 2020/852: `research/sources/eprint/2020-852.pdf`.
+- [GS22] Groth, Shoup, ePrint 2021/1330: `/home/hoskinson/Projects/mpcexperiments/research/sources/groth-shoup-2021-1330.pdf` (pages 1 to 48; reference list excepted).
+- Komlo, Goldberg, FROST, ePrint 2020/852: `/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2020-852.pdf`.
 
 Local now, read in part in this pass, not "in full":
 
-- Internet Computer signing service, ePrint 2022/506: `research/sources/eprint/2022-506.pdf` (parts listed in section 0). SCHEME.md takes its statements from REPORT.md.
-- Crites, Komlo, Maller, ePrint 2023/445: `research/sources/eprint/2023-445.pdf` (not cited in section 12; parts listed in section 0).
+- Internet Computer signing service, ePrint 2022/506: `/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2022-506.pdf` (parts listed in section 0). SCHEME.md takes its statements from REPORT.md.
+- Crites, Komlo, Maller, ePrint 2023/445: `/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2023-445.pdf` (not cited in section 12; parts listed in section 0).
 
 Local now, not read in this pass; statements still come from REPORT.md or from memory:
 
-- cgVSS: `research/sources/eprint/2023-451.pdf`
-- Groth NI-DKG: `research/sources/eprint/2021-339.pdf`
-- Ika: `research/sources/eprint/2024-253.pdf` and `research/sources/eprint/2025-297.pdf`
-- RFC 9591: `research/sources/lifecycle/rfc9591.txt`
+- cgVSS: `/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2023-451.pdf`
+- Groth NI-DKG: `/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2021-339.pdf`
+- Ika: `/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2024-253.pdf` and `/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/2025-297.pdf`
+- RFC 9591: `/home/hoskinson/Projects/mpcexperiments/research/sources/lifecycle/rfc9591.txt`
 
-Still not local, still "from memory": Feldman VSS (1987); Bellare et al. on non-interactive threshold Schnorr; MuSig2; Benhamouda et al. on ROS; Abdalla, Bellare, Rogaway; BIP125, BIP143, BIP340, BIP341; RFC 8032; EIP-2, EIP-1559, EIP-2718; Solana durable nonces. None of them appears in `research/sources/eprint/SOURCES.tsv`.
+Still not local, still "from memory": Feldman VSS (1987); Bellare et al. on non-interactive threshold Schnorr; MuSig2; Benhamouda et al. on ROS; Abdalla, Bellare, Rogaway; BIP125, BIP143, BIP340, BIP341; RFC 8032; EIP-2, EIP-1559, EIP-2718; Solana durable nonces. None of them appears in `/home/hoskinson/Projects/mpcexperiments/research/sources/eprint/SOURCES.tsv`.
 
 ## 8. What closes each gap
 

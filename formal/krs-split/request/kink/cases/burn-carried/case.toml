@@ -1,0 +1,13 @@
+# Ledger 12: a restart burn of a carried leaf is refused with settled. The leaf is the VOID
+# leaf of a STALLED request (f + 1 STALLED posts), which a reissue carries (RQ-060, ledger 25).
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { PostVoid = { eid = 1, epoch = 0, member = 0, reason = "Stalled" } },
+  { PostVoid = { eid = 1, epoch = 0, member = 1, reason = "Stalled" } },
+  { Carry = { eid = 1 } },
+  { RestartBurn = { eid = 1 } },
+]

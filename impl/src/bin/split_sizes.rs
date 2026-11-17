@@ -200,6 +200,28 @@ fn slot_bytes(n: u16, count: u64) -> usize {
         .sum()
 }
 
+/// Encoded points of one actor pool of 64 pairs (D, E). The POOL record
+/// framing (pool id, pool key, signature) has no encoder in the prototype (O23).
+fn pool_points() -> usize {
+    use line_dealing::split::{access::LeafId, schnorr::ActorPool};
+    let mut rng = SeededRng::new(171);
+    let pool = ActorPool::<Secp>::new(
+        LeafId::new(1, vec![], 1),
+        [1; 32],
+        Secp::random(&mut rng),
+        Secp::random(&mut rng),
+        64,
+        &mut rng,
+    )
+    .unwrap();
+    (0..64)
+        .map(|i| {
+            let c = pool.commitment(i).unwrap();
+            Secp::encode_point(c.d).unwrap().len() + Secp::encode_point(c.e).unwrap().len()
+        })
+        .sum()
+}
+
 fn main() {
     println!(
         "All values are bytes from serialized prototype objects; frame capacity is 16,384 bytes."
@@ -207,14 +229,14 @@ fn main() {
     println!("Layout, header, bodies and capsules include AEAD tags. Layout is 64 bytes. Actor HPKE capsules are 385 bytes. Outer includes the public proof. Actor growth uses separately built one- and two-actor requests; first growth includes the shared contribution keys.");
     println!();
     println!("| n | Suite | Grid | Frame used | Outer + proof | Layout | Header | Bodies | Capsules | First other actor | Next other actor | CONTRIB frame used | Embedded actor |\n|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
-    for n in [9, 17] {
+    for n in [5, 9, 17, 33] {
         schnorr::<Secp>(n, 8, 2, "BIP340");
         ecdsa(n);
         schnorr::<Edwards>(n, 1, 1, "Ed25519");
     }
     println!("\nBoard slot posts include dealer context, ephemeral key and proof. Four slots are one batch per dealer; all t dealers are counted.");
     println!("\n| n | t | One Schnorr slot | Four Schnorr slots |\n|---:|---:|---:|---:|");
-    for n in [9, 17] {
+    for n in [5, 9, 17, 33] {
         println!(
             "| {n} | {} | {} | {} |",
             support::threshold(n),
@@ -222,4 +244,8 @@ fn main() {
             slot_bytes(n, 4)
         );
     }
+    println!(
+        "\nActor pool pair points, N_pool = 64 pairs (D, E), secp256k1 encoder: {} bytes",
+        pool_points()
+    );
 }

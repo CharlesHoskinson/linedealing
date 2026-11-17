@@ -1,0 +1,18 @@
+# EARS IDs of split-authorization that no mutation of kink/mutations names, with the
+# check that covers each (gate `mutations`, scripts/check_mutations.py).
+
+[[gap]]
+id = "AU-003"
+covered_by = "Exception in the oracle (README, AU-003): the wallet's hash auth = H(ic ‖ hd ‖ tkc ‖ nf ‖ rh) and what the wallet publishes are outside the contract state; auth and rh are input numbers that no rule reads except as identifiers, which every case carries"
+
+[[gap]]
+id = "AU-017"
+covered_by = "Exception in the oracle (README, AU-017): the ElGamal encryption of the hold tag is cryptography outside the state; rh is an input number, copied into the authorization (cases authorize-accept, bf-root-accept compare it against the oracle)"
+
+[[gap]]
+id = "AU-024"
+covered_by = "Invariant of every run, proved in Lean (C11_one_final, apply_inv); no single rule states it, the settlement rules that keep it are the mutation targets of AU-020 and AU-023"
+
+[[gap]]
+id = "AU-025"
+covered_by = "Invariant of every run, proved in Lean (C11_released_never_fresh); no single rule states it, the RELEASED successor that keeps it is the mutation target of AU-023 (settle-released-*)"

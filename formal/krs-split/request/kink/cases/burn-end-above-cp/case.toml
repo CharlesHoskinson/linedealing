@@ -1,0 +1,10 @@
+# RQ-054, RQ-068: a checkpoint one below the end height does not hold the leaf; the burn re-ends it.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 40, rtype = "Spend", profile = "PfP1" } },
+  { Tick = { h = 41 } },
+  { LandCp = { h = 40 } },
+  { RestartBurn = { eid = 1 } },
+]

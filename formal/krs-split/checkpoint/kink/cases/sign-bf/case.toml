@@ -1,0 +1,13 @@
+# CP-012: no repeated nf and no nf of a landed bf_root
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { SignBf = { leaves = [{ P = [1, 1] }, { P = [2, 2] }] } },
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [{ P = [1, 77] }], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { Land = { c = { CpOf = { seq = 1, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [{ P = [2, 78] }, { P = [3, 79] }], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { SignBf = { leaves = [{ P = [1, 5] }, { P = [2, 6] }] } },
+  { SignBf = { leaves = [{ P = [1, 5] }, { P = [2, 5] }] } },
+  { SignBf = { leaves = [{ P = [1, 79] }] } },
+  { SignBf = { leaves = [{ P = [4, 77] }, { P = [5, 9] }] } },
+  { SignBf = { leaves = [] } },
+]

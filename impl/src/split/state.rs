@@ -60,6 +60,8 @@ pub enum VoidReason {
     SlotTaken,
     Stalled,
     DealerFault,
+    /// A whole-committee restart ended the request (DESIGN §7.11).
+    Restart,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum State {
@@ -577,6 +579,12 @@ pub enum Event {
     Checkpoint {
         pools: BTreeMap<PoolId, PoolCheckpoint>,
     },
+    /// DESIGN §5.6, §7.11, DECISIONS 53: a whole-committee restart ends every
+    /// live request. `host_final` maps a request to its transaction when the
+    /// host chain shows one of its variant transactions at confirmation depth.
+    WholeCommitteeRestart {
+        host_final: BTreeMap<Eid, Digest>,
+    },
     Tick,
 }
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -653,6 +661,10 @@ pub struct SplitBoard {
     erasures: Vec<Erasure>,
     release_audits: Vec<ReleaseAudit>,
     pub checkpoint: Option<Checkpoint>,
+    /// DESIGN §7.11: after a whole-committee restart, `h + B` of the
+    /// checkpoint it read, per committee pool. The next checkpoint must raise
+    /// `h` to it, and until then no account-pool slot is reserved.
+    restart_floor: Option<BTreeMap<PoolId, u64>>,
 }
 impl SplitBoard {
     pub fn new(
@@ -693,6 +705,7 @@ impl SplitBoard {
             erasures: vec![],
             release_audits: vec![],
             checkpoint: None,
+            restart_floor: None,
         })
     }
     pub fn request(&self, eid: &Eid) -> Result<&Request, SplitError> {
@@ -712,6 +725,10 @@ impl SplitBoard {
     }
     pub fn pending(&self) -> &BTreeMap<Digest, Eid> {
         &self.pending
+    }
+    /// The pinned input a RELEASED record is locked to (DESIGN §5.6).
+    pub fn record_lock(&self, record: &Digest) -> Option<Digest> {
+        self.record_locks.get(record).copied()
     }
     fn req_mut(&mut self, eid: Eid) -> &mut Request {
         self.requests.get_mut(&eid).expect("validated request")
@@ -738,10 +755,67 @@ impl SplitBoard {
         self.height = height;
         self.position = self.position.checked_add(1).ok_or(SplitError::Height)?;
         self.deadlines();
+        self.ecdsa_precedence();
         let mut next = self.clone();
         next.transition(event)?;
+        next.ecdsa_precedence();
         *self = next;
         Ok(())
+    }
+    /// DESIGN §4.1 ECDSA precedence (DECISIONS 54): an ECDSA slot has a
+    /// precedence holder only while that request's authorization is in force,
+    /// not revoked or held, and its source opens the slot's root.
+    fn ecdsa_eligible(&self, eid: &Eid, slot: &SlotId) -> bool {
+        let Some(r) = self.requests.get(eid) else {
+            return false;
+        };
+        let Some(h) = r.header.as_ref() else {
+            return false;
+        };
+        !r.state.terminal()
+            && !r.lapsed
+            && !r.revoked
+            && r.in_force()
+            && !self.held(h)
+            && h.slots.contains(slot)
+            && h.tickets
+                .iter()
+                .filter(|t| t.slot == *slot)
+                .all(|t| t.in_source_root)
+    }
+    /// Drop ECDSA precedence that is no longer in force, then give each free
+    /// ECDSA slot to the earliest-ordered eligible request that names it.
+    fn ecdsa_precedence(&mut self) {
+        let mut ecdsa: BTreeSet<SlotId> = self
+            .slots
+            .keys()
+            .filter(|s| matches!(s, SlotId::Ecdsa { .. }))
+            .copied()
+            .collect();
+        for r in self.requests.values() {
+            if let Some(h) = r.header.as_ref() {
+                ecdsa.extend(h.slots.iter().filter(|s| matches!(s, SlotId::Ecdsa { .. })));
+            }
+        }
+        for slot in ecdsa {
+            if let SlotState::Named(e) = self.slot(&slot) {
+                if !self.ecdsa_eligible(&e, &slot) {
+                    self.slots.insert(slot, SlotState::Free);
+                }
+            }
+            if self.slot(&slot) != SlotState::Free {
+                continue;
+            }
+            let first = self
+                .requests
+                .iter()
+                .filter(|(e, r)| r.order_position.is_some() && self.ecdsa_eligible(e, &slot))
+                .min_by_key(|(_, r)| r.order_position)
+                .map(|(e, _)| *e);
+            if let Some(e) = first {
+                self.slots.insert(slot, SlotState::Named(e));
+            }
+        }
     }
     fn deadlines(&mut self) {
         let ids: Vec<_> = self.requests.keys().copied().collect();
@@ -766,10 +840,19 @@ impl SplitBoard {
             }
         }
     }
+    /// The one burn rule (DESIGN §4.1, §4.5 item 4, DECISIONS 54): the request
+    /// with precedence burns every committee slot it holds. An ECDSA slot burns
+    /// only when the request reserved or claimed it; precedence alone holds no
+    /// partial, so that slot returns to free.
     fn burn(&mut self, eid: Eid) {
-        for state in self.slots.values_mut() {
+        for (slot, state) in self.slots.iter_mut() {
             if state.owner() == Some(eid) {
-                *state = SlotState::Burned;
+                *state = if matches!(slot, SlotId::Ecdsa { .. }) && *state == SlotState::Named(eid)
+                {
+                    SlotState::Free
+                } else {
+                    SlotState::Burned
+                };
             }
         }
     }
@@ -785,7 +868,9 @@ impl SplitBoard {
             }
             match state {
                 State::Final(ciphertext) => {
+                    // C11 (QA-8): a spent record is never locked.
                     self.spent_records.insert(h.record);
+                    self.record_locks.remove(&h.record);
                     Settlement::Successor(ciphertext)
                 }
                 _ => match self.record_locks.get(&h.record) {
@@ -918,12 +1003,17 @@ impl SplitBoard {
         let mut wait = false;
         for slot in &self.request(&eid)?.header()?.slots {
             // ECDSA account pools use opaque records, not committee indices.
+            // After a whole-committee restart no account-pool slot is bound
+            // until the next checkpoint lands (DESIGN §7.11 restart marker).
             let SlotId::Schnorr {
                 suite,
                 epoch,
                 index,
             } = slot
             else {
+                if self.restart_floor.is_some() {
+                    wait = true;
+                }
                 continue;
             };
             let pool = PoolId {
@@ -1125,9 +1215,14 @@ impl SplitBoard {
                     return Err(SplitError::Threshold);
                 }
                 header.validate(r.envelope.epoch)?;
+                // Committee slots take precedence by board order (§4.1).
+                // ECDSA slots take it from the authorization in force
+                // (DECISIONS 54), assigned by `ecdsa_precedence`.
                 for slot in &header.slots {
-                    let previous = self.slot(slot);
-                    if previous == SlotState::Free {
+                    if matches!(slot, SlotId::Ecdsa { .. }) {
+                        continue;
+                    }
+                    if self.slot(slot) == SlotState::Free {
                         self.slots.insert(*slot, SlotState::Named(eid));
                     }
                     self.named.insert(*slot);
@@ -1725,12 +1820,78 @@ impl SplitBoard {
                         }
                     }
                 }
+                // DESIGN §7.11: the first checkpoint after a whole-committee
+                // restart raises h to at least h + B of the checkpoint the
+                // restart read, and pending_min above it.
+                if let Some(floor) = &self.restart_floor {
+                    for (pool, raised) in floor {
+                        if pools
+                            .get(pool)
+                            .is_none_or(|cp| cp.h < *raised || cp.pending_min <= *raised)
+                        {
+                            return Err(SplitError::Evidence);
+                        }
+                    }
+                }
+                self.restart_floor = None;
                 self.checkpoint = Some(Checkpoint {
                     position: self.position,
                     pending: self.pending.clone(),
                     slots: self.slots.clone(),
                     pools,
                 });
+            }
+            Event::WholeCommitteeRestart { host_final } => {
+                // DESIGN §5.6, §7.11, DECISIONS 53: no node can show after the
+                // restart that no partial left, so an authorized request settles
+                // FINAL when the host shows its transaction and RELEASED
+                // otherwise, never VOID with a fresh nullifier.
+                // A posted envelope that the board has not ordered holds no
+                // slot and no authorization in force; it stays posted.
+                let live: Vec<_> = self
+                    .requests
+                    .iter()
+                    .filter(|(_, r)| !r.state.terminal() && r.order_position.is_some())
+                    .map(|(e, _)| *e)
+                    .collect();
+                for eid in live {
+                    if let Some(ciphertext) = host_final.get(&eid) {
+                        self.finish(eid, State::Final(*ciphertext));
+                        continue;
+                    }
+                    let r = &self.requests[&eid];
+                    // Only the authorization in force claimed the record (`force`).
+                    if let Some(h) = r.header.as_ref().filter(|_| r.in_force()) {
+                        if !self.spent_records.contains(&h.record) {
+                            self.record_locks.entry(h.record).or_insert(h.pin);
+                        }
+                    }
+                    self.finish(eid, State::Void(VoidReason::Restart));
+                }
+                // C16: a restart without slot anchors burns every slot it knows,
+                // and in each committee pool every index in [pending_min, h + B]
+                // of the latest checkpoint (DESIGN §7.11 item 1).
+                for state in self.slots.values_mut() {
+                    *state = SlotState::Burned;
+                }
+                let mut floor = BTreeMap::new();
+                if let Some(cp) = &self.checkpoint {
+                    for (pool, pc) in &cp.pools {
+                        let top =
+                            pc.h.checked_add(self.reservation_window)
+                                .ok_or(SplitError::Parameters)?;
+                        for index in pc.pending_min..=top {
+                            let slot = SlotId::Schnorr {
+                                suite: pool.suite,
+                                epoch: pool.epoch,
+                                index,
+                            };
+                            self.slots.insert(slot, SlotState::Burned);
+                        }
+                        floor.insert(*pool, top);
+                    }
+                }
+                self.restart_floor = Some(floor);
             }
             Event::Tick => {}
         }
@@ -1944,7 +2105,17 @@ impl SplitBoard {
                 return Err(fail("named slot returned to free"));
             }
         }
+        for record in &self.spent_records {
+            if self.record_locks.contains_key(record) {
+                return Err(fail("spent record locked"));
+            }
+        }
         for (slot, state) in &self.slots {
+            if let (SlotId::Ecdsa { .. }, SlotState::Named(eid)) = (slot, state) {
+                if !self.ecdsa_eligible(eid, slot) {
+                    return Err(fail("ECDSA precedence without authorization in force"));
+                }
+            }
             if let Some(eid) = state.owner() {
                 let r = self.request(&eid)?;
                 if r.state.terminal() || r.lapsed || !r.header()?.slots.contains(slot) {
@@ -1962,7 +2133,9 @@ impl SplitBoard {
             }
             if self.any_release(*eid) {
                 let h = r.header()?;
-                if self.record_locks.get(&h.record) != Some(&h.pin) {
+                if !self.spent_records.contains(&h.record)
+                    && self.record_locks.get(&h.record) != Some(&h.pin)
+                {
                     return Err(fail("lost released pin"));
                 }
                 if r.settlement == Some(Settlement::UnspentFreshNullifier) {

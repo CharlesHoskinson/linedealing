@@ -1,0 +1,28 @@
+All values are bytes from serialized prototype objects; frame capacity is 16,384 bytes.
+Layout, header, bodies and capsules include AEAD tags. Layout is 64 bytes. Actor HPKE capsules are 385 bytes. Outer includes the public proof. Actor growth uses separately built one- and two-actor requests; first growth includes the shared contribution keys.
+
+| n | Suite | Grid | Frame used | Outer + proof | Layout | Header | Bodies | Capsules | First other actor | Next other actor | CONTRIB frame used | Embedded actor |
+|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 5 | BIP340 | K=8, L=2 | 11195 | 521 | 64 | 4700 | 1680 | 4134 | 1285 | 790 | 2591 | 1711 |
+| 5 | ECDSA (embedded actors) | K=3, L=2 | 2660 | 521 | 64 | 446 | 336 | 1197 | 594 | 495 | 1235 | 355 |
+| 5 | Ed25519 | K=1, L=1 | 1426 | 521 | 64 | 379 | 80 | 286 | 492 | 459 | 977 | 97 |
+| 9 | BIP340 | K=8, L=2 | 11422 | 748 | 64 | 4700 | 1680 | 4134 | 1285 | 790 | 2818 | 1711 |
+| 9 | ECDSA (embedded actors) | K=3, L=2 | 2887 | 748 | 64 | 446 | 336 | 1197 | 594 | 495 | 1462 | 355 |
+| 9 | Ed25519 | K=1, L=1 | 1653 | 748 | 64 | 379 | 80 | 286 | 492 | 459 | 1204 | 97 |
+| 17 | BIP340 | K=8, L=2 | 11843 | 1169 | 64 | 4700 | 1680 | 4134 | 1285 | 790 | 3239 | 1711 |
+| 17 | ECDSA (embedded actors) | K=3, L=2 | 3308 | 1169 | 64 | 446 | 336 | 1197 | 594 | 495 | 1883 | 355 |
+| 17 | Ed25519 | K=1, L=1 | 2074 | 1169 | 64 | 379 | 80 | 286 | 492 | 459 | 1625 | 97 |
+| 33 | BIP340 | K=8, L=2 | 12718 | 2044 | 64 | 4700 | 1680 | 4134 | 1285 | 790 | 4114 | 1711 |
+| 33 | ECDSA (embedded actors) | K=3, L=2 | 4183 | 2044 | 64 | 446 | 336 | 1197 | 594 | 495 | 2758 | 355 |
+| 33 | Ed25519 | K=1, L=1 | 2949 | 2044 | 64 | 379 | 80 | 286 | 492 | 459 | 2500 | 97 |
+
+Board slot posts include dealer context, ephemeral key and proof. Four slots are one batch per dealer; all t dealers are counted.
+
+| n | t | One Schnorr slot | Four Schnorr slots |
+|---:|---:|---:|---:|
+| 5 | 4 | 2924 | 10028 |
+| 9 | 7 | 8351 | 30317 |
+| 17 | 12 | 24612 | 92580 |
+| 33 | 23 | 88159 | 339181 |
+
+Actor pool pair points, N_pool = 64 pairs (D, E), secp256k1 encoder: 4224 bytes

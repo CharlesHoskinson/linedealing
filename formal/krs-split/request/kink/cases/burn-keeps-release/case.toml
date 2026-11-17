@@ -1,0 +1,15 @@
+# RQ-076 (ledger 28): a whole-committee restart keeps any_release and released[g].
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { HostFee = { h = 50, m = 15 } },
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { Open = { eid = 1, kk = 2, ll = 1, collecting = false, npos = 0, rates = [10, 20] } },
+  { VoteAdmit = { eid = 1, node = 0, hash = 7, h = 50 } },
+  { VoteAdmit = { eid = 1, node = 1, hash = 7, h = 50 } },
+  { VoteAdmit = { eid = 1, node = 2, hash = 7, h = 50 } },
+  { Release = { eid = 1, g = 1, j = 2 } },
+  { RestartBurn = { eid = 1 } },
+]

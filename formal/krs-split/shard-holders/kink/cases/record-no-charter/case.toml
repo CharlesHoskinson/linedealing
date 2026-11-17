@@ -1,0 +1,6 @@
+# ledger 3: a record for a charter that is not fixed
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { SubmitRecord = { record = { Rr = { cm_addr = 77, profile = "P1", charter = 8, signers = [0, 1, 2], owner_reg = false, escrow_acks = 0, escrow_quorum = 0, guardian_acks = 0, q_g = 0, network_created = false } } } },
+]

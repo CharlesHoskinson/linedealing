@@ -1,0 +1,11 @@
+# EN-023: the ordering block's own height b is read, not the board height: board 800, b = 895, delta_c 10 refuses exp = 905, then b = 894 passes, and a later tick changes nothing in either answer.
+[inputs]
+params = { Params = { mode = "Tee", delta_c = 10 } }
+height = 800
+epochs = [{ P = [3, 33] }]
+ops = [
+  { OrderCheck = { exp = 905, b = 895 } },
+  { OrderCheck = { exp = 905, b = 894 } },
+  { Tick = { h = 900 } },
+  { OrderCheck = { exp = 905, b = 894 } },
+]

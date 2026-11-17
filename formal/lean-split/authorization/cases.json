@@ -1,0 +1,2385 @@
+[
+ {
+  "name": "run P1 and board-first",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "mode": "TEE",
+     "q": 3
+    },
+    "ops": [
+     {
+      "op": "charter",
+      "cid": 1,
+      "profile": "P1",
+      "board_first": false,
+      "stateful": false
+     },
+     {
+      "op": "charter",
+      "cid": 2,
+      "profile": "P2",
+      "board_first": false,
+      "stateful": false
+     },
+     {
+      "op": "charter",
+      "cid": 3,
+      "profile": "P0",
+      "board_first": true,
+      "stateful": false
+     },
+     {
+      "op": "record",
+      "rid": 10,
+      "cid": 1,
+      "cm_addr": 100,
+      "nf": {
+       "fresh": 10
+      },
+      "hold_tag": 7,
+      "slr_own": 1,
+      "slr_G": null
+     },
+     {
+      "op": "record",
+      "rid": 20,
+      "cid": 2,
+      "cm_addr": 200,
+      "nf": {
+       "fresh": 20
+      },
+      "hold_tag": 8,
+      "slr_own": 2,
+      "slr_G": 3
+     },
+     {
+      "op": "record",
+      "rid": 30,
+      "cid": 3,
+      "cm_addr": 300,
+      "nf": {
+       "fresh": 30
+      },
+      "hold_tag": 9,
+      "slr_own": null,
+      "slr_G": null
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 10,
+       "nf": {
+        "fresh": 10
+       },
+       "auth": 501,
+       "rh": 601,
+       "source": "OWNER",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 5,
+       "to_exit": false,
+       "carry": null
+      }
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 10,
+       "nf": {
+        "fresh": 10
+       },
+       "auth": 502,
+       "rh": 601,
+       "source": "OWNER",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 5,
+       "to_exit": false,
+       "carry": null
+      }
+     },
+     {
+      "op": "query",
+      "auth": 501,
+      "height": 100
+     },
+     {
+      "op": "finalize",
+      "auth": 501,
+      "height": 50
+     },
+     {
+      "op": "query",
+      "auth": 501,
+      "height": 50
+     },
+     {
+      "op": "revoke",
+      "auth": 501,
+      "tag": 7
+     },
+     {
+      "op": "settle_root",
+      "leaves": [
+       [
+        501,
+        "RELEASED"
+       ]
+      ]
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 10,
+       "nf": {
+        "auth": 501,
+        "outcome": "RELEASED"
+       },
+       "auth": 503,
+       "rh": 601,
+       "source": "OWNER",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 6,
+       "to_exit": false,
+       "carry": null
+      }
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 10,
+       "nf": {
+        "auth": 501,
+        "outcome": "RELEASED"
+       },
+       "auth": 503,
+       "rh": 601,
+       "source": "OWNER",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 5,
+       "to_exit": false,
+       "carry": null
+      }
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 30,
+       "nf": {
+        "fresh": 30
+       },
+       "auth": 504,
+       "rh": 601,
+       "source": "OWNER",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 5,
+       "to_exit": false,
+       "carry": null
+      }
+     },
+     {
+      "op": "bf_call",
+      "call": {
+       "auth": 701,
+       "nf": {
+        "fresh": 30
+       },
+       "proof_ok": true,
+       "root_final": true,
+       "root_age": 40,
+       "bound": 100,
+       "interval": 30,
+       "F_M": 30,
+       "carry_sigs": null
+      }
+     },
+     {
+      "op": "bf_call",
+      "call": {
+       "auth": 702,
+       "nf": {
+        "fresh": 30
+       },
+       "proof_ok": true,
+       "root_final": true,
+       "root_age": 40,
+       "bound": 100,
+       "interval": 30,
+       "F_M": 30,
+       "carry_sigs": null
+      }
+     },
+     {
+      "op": "query",
+      "auth": 701,
+      "height": 0
+     },
+     {
+      "op": "bf_root",
+      "tuples": [
+       {
+        "auth": 701,
+        "nf": {
+         "fresh": 30
+        },
+        "rh": 801,
+        "root": 901
+       }
+      ]
+     },
+     {
+      "op": "charter",
+      "cid": 4,
+      "profile": "P1",
+      "board_first": true,
+      "stateful": true
+     }
+    ]
+   }
+  },
+  "expect": {
+   "cells": {
+    "obs": [
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "refused": [
+       "nf_used"
+      ]
+     },
+     {
+      "in_force": false
+     },
+     {
+      "ok": true
+     },
+     {
+      "in_force": true
+     },
+     {
+      "refused": [
+       "not_revocable"
+      ]
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "pin_mismatch"
+      ]
+     },
+     {
+      "accepted": true
+     },
+     {
+      "refused": [
+       "board_first_record"
+      ]
+     },
+     {
+      "accepted": true
+     },
+     {
+      "refused": [
+       "nf_pending"
+      ]
+     },
+     {
+      "in_force": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "board_first_forbidden"
+      ]
+     }
+    ],
+    "state": {
+     "charters": [
+      {
+       "board_first": false,
+       "cid": 1,
+       "profile": "P1"
+      },
+      {
+       "board_first": false,
+       "cid": 2,
+       "profile": "P2"
+      },
+      {
+       "board_first": true,
+       "cid": 3,
+       "profile": "P0"
+      }
+     ],
+     "holds": [],
+     "node": {
+      "in_force": [
+       [
+        701,
+        {
+         "fresh": 30
+        }
+       ]
+      ],
+      "landed": [
+       {
+        "fresh": 30
+       }
+      ],
+      "pending": []
+     },
+     "params": {
+      "mode": "TEE",
+      "q": 3
+     },
+     "records": [
+      {
+       "auths": [
+        {
+         "auth": 503,
+         "direct": true,
+         "final_height": null,
+         "nf": {
+          "auth": 501,
+          "outcome": "RELEASED"
+         },
+         "pin": 5,
+         "rh": 601,
+         "settled": "NONE",
+         "source": "OWNER",
+         "status": "SUBMITTED"
+        },
+        {
+         "auth": 501,
+         "direct": true,
+         "final_height": 50,
+         "nf": {
+          "fresh": 10
+         },
+         "pin": 5,
+         "rh": 601,
+         "settled": "RELEASED",
+         "source": "OWNER",
+         "status": "FINAL"
+        }
+       ],
+       "board_first": false,
+       "cm_addr": 100,
+       "hold_tag": 7,
+       "nf": {
+        "auth": 501,
+        "outcome": "RELEASED"
+       },
+       "pin": 5,
+       "profile": "P1",
+       "rid": 10,
+       "rstate": "PENDING",
+       "slr_G": null,
+       "slr_own": 1,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": false,
+       "cm_addr": 200,
+       "hold_tag": 8,
+       "nf": {
+        "fresh": 20
+       },
+       "pin": null,
+       "profile": "P2",
+       "rid": 20,
+       "rstate": "UNSPENT",
+       "slr_G": 3,
+       "slr_own": 2,
+       "spent": false
+      },
+      {
+       "auths": [
+        {
+         "auth": 701,
+         "direct": false,
+         "final_height": null,
+         "nf": {
+          "fresh": 30
+         },
+         "pin": null,
+         "rh": 801,
+         "settled": "NONE",
+         "source": null,
+         "status": "SUBMITTED"
+        }
+       ],
+       "board_first": true,
+       "cm_addr": 300,
+       "hold_tag": 9,
+       "nf": {
+        "fresh": 30
+       },
+       "pin": null,
+       "profile": "P0",
+       "rid": 30,
+       "rstate": "PENDING",
+       "slr_G": null,
+       "slr_own": null,
+       "spent": false
+      }
+     ],
+     "recovered": false,
+     "used": [
+      [
+       {
+        "auth": 501,
+        "outcome": "RELEASED"
+       },
+       503
+      ],
+      [
+       {
+        "fresh": 10
+       },
+       501
+      ]
+     ]
+    }
+   },
+   "end": "final"
+  }
+ },
+ {
+  "name": "run P2 hold and recovery",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "mode": "TEE",
+     "q": 3
+    },
+    "ops": [
+     {
+      "op": "charter",
+      "cid": 1,
+      "profile": "P1",
+      "board_first": false,
+      "stateful": false
+     },
+     {
+      "op": "charter",
+      "cid": 2,
+      "profile": "P2",
+      "board_first": false,
+      "stateful": false
+     },
+     {
+      "op": "charter",
+      "cid": 3,
+      "profile": "P0",
+      "board_first": true,
+      "stateful": false
+     },
+     {
+      "op": "record",
+      "rid": 10,
+      "cid": 1,
+      "cm_addr": 100,
+      "nf": {
+       "fresh": 10
+      },
+      "hold_tag": 7,
+      "slr_own": 1,
+      "slr_G": null
+     },
+     {
+      "op": "record",
+      "rid": 20,
+      "cid": 2,
+      "cm_addr": 200,
+      "nf": {
+       "fresh": 20
+      },
+      "hold_tag": 8,
+      "slr_own": 2,
+      "slr_G": 3
+     },
+     {
+      "op": "record",
+      "rid": 30,
+      "cid": 3,
+      "cm_addr": 300,
+      "nf": {
+       "fresh": 30
+      },
+      "hold_tag": 9,
+      "slr_own": null,
+      "slr_G": null
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 20,
+       "nf": {
+        "fresh": 20
+       },
+       "auth": 502,
+       "rh": 601,
+       "source": "OWNER",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 0,
+       "to_exit": false,
+       "carry": null
+      }
+     },
+     {
+      "op": "revoke",
+      "auth": 502,
+      "tag": 8
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 20,
+       "nf": {
+        "fresh": 20
+       },
+       "auth": 503,
+       "rh": 601,
+       "source": "OWNER",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 0,
+       "to_exit": false,
+       "carry": null
+      }
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 20,
+       "nf": {
+        "fresh": 21
+       },
+       "auth": 505,
+       "rh": 601,
+       "source": "SEIZURE",
+       "slot": [
+        20,
+        "G"
+       ],
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 5,
+       "to_exit": false,
+       "carry": null
+      }
+     },
+     {
+      "op": "seizure",
+      "auth": 502,
+      "all_to_dreg": true
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 10,
+       "nf": {
+        "fresh": 10
+       },
+       "auth": 501,
+       "rh": 601,
+       "source": "RECOVERY",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 5,
+       "to_exit": true,
+       "carry": null
+      }
+     },
+     {
+      "op": "recover"
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 10,
+       "nf": {
+        "fresh": 10
+       },
+       "auth": 501,
+       "rh": 601,
+       "source": "RECOVERY",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 5,
+       "to_exit": true,
+       "carry": null
+      }
+     },
+     {
+      "op": "settle_root",
+      "leaves": [
+       [
+        501,
+        "VOID"
+       ]
+      ]
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 10,
+       "nf": {
+        "auth": 501,
+        "outcome": "VOID"
+       },
+       "auth": 506,
+       "rh": 601,
+       "source": "OWNER",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 5,
+       "to_exit": false,
+       "carry": {
+        "auth_0": 501,
+        "outcome": "FINAL",
+        "sigs": 3
+       }
+      }
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 10,
+       "nf": {
+        "auth": 501,
+        "outcome": "VOID"
+       },
+       "auth": 506,
+       "rh": 601,
+       "source": "OWNER",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 5,
+       "to_exit": false,
+       "carry": null
+      }
+     }
+    ]
+   }
+  },
+  "expect": {
+   "cells": {
+    "obs": [
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "nf_used",
+       "no-rule"
+      ]
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     },
+     {
+      "refused": [
+       "no_recovery"
+      ]
+     },
+     {
+      "ok": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "bad_carry"
+      ]
+     },
+     {
+      "accepted": true
+     }
+    ],
+    "state": {
+     "charters": [
+      {
+       "board_first": false,
+       "cid": 1,
+       "profile": "P1"
+      },
+      {
+       "board_first": false,
+       "cid": 2,
+       "profile": "P2"
+      },
+      {
+       "board_first": true,
+       "cid": 3,
+       "profile": "P0"
+      }
+     ],
+     "holds": [
+      8
+     ],
+     "node": {
+      "in_force": [],
+      "landed": [],
+      "pending": []
+     },
+     "params": {
+      "mode": "TEE",
+      "q": 3
+     },
+     "records": [
+      {
+       "auths": [
+        {
+         "auth": 506,
+         "direct": true,
+         "final_height": null,
+         "nf": {
+          "auth": 501,
+          "outcome": "VOID"
+         },
+         "pin": 5,
+         "rh": 601,
+         "settled": "NONE",
+         "source": "OWNER",
+         "status": "SUBMITTED"
+        },
+        {
+         "auth": 501,
+         "direct": true,
+         "final_height": null,
+         "nf": {
+          "fresh": 10
+         },
+         "pin": 5,
+         "rh": 601,
+         "settled": "VOID",
+         "source": "RECOVERY",
+         "status": "SUBMITTED"
+        }
+       ],
+       "board_first": false,
+       "cm_addr": 100,
+       "hold_tag": 7,
+       "nf": {
+        "auth": 501,
+        "outcome": "VOID"
+       },
+       "pin": null,
+       "profile": "P1",
+       "rid": 10,
+       "rstate": "PENDING",
+       "slr_G": null,
+       "slr_own": 1,
+       "spent": false
+      },
+      {
+       "auths": [
+        {
+         "auth": 502,
+         "direct": true,
+         "final_height": null,
+         "nf": {
+          "fresh": 20
+         },
+         "pin": 0,
+         "rh": 601,
+         "settled": "NONE",
+         "source": "OWNER",
+         "status": "REVOKED"
+        }
+       ],
+       "board_first": false,
+       "cm_addr": 200,
+       "hold_tag": 8,
+       "nf": {
+        "fresh": 20
+       },
+       "pin": null,
+       "profile": "P2",
+       "rid": 20,
+       "rstate": "PENDING",
+       "slr_G": 3,
+       "slr_own": 2,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": true,
+       "cm_addr": 300,
+       "hold_tag": 9,
+       "nf": {
+        "fresh": 30
+       },
+       "pin": null,
+       "profile": "P0",
+       "rid": 30,
+       "rstate": "UNSPENT",
+       "slr_G": null,
+       "slr_own": null,
+       "spent": false
+      }
+     ],
+     "recovered": true,
+     "used": [
+      [
+       {
+        "auth": 501,
+        "outcome": "VOID"
+       },
+       506
+      ],
+      [
+       {
+        "fresh": 10
+       },
+       501
+      ],
+      [
+       {
+        "fresh": 20
+       },
+       502
+      ]
+     ]
+    }
+   },
+   "end": "final"
+  }
+ },
+ {
+  "name": "run seizure",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "mode": "TEE",
+     "q": 3
+    },
+    "ops": [
+     {
+      "op": "charter",
+      "cid": 1,
+      "profile": "P1",
+      "board_first": false,
+      "stateful": false
+     },
+     {
+      "op": "charter",
+      "cid": 2,
+      "profile": "P2",
+      "board_first": false,
+      "stateful": false
+     },
+     {
+      "op": "charter",
+      "cid": 3,
+      "profile": "P0",
+      "board_first": true,
+      "stateful": false
+     },
+     {
+      "op": "record",
+      "rid": 10,
+      "cid": 1,
+      "cm_addr": 100,
+      "nf": {
+       "fresh": 10
+      },
+      "hold_tag": 7,
+      "slr_own": 1,
+      "slr_G": null
+     },
+     {
+      "op": "record",
+      "rid": 20,
+      "cid": 2,
+      "cm_addr": 200,
+      "nf": {
+       "fresh": 20
+      },
+      "hold_tag": 8,
+      "slr_own": 2,
+      "slr_G": 3
+     },
+     {
+      "op": "record",
+      "rid": 30,
+      "cid": 3,
+      "cm_addr": 300,
+      "nf": {
+       "fresh": 30
+      },
+      "hold_tag": 9,
+      "slr_own": null,
+      "slr_G": null
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 20,
+       "nf": {
+        "fresh": 20
+       },
+       "auth": 505,
+       "rh": 601,
+       "source": "SEIZURE",
+       "slot": [
+        20,
+        "G"
+       ],
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 0,
+       "to_exit": false,
+       "carry": null
+      }
+     },
+     {
+      "op": "seizure",
+      "auth": 505,
+      "all_to_dreg": false
+     },
+     {
+      "op": "seizure",
+      "auth": 505,
+      "all_to_dreg": true
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 10,
+       "nf": {
+        "fresh": 10
+       },
+       "auth": 507,
+       "rh": 601,
+       "source": "OWNER",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 5,
+       "to_exit": false,
+       "carry": {
+        "auth_0": 505,
+        "outcome": "VOID",
+        "sigs": 2
+       }
+      }
+     },
+     {
+      "op": "query",
+      "auth": 505,
+      "height": 9
+     }
+    ]
+   }
+  },
+  "expect": {
+   "cells": {
+    "obs": [
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "void": "AUTH_REFUSED"
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "bad_carry"
+      ]
+     },
+     {
+      "in_force": false
+     }
+    ],
+    "state": {
+     "charters": [
+      {
+       "board_first": false,
+       "cid": 1,
+       "profile": "P1"
+      },
+      {
+       "board_first": false,
+       "cid": 2,
+       "profile": "P2"
+      },
+      {
+       "board_first": true,
+       "cid": 3,
+       "profile": "P0"
+      }
+     ],
+     "holds": [],
+     "node": {
+      "in_force": [],
+      "landed": [],
+      "pending": []
+     },
+     "params": {
+      "mode": "TEE",
+      "q": 3
+     },
+     "records": [
+      {
+       "auths": [],
+       "board_first": false,
+       "cm_addr": 100,
+       "hold_tag": 7,
+       "nf": {
+        "fresh": 10
+       },
+       "pin": null,
+       "profile": "P1",
+       "rid": 10,
+       "rstate": "UNSPENT",
+       "slr_G": null,
+       "slr_own": 1,
+       "spent": false
+      },
+      {
+       "auths": [
+        {
+         "auth": 505,
+         "direct": true,
+         "final_height": null,
+         "nf": {
+          "fresh": 20
+         },
+         "pin": 0,
+         "rh": 601,
+         "settled": "NONE",
+         "source": "SEIZURE",
+         "status": "SUBMITTED"
+        }
+       ],
+       "board_first": false,
+       "cm_addr": 200,
+       "hold_tag": 8,
+       "nf": {
+        "fresh": 20
+       },
+       "pin": null,
+       "profile": "P2",
+       "rid": 20,
+       "rstate": "PENDING",
+       "slr_G": 3,
+       "slr_own": 2,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": true,
+       "cm_addr": 300,
+       "hold_tag": 9,
+       "nf": {
+        "fresh": 30
+       },
+       "pin": null,
+       "profile": "P0",
+       "rid": 30,
+       "rstate": "UNSPENT",
+       "slr_G": null,
+       "slr_own": null,
+       "spent": false
+      }
+     ],
+     "recovered": false,
+     "used": [
+      [
+       {
+        "fresh": 20
+       },
+       505
+      ]
+     ]
+    }
+   },
+   "end": "final"
+  }
+ },
+ {
+  "name": "run reissue NON_TEE",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "mode": "NON_TEE",
+     "q": 3
+    },
+    "ops": [
+     {
+      "op": "charter",
+      "cid": 1,
+      "profile": "P1",
+      "board_first": false,
+      "stateful": false
+     },
+     {
+      "op": "charter",
+      "cid": 2,
+      "profile": "P2",
+      "board_first": false,
+      "stateful": false
+     },
+     {
+      "op": "charter",
+      "cid": 3,
+      "profile": "P0",
+      "board_first": true,
+      "stateful": false
+     },
+     {
+      "op": "record",
+      "rid": 10,
+      "cid": 1,
+      "cm_addr": 100,
+      "nf": {
+       "fresh": 10
+      },
+      "hold_tag": 7,
+      "slr_own": 1,
+      "slr_G": null
+     },
+     {
+      "op": "record",
+      "rid": 20,
+      "cid": 2,
+      "cm_addr": 200,
+      "nf": {
+       "fresh": 20
+      },
+      "hold_tag": 8,
+      "slr_own": 2,
+      "slr_G": 3
+     },
+     {
+      "op": "record",
+      "rid": 30,
+      "cid": 3,
+      "cm_addr": 300,
+      "nf": {
+       "fresh": 30
+      },
+      "hold_tag": 9,
+      "slr_own": null,
+      "slr_G": null
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 10,
+       "nf": {
+        "fresh": 10
+       },
+       "auth": 501,
+       "rh": 601,
+       "source": "OWNER",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 5,
+       "to_exit": false,
+       "carry": null
+      }
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 10,
+       "nf": {
+        "auth": 501,
+        "outcome": "VOID"
+       },
+       "auth": 504,
+       "rh": 601,
+       "source": "OWNER",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 5,
+       "to_exit": false,
+       "carry": {
+        "auth_0": 501,
+        "outcome": "VOID",
+        "sigs": 3
+       }
+      }
+     },
+     {
+      "op": "settle_root",
+      "leaves": [
+       [
+        504,
+        "FINAL"
+       ]
+      ]
+     },
+     {
+      "op": "authorize",
+      "call": {
+       "rid": 10,
+       "nf": {
+        "auth": 501,
+        "outcome": "VOID"
+       },
+       "auth": 508,
+       "rh": 601,
+       "source": "OWNER",
+       "slot": null,
+       "inputs_ok": true,
+       "pred_ok": true,
+       "in_gamma": true,
+       "blacklisted": false,
+       "ticket_ok": true,
+       "pin": 5,
+       "to_exit": false,
+       "carry": null
+      }
+     }
+    ]
+   }
+  },
+  "expect": {
+   "cells": {
+    "obs": [
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "accepted": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "nf_used",
+       "no-rule"
+      ]
+     }
+    ],
+    "state": {
+     "charters": [
+      {
+       "board_first": false,
+       "cid": 1,
+       "profile": "P1"
+      },
+      {
+       "board_first": false,
+       "cid": 2,
+       "profile": "P2"
+      },
+      {
+       "board_first": true,
+       "cid": 3,
+       "profile": "P0"
+      }
+     ],
+     "holds": [],
+     "node": {
+      "in_force": [],
+      "landed": [],
+      "pending": []
+     },
+     "params": {
+      "mode": "NON_TEE",
+      "q": 3
+     },
+     "records": [
+      {
+       "auths": [
+        {
+         "auth": 504,
+         "direct": true,
+         "final_height": null,
+         "nf": {
+          "auth": 501,
+          "outcome": "VOID"
+         },
+         "pin": 5,
+         "rh": 601,
+         "settled": "FINAL",
+         "source": "OWNER",
+         "status": "SUBMITTED"
+        },
+        {
+         "auth": 501,
+         "direct": true,
+         "final_height": null,
+         "nf": {
+          "fresh": 10
+         },
+         "pin": 5,
+         "rh": 601,
+         "settled": "VOID",
+         "source": "OWNER",
+         "status": "SUBMITTED"
+        }
+       ],
+       "board_first": false,
+       "cm_addr": 100,
+       "hold_tag": 7,
+       "nf": {
+        "auth": 501,
+        "outcome": "VOID"
+       },
+       "pin": null,
+       "profile": "P1",
+       "rid": 10,
+       "rstate": "PENDING",
+       "slr_G": null,
+       "slr_own": 1,
+       "spent": true
+      },
+      {
+       "auths": [],
+       "board_first": false,
+       "cm_addr": 200,
+       "hold_tag": 8,
+       "nf": {
+        "fresh": 20
+       },
+       "pin": null,
+       "profile": "P2",
+       "rid": 20,
+       "rstate": "UNSPENT",
+       "slr_G": 3,
+       "slr_own": 2,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": true,
+       "cm_addr": 300,
+       "hold_tag": 9,
+       "nf": {
+        "fresh": 30
+       },
+       "pin": null,
+       "profile": "P0",
+       "rid": 30,
+       "rstate": "UNSPENT",
+       "slr_G": null,
+       "slr_own": null,
+       "spent": false
+      }
+     ],
+     "recovered": false,
+     "used": [
+      [
+       {
+        "auth": 501,
+        "outcome": "VOID"
+       },
+       504
+      ],
+      [
+       {
+        "fresh": 10
+       },
+       501
+      ]
+     ]
+    }
+   },
+   "end": "final"
+  }
+ },
+ {
+  "name": "exponent",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"q\": 3e0}, \"ops\": [{\"op\": \"charter\", \"cid\": 1, \"profile\": \"P1\", \"board_first\": false, \"stateful\": false}, {\"op\": \"authorize\", \"call\": {\"rid\": 10, \"nf\": {\"fresh\": 10}, \"auth\": 501, \"rh\": 601, \"source\": \"OWNER\", \"slot\": null, \"inputs_ok\": true, \"pred_ok\": true, \"in_gamma\": true, \"blacklisted\": false, \"ticket_ok\": true, \"pin\": 5, \"to_exit\": false, \"carry\": null}}]}}",
+  "rc": 2
+ },
+ {
+  "name": "fraction",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"q\": 3.0}, \"ops\": [{\"op\": \"charter\", \"cid\": 1, \"profile\": \"P1\", \"board_first\": false, \"stateful\": false}, {\"op\": \"authorize\", \"call\": {\"rid\": 10, \"nf\": {\"fresh\": 10}, \"auth\": 501, \"rh\": 601, \"source\": \"OWNER\", \"slot\": null, \"inputs_ok\": true, \"pred_ok\": true, \"in_gamma\": true, \"blacklisted\": false, \"ticket_ok\": true, \"pin\": 5, \"to_exit\": false, \"carry\": null}}]}}",
+  "rc": 2
+ },
+ {
+  "name": "leading zero",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"q\": \"03\"}, \"ops\": [{\"op\": \"charter\", \"cid\": 1, \"profile\": \"P1\", \"board_first\": false, \"stateful\": false}, {\"op\": \"authorize\", \"call\": {\"rid\": 10, \"nf\": {\"fresh\": 10}, \"auth\": 501, \"rh\": 601, \"source\": \"OWNER\", \"slot\": null, \"inputs_ok\": true, \"pred_ok\": true, \"in_gamma\": true, \"blacklisted\": false, \"ticket_ok\": true, \"pin\": 5, \"to_exit\": false, \"carry\": null}}]}}",
+  "rc": 2
+ },
+ {
+  "name": "underscore",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"q\": 3}, \"ops\": [{\"op\": \"charter\", \"cid\": 1, \"profile\": \"P1\", \"board_first\": false, \"stateful\": false}, {\"op\": \"authorize\", \"call\": {\"rid\": 10, \"nf\": {\"fresh\": 10}, \"auth\": 501, \"rh\": 601, \"source\": \"OWNER\", \"slot\": null, \"inputs_ok\": true, \"pred_ok\": true, \"in_gamma\": true, \"blacklisted\": false, \"ticket_ok\": true, \"pin\": \"5_0\", \"to_exit\": false, \"carry\": null}}]}}",
+  "rc": 2
+ },
+ {
+  "name": "extra key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"q\": 3, \"extra\": 1}, \"ops\": [{\"op\": \"charter\", \"cid\": 1, \"profile\": \"P1\", \"board_first\": false, \"stateful\": false}, {\"op\": \"authorize\", \"call\": {\"rid\": 10, \"nf\": {\"fresh\": 10}, \"auth\": 501, \"rh\": 601, \"source\": \"OWNER\", \"slot\": null, \"inputs_ok\": true, \"pred_ok\": true, \"in_gamma\": true, \"blacklisted\": false, \"ticket_ok\": true, \"pin\": 5, \"to_exit\": false, \"carry\": null}}]}}",
+  "rc": 2
+ },
+ {
+  "name": "missing key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"x\": 3}, \"ops\": [{\"op\": \"charter\", \"cid\": 1, \"profile\": \"P1\", \"board_first\": false, \"stateful\": false}, {\"op\": \"authorize\", \"call\": {\"rid\": 10, \"nf\": {\"fresh\": 10}, \"auth\": 501, \"rh\": 601, \"source\": \"OWNER\", \"slot\": null, \"inputs_ok\": true, \"pred_ok\": true, \"in_gamma\": true, \"blacklisted\": false, \"ticket_ok\": true, \"pin\": 5, \"to_exit\": false, \"carry\": null}}]}}",
+  "rc": 2
+ },
+ {
+  "name": "duplicate key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"q\": 3, \"q\": 3}, \"ops\": [{\"op\": \"charter\", \"cid\": 1, \"profile\": \"P1\", \"board_first\": false, \"stateful\": false}, {\"op\": \"authorize\", \"call\": {\"rid\": 10, \"nf\": {\"fresh\": 10}, \"auth\": 501, \"rh\": 601, \"source\": \"OWNER\", \"slot\": null, \"inputs_ok\": true, \"pred_ok\": true, \"in_gamma\": true, \"blacklisted\": false, \"ticket_ok\": true, \"pin\": 5, \"to_exit\": false, \"carry\": null}}]}}",
+  "rc": 2
+ },
+ {
+  "name": "unknown enum",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"q\": 3}, \"ops\": [{\"op\": \"charter\", \"cid\": 1, \"profile\": \"p1\", \"board_first\": false, \"stateful\": false}, {\"op\": \"authorize\", \"call\": {\"rid\": 10, \"nf\": {\"fresh\": 10}, \"auth\": 501, \"rh\": 601, \"source\": \"OWNER\", \"slot\": null, \"inputs_ok\": true, \"pred_ok\": true, \"in_gamma\": true, \"blacklisted\": false, \"ticket_ok\": true, \"pin\": 5, \"to_exit\": false, \"carry\": null}}]}}",
+  "rc": 2
+ },
+ {
+  "name": "nf with both forms",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"q\": 3}, \"ops\": [{\"op\": \"charter\", \"cid\": 1, \"profile\": \"P1\", \"board_first\": false, \"stateful\": false}, {\"op\": \"authorize\", \"call\": {\"rid\": 10, \"nf\": {\"fresh\": 10, \"auth\": 1}, \"auth\": 501, \"rh\": 601, \"source\": \"OWNER\", \"slot\": null, \"inputs_ok\": true, \"pred_ok\": true, \"in_gamma\": true, \"blacklisted\": false, \"ticket_ok\": true, \"pin\": 5, \"to_exit\": false, \"carry\": null}}]}}",
+  "rc": 2
+ },
+ {
+  "name": "protocol 2",
+  "input": "{\"protocol\": \"kink-implementation/2\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"q\": 3}, \"ops\": []}}",
+  "rc": 2
+ },
+ {
+  "name": "unknown op",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "mode": "TEE",
+     "q": 3
+    },
+    "ops": [
+     {
+      "op": "nope"
+     }
+    ]
+   }
+  },
+  "rc": 2
+ },
+ {
+  "name": "string integer accepted",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"mode\": \"TEE\", \"q\": \"3\"}, \"ops\": [{\"op\": \"charter\", \"cid\": 1, \"profile\": \"P1\", \"board_first\": false, \"stateful\": false}, {\"op\": \"authorize\", \"call\": {\"rid\": 10, \"nf\": {\"fresh\": 10}, \"auth\": 501, \"rh\": 601, \"source\": \"OWNER\", \"slot\": null, \"inputs_ok\": true, \"pred_ok\": true, \"in_gamma\": true, \"blacklisted\": false, \"ticket_ok\": true, \"pin\": 5, \"to_exit\": false, \"carry\": null}}]}}",
+  "expect": {
+   "cells": {
+    "obs": [
+     {
+      "accepted": true
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     }
+    ],
+    "state": {
+     "charters": [
+      {
+       "board_first": false,
+       "cid": 1,
+       "profile": "P1"
+      }
+     ],
+     "holds": [],
+     "node": {
+      "in_force": [],
+      "landed": [],
+      "pending": []
+     },
+     "params": {
+      "mode": "TEE",
+      "q": 3
+     },
+     "records": [],
+     "recovered": false,
+     "used": []
+    }
+   },
+   "end": "final"
+  }
+ },
+ {
+  "name": "step answers",
+  "args": [
+   "--step"
+  ],
+  "input": [
+   {
+    "state": {
+     "charters": [
+      {
+       "board_first": false,
+       "cid": 1,
+       "profile": "P1"
+      },
+      {
+       "board_first": false,
+       "cid": 2,
+       "profile": "P2"
+      },
+      {
+       "board_first": true,
+       "cid": 3,
+       "profile": "P0"
+      }
+     ],
+     "holds": [],
+     "node": {
+      "in_force": [],
+      "landed": [],
+      "pending": []
+     },
+     "params": {
+      "mode": "TEE",
+      "q": 3
+     },
+     "records": [
+      {
+       "auths": [
+        {
+         "auth": 501,
+         "direct": true,
+         "final_height": null,
+         "nf": {
+          "fresh": 10
+         },
+         "pin": 5,
+         "rh": 601,
+         "settled": "NONE",
+         "source": "OWNER",
+         "status": "SUBMITTED"
+        }
+       ],
+       "board_first": false,
+       "cm_addr": 100,
+       "hold_tag": 7,
+       "nf": {
+        "fresh": 10
+       },
+       "pin": null,
+       "profile": "P1",
+       "rid": 10,
+       "rstate": "PENDING",
+       "slr_G": null,
+       "slr_own": 1,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": false,
+       "cm_addr": 200,
+       "hold_tag": 8,
+       "nf": {
+        "fresh": 20
+       },
+       "pin": null,
+       "profile": "P2",
+       "rid": 20,
+       "rstate": "UNSPENT",
+       "slr_G": 3,
+       "slr_own": 2,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": true,
+       "cm_addr": 300,
+       "hold_tag": 9,
+       "nf": {
+        "fresh": 30
+       },
+       "pin": null,
+       "profile": "P0",
+       "rid": 30,
+       "rstate": "UNSPENT",
+       "slr_G": null,
+       "slr_own": null,
+       "spent": false
+      }
+     ],
+     "recovered": false,
+     "used": [
+      [
+       {
+        "fresh": 10
+       },
+       501
+      ]
+     ]
+    },
+    "op": {
+     "op": "authorize",
+     "call": {
+      "rid": 10,
+      "nf": {
+       "fresh": 10
+      },
+      "auth": 502,
+      "rh": 601,
+      "source": "OWNER",
+      "slot": null,
+      "inputs_ok": true,
+      "pred_ok": true,
+      "in_gamma": true,
+      "blacklisted": false,
+      "ticket_ok": true,
+      "pin": 5,
+      "to_exit": false,
+      "carry": null
+     }
+    }
+   },
+   {
+    "state": {
+     "charters": [
+      {
+       "board_first": false,
+       "cid": 1,
+       "profile": "P1"
+      },
+      {
+       "board_first": false,
+       "cid": 2,
+       "profile": "P2"
+      },
+      {
+       "board_first": true,
+       "cid": 3,
+       "profile": "P0"
+      }
+     ],
+     "holds": [],
+     "node": {
+      "in_force": [],
+      "landed": [],
+      "pending": []
+     },
+     "params": {
+      "mode": "TEE",
+      "q": 3
+     },
+     "records": [
+      {
+       "auths": [
+        {
+         "auth": 501,
+         "direct": true,
+         "final_height": null,
+         "nf": {
+          "fresh": 10
+         },
+         "pin": 5,
+         "rh": 601,
+         "settled": "NONE",
+         "source": "OWNER",
+         "status": "SUBMITTED"
+        }
+       ],
+       "board_first": false,
+       "cm_addr": 100,
+       "hold_tag": 7,
+       "nf": {
+        "fresh": 10
+       },
+       "pin": null,
+       "profile": "P1",
+       "rid": 10,
+       "rstate": "PENDING",
+       "slr_G": null,
+       "slr_own": 1,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": false,
+       "cm_addr": 200,
+       "hold_tag": 8,
+       "nf": {
+        "fresh": 20
+       },
+       "pin": null,
+       "profile": "P2",
+       "rid": 20,
+       "rstate": "UNSPENT",
+       "slr_G": 3,
+       "slr_own": 2,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": true,
+       "cm_addr": 300,
+       "hold_tag": 9,
+       "nf": {
+        "fresh": 30
+       },
+       "pin": null,
+       "profile": "P0",
+       "rid": 30,
+       "rstate": "UNSPENT",
+       "slr_G": null,
+       "slr_own": null,
+       "spent": false
+      }
+     ],
+     "recovered": false,
+     "used": [
+      [
+       {
+        "fresh": 10
+       },
+       501
+      ]
+     ]
+    },
+    "op": {
+     "op": "finalize",
+     "auth": 501,
+     "height": 7
+    }
+   },
+   {
+    "state": {
+     "charters": [
+      {
+       "board_first": false,
+       "cid": 1,
+       "profile": "P1"
+      },
+      {
+       "board_first": false,
+       "cid": 2,
+       "profile": "P2"
+      },
+      {
+       "board_first": true,
+       "cid": 3,
+       "profile": "P0"
+      }
+     ],
+     "holds": [],
+     "node": {
+      "in_force": [],
+      "landed": [],
+      "pending": []
+     },
+     "params": {
+      "mode": "TEE",
+      "q": 3
+     },
+     "records": [
+      {
+       "auths": [
+        {
+         "auth": 501,
+         "direct": true,
+         "final_height": null,
+         "nf": {
+          "fresh": 10
+         },
+         "pin": 5,
+         "rh": 601,
+         "settled": "NONE",
+         "source": "OWNER",
+         "status": "SUBMITTED"
+        }
+       ],
+       "board_first": false,
+       "cm_addr": 100,
+       "hold_tag": 7,
+       "nf": {
+        "fresh": 10
+       },
+       "pin": null,
+       "profile": "P1",
+       "rid": 10,
+       "rstate": "PENDING",
+       "slr_G": null,
+       "slr_own": 1,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": false,
+       "cm_addr": 200,
+       "hold_tag": 8,
+       "nf": {
+        "fresh": 20
+       },
+       "pin": null,
+       "profile": "P2",
+       "rid": 20,
+       "rstate": "UNSPENT",
+       "slr_G": 3,
+       "slr_own": 2,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": true,
+       "cm_addr": 300,
+       "hold_tag": 9,
+       "nf": {
+        "fresh": 30
+       },
+       "pin": null,
+       "profile": "P0",
+       "rid": 30,
+       "rstate": "UNSPENT",
+       "slr_G": null,
+       "slr_own": null,
+       "spent": false
+      },
+      {
+       "auths": [
+        {
+         "auth": 501,
+         "direct": true,
+         "final_height": null,
+         "nf": {
+          "fresh": 10
+         },
+         "pin": 5,
+         "rh": 601,
+         "settled": "NONE",
+         "source": "OWNER",
+         "status": "SUBMITTED"
+        }
+       ],
+       "board_first": false,
+       "cm_addr": 100,
+       "hold_tag": 7,
+       "nf": {
+        "fresh": 10
+       },
+       "pin": null,
+       "profile": "P1",
+       "rid": 10,
+       "rstate": "PENDING",
+       "slr_G": null,
+       "slr_own": 1,
+       "spent": false
+      }
+     ],
+     "recovered": false,
+     "used": [
+      [
+       {
+        "fresh": 10
+       },
+       501
+      ]
+     ]
+    },
+    "op": {
+     "op": "recover"
+    }
+   },
+   "{\"state\": 1}",
+   {
+    "state": {
+     "charters": [
+      {
+       "board_first": false,
+       "cid": 1,
+       "profile": "P1"
+      },
+      {
+       "board_first": false,
+       "cid": 2,
+       "profile": "P2"
+      },
+      {
+       "board_first": true,
+       "cid": 3,
+       "profile": "P0"
+      }
+     ],
+     "holds": [],
+     "node": {
+      "in_force": [],
+      "landed": [],
+      "pending": []
+     },
+     "params": {
+      "mode": "TEE",
+      "q": 3
+     },
+     "records": [
+      {
+       "auths": [
+        {
+         "auth": 501,
+         "direct": true,
+         "final_height": null,
+         "nf": {
+          "fresh": 10
+         },
+         "pin": 5,
+         "rh": 601,
+         "settled": "NONE",
+         "source": "OWNER",
+         "status": "SUBMITTED"
+        }
+       ],
+       "board_first": false,
+       "cm_addr": 100,
+       "hold_tag": 7,
+       "nf": {
+        "fresh": 10
+       },
+       "pin": null,
+       "profile": "P1",
+       "rid": 10,
+       "rstate": "PENDING",
+       "slr_G": null,
+       "slr_own": 1,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": false,
+       "cm_addr": 200,
+       "hold_tag": 8,
+       "nf": {
+        "fresh": 20
+       },
+       "pin": null,
+       "profile": "P2",
+       "rid": 20,
+       "rstate": "UNSPENT",
+       "slr_G": 3,
+       "slr_own": 2,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": true,
+       "cm_addr": 300,
+       "hold_tag": 9,
+       "nf": {
+        "fresh": 30
+       },
+       "pin": null,
+       "profile": "P0",
+       "rid": 30,
+       "rstate": "UNSPENT",
+       "slr_G": null,
+       "slr_own": null,
+       "spent": false
+      }
+     ],
+     "recovered": false,
+     "used": [
+      [
+       {
+        "fresh": 10
+       },
+       501
+      ]
+     ]
+    },
+    "op": {
+     "op": "query",
+     "auth": 501,
+     "height": 7
+    }
+   }
+  ],
+  "expect": [
+   {
+    "refused": [
+     "nf_used"
+    ]
+   },
+   {
+    "obs": {
+     "ok": true
+    },
+    "state": {
+     "charters": [
+      {
+       "board_first": false,
+       "cid": 1,
+       "profile": "P1"
+      },
+      {
+       "board_first": false,
+       "cid": 2,
+       "profile": "P2"
+      },
+      {
+       "board_first": true,
+       "cid": 3,
+       "profile": "P0"
+      }
+     ],
+     "holds": [],
+     "node": {
+      "in_force": [],
+      "landed": [],
+      "pending": []
+     },
+     "params": {
+      "mode": "TEE",
+      "q": 3
+     },
+     "records": [
+      {
+       "auths": [
+        {
+         "auth": 501,
+         "direct": true,
+         "final_height": 7,
+         "nf": {
+          "fresh": 10
+         },
+         "pin": 5,
+         "rh": 601,
+         "settled": "NONE",
+         "source": "OWNER",
+         "status": "FINAL"
+        }
+       ],
+       "board_first": false,
+       "cm_addr": 100,
+       "hold_tag": 7,
+       "nf": {
+        "fresh": 10
+       },
+       "pin": null,
+       "profile": "P1",
+       "rid": 10,
+       "rstate": "PENDING",
+       "slr_G": null,
+       "slr_own": 1,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": false,
+       "cm_addr": 200,
+       "hold_tag": 8,
+       "nf": {
+        "fresh": 20
+       },
+       "pin": null,
+       "profile": "P2",
+       "rid": 20,
+       "rstate": "UNSPENT",
+       "slr_G": 3,
+       "slr_own": 2,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": true,
+       "cm_addr": 300,
+       "hold_tag": 9,
+       "nf": {
+        "fresh": 30
+       },
+       "pin": null,
+       "profile": "P0",
+       "rid": 30,
+       "rstate": "UNSPENT",
+       "slr_G": null,
+       "slr_own": null,
+       "spent": false
+      }
+     ],
+     "recovered": false,
+     "used": [
+      [
+       {
+        "fresh": 10
+       },
+       501
+      ]
+     ]
+    }
+   },
+   {
+    "refused": [
+     "outside-state-domain"
+    ]
+   },
+   {
+    "error": "line: keys must be exactly [state, op], got [state]"
+   },
+   {
+    "obs": {
+     "in_force": false
+    },
+    "state": {
+     "charters": [
+      {
+       "board_first": false,
+       "cid": 1,
+       "profile": "P1"
+      },
+      {
+       "board_first": false,
+       "cid": 2,
+       "profile": "P2"
+      },
+      {
+       "board_first": true,
+       "cid": 3,
+       "profile": "P0"
+      }
+     ],
+     "holds": [],
+     "node": {
+      "in_force": [],
+      "landed": [],
+      "pending": []
+     },
+     "params": {
+      "mode": "TEE",
+      "q": 3
+     },
+     "records": [
+      {
+       "auths": [
+        {
+         "auth": 501,
+         "direct": true,
+         "final_height": null,
+         "nf": {
+          "fresh": 10
+         },
+         "pin": 5,
+         "rh": 601,
+         "settled": "NONE",
+         "source": "OWNER",
+         "status": "SUBMITTED"
+        }
+       ],
+       "board_first": false,
+       "cm_addr": 100,
+       "hold_tag": 7,
+       "nf": {
+        "fresh": 10
+       },
+       "pin": null,
+       "profile": "P1",
+       "rid": 10,
+       "rstate": "PENDING",
+       "slr_G": null,
+       "slr_own": 1,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": false,
+       "cm_addr": 200,
+       "hold_tag": 8,
+       "nf": {
+        "fresh": 20
+       },
+       "pin": null,
+       "profile": "P2",
+       "rid": 20,
+       "rstate": "UNSPENT",
+       "slr_G": 3,
+       "slr_own": 2,
+       "spent": false
+      },
+      {
+       "auths": [],
+       "board_first": true,
+       "cm_addr": 300,
+       "hold_tag": 9,
+       "nf": {
+        "fresh": 30
+       },
+       "pin": null,
+       "profile": "P0",
+       "rid": 30,
+       "rstate": "UNSPENT",
+       "slr_G": null,
+       "slr_own": null,
+       "spent": false
+      }
+     ],
+     "recovered": false,
+     "used": [
+      [
+       {
+        "fresh": 10
+       },
+       501
+      ]
+     ]
+    }
+   }
+  ]
+ }
+]

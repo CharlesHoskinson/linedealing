@@ -1,0 +1,17 @@
+# SH-003, SH-004: groups of groups and an AND below a group
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { FixCharter = { id = 8, gamma = { Group = { mid = 0, kk = 1, children = [{ And = { mid = 1, children = [{ Leaf = { mid = 1, actor = 1 } }, { Or = { mid = 2, primary = { Leaf = { mid = 1, actor = 2 } }, escrow = { Leaf = { mid = 2, actor = 3 } } } }] } }, { Group = { mid = 2, kk = 1, children = [{ Or = { mid = 1, primary = { Leaf = { mid = 1, actor = 4 } }, escrow = { Leaf = { mid = 2, actor = 6 } } } }] } }] } } } },
+  { PostPool = { actor = 1, root = 1, key = 0 } },
+  { PostPool = { actor = 2, root = 1, key = 0 } },
+  { PostPool = { actor = 4, root = 1, key = 0 } },
+  { PostPool = { actor = 6, root = 1, key = 0 } },
+  { Contribute = { request = { Cr = { actor = 1, charter = 8, s_set = [1, 2], initiator = 1, weight = { Qv = { num = 1, den = 1 } }, pairs = [0], slot = { Committee = {} }, exp_c = 10, height = 5, policy_ok = true, recompute_ok = true, seizure_settled = false } } } },
+  { Contribute = { request = { Cr = { actor = 4, charter = 8, s_set = [4], initiator = 4, weight = { Qv = { num = 1, den = 1 } }, pairs = [0], slot = { Committee = {} }, exp_c = 10, height = 5, policy_ok = true, recompute_ok = true, seizure_settled = false } } } },
+  { Contribute = { request = { Cr = { actor = 1, charter = 8, s_set = [1, 2, 4], initiator = 1, weight = { Qv = { num = 1, den = 1 } }, pairs = [1], slot = { Committee = {} }, exp_c = 10, height = 5, policy_ok = true, recompute_ok = true, seizure_settled = false } } } },
+  { Contribute = { request = { Cr = { actor = 4, charter = 8, s_set = [4, 6], initiator = 4, weight = { Qv = { num = 1, den = 1 } }, pairs = [1], slot = { Committee = {} }, exp_c = 10, height = 5, policy_ok = true, recompute_ok = true, seizure_settled = true } } } },
+  { Contribute = { request = { Cr = { actor = 1, charter = 8, s_set = [1], initiator = 1, weight = { Qv = { num = 1, den = 1 } }, pairs = [2], slot = { Committee = {} }, exp_c = 10, height = 5, policy_ok = true, recompute_ok = true, seizure_settled = false } } } },
+  { Contribute = { request = { Cr = { actor = 6, charter = 8, s_set = [6], initiator = 6, weight = { Qv = { num = 1, den = 1 } }, pairs = [0], slot = { Committee = {} }, exp_c = 10, height = 5, policy_ok = true, recompute_ok = true, seizure_settled = true } } } },
+  { Contribute = { request = { Cr = { actor = 2, charter = 8, s_set = [1, 2], initiator = 1, weight = { Qv = { num = 1, den = 1 } }, pairs = [0], slot = { Committee = {} }, exp_c = 10, height = 5, policy_ok = true, recompute_ok = true, seizure_settled = false } } } },
+]

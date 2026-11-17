@@ -1,0 +1,10 @@
+# SL-001, SL-022: each pool deals above its own highest index.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealC = { suite = "Bip340", epoch = 3, kcount = 2 } },
+  { DealC = { suite = "Ed25519", epoch = 3, kcount = 1 } },
+  { DealC = { suite = "Bip340", epoch = 3, kcount = 1 } },
+  { DealC = { suite = "Bip340", epoch = 4, kcount = 1 } },
+  { DealC = { suite = "Bip340", epoch = 3, kcount = 0 } },
+]

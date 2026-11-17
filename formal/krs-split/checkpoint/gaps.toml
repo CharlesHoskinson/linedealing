@@ -1,0 +1,7 @@
+# EARS IDs of split-checkpoint that no rule of the KRS definition stands for, so no
+# mutation can name them, and the check that covers each instead. The `mutations` gate
+# (scripts/check_mutations.py) fails on an ID that is neither here nor named by a mutation.
+
+[[gap]]
+id = "CP-038"
+covered_by = "Lean SplitCheckpoint.C16_run_window_burned, C16_acct_burned and C16_session_burned (proved); the port's burns are the rules CP-020, CP-021 and CP-024 that mutations name, and the coin and key parts are outside the state (oracle README)"

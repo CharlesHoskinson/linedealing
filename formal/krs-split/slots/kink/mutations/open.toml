@@ -1,0 +1,404 @@
+# Plausible misreadings of opening and naming slots (SL-004, SL-006, SL-007, SL-016,
+# SL-017), of header order (Q-003, ledger 4) and of the open domain (ledgers 5, 9), as K
+# patches of kink/definition.k.
+
+[[mutation]]
+id = "sl004-stays-unnamed"
+expect = "kill"
+misunderstanding = "SL-004: naming sets prec but leaves bstat UNNAMED"
+  [[mutation.edit]]
+  rule = "split_slots--open_slot_1_1"
+  find = "Idx:Int , NAMED , lowest"
+  replace = "Idx:Int , Bstat:BStat , lowest"
+
+[[mutation]]
+id = "sl004-namer-not-recorded"
+expect = "kill"
+misunderstanding = "SL-004: a namer of a slot under a precedence is not recorded"
+  [[mutation.edit]]
+  rule = "split_slots--open_slot_1_2"
+  find = "Prec:List , Namers:List ListItem(pr ( Eid:Int , Pos:Int )) )"
+  replace = "Prec:List , Namers:List )"
+
+[[mutation]]
+id = "sl017-burned-named"
+expect = "kill"
+misunderstanding = "SL-017: a BURNED committee slot without prec still takes the first namer and moves back to NAMED"
+  [[mutation.edit]]
+  rule = "split_slots--open_slot_1_1"
+  find = "(size(Prec:List) ==Int 0) andThenBool (Bstat:BStat ==K UNNAMED)"
+  replace = "(size(Prec:List) ==Int 0)"
+  [[mutation.edit]]
+  rule = "split_slots--open_slot_1_2"
+  find = "(size(Prec:List) ==Int 0) andThenBool (Bstat:BStat ==K UNNAMED)"
+  replace = "(size(Prec:List) ==Int 0)"
+
+[[mutation]]
+id = "sl004-open-names-all"
+expect = "kill"
+misunderstanding = "SL-004: an open names every committee slot, not only the ones in its header"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_1_1"
+  find = "requires cKeyOf ( X:CSlot ) in Names:List"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_slots--c_step_1_2"
+  find = "requires notBool cKeyOf ( X:CSlot ) in Names:List"
+  replace = "requires false"
+
+[[mutation]]
+id = "sl016-c-no-void"
+expect = "kill"
+misunderstanding = "SL-016: a header in force that names a committee slot under another request's prec is not VOID"
+  [[mutation.edit]]
+  rule = "split_slots--taken_for_1"
+  find = "=> true"
+  replace = "=> false"
+[[mutation]]
+id = "sl016-c-void-own"
+expect = "kill"
+misunderstanding = "SL-016: any precedence on a named slot, even the opening request's own, makes the header VOID"
+  [[mutation.edit]]
+  rule = "split_slots--taken_c_2"
+  find = "P:Int =/=Int Eid:Int"
+  replace = "true"
+
+[[mutation]]
+id = "sl016-c-unnamed-slots"
+expect = "kill"
+misunderstanding = "SL-016: a precedence of another request on any committee slot, named by the header or not, makes the header VOID"
+  [[mutation.edit]]
+  rule = "split_slots--c_taken_by_1_1"
+  find = "requires namedBy ( Eid:Int , Namers:List )"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_slots--c_taken_by_1_2"
+  find = "requires notBool namedBy ( Eid:Int , Namers:List )"
+  replace = "requires false"
+[[mutation]]
+id = "sl016-c-first-slot-only"
+expect = "kill"
+misunderstanding = "SL-016: only the first committee slot of the slot list decides whether the header is VOID"
+  [[mutation.edit]]
+  rule = "split_slots--any_taken_c_2_2"
+  find = "=> anyTakenC ( Eid:Int , Rest:List )"
+  replace = "=> false"
+[[mutation]]
+id = "q003-reopen"
+expect = "kill"
+misunderstanding = "Q-003, ledger 4: a header that already opened may open again at a later position"
+  [[mutation.edit]]
+  rule = "split_slots--header_order_2"
+  find = "Eid:Int in Opened:List orElseBool "
+  replace = ""
+
+[[mutation]]
+id = "ledger4-equal-position"
+expect = "kill"
+misunderstanding = "Q-003, ledger 4: a header at the same board position as the last opened header may open"
+  [[mutation.edit]]
+  rule = "split_slots--header_order_2"
+  find = "(Pos:Int <=Int P:Int)"
+  replace = "(Pos:Int <Int P:Int)"
+
+[[mutation]]
+id = "ledger4-order-unchecked"
+expect = "kill"
+misunderstanding = "Q-003, ledger 4: headers open in any board order"
+  [[mutation.edit]]
+  rule = "split_slots--header_order_2"
+  find = " orElseBool (Pos:Int <=Int P:Int)"
+  replace = ""
+
+[[mutation]]
+id = "ledger5-undealt-c"
+expect = "kill"
+misunderstanding = "Ledger 5: a header may name a committee slot that no dealing gave"
+  [[mutation.edit]]
+  rule = "split_slots--order_or_undealt_c_2"
+  find = "=> undealtC ( Names:List , Xs:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "ledger5-undealt-c-first"
+expect = "kill"
+misunderstanding = "Ledger 5: only the first named committee slot must be dealt"
+  [[mutation.edit]]
+  rule = "split_slots--undealt_c_2_1"
+  find = "=> undealtC ( Rest:List , Xs:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "ledger5-dealt-by-index"
+expect = "kill"
+misunderstanding = "Ledger 5: a committee slot counts as dealt when any pool has its index"
+  [[mutation.edit]]
+  rule = "split_slots--has_c_key_2_1"
+  find = "cKeyOf ( X:CSlot ) ==K N:CKey"
+  replace = "cKeyOf ( X:CSlot ) ==K cKeyOf ( X:CSlot )"
+  [[mutation.edit]]
+  rule = "split_slots--has_c_key_2_2"
+  find = "notBool (cKeyOf ( X:CSlot ) ==K N:CKey)"
+  replace = "false"
+
+[[mutation]]
+id = "ledger9-dup-c"
+expect = "kill"
+misunderstanding = "Ledger 9: a committee slot named twice in one header is inside the capability"
+  [[mutation.edit]]
+  rule = "split_slots--open_c_ref"
+  find = "outsideIf ( notBool nodupB ( Names:List ) )"
+  replace = ".List"
+
+[[mutation]]
+id = "ledger9-dup-as-no-rule"
+expect = "kill"
+misunderstanding = "Ledger 9: a slot named twice is refused with no-rule, not outside-capability"
+  [[mutation.edit]]
+  rule = "split_slots--outside_if_1"
+  find = "ListItem(outsideCapability)"
+  replace = "ListItem(noRule)"
+
+[[mutation]]
+id = "ledger9-dup-adjacent"
+expect = "kill"
+misunderstanding = "Ledger 9: only the first name is checked against the later ones"
+  [[mutation.edit]]
+  rule = "split_slots--nodup_b_2_2"
+  find = "=> nodupB ( Rest:List )"
+  replace = "=> true"
+
+[[mutation]]
+id = "refusal-order"
+expect = "kill"
+misunderstanding = "Ledgers 5, 9: outside-capability is listed before no-rule"
+  [[mutation.edit]]
+  rule = "split_slots--open_c_ref"
+  find = "noRuleIf ( orderOrUndealtC ( Opened:List , Lastpos:List , Eid:Int , Pos:Int , Names:List , Xs:List ) ) outsideIf ( notBool nodupB ( Names:List ) )"
+  replace = "outsideIf ( notBool nodupB ( Names:List ) ) noRuleIf ( orderOrUndealtC ( Opened:List , Lastpos:List , Eid:Int , Pos:Int , Names:List , Xs:List ) )"
+
+[[mutation]]
+id = "open-c-not-recorded"
+expect = "kill"
+misunderstanding = "Q-003: an open does not record the header as opened"
+  [[mutation.edit]]
+  rule = "open-c"
+  find = "Opened:List => ListItem(Eid:Int) Opened:List"
+  replace = "Opened:List"
+
+[[mutation]]
+id = "open-c-refused-ok"
+expect = "kill"
+misunderstanding = "Q-003, ledgers 4, 5, 9: a refused committee open answers ok"
+  [[mutation.edit]]
+  rule = "open-c-refused"
+  find = "ListItem(refused ( openCRef ( Opened:List , Lastpos:List , Cslots:List , Eid:Int , Pos:Int , Names:List ) ))"
+  replace = "ListItem(ok)"
+
+[[mutation]]
+id = "sl007-unauthorized-takes"
+expect = "kill"
+misunderstanding = "SL-007: a namer without an authorization in force takes precedence on an ECDSA slot"
+  [[mutation.edit]]
+  rule = "split_slots--open_e1_2"
+  find = "=> addNamerE ( Eid:Int , Pos:Int , X:ESlot )"
+  replace = "=> setPrecE ( Eid:Int , addNamerE ( Eid:Int , Pos:Int , X:ESlot ) )"
+
+[[mutation]]
+id = "sl006-open-waits-for-force"
+expect = "kill"
+misunderstanding = "SL-006: a namer already in force takes the slot only at a later in_force, not at its open"
+  [[mutation.edit]]
+  rule = "split_slots--open_e1_1"
+  find = "=> assignE ( Inf:List , addNamerE ( Eid:Int , Pos:Int , X:ESlot ) )"
+  replace = "=> addNamerE ( Eid:Int , Pos:Int , X:ESlot )"
+
+[[mutation]]
+id = "sl007-namer-not-recorded"
+expect = "kill"
+misunderstanding = "SL-007: a namer without an authorization in force is not recorded, so its later in_force takes nothing"
+  [[mutation.edit]]
+  rule = "split_slots--open_e1_2"
+  find = "=> addNamerE ( Eid:Int , Pos:Int , X:ESlot )"
+  replace = "=> X:ESlot"
+
+[[mutation]]
+id = "sl006-open-e-names-all"
+expect = "kill"
+misunderstanding = "SL-006: an ECDSA open names every slot, not only the ones in its header"
+  [[mutation.edit]]
+  rule = "split_slots--e_step_1_1"
+  find = "requires eKeyOf ( X:ESlot ) in Names:List"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_slots--e_step_1_2"
+  find = "requires notBool eKeyOf ( X:ESlot ) in Names:List"
+  replace = "requires false"
+
+[[mutation]]
+id = "ledger2-root-ignored"
+expect = "kill"
+misunderstanding = "SL-006, ledger 2: a namer in force under any root takes the slot, not only under the slot's root"
+  [[mutation.edit]]
+  rule = "split_slots--in_force_namers_2_1"
+  find = "requires force ( A:Int , R:Root ) in Inf:List"
+  replace = "requires inForceAny ( Inf:List , A:Int )"
+  [[mutation.edit]]
+  rule = "split_slots--in_force_namers_2_2"
+  find = "requires notBool force ( A:Int , R:Root ) in Inf:List"
+  replace = "requires notBool inForceAny ( Inf:List , A:Int )"
+
+[[mutation]]
+id = "ledger3-stays-unnamed"
+expect = "kill"
+misunderstanding = "SL-006, ledger 3: the ECDSA precedence leaves bstat UNNAMED"
+  [[mutation.edit]]
+  rule = "split_slots--set_prec_e_1_1"
+  find = "Root:Root , NAMED , ListItem(E:Int)"
+  replace = "Root:Root , Bstat:BStat , ListItem(E:Int)"
+
+[[mutation]]
+id = "sl017-burned-e-named"
+expect = "kill"
+misunderstanding = "SL-017: a BURNED ECDSA slot without prec still takes the earliest namer in force"
+  [[mutation.edit]]
+  rule = "split_slots--assign_e_1"
+  find = " andThenBool (notBool (eBstat ( X:ESlot ) ==K BURNED))"
+  replace = ""
+  [[mutation.edit]]
+  rule = "split_slots--assign_e_2"
+  find = " andThenBool (notBool (eBstat ( X:ESlot ) ==K BURNED))"
+  replace = ""
+
+[[mutation]]
+id = "sl016-e-no-void"
+expect = "kill"
+misunderstanding = "SL-016: a header in force that names an ECDSA slot under another request's prec in force is not VOID"
+  [[mutation.edit]]
+  rule = "split_slots--taken_for_2"
+  find = "=> anyTakenE ( Eid:Int , Inf:List , Es:List )"
+  replace = "=> false"
+[[mutation]]
+id = "sl016-e-unnamed-slots"
+expect = "kill"
+misunderstanding = "SL-016: another request's precedence on any ECDSA slot, named by the header or not, makes the header VOID"
+  [[mutation.edit]]
+  rule = "split_slots--e_taken_by_1_1"
+  find = "requires namedBy ( Eid:Int , Namers:List )"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_slots--e_taken_by_1_2"
+  find = "requires notBool namedBy ( Eid:Int , Namers:List )"
+  replace = "requires false"
+[[mutation]]
+id = "ledger5-undealt-e"
+expect = "kill"
+misunderstanding = "Ledger 5: a header may name an ECDSA slot that no dealing gave"
+  [[mutation.edit]]
+  rule = "split_slots--order_or_undealt_e_2"
+  find = "=> undealtE ( Names:List , Xs:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "ledger9-dup-e"
+expect = "kill"
+misunderstanding = "Ledger 9: an ECDSA slot named twice in one header is inside the capability"
+  [[mutation.edit]]
+  rule = "split_slots--open_e_ref"
+  find = "outsideIf ( notBool nodupB ( Names:List ) )"
+  replace = ".List"
+
+[[mutation]]
+id = "open-e-position-kept"
+expect = "kill"
+misunderstanding = "Q-003: an ECDSA open does not move the last opened position"
+  [[mutation.edit]]
+  rule = "open-e"
+  find = "Lastpos:List => ListItem(Pos:Int)"
+  replace = "Lastpos:List"
+
+[[mutation]]
+id = "open-e-refused-ok"
+expect = "kill"
+misunderstanding = "Q-003, ledgers 4, 5, 9: a refused ECDSA open answers ok"
+  [[mutation.edit]]
+  rule = "open-e-refused"
+  find = "ListItem(refused ( openERef ( Opened:List , Lastpos:List , Eslots:List , Eid:Int , Pos:Int , Names:List ) ))"
+  replace = "ListItem(ok)"
+
+[[mutation]]
+id = "sl016-void-without-force"
+expect = "kill"
+misunderstanding = "SL-016 (before DECISIONS 68): SLOT_TAKEN does not wait for the authorization of the opened request; a header whose authorization is not in force is VOID at its open"
+  [[mutation.edit]]
+  rule = "split_slots--slot_taken_at_1"
+  find = "requires inForceAny ( Inf:List , Eid:Int )"
+  replace = "requires true"
+  [[mutation.edit]]
+  rule = "split_slots--slot_taken_at_2"
+  find = "requires notBool inForceAny ( Inf:List , Eid:Int )"
+  replace = "requires false"
+
+[[mutation]]
+id = "sl016-open-reads-before"
+expect = "kill"
+misunderstanding = "SL-016: the observation of open_c reads the committee slots before the open, so the header's own names are not seen"
+  [[mutation.edit]]
+  rule = "split_slots--obs_open_c"
+  find = "mapC ( Lapsed:List , Op:Op , Cs:List )"
+  replace = "Cs:List"
+
+[[mutation]]
+id = "sl016-open-not-opened"
+expect = "kill"
+misunderstanding = "SL-016: the observation of open_c reads the opened list before the open, so an open in force is never VOID"
+  [[mutation.edit]]
+  rule = "split_slots--obs_open_c"
+  find = "ListItem(Eid:Int) Opened:List"
+  replace = "Opened:List"
+
+[[mutation]]
+id = "sl016-open-e-reads-before"
+expect = "kill"
+misunderstanding = "SL-016: the observation of open_e reads the ECDSA slots before the open, so the header's own names are not seen"
+  [[mutation.edit]]
+  rule = "split_slots--obs_open_e"
+  find = "mapE ( Inf:List , Op:Op , Es:List )"
+  replace = "Es:List"
+
+[[mutation]]
+id = "sl016-open-e-not-opened"
+expect = "kill"
+misunderstanding = "SL-016: the observation of open_e reads the opened list before the open, so an open in force is never VOID"
+  [[mutation.edit]]
+  rule = "split_slots--obs_open_e"
+  find = "ListItem(Eid:Int) Opened:List"
+  replace = "Opened:List"
+
+[[mutation]]
+id = "sl016-in-force-no-check"
+expect = "kill"
+misunderstanding = "SL-016 (DECISIONS 68): the in_force of an opened request reads the in-force list before it, so the check never runs at in_force"
+  [[mutation.edit]]
+  rule = "split_slots--obs_in_force"
+  find = "Inf:List ListItem(force ( Eid:Int , Root:Root ))"
+  replace = "Inf:List"
+
+[[mutation]]
+id = "sl016-in-force-reads-before"
+expect = "survive"
+misunderstanding = "SL-016: the observation of in_force reads the ECDSA slots before the in_force step. Argued equivalent: the in_force step changes only slots with prec = none (assignE), and a slot without prec is never taken (takenFor needs a prec of another request); the slots under another request's prec are the same before and after. Tried: every in_force case of the corpus (sl016-ecdsa-taken-in-force, ecdsa-void-later, ecdsa-precedence, ecdsa-root-mismatch)."
+  [[mutation.edit]]
+  rule = "split_slots--obs_in_force"
+  find = "mapE ( Inf:List , Op:Op , Es:List )"
+  replace = "Es:List"
+
+
+[[mutation]]
+id = "sl016-taken-not-void"
+expect = "kill"
+misunderstanding = "SL-016: an opened request in force whose header names a taken slot gets no VOID; the taken slot is only noted"
+  [[mutation.edit]]
+  rule = "split_slots--slot_taken_obs_1"
+  find = "=> void ( SLOT_TAKEN )"
+  replace = "=> ok"

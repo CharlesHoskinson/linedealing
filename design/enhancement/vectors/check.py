@@ -173,7 +173,8 @@ def bip340_multi(st,choice,root,tally,key=None,twice=False):
     PD=[(M(d,G),M(e,G)) for d,e in pairs]
     dl,el=secrets.randbelow(N),secrets.randbelow(N); Dl,El=M(dl,G),M(el,G)
     # actors bind over the full commitment list CL; the committee binds over (slot, R_A, pm) only
-    Bser=cb(R0)+b''.join(lb.encode()+cb(D)+cb(E) for (lb,_,_),(D,E) in zip(L[1:],PD))+b"slot7"+cb(Dl)+cb(El)
+    # the list starts with the initiator's leaf id, so it names the whole signing set (DECISIONS 72)
+    Bser=L[0][0].encode()+cb(R0)+b''.join(lb.encode()+cb(D)+cb(E) for (lb,_,_),(D,E) in zip(L[1:],PD))+b"slot7"+cb(Dl)+cb(El)
     rho=[H_bind(lb,Bser,pm) for (lb,_,_) in L[1:]]
     RA=A(R0,*[A(D,M(r,E)) for (D,E),r in zip(PD,rho)])
     rf=H_bind("F",b"slot7"+cb(RA),pm)
@@ -381,7 +382,8 @@ def slot_sharing(K,Lin,nact):
         PD=[(M(d_,G),M(e_,G)) for d_,e_ in prs]
         for nonce in [k0]+[d_ for d_,_ in prs]: assert nonce not in used; used.add(nonce)   # no nonce serves two halves
         slab=f"slot{g}.{j}".encode()
-        Bser=cb(R0)+b''.join(f"a{i}".encode()+cb(D)+cb(E) for i,(D,E) in enumerate(PD))+slab+cb(Dl)+cb(El)
+        # the initiator (the user, leaf "u") comes first in the list (DECISIONS 72)
+        Bser=b"u"+cb(R0)+b''.join(f"a{i}".encode()+cb(D)+cb(E) for i,(D,E) in enumerate(PD))+slab+cb(Dl)+cb(El)
         rho=[H_bind(f"a{i}",Bser,pm) for i in range(nact)]
         RA=A(R0,*[A(D,M(r,E)) for (D,E),r in zip(PD,rho)])
         rf=H_bind("F",slab+cb(RA),pm); R=A(RA,Dl,M(rf,El)); sig=1 if R[1]%2==0 else -1
@@ -518,3 +520,18 @@ v1=(h1*wu+rk*muu)%N; v2=sum(lag(i,[2,4,5])*(h2*ews[i]+rk*ems[i]) for i in [2,4,5
 assert ((v1-v2)*pow((h1-h2)%N,N-2,N)%N)==wu                       # so a G-reserved slot is never the user's
 print("ecdsa slot binding: two subsets on one slot reveal the group half and x; a slot bound to one leaf set refuses the second subset")
 
+# (e) The initiator's leaf id in the commitment list (DESIGN.md §4.2 item 3, DECISIONS 72,
+# finding E1). A 2-of-3 group {1,2,3}: member 1 has weight 2 beside member 2 and 3/2 beside
+# member 3. Without the initiator's leaf id the two requests have one list, so member 1 has one
+# rho_a, one R and one c under two weights, and two answers on the pair give x_1.
+x1=secrets.randbelow(N); d1,e1=secrets.randbelow(N),secrets.randbelow(N); D1,E1=M(d1,G),M(e1,G)
+R0e=M(secrets.randbelow(N),G); Dle,Ele=M(secrets.randbelow(N),G),M(secrets.randbelow(N),G)
+pme=secrets.token_bytes(32); cte=secrets.randbelow(N)   # one pm, hence one c for one list
+def cl(init): return init+cb(R0e)+b"0.grp1"+cb(D1)+cb(E1)+b"slot7"+cb(Dle)+cb(Ele)
+w12,w13=lag(1,[1,2]),lag(1,[1,3]); assert w12==2 and w13*2%N==3
+r_old=H_bind("0.grp1",cl(b""),pme)                      # old list: the same bytes for both initiators
+a12=(d1+r_old*e1+cte*w12*x1)%N; a13=(d1+r_old*e1+cte*w13*x1)%N
+assert (a12-a13)*pow(cte*(w12-w13)%N,N-2,N)%N==x1       # two answers under two weights give the leaf secret
+r2,r3=H_bind("0.grp1",cl(b"0.grp2"),pme),H_bind("0.grp1",cl(b"0.grp3"),pme)
+assert r2!=r3                                           # new list: one rho_a per signing set
+print("initiator leaf in CL: without it one rho_a serves two weights and two answers give x_1; with it the two sets have two rho_a")

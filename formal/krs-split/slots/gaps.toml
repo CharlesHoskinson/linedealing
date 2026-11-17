@@ -1,0 +1,6 @@
+# EARS IDs of split-slots that no mutation can name, with the check that covers each
+# (../../lean-split/slots/README.md, requirement table).
+
+[[gap]]
+id = "SL-029"
+covered_by = "Exception in the Lean oracle: a Schnorr committee slot serves one (generation, input) of one request and an ECDSA slot one (variant, input) of one leaf set. The slot state holds no generation, input or variant, so no rule reads them and no mutation can change them; the envelope suite checks the generation and variant grid (EN-010, EN-016)."

@@ -1,0 +1,7 @@
+# CP-009: a later pool of cp2 inside the window is restart_jump
+[inputs]
+params = { Params = { n = 4, f = 1, mode = "Tee", bb = 10, slot_anchor = false, d_rec = 30 } }
+ops = [
+  { Land = { c = { CpOf = { seq = 0, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 1, h = 100, pending_min = 101, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [], restart_seq = 0, seat_roots = [], restores = [] } }, mh = 1000 } },
+  { Land = { c = { CpOf = { seq = 1, epoch = 3, board_height = 100, board_root = 0, witness_root = 0, pools = [{ PoolOf = { pool = 2, h = 5, pending_min = 6, pending = [], pending_count = 0 } }, { PoolOf = { pool = 1, h = 105, pending_min = 106, pending = [], pending_count = 0 } }], settle = [], bf = [], boot_counters = [{ P = [0, 1] }, { P = [1, 1] }], restart_seq = 0, seat_roots = [], restores = [{ Rd = { seat = 0, boot_ctr = 1, cp_seq = 0, whole = false } }, { Rd = { seat = 1, boot_ctr = 1, cp_seq = 0, whole = false } }] } }, mh = 1000 } },
+]

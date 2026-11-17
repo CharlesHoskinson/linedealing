@@ -1,0 +1,312 @@
+# Plausible misreadings of SH-011 and SH-012 (the address record at FenrirAssets),
+# RQ-001 (the quorum q), ledger 3 (a second record for one cm_addr) and ledger 4 (a
+# signer named twice), as K patches.
+
+[[mutation]]
+id = "sh011-quorum-floor"
+expect = "kill"
+misunderstanding = "RQ-001, SH-011: q = floor((n + f + 1) / 2), not the ceiling"
+  [[mutation.edit]]
+  rule = "split_shard_holders--quorum_of_1"
+  find = "((N:Int +Int F:Int) +Int 2) /Int 2"
+  replace = "((N:Int +Int F:Int) +Int 1) /Int 2"
+
+[[mutation]]
+id = "sh011-quorum-two-f-plus-one"
+expect = "kill"
+misunderstanding = "RQ-001, SH-011: the birth certificate needs 2f + 1 BIRTH_OK"
+  [[mutation.edit]]
+  rule = "split_shard_holders--quorum_of_1"
+  find = "((N:Int +Int F:Int) +Int 2) /Int 2"
+  replace = "(2 *Int F:Int) +Int 1"
+
+[[mutation]]
+id = "sh011-quorum-strict"
+expect = "kill"
+misunderstanding = "SH-011: the certificate needs more than q valid BIRTH_OK"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_birth_cert_of_2"
+  find = "=> Signed_2:Int <Int Q:Int"
+  replace = "=> Signed_2:Int <=Int Q:Int"
+
+[[mutation]]
+id = "sh011-p0-needs-births"
+expect = "kill"
+misunderstanding = "SH-011: a P0 record needs a birth certificate like P1 and P2"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_birth_cert_of_1"
+  find = "=> notBool OwnerReg:Bool"
+  replace = "=> Signed_2:Int <Int Q:Int"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_birth_cert_of_1"
+  find = "OwnerReg:Bool , _ , _ )"
+  replace = "OwnerReg:Bool , Signed_2:Int , Q:Int )"
+
+[[mutation]]
+id = "sh011-p0-unchecked"
+expect = "kill"
+misunderstanding = "SH-011: a P0 record needs no registration signed by the owner's key"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_birth_cert_of_1"
+  find = "=> notBool OwnerReg:Bool"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh011-signers-unverified"
+expect = "kill"
+misunderstanding = "SH-011: every node the certificate names counts, whether or not its BIRTH_OK verifies"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_birth_cert_1"
+  find = "size(validSigners ( Signers:List , Births:List , CmAddr:Int ))"
+  replace = "size(Signers:List)"
+
+[[mutation]]
+id = "sh011-signer-other-address"
+expect = "kill"
+misunderstanding = "SH-011: a node's BIRTH_OK on any address counts for this record"
+  [[mutation.edit]]
+  rule = "split_shard_holders--valid_signers_2_2"
+  find = "=> validSigners ( Rest:List , Births:List , Cm:Int )"
+  replace = "=> ListItem(N:Int) validSigners ( Rest:List , Births:List , Cm:Int )"
+
+[[mutation]]
+id = "sh011-signer-dropped"
+expect = "kill"
+misunderstanding = "SH-011: a verified signer is dropped from the certificate"
+  [[mutation.edit]]
+  rule = "split_shard_holders--valid_signers_2_1"
+  find = "=> ListItem(N:Int) validSigners ( Rest:List , Births:List , Cm:Int )"
+  replace = "=> validSigners ( Rest:List , Births:List , Cm:Int )"
+
+[[mutation]]
+id = "sh011-signers-extra"
+expect = "kill"
+misunderstanding = "SH-011: the coordinator's own signature counts as one more BIRTH_OK"
+  [[mutation.edit]]
+  rule = "split_shard_holders--valid_signers_1"
+  find = "=> .List"
+  replace = "=> ListItem(0)"
+
+[[mutation]]
+id = "sh011-record-all-signers"
+expect = "kill"
+misunderstanding = "SH-011: the admitted record keeps every signer the certificate names"
+  [[mutation.edit]]
+  rule = "split_shard_holders--rec_of_1"
+  find = "validSigners ( Signers:List , Births:List , CmAddr:Int ) ,"
+  replace = "Signers:List ,"
+
+[[mutation]]
+id = "sh012-escrow-quorum-unchecked"
+expect = "kill"
+misunderstanding = "SH-012: a record whose Gamma has an OR gate needs no escrow certificate"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_escrow_cert_1"
+  find = "(hasOr ( G:Gate ) andThenBool (EscrowAcks:Int <Int EscrowQuorum:Int)) orElseBool "
+  replace = ""
+
+[[mutation]]
+id = "sh012-escrow-every-gamma"
+expect = "kill"
+misunderstanding = "SH-012: every record needs an escrow certificate, OR gate or not"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_escrow_cert_1"
+  find = "(hasOr ( G:Gate ) andThenBool (EscrowAcks:Int <Int EscrowQuorum:Int))"
+  replace = "(EscrowAcks:Int <Int EscrowQuorum:Int)"
+
+[[mutation]]
+id = "sh012-escrow-strict"
+expect = "kill"
+misunderstanding = "SH-012: the escrow certificate needs more ACKs than the quorum"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_escrow_cert_1"
+  find = "(EscrowAcks:Int <Int EscrowQuorum:Int)"
+  replace = "(EscrowAcks:Int <=Int EscrowQuorum:Int)"
+
+[[mutation]]
+id = "sh012-guardians-unchecked"
+expect = "kill"
+misunderstanding = "SH-012: a P2 record needs no guardian ACKs"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_escrow_cert_1"
+  find = " orElseBool ((Profile:Profile ==K pP2) andThenBool (GuardianAcks:Int <Int QG:Int))"
+  replace = ""
+
+[[mutation]]
+id = "sh012-guardians-every-profile"
+expect = "kill"
+misunderstanding = "SH-012: P1 records also need q_g guardian ACKs"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_escrow_cert_1"
+  find = "((Profile:Profile ==K pP2) andThenBool (GuardianAcks:Int <Int QG:Int))"
+  replace = "(GuardianAcks:Int <Int QG:Int)"
+
+[[mutation]]
+id = "sh012-guardians-strict"
+expect = "kill"
+misunderstanding = "SH-012: a P2 record needs more than q_g guardian ACKs"
+  [[mutation.edit]]
+  rule = "split_shard_holders--no_escrow_cert_1"
+  find = "(GuardianAcks:Int <Int QG:Int)"
+  replace = "(GuardianAcks:Int <=Int QG:Int)"
+
+[[mutation]]
+id = "sh012-hasor-leaf"
+expect = "kill"
+misunderstanding = "SH-012: a single leaf counts as an OR gate"
+  [[mutation.edit]]
+  rule = "split_shard_holders--has_or_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh012-hasor-and-unchecked"
+expect = "kill"
+misunderstanding = "SH-012: an OR gate below an AND gate is not seen"
+  [[mutation.edit]]
+  rule = "split_shard_holders--has_or_2"
+  find = "=> hasOrL ( Children:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh012-hasor-group-unchecked"
+expect = "kill"
+misunderstanding = "SH-012: an OR gate below a group gate is not seen"
+  [[mutation.edit]]
+  rule = "split_shard_holders--has_or_3"
+  find = "=> hasOrL ( Children:List )"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh012-hasor-or-false"
+expect = "kill"
+misunderstanding = "SH-012: only an OR gate below another gate counts"
+  [[mutation.edit]]
+  rule = "split_shard_holders--has_or_4"
+  find = "=> true"
+  replace = "=> false"
+
+[[mutation]]
+id = "sh012-hasor-first-child"
+expect = "kill"
+misunderstanding = "SH-012: only the first child of a gate is searched for an OR gate"
+  [[mutation.edit]]
+  rule = "split_shard_holders--has_or_l_2"
+  find = "hasOr ( G:Gate ) orElseBool hasOrL ( Rest:List )"
+  replace = "hasOr ( G:Gate )"
+
+[[mutation]]
+id = "sh012-hasor-end-true"
+expect = "kill"
+misunderstanding = "SH-012: every gate with children holds an OR gate"
+  [[mutation.edit]]
+  rule = "split_shard_holders--has_or_l_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh011-codes-order"
+expect = "kill"
+misunderstanding = "SH-011, SH-012 (ledger 2): no_escrow_certificate is listed before no_birth_certificate"
+  [[mutation.edit]]
+  rule = "split_shard_holders--record_refusals_g_2"
+  find = "opt ( noBirthCert ( P:Params , Births:List , R:RecordReq ) , rNoBirthCertificate ) opt ( noEscrowCert ( G:Gate , R:RecordReq ) , rNoEscrowCertificate )"
+  replace = "opt ( noEscrowCert ( G:Gate , R:RecordReq ) , rNoEscrowCertificate ) opt ( noBirthCert ( P:Params , Births:List , R:RecordReq ) , rNoBirthCertificate )"
+
+[[mutation]]
+id = "sh011-record-twice"
+expect = "kill"
+misunderstanding = "SH-011 (ledger 3): a second record for one cm_addr is admitted"
+  [[mutation.edit]]
+  rule = "split_shard_holders--record_refusals_g_2"
+  find = "opt ( hasRecord ( Records:List , CmAddr:Int ) , rNoRule )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh011-signer-twice"
+expect = "kill"
+misunderstanding = "SH-011 (ledger 4): a certificate may name one node twice"
+  [[mutation.edit]]
+  rule = "split_shard_holders--record_refusals_g_2"
+  find = "opt ( notBool nodupB ( Signers:List ) , rOutsideCapability )"
+  replace = ".List"
+
+[[mutation]]
+id = "sh011-no-charter-default"
+expect = "kill"
+misunderstanding = "SH-011 (ledger 3): a record for an unfixed charter is checked like any other"
+  [[mutation.edit]]
+  rule = "split_shard_holders--record_refusals_g_1"
+  find = "=> ListItem(rNoRule)"
+  replace = "=> .List"
+
+[[mutation]]
+id = "sh011-charter-by-cm"
+expect = "kill"
+misunderstanding = "SH-011: the record's charter is looked up by its cm_addr"
+  [[mutation.edit]]
+  rule = "split_shard_holders--record_refusals_1"
+  find = "recordReq ( _ , _ , Charter:Int ,"
+  replace = "recordReq ( Charter:Int , _ , _ ,"
+
+[[mutation]]
+id = "sh011-hasrecord-match-missed"
+expect = "kill"
+misunderstanding = "SH-011 (ledger 3): an existing record for cm_addr is not found"
+  [[mutation.edit]]
+  rule = "split_shard_holders--has_record_2_1"
+  find = "=> true"
+  replace = "=> hasRecord ( Rest:List , Cm:Int )"
+
+[[mutation]]
+id = "sh011-hasrecord-any"
+expect = "kill"
+misunderstanding = "SH-011 (ledger 3): any earlier record blocks a new one"
+  [[mutation.edit]]
+  rule = "split_shard_holders--has_record_2_2"
+  find = "=> hasRecord ( Rest:List , Cm:Int )"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh011-hasrecord-end"
+expect = "kill"
+misunderstanding = "SH-011 (ledger 3): every cm_addr counts as recorded"
+  [[mutation.edit]]
+  rule = "split_shard_holders--has_record_1"
+  find = "=> false"
+  replace = "=> true"
+
+[[mutation]]
+id = "sh011-record-appended"
+expect = "kill"
+misunderstanding = "SH-011: an admitted record goes last in the record list"
+  [[mutation.edit]]
+  rule = "submit-record"
+  find = "Records:List => ListItem(recOf ( Births:List , Record:RecordReq )) Records:List"
+  replace = "Records:List => Records:List ListItem(recOf ( Births:List , Record:RecordReq ))"
+
+[[mutation]]
+id = "sh011-refused-codes-first"
+expect = "kill"
+misunderstanding = "SH-011, SH-012: a refused record reports only its first code"
+  [[mutation.edit]]
+  rule = "submit-record-refused"
+  find = "ListItem(oRefused ( recordRefusals ( Params:Params , Charters:List , Births:List , Records:List , Record:RecordReq ) ))"
+  replace = "ListItem(oRefused ( ListItem(rNoBirthCertificate) ))"
+
+[[mutation]]
+id = "opt-inverted"
+expect = "kill"
+misunderstanding = "SH-001, SH-022 (ledger 2): a check adds its code when it passes"
+  [[mutation.edit]]
+  rule = "split_shard_holders--opt_1"
+  find = "=> ListItem(R:Refusal)"
+  replace = "=> .List"
+  [[mutation.edit]]
+  rule = "split_shard_holders--opt_2"
+  find = "opt ( B:Bool , _ )"
+  replace = "opt ( B:Bool , R:Refusal )"
+  [[mutation.edit]]
+  rule = "split_shard_holders--opt_2"
+  find = "=> .List"
+  replace = "=> ListItem(R:Refusal)"

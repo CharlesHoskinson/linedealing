@@ -1,0 +1,26 @@
+# SL-020, ledger 6: bound to another digest, absent, free, burned, or not current.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { SeatPut = { key = 1 } },
+  { SeatPut = { key = 1 } },
+  { SeatBind = { key = 1, d = 7, slot_acks = 2, sealed_acks = 2 } },
+  { SeatBind = { key = 1, d = 8, slot_acks = 2, sealed_acks = 2 } },
+  { SeatRelease = { key = 1, d = 8 } },
+  { SeatRelease = { key = 2, d = 7 } },
+  { SeatBind = { key = 2, d = 7, slot_acks = 2, sealed_acks = 2 } },
+  { SeatBurn = { key = 2 } },
+  { SeatPut = { key = 2 } },
+  { SeatRelease = { key = 2, d = 7 } },
+  { SeatPut = { key = 3 } },
+  { SeatBind = { key = 3, d = 5, slot_acks = 1, sealed_acks = 2 } },
+  { SeatRelease = { key = 3, d = 5 } },
+  { SeatBind = { key = 3, d = 5, slot_acks = 2, sealed_acks = 1 } },
+  { SeatRelease = { key = 3, d = 5 } },
+  { SeatBind = { key = 3, d = 5, slot_acks = 2, sealed_acks = 2 } },
+  { SeatRelease = { key = 3, d = 5 } },
+  { SeatBurn = { key = 1 } },
+  { SeatBurn = { key = 1 } },
+  { SeatRelease = { key = 1, d = 7 } },
+  { SeatBind = { key = 1, d = 7, slot_acks = 2, sealed_acks = 2 } },
+]

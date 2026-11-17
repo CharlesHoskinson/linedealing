@@ -1,0 +1,17 @@
+# RQ-026: ADMIT votes of a COLLECTING request set ADMITTED.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { HostFee = { h = 50, m = 15 } },
+  { Post = { eid = 1, epoch = 0, exp = 1000, rtype = "Spend", profile = "PfP1" } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+  { Open = { eid = 1, kk = 2, ll = 1, collecting = true, npos = 1, rates = [10, 20] } },
+  { VoteOpened = { eid = 1, node = 0, hash = 7 } },
+  { VoteOpened = { eid = 1, node = 1, hash = 7 } },
+  { VoteOpened = { eid = 1, node = 2, hash = 7 } },
+  { FrameOp = { eid = 1, fr = { Fr = { position = 0, token_ok = true, lengths_ok = true, height = 0, cid = 77 } } } },
+  { VoteAdmit = { eid = 1, node = 0, hash = 7, h = 50 } },
+  { VoteAdmit = { eid = 1, node = 1, hash = 7, h = 50 } },
+  { VoteAdmit = { eid = 1, node = 2, hash = 7, h = 50 } },
+]

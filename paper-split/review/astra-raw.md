@@ -1,7 +1,7 @@
 VERDICT: changes_requested
 
 1. **BLOCKING — The profile proposition exceeds the cited Lean theorems.**  
-   **Location:** §4.1, [sec-security.tex:86](~/.cache/paper-split-review/astra/bundle/src/sec-security.tex:86).
+   **Location:** §4.1, [sec-security.tex:86](/home/hoskinson/.cache/paper-split-review/astra/bundle/src/sec-security.tex:86).
 
    **Claim:** “The user alone signs in every profile,” and “No set without the user covers a P0 or P1 charter.”
 
@@ -16,7 +16,7 @@ VERDICT: changes_requested
    **Suggested fix:** Restrict the proposition explicitly to the modeled single-user charter family. Separate profile-independent algebra from claims about actual P0 execution and arbitrary P1/P2 charters.
 
 2. **BLOCKING — The blindness statements contradict the disclosed views.**  
-   **Location:** §2.2, [sec-setting.tex:21](~/.cache/paper-split-review/astra/bundle/src/sec-setting.tex:21); §5, [sec-blindness.tex:26](~/.cache/paper-split-review/astra/bundle/src/sec-blindness.tex:26).
+   **Location:** §2.2, [sec-setting.tex:21](/home/hoskinson/.cache/paper-split-review/astra/bundle/src/sec-setting.tex:21); §5, [sec-blindness.tex:26](/home/hoskinson/.cache/paper-split-review/astra/bundle/src/sec-blindness.tex:26).
 
    **Claim:** No operator outside an enclave learns the tweak; before release a node cannot select, delay, or refuse by address, amount, destination, or chain.
 
@@ -27,7 +27,7 @@ VERDICT: changes_requested
    **Suggested fix:** State the exceptions in the operative blindness claim, not only elsewhere: restrict tweak secrecy to TEE mode, acknowledge ECDSA account identification, and condition Schnorr ticket hiding on transaction uncertainty and absence of disclosure by named actors.
 
 3. **BLOCKING — The release procedure omits the hold check required by the design.**  
-   **Location:** §§3.7–3.8, [sec-construction.tex:141](~/.cache/paper-split-review/astra/bundle/src/sec-construction.tex:141); C7, `sec-security.tex:114`.
+   **Location:** §§3.7–3.8, [sec-construction.tex:141](/home/hoskinson/.cache/paper-split-review/astra/bundle/src/sec-construction.tex:141); C7, `sec-security.tex:114`.
 
    **Claim:** A revoked authorization releases no new generation.
 
@@ -41,7 +41,7 @@ VERDICT: changes_requested
    **Suggested fix:** Insert the per-release check, its finalized-ledger freshness condition, and the initial P2 hold delay into the construction. State the transition when revocation occurs after an earlier release.
 
 4. **BLOCKING — C6 incorrectly constrains Byzantine nodes’ individual outputs.**  
-   **Location:** §4.2, [sec-security.tex:113](~/.cache/paper-split-review/astra/bundle/src/sec-security.tex:113).
+   **Location:** §4.2, [sec-security.tex:113](/home/hoskinson/.cache/paper-split-review/astra/bundle/src/sec-security.tex:113).
 
    **Claim:** “No node releases” without an unrevoked authorization, including in non-TEE mode with fewer than \(t\) corrupt nodes.
 
@@ -53,7 +53,7 @@ VERDICT: changes_requested
    **Suggested fix:** Distinguish honest-node behavior from completed threshold release. State the latter’s assumptions separately, including any board-safety or slot-anchor conditions needed for the intended authorization guarantee.
 
 5. **BLOCKING — Recovery is not unconditional for the supported ECDSA access structures.**  
-   **Location:** §4.2, [sec-security.tex:122](~/.cache/paper-split-review/astra/bundle/src/sec-security.tex:122); §3.10, `sec-construction.tex:195`.
+   **Location:** §4.2, [sec-security.tex:122](/home/hoskinson/.cache/paper-split-review/astra/bundle/src/sec-security.tex:122); §3.10, `sec-construction.tex:195`.
 
    **Claim:** After the recovery delay, “the owner exits (P1 always, P2 unless held).”
 
@@ -65,7 +65,7 @@ VERDICT: changes_requested
    **Suggested fix:** State recovery availability conditions explicitly: an available admitted set, plus usable ECDSA slots or availability of every required refill participant. Reserve “unconditional” for exemption from policy checks, not guaranteed ability to spend.
 
 6. **BLOCKING — Removing the Taproot tweak term does not produce a signature for the internal key.**  
-   **Location:** §3.3, [sec-construction.tex:56](~/.cache/paper-split-review/astra/bundle/src/sec-construction.tex:56).
+   **Location:** §3.3, [sec-construction.tex:56](/home/hoskinson/.cache/paper-split-review/astra/bundle/src/sec-construction.tex:56).
 
    **Claim:** Without \(c g_Q t_{\mathrm{tap}}\), “the signature verifies for \(P\) and not for \(Q\).”
 
@@ -85,7 +85,7 @@ VERDICT: changes_requested
    **Suggested fix:** Say that omitting the term generally invalidates the output-key signature. Remove the claim about verification under \(P\).
 
 7. **BLOCKING — The introduction upgrades an open ECDSA instantiation to an existing result.**  
-   **Location:** §1, [sec-intro.tex:22](~/.cache/paper-split-review/astra/bundle/src/sec-intro.tex:22).
+   **Location:** §1, [sec-intro.tex:22](/home/hoskinson/.cache/paper-split-review/astra/bundle/src/sec-intro.tex:22).
 
    **Claim:** The functionalities preparing the halves “are instantiated by published threshold ECDSA protocols.”
 
@@ -97,7 +97,7 @@ VERDICT: changes_requested
    **Suggested fix:** Replace “are instantiated” with “have published candidate instantiations,” and retain the O1/O2/O19 qualifications.
 
 8. **BLOCKING — The latency estimate omits required slot-binding rounds.**  
-   **Location:** §7, [sec-eval.tex:63](~/.cache/paper-split-review/astra/bundle/src/sec-eval.tex:63); estimate macros at `results-split.tex:60–63`.
+   **Location:** §7, [sec-eval.tex:63](/home/hoskinson/.cache/paper-split-review/astra/bundle/src/sec-eval.tex:63); estimate macros at `results-split.tex:60–63`.
 
    **Claim:** The normal path has three peer rounds and latency
    \[
@@ -113,7 +113,7 @@ VERDICT: changes_requested
    **Suggested fix:** Recompute latency from the specified dependency sequence. Using the paper’s existing per-round convention adds \(2h\) to the displayed TEE formulas. Include the P2 hold delay where applicable and identify the dependence on O36.
 
 9. **BLOCKING — The CPU totals and derived throughput contradict their components.**  
-   **Location:** §7, [sec-eval.tex:52](~/.cache/paper-split-review/astra/bundle/src/sec-eval.tex:52); `results-split.tex:40–47`.
+   **Location:** §7, [sec-eval.tex:52](/home/hoskinson/.cache/paper-split-review/astra/bundle/src/sec-eval.tex:52); `results-split.tex:40–47`.
 
    **Claim:** Total CPU is 2.5–6.3 ms at nine nodes and 3.8–10.5 ms at seventeen nodes.
 
@@ -127,7 +127,7 @@ VERDICT: changes_requested
    **Suggested fix:** Correct the totals and derived rates, or explain and quantify the overlap or different optimization assumptions that produce them. This is an accounting inconsistency, not an objection to using estimates.
 
 10. **BLOCKING — The universal envelope key/dealing claims are contradicted by the construction.**  
-    **Location:** Abstract, [sec-abstract.tex:4](~/.cache/paper-split-review/astra/bundle/src/sec-abstract.tex:4); §1, `sec-intro.tex:20`; §3.6, `sec-construction.tex:98–104`.
+    **Location:** Abstract, [sec-abstract.tex:4](/home/hoskinson/.cache/paper-split-review/astra/bundle/src/sec-abstract.tex:4); §1, `sec-intro.tex:20`; §3.6, `sec-construction.tex:98–104`.
 
     **Claim:** Every key of the envelope is a threshold-PRF output, and an envelope deals only one secret across all request types.
 

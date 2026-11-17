@@ -1163,6 +1163,7 @@ impl PreparedEnvelope {
             ephemeral: self.ephemeral,
             hd,
             used,
+            contrib: header.kind == RequestType::Contrib,
         })
     }
 }
@@ -1181,6 +1182,8 @@ pub struct PendingEnvelope {
     ephemeral: Scalar,
     hd: [u8; 32],
     used: usize,
+    /// A CONTRIB frame has no authorization and takes random `auth_ref` bytes.
+    contrib: bool,
 }
 impl Drop for PendingEnvelope {
     fn drop(&mut self) {
@@ -1200,6 +1203,11 @@ impl PendingEnvelope {
         auth_ref: Option<[u8; 32]>,
         rng: &mut impl CryptoRngCore,
     ) -> Result<Envelope> {
+        // DESIGN §4.6, DECISIONS 54(2): every envelope without an authorization,
+        // CONTRIB frames included, carries 32 random bytes in `auth_ref`.
+        if self.contrib && auth_ref.is_some() {
+            return Err(Error::Parameters);
+        }
         self.public.auth_ref = auth_ref.unwrap_or_else(|| {
             let mut b = [0; 32];
             rng.fill_bytes(&mut b);

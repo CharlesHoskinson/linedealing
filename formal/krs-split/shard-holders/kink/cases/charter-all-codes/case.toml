@@ -1,0 +1,7 @@
+# SH-001, SH-002 and ledger 3 together, in code order
+[inputs]
+params = { Pm = { n = 4, f = 1, mode = "Tee", n_h = 10 } }
+ops = [
+  { FixCharter = { id = 8, gamma = { Group = { mid = 0, kk = 2, children = [{ Leaf = { mid = 1, actor = 1 } }, { Leaf = { mid = 2, actor = 2 } }, { Leaf = { mid = 3, actor = 3 } }] } } } },
+  { FixCharter = { id = 8, gamma = { Group = { mid = 0, kk = 0, children = [{ Leaf = { mid = 0, actor = 1 } }, { Leaf = { mid = 0, actor = 1 } }] } } } },
+]

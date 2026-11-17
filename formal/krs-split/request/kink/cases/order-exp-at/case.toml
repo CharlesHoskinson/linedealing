@@ -1,0 +1,10 @@
+# EN-023 at the ordering block (RQ-006 scenario, ledger 23): exp = b + delta_c
+# (120 = 20 + 100) is refused with exp_c_not_below_exp and the request stays POSTED.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { Post = { eid = 1, epoch = 0, exp = 120, rtype = "Spend", profile = "PfP1" } },
+  { Tick = { h = 20 } },
+  { Order = { eid = 1, qc = true, p = 0 } },
+]

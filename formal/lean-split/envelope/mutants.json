@@ -1,0 +1,18 @@
+[
+  {"name": "EN-006 expired at exp", "file": "SplitEnvelope/Spec.lean", "old": "decide (e.pub.exp < s.height)", "new": "decide (e.pub.exp ≤ s.height)"},
+  {"name": "EN-008 dd across epochs", "file": "SplitEnvelope/Spec.lean", "old": "s.seen.contains (e.pub.epoch, e.dd)", "new": "s.seen.any (·.2 == e.dd)"},
+  {"name": "EN-007 proof ignores auth_ref", "file": "SplitEnvelope/Spec.lean", "old": "e.proofCtx != e.eid || !e.proofValid", "new": "e.proofCtx.1 != e.hd || !e.proofValid"},
+  {"name": "EN-010 count without min(v, G)", "file": "SplitEnvelope/Spec.lean", "old": "(List.range k).map (fun i => min (i + 1) (gOf k))).sum", "new": "(List.range k).map (fun i => i + 1)).sum"},
+  {"name": "EN-004 size class unchecked", "file": "SplitEnvelope/Spec.lean", "old": " || e.pub.sizeClass != sizeClass0", "new": ""},
+  {"name": "EN-013 in every mode", "file": "SplitEnvelope/Spec.lean", "old": "m == .TEE && h.recomputeMismatch", "new": "h.recomputeMismatch"},
+  {"name": "EN-014 no drop of failing proofs", "file": "SplitEnvelope/Spec.lean", "old": "let proved := ps.filter (·.proofOk)", "new": "let proved := ps"},
+  {"name": "EN-008 accept forgets dd", "file": "SplitEnvelope/Spec.lean", "old": "seen := (e.pub.epoch, e.dd) :: s.seen", "new": "seen := s.seen"},
+  {"name": "EN-011 pair check in NON_TEE", "file": "SplitEnvelope/Spec.lean", "old": "(m == .TEE && !nodupB h.pairs)", "new": "!nodupB h.pairs"},
+  {"name": "EN-009 unused capsule entries unchecked", "file": "SplitEnvelope/Spec.lean", "old": "(h.layout.capsules.drop h.nCapsules)", "new": "(h.layout.capsules.drop 8)"},
+  {"name": "EN-023 acceptance checks the current height", "file": "SplitEnvelope/Spec.lean", "old": "!windowInsideExpiry (s.height + 1) s.params.deltaC e.pub.exp", "new": "!windowInsideExpiry s.height s.params.deltaC e.pub.exp"},
+  {"name": "EN-023 dropped at acceptance", "file": "SplitEnvelope/Spec.lean", "old": " ++ opt (windowBad s e) .expCNotBelowExp", "new": ""},
+  {"name": "EN-023 ordering block unchecked", "file": "SplitEnvelope/Spec.lean", "old": "| .orderCheck x b => opt (!windowInsideExpiry b s.params.deltaC x) .expCNotBelowExp", "new": "| .orderCheck _ _ => []"},
+  {"name": "EN-021/EN-023 window at exp_c = exp accepted", "file": "SplitEnvelope/Spec.lean", "old": "def windowInsideExpiry (b deltaC exp : Nat) : Bool := decide (b + deltaC < exp)", "new": "def windowInsideExpiry (b deltaC exp : Nat) : Bool := decide (b + deltaC ≤ exp)"},
+  {"name": "EN-012 a tkc mismatch is malformed at opening (before DECISIONS 68)", "file": "SplitEnvelope/Spec.lean", "old": "def commitBad (h : Header) : Bool := !h.hasIc || !h.hasRtkc", "new": "def commitBad (h : Header) : Bool := !h.hasIc || !h.hasRtkc || h.tkc != h.authTkc"},
+  {"name": "EN-012 malformed only without both ic and r_tkc", "file": "SplitEnvelope/Spec.lean", "old": "!h.hasIc || !h.hasRtkc", "new": "!h.hasIc && !h.hasRtkc"}
+]

@@ -1,0 +1,8 @@
+# RQ-027: the host fee median of a new host height is recorded.
+[inputs]
+params = { Pm = { n = 4, f = 1, delta_c = 100, delta_hold = 10, mode = "Tee" } }
+epochs = [{ Ep = { e = 0, n = 4, f = 1 } }]
+ops = [
+  { HostFee = { h = 50, m = 15 } },
+  { HostFee = { h = 51, m = 16 } },
+]

@@ -1,0 +1,9 @@
+# AU-006: a seizure slot under slr_G on a P2 record without slr_G is no-rule
+[inputs]
+params = { Params = { mode = "Tee", q = 3 } }
+ops = [
+  { CharterOp = { cid = 2, profile = "P2", board_first = false, stateful = false } },
+  { RecordOp = { rid = 5, cid = 2, cm_addr = 105, nf = { Fresh = { n = 5 } }, hold_tag = 0, slr_own = [], slr_g = [] } },
+  { AuthorizeOp = { c = { Cl = { rid = 5, nf = { Fresh = { n = 5 } }, auth = 10, rh = 0, source = "Seizure", slot = [{ Sr = [5, "RootG"] }], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 0, to_exit = false, carry = [] } } } },
+  { AuthorizeOp = { c = { Cl = { rid = 5, nf = { Fresh = { n = 5 } }, auth = 11, rh = 0, source = "Seizure", slot = [], inputs_ok = true, pred_ok = true, in_gamma = true, blacklisted = false, ticket_ok = true, pin = 0, to_exit = false, carry = [] } } } },
+]

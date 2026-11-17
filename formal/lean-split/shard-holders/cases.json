@@ -1,0 +1,4949 @@
+[
+ {
+  "name": "run with refusals",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "n": 9,
+     "f": 2,
+     "mode": "TEE",
+     "N_h": 30
+    },
+    "ops": [
+     {
+      "op": "fix_charter",
+      "id": 8,
+      "gamma": {
+       "gate": "GROUP",
+       "mid": 0,
+       "k": 2,
+       "children": [
+        {
+         "gate": "LEAF",
+         "mid": 1,
+         "actor": 21
+        },
+        {
+         "gate": "LEAF",
+         "mid": 2,
+         "actor": 22
+        },
+        {
+         "gate": "LEAF",
+         "mid": 3,
+         "actor": 23
+        }
+       ]
+      }
+     },
+     {
+      "op": "post_pool",
+      "actor": 21,
+      "root": 0,
+      "key": 0
+     },
+     {
+      "op": "contribute",
+      "request": {
+       "actor": 21,
+       "charter": 8,
+       "S": [
+        21,
+        23
+       ],
+       "initiator": 21,
+       "weight": {
+        "num": 3,
+        "den": 2
+       },
+       "pairs": [
+        0,
+        1
+       ],
+       "slot": {
+        "kind": "ecdsa",
+        "id": 5,
+        "leaf_set": [
+         21,
+         23
+        ],
+        "under_G": false
+       },
+       "exp_c": 100,
+       "height": 50,
+       "policy_ok": true,
+       "recompute_ok": true,
+       "seizure_settled": false
+      }
+     },
+     {
+      "op": "contribute",
+      "request": {
+       "actor": 21,
+       "charter": 8,
+       "S": [
+        21,
+        23
+       ],
+       "initiator": 21,
+       "weight": {
+        "num": 3,
+        "den": 2
+       },
+       "pairs": [
+        2
+       ],
+       "slot": {
+        "kind": "ecdsa",
+        "id": 5,
+        "leaf_set": [
+         21,
+         23
+        ],
+        "under_G": false
+       },
+       "exp_c": 100,
+       "height": 50,
+       "policy_ok": true,
+       "recompute_ok": true,
+       "seizure_settled": false
+      }
+     },
+     {
+      "op": "contribute",
+      "request": {
+       "actor": 21,
+       "charter": 8,
+       "S": [
+        21,
+        23
+       ],
+       "initiator": 21,
+       "weight": {
+        "num": 3,
+        "den": 2
+       },
+       "pairs": [
+        3
+       ],
+       "slot": {
+        "kind": "committee"
+       },
+       "exp_c": 100,
+       "height": 50,
+       "policy_ok": false,
+       "recompute_ok": true,
+       "seizure_settled": false
+      }
+     },
+     {
+      "op": "birth_check",
+      "node": 9,
+      "cm_addr": 900,
+      "birth": {
+       "x_f": 5,
+       "charter_id": 7,
+       "chain_id": 1,
+       "actors": [
+        {
+         "slot": 1,
+         "x_a": 50,
+         "ctx": [
+          5,
+          50,
+          1,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        },
+        {
+         "slot": 2,
+         "x_a": 60,
+         "ctx": [
+          5,
+          60,
+          2,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        }
+       ],
+       "dealer_ok": true,
+       "x_recomputed": true,
+       "encoding_ok": true,
+       "opening_ok": true
+      }
+     },
+     {
+      "op": "birth_check",
+      "node": 1,
+      "cm_addr": 900,
+      "birth": {
+       "x_f": 5,
+       "charter_id": 7,
+       "chain_id": 1,
+       "actors": [
+        {
+         "slot": 1,
+         "x_a": 50,
+         "ctx": [
+          5,
+          50,
+          1,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        },
+        {
+         "slot": 2,
+         "x_a": 60,
+         "ctx": [
+          5,
+          60,
+          2,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        }
+       ],
+       "dealer_ok": false,
+       "x_recomputed": true,
+       "encoding_ok": true,
+       "opening_ok": true
+      }
+     },
+     {
+      "op": "session",
+      "slots": [
+       {
+        "slot": 1,
+        "check_ok": true
+       },
+       {
+        "slot": 2,
+        "check_ok": false
+       }
+      ]
+     },
+     {
+      "op": "post_pool",
+      "actor": 21,
+      "root": 0,
+      "key": 1024
+     }
+    ]
+   }
+  },
+  "expect": {
+   "end": "final",
+   "cells": {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "N_h": 30
+     },
+     "charters": [
+      {
+       "id": 8,
+       "gamma": {
+        "gate": "GROUP",
+        "mid": 0,
+        "k": 2,
+        "children": [
+         {
+          "gate": "LEAF",
+          "mid": 1,
+          "actor": 21
+         },
+         {
+          "gate": "LEAF",
+          "mid": 2,
+          "actor": 22
+         },
+         {
+          "gate": "LEAF",
+          "mid": 3,
+          "actor": 23
+         }
+        ]
+       }
+      }
+     ],
+     "birth_ok": [],
+     "records": [],
+     "dealt": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       1
+      ],
+      [
+       21,
+       2
+      ],
+      [
+       21,
+       3
+      ],
+      [
+       21,
+       4
+      ],
+      [
+       21,
+       5
+      ],
+      [
+       21,
+       6
+      ],
+      [
+       21,
+       7
+      ],
+      [
+       21,
+       8
+      ],
+      [
+       21,
+       9
+      ],
+      [
+       21,
+       10
+      ],
+      [
+       21,
+       11
+      ],
+      [
+       21,
+       12
+      ],
+      [
+       21,
+       13
+      ],
+      [
+       21,
+       14
+      ],
+      [
+       21,
+       15
+      ],
+      [
+       21,
+       16
+      ],
+      [
+       21,
+       17
+      ],
+      [
+       21,
+       18
+      ],
+      [
+       21,
+       19
+      ],
+      [
+       21,
+       20
+      ],
+      [
+       21,
+       21
+      ],
+      [
+       21,
+       22
+      ],
+      [
+       21,
+       23
+      ],
+      [
+       21,
+       24
+      ],
+      [
+       21,
+       25
+      ],
+      [
+       21,
+       26
+      ],
+      [
+       21,
+       27
+      ],
+      [
+       21,
+       28
+      ],
+      [
+       21,
+       29
+      ],
+      [
+       21,
+       30
+      ],
+      [
+       21,
+       31
+      ],
+      [
+       21,
+       32
+      ],
+      [
+       21,
+       33
+      ],
+      [
+       21,
+       34
+      ],
+      [
+       21,
+       35
+      ],
+      [
+       21,
+       36
+      ],
+      [
+       21,
+       37
+      ],
+      [
+       21,
+       38
+      ],
+      [
+       21,
+       39
+      ],
+      [
+       21,
+       40
+      ],
+      [
+       21,
+       41
+      ],
+      [
+       21,
+       42
+      ],
+      [
+       21,
+       43
+      ],
+      [
+       21,
+       44
+      ],
+      [
+       21,
+       45
+      ],
+      [
+       21,
+       46
+      ],
+      [
+       21,
+       47
+      ],
+      [
+       21,
+       48
+      ],
+      [
+       21,
+       49
+      ],
+      [
+       21,
+       50
+      ],
+      [
+       21,
+       51
+      ],
+      [
+       21,
+       52
+      ],
+      [
+       21,
+       53
+      ],
+      [
+       21,
+       54
+      ],
+      [
+       21,
+       55
+      ],
+      [
+       21,
+       56
+      ],
+      [
+       21,
+       57
+      ],
+      [
+       21,
+       58
+      ],
+      [
+       21,
+       59
+      ],
+      [
+       21,
+       60
+      ],
+      [
+       21,
+       61
+      ],
+      [
+       21,
+       62
+      ],
+      [
+       21,
+       63
+      ]
+     ],
+     "used": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       1
+      ]
+     ],
+     "pool_keys": [
+      [
+       21,
+       0,
+       0
+      ]
+     ],
+     "ecdsa_used": [
+      [
+       21,
+       5
+      ]
+     ],
+     "ack_ok": []
+    },
+    "obs": [
+     {
+      "ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "contributed": {
+       "refill": false
+      }
+     },
+     {
+      "refused": [
+       "SH-018"
+      ]
+     },
+     {
+      "refused": [
+       "policy_refused"
+      ]
+     },
+     {
+      "refused": [
+       "outside-capability"
+      ]
+     },
+     {
+      "refused": [
+       "birth_refused"
+      ]
+     },
+     {
+      "session": {
+       "kept": [
+        1
+       ],
+       "complained": [
+        2
+       ]
+      }
+     },
+     {
+      "refused": [
+       "outside-capability"
+      ]
+     }
+    ]
+   }
+  }
+ },
+ {
+  "name": "params outside RQ-001",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "n": 6,
+     "f": 2,
+     "mode": "TEE",
+     "N_h": 30
+    },
+    "ops": [
+     {
+      "op": "fix_charter",
+      "id": 8,
+      "gamma": {
+       "gate": "GROUP",
+       "mid": 0,
+       "k": 2,
+       "children": [
+        {
+         "gate": "LEAF",
+         "mid": 1,
+         "actor": 21
+        },
+        {
+         "gate": "LEAF",
+         "mid": 2,
+         "actor": 22
+        },
+        {
+         "gate": "LEAF",
+         "mid": 3,
+         "actor": 23
+        }
+       ]
+      }
+     },
+     {
+      "op": "post_pool",
+      "actor": 21,
+      "root": 0,
+      "key": 0
+     },
+     {
+      "op": "contribute",
+      "request": {
+       "actor": 21,
+       "charter": 8,
+       "S": [
+        21,
+        23
+       ],
+       "initiator": 21,
+       "weight": {
+        "num": 3,
+        "den": 2
+       },
+       "pairs": [
+        0,
+        1
+       ],
+       "slot": {
+        "kind": "ecdsa",
+        "id": 5,
+        "leaf_set": [
+         21,
+         23
+        ],
+        "under_G": false
+       },
+       "exp_c": 100,
+       "height": 50,
+       "policy_ok": true,
+       "recompute_ok": true,
+       "seizure_settled": false
+      }
+     },
+     {
+      "op": "contribute",
+      "request": {
+       "actor": 21,
+       "charter": 8,
+       "S": [
+        21,
+        23
+       ],
+       "initiator": 21,
+       "weight": {
+        "num": 3,
+        "den": 2
+       },
+       "pairs": [
+        2
+       ],
+       "slot": {
+        "kind": "ecdsa",
+        "id": 5,
+        "leaf_set": [
+         21,
+         23
+        ],
+        "under_G": false
+       },
+       "exp_c": 100,
+       "height": 50,
+       "policy_ok": true,
+       "recompute_ok": true,
+       "seizure_settled": false
+      }
+     },
+     {
+      "op": "contribute",
+      "request": {
+       "actor": 21,
+       "charter": 8,
+       "S": [
+        21,
+        23
+       ],
+       "initiator": 21,
+       "weight": {
+        "num": 3,
+        "den": 2
+       },
+       "pairs": [
+        3
+       ],
+       "slot": {
+        "kind": "committee"
+       },
+       "exp_c": 100,
+       "height": 50,
+       "policy_ok": false,
+       "recompute_ok": true,
+       "seizure_settled": false
+      }
+     },
+     {
+      "op": "birth_check",
+      "node": 9,
+      "cm_addr": 900,
+      "birth": {
+       "x_f": 5,
+       "charter_id": 7,
+       "chain_id": 1,
+       "actors": [
+        {
+         "slot": 1,
+         "x_a": 50,
+         "ctx": [
+          5,
+          50,
+          1,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        },
+        {
+         "slot": 2,
+         "x_a": 60,
+         "ctx": [
+          5,
+          60,
+          2,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        }
+       ],
+       "dealer_ok": true,
+       "x_recomputed": true,
+       "encoding_ok": true,
+       "opening_ok": true
+      }
+     },
+     {
+      "op": "birth_check",
+      "node": 1,
+      "cm_addr": 900,
+      "birth": {
+       "x_f": 5,
+       "charter_id": 7,
+       "chain_id": 1,
+       "actors": [
+        {
+         "slot": 1,
+         "x_a": 50,
+         "ctx": [
+          5,
+          50,
+          1,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        },
+        {
+         "slot": 2,
+         "x_a": 60,
+         "ctx": [
+          5,
+          60,
+          2,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        }
+       ],
+       "dealer_ok": false,
+       "x_recomputed": true,
+       "encoding_ok": true,
+       "opening_ok": true
+      }
+     },
+     {
+      "op": "session",
+      "slots": [
+       {
+        "slot": 1,
+        "check_ok": true
+       },
+       {
+        "slot": 2,
+        "check_ok": false
+       }
+      ]
+     },
+     {
+      "op": "post_pool",
+      "actor": 21,
+      "root": 0,
+      "key": 1024
+     }
+    ]
+   }
+  },
+  "expect": {
+   "end": "could-not-apply",
+   "reason": "outside-capability"
+  }
+ },
+ {
+  "name": "exponent",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 0}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [0, 1], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 1e2, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [2], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [3], \"slot\": {\"kind\": \"committee\"}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": false, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"birth_check\", \"node\": 9, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": false, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"session\", \"slots\": [{\"slot\": 1, \"check_ok\": true}, {\"slot\": 2, \"check_ok\": false}]}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 1024}]}}",
+  "rc": 2
+ },
+ {
+  "name": "fraction",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 0}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [0, 1], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100.0, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [2], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [3], \"slot\": {\"kind\": \"committee\"}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": false, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"birth_check\", \"node\": 9, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": false, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"session\", \"slots\": [{\"slot\": 1, \"check_ok\": true}, {\"slot\": 2, \"check_ok\": false}]}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 1024}]}}",
+  "rc": 2
+ },
+ {
+  "name": "leading zero",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 0}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [0, 1], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": \"0100\", \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [2], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [3], \"slot\": {\"kind\": \"committee\"}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": false, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"birth_check\", \"node\": 9, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": false, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"session\", \"slots\": [{\"slot\": 1, \"check_ok\": true}, {\"slot\": 2, \"check_ok\": false}]}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 1024}]}}",
+  "rc": 2
+ },
+ {
+  "name": "underscore",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 0}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [0, 1], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": \"1_00\", \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [2], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [3], \"slot\": {\"kind\": \"committee\"}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": false, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"birth_check\", \"node\": 9, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": false, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"session\", \"slots\": [{\"slot\": 1, \"check_ok\": true}, {\"slot\": 2, \"check_ok\": false}]}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 1024}]}}",
+  "rc": 2
+ },
+ {
+  "name": "extra key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 0}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [0, 1], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"extra\": 1, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [2], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [3], \"slot\": {\"kind\": \"committee\"}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": false, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"birth_check\", \"node\": 9, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": false, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"session\", \"slots\": [{\"slot\": 1, \"check_ok\": true}, {\"slot\": 2, \"check_ok\": false}]}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 1024}]}}",
+  "rc": 2
+ },
+ {
+  "name": "missing key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 0}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [0, 1], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [2], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [3], \"slot\": {\"kind\": \"committee\"}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": false, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"birth_check\", \"node\": 9, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": false, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"session\", \"slots\": [{\"slot\": 1, \"check_ok\": true}, {\"slot\": 2, \"check_ok\": false}]}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 1024}]}}",
+  "rc": 2
+ },
+ {
+  "name": "duplicate key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 0}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [0, 1], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [2], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [3], \"slot\": {\"kind\": \"committee\"}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": false, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"birth_check\", \"node\": 9, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": false, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"session\", \"slots\": [{\"slot\": 1, \"check_ok\": true}, {\"slot\": 2, \"check_ok\": false}]}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 1024}]}}",
+  "rc": 2
+ },
+ {
+  "name": "unknown op",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "n": 9,
+     "f": 2,
+     "mode": "TEE",
+     "N_h": 30
+    },
+    "ops": [
+     {
+      "op": "nope"
+     }
+    ]
+   }
+  },
+  "rc": 2
+ },
+ {
+  "name": "unknown gate",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"XOR\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 0}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [0, 1], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [2], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [3], \"slot\": {\"kind\": \"committee\"}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": false, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"birth_check\", \"node\": 9, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": false, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"session\", \"slots\": [{\"slot\": 1, \"check_ok\": true}, {\"slot\": 2, \"check_ok\": false}]}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 1024}]}}",
+  "rc": 2
+ },
+ {
+  "name": "unknown enum",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"tee\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 0}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [0, 1], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [2], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [3], \"slot\": {\"kind\": \"committee\"}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": false, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"birth_check\", \"node\": 9, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": false, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"session\", \"slots\": [{\"slot\": 1, \"check_ok\": true}, {\"slot\": 2, \"check_ok\": false}]}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 1024}]}}",
+  "rc": 2
+ },
+ {
+  "name": "protocol 2",
+  "input": "{\"protocol\": \"kink-implementation/2\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 0}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [0, 1], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [2], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [3], \"slot\": {\"kind\": \"committee\"}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": false, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"birth_check\", \"node\": 9, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": false, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"session\", \"slots\": [{\"slot\": 1, \"check_ok\": true}, {\"slot\": 2, \"check_ok\": false}]}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 1024}]}}",
+  "rc": 2
+ },
+ {
+  "name": "negative weight denominator string",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 0}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": \"-0\"}, \"pairs\": [0, 1], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [2], \"slot\": {\"kind\": \"ecdsa\", \"id\": 5, \"leaf_set\": [21, 23], \"under_G\": false}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": true, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"contribute\", \"request\": {\"actor\": 21, \"charter\": 8, \"S\": [21, 23], \"initiator\": 21, \"weight\": {\"num\": 3, \"den\": 2}, \"pairs\": [3], \"slot\": {\"kind\": \"committee\"}, \"exp_c\": 100, \"height\": 50, \"policy_ok\": false, \"recompute_ok\": true, \"seizure_settled\": false}}, {\"op\": \"birth_check\", \"node\": 9, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}], \"dealer_ok\": false, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"session\", \"slots\": [{\"slot\": 1, \"check_ok\": true}, {\"slot\": 2, \"check_ok\": false}]}, {\"op\": \"post_pool\", \"actor\": 21, \"root\": 0, \"key\": 1024}]}}",
+  "rc": 2
+ },
+ {
+  "name": "step answers",
+  "args": [
+   "--step"
+  ],
+  "input": [
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "N_h": 30
+     },
+     "charters": [
+      {
+       "id": 8,
+       "gamma": {
+        "gate": "GROUP",
+        "mid": 0,
+        "k": 2,
+        "children": [
+         {
+          "gate": "LEAF",
+          "mid": 1,
+          "actor": 21
+         },
+         {
+          "gate": "LEAF",
+          "mid": 2,
+          "actor": 22
+         },
+         {
+          "gate": "LEAF",
+          "mid": 3,
+          "actor": 23
+         }
+        ]
+       }
+      }
+     ],
+     "birth_ok": [],
+     "records": [],
+     "dealt": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       1
+      ],
+      [
+       21,
+       2
+      ],
+      [
+       21,
+       3
+      ],
+      [
+       21,
+       4
+      ],
+      [
+       21,
+       5
+      ],
+      [
+       21,
+       6
+      ],
+      [
+       21,
+       7
+      ],
+      [
+       21,
+       8
+      ],
+      [
+       21,
+       9
+      ],
+      [
+       21,
+       10
+      ],
+      [
+       21,
+       11
+      ],
+      [
+       21,
+       12
+      ],
+      [
+       21,
+       13
+      ],
+      [
+       21,
+       14
+      ],
+      [
+       21,
+       15
+      ],
+      [
+       21,
+       16
+      ],
+      [
+       21,
+       17
+      ],
+      [
+       21,
+       18
+      ],
+      [
+       21,
+       19
+      ],
+      [
+       21,
+       20
+      ],
+      [
+       21,
+       21
+      ],
+      [
+       21,
+       22
+      ],
+      [
+       21,
+       23
+      ],
+      [
+       21,
+       24
+      ],
+      [
+       21,
+       25
+      ],
+      [
+       21,
+       26
+      ],
+      [
+       21,
+       27
+      ],
+      [
+       21,
+       28
+      ],
+      [
+       21,
+       29
+      ],
+      [
+       21,
+       30
+      ],
+      [
+       21,
+       31
+      ],
+      [
+       21,
+       32
+      ],
+      [
+       21,
+       33
+      ],
+      [
+       21,
+       34
+      ],
+      [
+       21,
+       35
+      ],
+      [
+       21,
+       36
+      ],
+      [
+       21,
+       37
+      ],
+      [
+       21,
+       38
+      ],
+      [
+       21,
+       39
+      ],
+      [
+       21,
+       40
+      ],
+      [
+       21,
+       41
+      ],
+      [
+       21,
+       42
+      ],
+      [
+       21,
+       43
+      ],
+      [
+       21,
+       44
+      ],
+      [
+       21,
+       45
+      ],
+      [
+       21,
+       46
+      ],
+      [
+       21,
+       47
+      ],
+      [
+       21,
+       48
+      ],
+      [
+       21,
+       49
+      ],
+      [
+       21,
+       50
+      ],
+      [
+       21,
+       51
+      ],
+      [
+       21,
+       52
+      ],
+      [
+       21,
+       53
+      ],
+      [
+       21,
+       54
+      ],
+      [
+       21,
+       55
+      ],
+      [
+       21,
+       56
+      ],
+      [
+       21,
+       57
+      ],
+      [
+       21,
+       58
+      ],
+      [
+       21,
+       59
+      ],
+      [
+       21,
+       60
+      ],
+      [
+       21,
+       61
+      ],
+      [
+       21,
+       62
+      ],
+      [
+       21,
+       63
+      ]
+     ],
+     "used": [],
+     "pool_keys": [
+      [
+       21,
+       0,
+       0
+      ]
+     ],
+     "ecdsa_used": [],
+     "ack_ok": []
+    },
+    "op": {
+     "op": "contribute",
+     "request": {
+      "actor": 21,
+      "charter": 8,
+      "S": [
+       21,
+       23
+      ],
+      "initiator": 21,
+      "weight": {
+       "num": 3,
+       "den": 2
+      },
+      "pairs": [
+       0,
+       1
+      ],
+      "slot": {
+       "kind": "ecdsa",
+       "id": 5,
+       "leaf_set": [
+        21,
+        23
+       ],
+       "under_G": false
+      },
+      "exp_c": 100,
+      "height": 50,
+      "policy_ok": true,
+      "recompute_ok": true,
+      "seizure_settled": false
+     }
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "N_h": 30
+     },
+     "charters": [
+      {
+       "id": 8,
+       "gamma": {
+        "gate": "GROUP",
+        "mid": 0,
+        "k": 2,
+        "children": [
+         {
+          "gate": "LEAF",
+          "mid": 1,
+          "actor": 21
+         },
+         {
+          "gate": "LEAF",
+          "mid": 2,
+          "actor": 22
+         },
+         {
+          "gate": "LEAF",
+          "mid": 3,
+          "actor": 23
+         }
+        ]
+       }
+      }
+     ],
+     "birth_ok": [],
+     "records": [],
+     "dealt": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       1
+      ],
+      [
+       21,
+       2
+      ],
+      [
+       21,
+       3
+      ],
+      [
+       21,
+       4
+      ],
+      [
+       21,
+       5
+      ],
+      [
+       21,
+       6
+      ],
+      [
+       21,
+       7
+      ],
+      [
+       21,
+       8
+      ],
+      [
+       21,
+       9
+      ],
+      [
+       21,
+       10
+      ],
+      [
+       21,
+       11
+      ],
+      [
+       21,
+       12
+      ],
+      [
+       21,
+       13
+      ],
+      [
+       21,
+       14
+      ],
+      [
+       21,
+       15
+      ],
+      [
+       21,
+       16
+      ],
+      [
+       21,
+       17
+      ],
+      [
+       21,
+       18
+      ],
+      [
+       21,
+       19
+      ],
+      [
+       21,
+       20
+      ],
+      [
+       21,
+       21
+      ],
+      [
+       21,
+       22
+      ],
+      [
+       21,
+       23
+      ],
+      [
+       21,
+       24
+      ],
+      [
+       21,
+       25
+      ],
+      [
+       21,
+       26
+      ],
+      [
+       21,
+       27
+      ],
+      [
+       21,
+       28
+      ],
+      [
+       21,
+       29
+      ],
+      [
+       21,
+       30
+      ],
+      [
+       21,
+       31
+      ],
+      [
+       21,
+       32
+      ],
+      [
+       21,
+       33
+      ],
+      [
+       21,
+       34
+      ],
+      [
+       21,
+       35
+      ],
+      [
+       21,
+       36
+      ],
+      [
+       21,
+       37
+      ],
+      [
+       21,
+       38
+      ],
+      [
+       21,
+       39
+      ],
+      [
+       21,
+       40
+      ],
+      [
+       21,
+       41
+      ],
+      [
+       21,
+       42
+      ],
+      [
+       21,
+       43
+      ],
+      [
+       21,
+       44
+      ],
+      [
+       21,
+       45
+      ],
+      [
+       21,
+       46
+      ],
+      [
+       21,
+       47
+      ],
+      [
+       21,
+       48
+      ],
+      [
+       21,
+       49
+      ],
+      [
+       21,
+       50
+      ],
+      [
+       21,
+       51
+      ],
+      [
+       21,
+       52
+      ],
+      [
+       21,
+       53
+      ],
+      [
+       21,
+       54
+      ],
+      [
+       21,
+       55
+      ],
+      [
+       21,
+       56
+      ],
+      [
+       21,
+       57
+      ],
+      [
+       21,
+       58
+      ],
+      [
+       21,
+       59
+      ],
+      [
+       21,
+       60
+      ],
+      [
+       21,
+       61
+      ],
+      [
+       21,
+       62
+      ],
+      [
+       21,
+       63
+      ]
+     ],
+     "used": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       1
+      ]
+     ],
+     "pool_keys": [
+      [
+       21,
+       0,
+       0
+      ]
+     ],
+     "ecdsa_used": [
+      [
+       21,
+       5
+      ]
+     ],
+     "ack_ok": []
+    },
+    "op": {
+     "op": "contribute",
+     "request": {
+      "actor": 21,
+      "charter": 8,
+      "S": [
+       21,
+       23
+      ],
+      "initiator": 21,
+      "weight": {
+       "num": 3,
+       "den": 2
+      },
+      "pairs": [
+       1,
+       2
+      ],
+      "slot": {
+       "kind": "ecdsa",
+       "id": 5,
+       "leaf_set": [
+        21,
+        23
+       ],
+       "under_G": false
+      },
+      "exp_c": 100,
+      "height": 50,
+      "policy_ok": true,
+      "recompute_ok": true,
+      "seizure_settled": false
+     }
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "N_h": 30
+     },
+     "charters": [
+      {
+       "id": 8,
+       "gamma": {
+        "gate": "GROUP",
+        "mid": 0,
+        "k": 2,
+        "children": [
+         {
+          "gate": "LEAF",
+          "mid": 1,
+          "actor": 21
+         },
+         {
+          "gate": "LEAF",
+          "mid": 2,
+          "actor": 22
+         },
+         {
+          "gate": "LEAF",
+          "mid": 3,
+          "actor": 23
+         }
+        ]
+       }
+      }
+     ],
+     "birth_ok": [],
+     "records": [],
+     "dealt": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       1
+      ],
+      [
+       21,
+       2
+      ],
+      [
+       21,
+       3
+      ],
+      [
+       21,
+       4
+      ],
+      [
+       21,
+       5
+      ],
+      [
+       21,
+       6
+      ],
+      [
+       21,
+       7
+      ],
+      [
+       21,
+       8
+      ],
+      [
+       21,
+       9
+      ],
+      [
+       21,
+       10
+      ],
+      [
+       21,
+       11
+      ],
+      [
+       21,
+       12
+      ],
+      [
+       21,
+       13
+      ],
+      [
+       21,
+       14
+      ],
+      [
+       21,
+       15
+      ],
+      [
+       21,
+       16
+      ],
+      [
+       21,
+       17
+      ],
+      [
+       21,
+       18
+      ],
+      [
+       21,
+       19
+      ],
+      [
+       21,
+       20
+      ],
+      [
+       21,
+       21
+      ],
+      [
+       21,
+       22
+      ],
+      [
+       21,
+       23
+      ],
+      [
+       21,
+       24
+      ],
+      [
+       21,
+       25
+      ],
+      [
+       21,
+       26
+      ],
+      [
+       21,
+       27
+      ],
+      [
+       21,
+       28
+      ],
+      [
+       21,
+       29
+      ],
+      [
+       21,
+       30
+      ],
+      [
+       21,
+       31
+      ],
+      [
+       21,
+       32
+      ],
+      [
+       21,
+       33
+      ],
+      [
+       21,
+       34
+      ],
+      [
+       21,
+       35
+      ],
+      [
+       21,
+       36
+      ],
+      [
+       21,
+       37
+      ],
+      [
+       21,
+       38
+      ],
+      [
+       21,
+       39
+      ],
+      [
+       21,
+       40
+      ],
+      [
+       21,
+       41
+      ],
+      [
+       21,
+       42
+      ],
+      [
+       21,
+       43
+      ],
+      [
+       21,
+       44
+      ],
+      [
+       21,
+       45
+      ],
+      [
+       21,
+       46
+      ],
+      [
+       21,
+       47
+      ],
+      [
+       21,
+       48
+      ],
+      [
+       21,
+       49
+      ],
+      [
+       21,
+       50
+      ],
+      [
+       21,
+       51
+      ],
+      [
+       21,
+       52
+      ],
+      [
+       21,
+       53
+      ],
+      [
+       21,
+       54
+      ],
+      [
+       21,
+       55
+      ],
+      [
+       21,
+       56
+      ],
+      [
+       21,
+       57
+      ],
+      [
+       21,
+       58
+      ],
+      [
+       21,
+       59
+      ],
+      [
+       21,
+       60
+      ],
+      [
+       21,
+       61
+      ],
+      [
+       21,
+       62
+      ],
+      [
+       21,
+       63
+      ]
+     ],
+     "used": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       0
+      ]
+     ],
+     "pool_keys": [
+      [
+       21,
+       0,
+       0
+      ]
+     ],
+     "ecdsa_used": [
+      [
+       21,
+       5
+      ]
+     ],
+     "ack_ok": []
+    },
+    "op": {
+     "op": "put_shares",
+     "slots": [
+      1
+     ]
+    }
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "N_h": 30
+     },
+     "charters": [
+      {
+       "id": 8,
+       "gamma": {
+        "gate": "GROUP",
+        "mid": 0,
+        "k": 2,
+        "children": [
+         {
+          "gate": "LEAF",
+          "mid": 1,
+          "actor": 21
+         },
+         {
+          "gate": "LEAF",
+          "mid": 2,
+          "actor": 22
+         },
+         {
+          "gate": "LEAF",
+          "mid": 3,
+          "actor": 23
+         }
+        ]
+       }
+      }
+     ],
+     "birth_ok": [],
+     "records": [],
+     "dealt": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       1
+      ],
+      [
+       21,
+       2
+      ],
+      [
+       21,
+       3
+      ],
+      [
+       21,
+       4
+      ],
+      [
+       21,
+       5
+      ],
+      [
+       21,
+       6
+      ],
+      [
+       21,
+       7
+      ],
+      [
+       21,
+       8
+      ],
+      [
+       21,
+       9
+      ],
+      [
+       21,
+       10
+      ],
+      [
+       21,
+       11
+      ],
+      [
+       21,
+       12
+      ],
+      [
+       21,
+       13
+      ],
+      [
+       21,
+       14
+      ],
+      [
+       21,
+       15
+      ],
+      [
+       21,
+       16
+      ],
+      [
+       21,
+       17
+      ],
+      [
+       21,
+       18
+      ],
+      [
+       21,
+       19
+      ],
+      [
+       21,
+       20
+      ],
+      [
+       21,
+       21
+      ],
+      [
+       21,
+       22
+      ],
+      [
+       21,
+       23
+      ],
+      [
+       21,
+       24
+      ],
+      [
+       21,
+       25
+      ],
+      [
+       21,
+       26
+      ],
+      [
+       21,
+       27
+      ],
+      [
+       21,
+       28
+      ],
+      [
+       21,
+       29
+      ],
+      [
+       21,
+       30
+      ],
+      [
+       21,
+       31
+      ],
+      [
+       21,
+       32
+      ],
+      [
+       21,
+       33
+      ],
+      [
+       21,
+       34
+      ],
+      [
+       21,
+       35
+      ],
+      [
+       21,
+       36
+      ],
+      [
+       21,
+       37
+      ],
+      [
+       21,
+       38
+      ],
+      [
+       21,
+       39
+      ],
+      [
+       21,
+       40
+      ],
+      [
+       21,
+       41
+      ],
+      [
+       21,
+       42
+      ],
+      [
+       21,
+       43
+      ],
+      [
+       21,
+       44
+      ],
+      [
+       21,
+       45
+      ],
+      [
+       21,
+       46
+      ],
+      [
+       21,
+       47
+      ],
+      [
+       21,
+       48
+      ],
+      [
+       21,
+       49
+      ],
+      [
+       21,
+       50
+      ],
+      [
+       21,
+       51
+      ],
+      [
+       21,
+       52
+      ],
+      [
+       21,
+       53
+      ],
+      [
+       21,
+       54
+      ],
+      [
+       21,
+       55
+      ],
+      [
+       21,
+       56
+      ],
+      [
+       21,
+       57
+      ],
+      [
+       21,
+       58
+      ],
+      [
+       21,
+       59
+      ],
+      [
+       21,
+       60
+      ],
+      [
+       21,
+       61
+      ],
+      [
+       21,
+       62
+      ],
+      [
+       21,
+       63
+      ]
+     ],
+     "used": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       1
+      ]
+     ],
+     "pool_keys": [
+      [
+       21,
+       0,
+       0
+      ]
+     ],
+     "ecdsa_used": [
+      [
+       21,
+       5
+      ]
+     ],
+     "ack_ok": []
+    },
+    "op": {
+     "op": "put_shares",
+     "slots": [
+      1,
+      2
+     ]
+    }
+   }
+  ],
+  "expect": [
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "N_h": 30
+     },
+     "charters": [
+      {
+       "id": 8,
+       "gamma": {
+        "gate": "GROUP",
+        "mid": 0,
+        "k": 2,
+        "children": [
+         {
+          "gate": "LEAF",
+          "mid": 1,
+          "actor": 21
+         },
+         {
+          "gate": "LEAF",
+          "mid": 2,
+          "actor": 22
+         },
+         {
+          "gate": "LEAF",
+          "mid": 3,
+          "actor": 23
+         }
+        ]
+       }
+      }
+     ],
+     "birth_ok": [],
+     "records": [],
+     "dealt": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       1
+      ],
+      [
+       21,
+       2
+      ],
+      [
+       21,
+       3
+      ],
+      [
+       21,
+       4
+      ],
+      [
+       21,
+       5
+      ],
+      [
+       21,
+       6
+      ],
+      [
+       21,
+       7
+      ],
+      [
+       21,
+       8
+      ],
+      [
+       21,
+       9
+      ],
+      [
+       21,
+       10
+      ],
+      [
+       21,
+       11
+      ],
+      [
+       21,
+       12
+      ],
+      [
+       21,
+       13
+      ],
+      [
+       21,
+       14
+      ],
+      [
+       21,
+       15
+      ],
+      [
+       21,
+       16
+      ],
+      [
+       21,
+       17
+      ],
+      [
+       21,
+       18
+      ],
+      [
+       21,
+       19
+      ],
+      [
+       21,
+       20
+      ],
+      [
+       21,
+       21
+      ],
+      [
+       21,
+       22
+      ],
+      [
+       21,
+       23
+      ],
+      [
+       21,
+       24
+      ],
+      [
+       21,
+       25
+      ],
+      [
+       21,
+       26
+      ],
+      [
+       21,
+       27
+      ],
+      [
+       21,
+       28
+      ],
+      [
+       21,
+       29
+      ],
+      [
+       21,
+       30
+      ],
+      [
+       21,
+       31
+      ],
+      [
+       21,
+       32
+      ],
+      [
+       21,
+       33
+      ],
+      [
+       21,
+       34
+      ],
+      [
+       21,
+       35
+      ],
+      [
+       21,
+       36
+      ],
+      [
+       21,
+       37
+      ],
+      [
+       21,
+       38
+      ],
+      [
+       21,
+       39
+      ],
+      [
+       21,
+       40
+      ],
+      [
+       21,
+       41
+      ],
+      [
+       21,
+       42
+      ],
+      [
+       21,
+       43
+      ],
+      [
+       21,
+       44
+      ],
+      [
+       21,
+       45
+      ],
+      [
+       21,
+       46
+      ],
+      [
+       21,
+       47
+      ],
+      [
+       21,
+       48
+      ],
+      [
+       21,
+       49
+      ],
+      [
+       21,
+       50
+      ],
+      [
+       21,
+       51
+      ],
+      [
+       21,
+       52
+      ],
+      [
+       21,
+       53
+      ],
+      [
+       21,
+       54
+      ],
+      [
+       21,
+       55
+      ],
+      [
+       21,
+       56
+      ],
+      [
+       21,
+       57
+      ],
+      [
+       21,
+       58
+      ],
+      [
+       21,
+       59
+      ],
+      [
+       21,
+       60
+      ],
+      [
+       21,
+       61
+      ],
+      [
+       21,
+       62
+      ],
+      [
+       21,
+       63
+      ]
+     ],
+     "used": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       1
+      ]
+     ],
+     "pool_keys": [
+      [
+       21,
+       0,
+       0
+      ]
+     ],
+     "ecdsa_used": [
+      [
+       21,
+       5
+      ]
+     ],
+     "ack_ok": []
+    },
+    "obs": {
+     "contributed": {
+      "refill": false
+     }
+    }
+   },
+   {
+    "refused": [
+     "SH-018",
+     "bad_request"
+    ]
+   },
+   {
+    "refused": [
+     "outside-state-domain"
+    ]
+   },
+   {
+    "state": {
+     "params": {
+      "n": 9,
+      "f": 2,
+      "mode": "TEE",
+      "N_h": 30
+     },
+     "charters": [
+      {
+       "id": 8,
+       "gamma": {
+        "gate": "GROUP",
+        "mid": 0,
+        "k": 2,
+        "children": [
+         {
+          "gate": "LEAF",
+          "mid": 1,
+          "actor": 21
+         },
+         {
+          "gate": "LEAF",
+          "mid": 2,
+          "actor": 22
+         },
+         {
+          "gate": "LEAF",
+          "mid": 3,
+          "actor": 23
+         }
+        ]
+       }
+      }
+     ],
+     "birth_ok": [],
+     "records": [],
+     "dealt": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       1
+      ],
+      [
+       21,
+       2
+      ],
+      [
+       21,
+       3
+      ],
+      [
+       21,
+       4
+      ],
+      [
+       21,
+       5
+      ],
+      [
+       21,
+       6
+      ],
+      [
+       21,
+       7
+      ],
+      [
+       21,
+       8
+      ],
+      [
+       21,
+       9
+      ],
+      [
+       21,
+       10
+      ],
+      [
+       21,
+       11
+      ],
+      [
+       21,
+       12
+      ],
+      [
+       21,
+       13
+      ],
+      [
+       21,
+       14
+      ],
+      [
+       21,
+       15
+      ],
+      [
+       21,
+       16
+      ],
+      [
+       21,
+       17
+      ],
+      [
+       21,
+       18
+      ],
+      [
+       21,
+       19
+      ],
+      [
+       21,
+       20
+      ],
+      [
+       21,
+       21
+      ],
+      [
+       21,
+       22
+      ],
+      [
+       21,
+       23
+      ],
+      [
+       21,
+       24
+      ],
+      [
+       21,
+       25
+      ],
+      [
+       21,
+       26
+      ],
+      [
+       21,
+       27
+      ],
+      [
+       21,
+       28
+      ],
+      [
+       21,
+       29
+      ],
+      [
+       21,
+       30
+      ],
+      [
+       21,
+       31
+      ],
+      [
+       21,
+       32
+      ],
+      [
+       21,
+       33
+      ],
+      [
+       21,
+       34
+      ],
+      [
+       21,
+       35
+      ],
+      [
+       21,
+       36
+      ],
+      [
+       21,
+       37
+      ],
+      [
+       21,
+       38
+      ],
+      [
+       21,
+       39
+      ],
+      [
+       21,
+       40
+      ],
+      [
+       21,
+       41
+      ],
+      [
+       21,
+       42
+      ],
+      [
+       21,
+       43
+      ],
+      [
+       21,
+       44
+      ],
+      [
+       21,
+       45
+      ],
+      [
+       21,
+       46
+      ],
+      [
+       21,
+       47
+      ],
+      [
+       21,
+       48
+      ],
+      [
+       21,
+       49
+      ],
+      [
+       21,
+       50
+      ],
+      [
+       21,
+       51
+      ],
+      [
+       21,
+       52
+      ],
+      [
+       21,
+       53
+      ],
+      [
+       21,
+       54
+      ],
+      [
+       21,
+       55
+      ],
+      [
+       21,
+       56
+      ],
+      [
+       21,
+       57
+      ],
+      [
+       21,
+       58
+      ],
+      [
+       21,
+       59
+      ],
+      [
+       21,
+       60
+      ],
+      [
+       21,
+       61
+      ],
+      [
+       21,
+       62
+      ],
+      [
+       21,
+       63
+      ]
+     ],
+     "used": [
+      [
+       21,
+       0
+      ],
+      [
+       21,
+       1
+      ]
+     ],
+     "pool_keys": [
+      [
+       21,
+       0,
+       0
+      ]
+     ],
+     "ecdsa_used": [
+      [
+       21,
+       5
+      ]
+     ],
+     "ack_ok": []
+    },
+    "obs": {
+     "puts": [
+      1,
+      2
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "name": "step decode error",
+  "args": [
+   "--step"
+  ],
+  "match": "keys",
+  "input": [
+   "{\"state\": 1}"
+  ],
+  "expect": [
+   {
+    "error": 0
+   }
+  ]
+ },
+ {
+  "name": "ack run",
+  "input": {
+   "protocol": "kink-implementation/1",
+   "program": "gate",
+   "inputs": {
+    "params": {
+     "n": 9,
+     "f": 2,
+     "mode": "TEE",
+     "N_h": 30
+    },
+    "ops": [
+     {
+      "op": "fix_charter",
+      "id": 8,
+      "gamma": {
+       "gate": "GROUP",
+       "mid": 0,
+       "k": 2,
+       "children": [
+        {
+         "gate": "LEAF",
+         "mid": 1,
+         "actor": 21
+        },
+        {
+         "gate": "LEAF",
+         "mid": 2,
+         "actor": 22
+        },
+        {
+         "gate": "LEAF",
+         "mid": 3,
+         "actor": 23
+        }
+       ]
+      }
+     },
+     {
+      "op": "birth_check",
+      "node": 0,
+      "cm_addr": 900,
+      "birth": {
+       "x_f": 5,
+       "charter_id": 7,
+       "chain_id": 1,
+       "actors": [
+        {
+         "slot": 1,
+         "x_a": 50,
+         "ctx": [
+          5,
+          50,
+          1,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        },
+        {
+         "slot": 2,
+         "x_a": 60,
+         "ctx": [
+          5,
+          60,
+          2,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": true,
+         "pop_U": true,
+         "delta": true
+        }
+       ],
+       "dealer_ok": true,
+       "x_recomputed": true,
+       "encoding_ok": true,
+       "opening_ok": true
+      }
+     },
+     {
+      "op": "birth_check",
+      "node": 1,
+      "cm_addr": 900,
+      "birth": {
+       "x_f": 5,
+       "charter_id": 7,
+       "chain_id": 1,
+       "actors": [
+        {
+         "slot": 1,
+         "x_a": 50,
+         "ctx": [
+          5,
+          50,
+          1,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        },
+        {
+         "slot": 2,
+         "x_a": 60,
+         "ctx": [
+          5,
+          60,
+          2,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": true,
+         "pop_U": true,
+         "delta": true
+        }
+       ],
+       "dealer_ok": true,
+       "x_recomputed": true,
+       "encoding_ok": true,
+       "opening_ok": true
+      }
+     },
+     {
+      "op": "birth_check",
+      "node": 2,
+      "cm_addr": 900,
+      "birth": {
+       "x_f": 5,
+       "charter_id": 7,
+       "chain_id": 1,
+       "actors": [
+        {
+         "slot": 1,
+         "x_a": 50,
+         "ctx": [
+          5,
+          50,
+          1,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        },
+        {
+         "slot": 2,
+         "x_a": 60,
+         "ctx": [
+          5,
+          60,
+          2,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": true,
+         "pop_U": true,
+         "delta": true
+        }
+       ],
+       "dealer_ok": true,
+       "x_recomputed": true,
+       "encoding_ok": true,
+       "opening_ok": true
+      }
+     },
+     {
+      "op": "birth_check",
+      "node": 3,
+      "cm_addr": 900,
+      "birth": {
+       "x_f": 5,
+       "charter_id": 7,
+       "chain_id": 1,
+       "actors": [
+        {
+         "slot": 1,
+         "x_a": 50,
+         "ctx": [
+          5,
+          50,
+          1,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        },
+        {
+         "slot": 2,
+         "x_a": 60,
+         "ctx": [
+          5,
+          60,
+          2,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": true,
+         "pop_U": true,
+         "delta": true
+        }
+       ],
+       "dealer_ok": true,
+       "x_recomputed": true,
+       "encoding_ok": true,
+       "opening_ok": true
+      }
+     },
+     {
+      "op": "birth_check",
+      "node": 4,
+      "cm_addr": 900,
+      "birth": {
+       "x_f": 5,
+       "charter_id": 7,
+       "chain_id": 1,
+       "actors": [
+        {
+         "slot": 1,
+         "x_a": 50,
+         "ctx": [
+          5,
+          50,
+          1,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        },
+        {
+         "slot": 2,
+         "x_a": 60,
+         "ctx": [
+          5,
+          60,
+          2,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": true,
+         "pop_U": true,
+         "delta": true
+        }
+       ],
+       "dealer_ok": true,
+       "x_recomputed": true,
+       "encoding_ok": true,
+       "opening_ok": true
+      }
+     },
+     {
+      "op": "birth_check",
+      "node": 5,
+      "cm_addr": 900,
+      "birth": {
+       "x_f": 5,
+       "charter_id": 7,
+       "chain_id": 1,
+       "actors": [
+        {
+         "slot": 1,
+         "x_a": 50,
+         "ctx": [
+          5,
+          50,
+          1,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": false,
+         "pop_U": false,
+         "delta": false
+        },
+        {
+         "slot": 2,
+         "x_a": 60,
+         "ctx": [
+          5,
+          60,
+          2,
+          7,
+          1
+         ],
+         "valid": true,
+         "network_created": true,
+         "pop_U": true,
+         "delta": true
+        }
+       ],
+       "dealer_ok": true,
+       "x_recomputed": true,
+       "encoding_ok": true,
+       "opening_ok": true
+      }
+     },
+     {
+      "op": "submit_record",
+      "record": {
+       "cm_addr": 900,
+       "profile": "P1",
+       "charter": 8,
+       "signers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+       ],
+       "owner_reg": false,
+       "escrow_acks": 0,
+       "escrow_quorum": 0,
+       "guardian_acks": 0,
+       "q_g": 0,
+       "network_created": true
+      }
+     },
+     {
+      "op": "pay",
+      "cm_addr": 900
+     },
+     {
+      "op": "holder_open",
+      "cm_addr": 900,
+      "x_match": false
+     },
+     {
+      "op": "holder_open",
+      "cm_addr": 900,
+      "x_match": true
+     },
+     {
+      "op": "ack_check",
+      "node": 2,
+      "cm_addr": 900,
+      "ack": {
+       "x_recomputed": true,
+       "opening_ok": true,
+       "pop_u": false
+      }
+     },
+     {
+      "op": "ack_check",
+      "node": 9,
+      "cm_addr": 900,
+      "ack": {
+       "x_recomputed": true,
+       "opening_ok": true,
+       "pop_u": true
+      }
+     },
+     {
+      "op": "ack_check",
+      "node": 0,
+      "cm_addr": 900,
+      "ack": {
+       "x_recomputed": true,
+       "opening_ok": true,
+       "pop_u": true
+      }
+     },
+     {
+      "op": "ack_check",
+      "node": 1,
+      "cm_addr": 900,
+      "ack": {
+       "x_recomputed": true,
+       "opening_ok": true,
+       "pop_u": true
+      }
+     },
+     {
+      "op": "ack_check",
+      "node": 2,
+      "cm_addr": 900,
+      "ack": {
+       "x_recomputed": true,
+       "opening_ok": true,
+       "pop_u": true
+      }
+     },
+     {
+      "op": "ack_check",
+      "node": 3,
+      "cm_addr": 900,
+      "ack": {
+       "x_recomputed": true,
+       "opening_ok": true,
+       "pop_u": true
+      }
+     },
+     {
+      "op": "ack_check",
+      "node": 4,
+      "cm_addr": 900,
+      "ack": {
+       "x_recomputed": true,
+       "opening_ok": true,
+       "pop_u": true
+      }
+     },
+     {
+      "op": "ack_check",
+      "node": 5,
+      "cm_addr": 900,
+      "ack": {
+       "x_recomputed": true,
+       "opening_ok": true,
+       "pop_u": true
+      }
+     },
+     {
+      "op": "ack_check",
+      "node": 0,
+      "cm_addr": 900,
+      "ack": {
+       "x_recomputed": true,
+       "opening_ok": true,
+       "pop_u": true
+      }
+     },
+     {
+      "op": "acknowledge",
+      "cm_addr": 900,
+      "signers": [
+       0,
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     {
+      "op": "acknowledge",
+      "cm_addr": 900,
+      "signers": [
+       0,
+       0,
+       1,
+       2,
+       3,
+       4,
+       5
+      ]
+     },
+     {
+      "op": "acknowledge",
+      "cm_addr": 901,
+      "signers": [
+       0,
+       1,
+       2,
+       3,
+       4,
+       5
+      ]
+     },
+     {
+      "op": "holder_open",
+      "cm_addr": 901,
+      "x_match": true
+     },
+     {
+      "op": "acknowledge",
+      "cm_addr": 900,
+      "signers": [
+       0,
+       1,
+       2,
+       3,
+       4,
+       5
+      ]
+     },
+     {
+      "op": "pay",
+      "cm_addr": 900
+     },
+     {
+      "op": "pay",
+      "cm_addr": 901
+     }
+    ]
+   }
+  },
+  "expect": {
+   "cells": {
+    "obs": [
+     {
+      "ok": true
+     },
+     {
+      "birth_ok": true
+     },
+     {
+      "birth_ok": true
+     },
+     {
+      "birth_ok": true
+     },
+     {
+      "birth_ok": true
+     },
+     {
+      "birth_ok": true
+     },
+     {
+      "birth_ok": true
+     },
+     {
+      "ok": true
+     },
+     {
+      "refused": [
+       "SH-035"
+      ]
+     },
+     {
+      "refused": [
+       "SH-036"
+      ]
+     },
+     {
+      "ack_envelope": true
+     },
+     {
+      "refused": [
+       "ack_refused"
+      ]
+     },
+     {
+      "refused": [
+       "outside-capability"
+      ]
+     },
+     {
+      "ack_ok": true
+     },
+     {
+      "ack_ok": true
+     },
+     {
+      "ack_ok": true
+     },
+     {
+      "ack_ok": true
+     },
+     {
+      "ack_ok": true
+     },
+     {
+      "ack_ok": true
+     },
+     {
+      "ack_ok": true
+     },
+     {
+      "refused": [
+       "no_ack_certificate"
+      ]
+     },
+     {
+      "refused": [
+       "outside-capability"
+      ]
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     },
+     {
+      "ok": true
+     },
+     {
+      "paid": true
+     },
+     {
+      "refused": [
+       "no-rule"
+      ]
+     }
+    ],
+    "state": {
+     "ack_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "birth_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "charters": [
+      {
+       "gamma": {
+        "children": [
+         {
+          "actor": 21,
+          "gate": "LEAF",
+          "mid": 1
+         },
+         {
+          "actor": 22,
+          "gate": "LEAF",
+          "mid": 2
+         },
+         {
+          "actor": 23,
+          "gate": "LEAF",
+          "mid": 3
+         }
+        ],
+        "gate": "GROUP",
+        "k": 2,
+        "mid": 0
+       },
+       "id": 8
+      }
+     ],
+     "dealt": [],
+     "ecdsa_used": [],
+     "params": {
+      "N_h": 30,
+      "f": 2,
+      "mode": "TEE",
+      "n": 9
+     },
+     "pool_keys": [],
+     "records": [
+      {
+       "acked": true,
+       "charter": 8,
+       "cm_addr": 900,
+       "network_created": true,
+       "profile": "P1",
+       "sigs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+       ]
+      }
+     ],
+     "used": []
+    }
+   },
+   "end": "final"
+  }
+ },
+ {
+  "name": "ack step answers",
+  "args": [
+   "--step"
+  ],
+  "input": [
+   {
+    "state": {
+     "ack_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "birth_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "charters": [
+      {
+       "gamma": {
+        "children": [
+         {
+          "actor": 21,
+          "gate": "LEAF",
+          "mid": 1
+         },
+         {
+          "actor": 22,
+          "gate": "LEAF",
+          "mid": 2
+         },
+         {
+          "actor": 23,
+          "gate": "LEAF",
+          "mid": 3
+         }
+        ],
+        "gate": "GROUP",
+        "k": 2,
+        "mid": 0
+       },
+       "id": 8
+      }
+     ],
+     "dealt": [],
+     "ecdsa_used": [],
+     "params": {
+      "N_h": 30,
+      "f": 2,
+      "mode": "TEE",
+      "n": 9
+     },
+     "pool_keys": [],
+     "records": [
+      {
+       "acked": false,
+       "charter": 8,
+       "cm_addr": 900,
+       "network_created": true,
+       "profile": "P1",
+       "sigs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+       ]
+      }
+     ],
+     "used": []
+    },
+    "op": {
+     "op": "pay",
+     "cm_addr": 900
+    }
+   },
+   {
+    "state": {
+     "ack_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "birth_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "charters": [
+      {
+       "gamma": {
+        "children": [
+         {
+          "actor": 21,
+          "gate": "LEAF",
+          "mid": 1
+         },
+         {
+          "actor": 22,
+          "gate": "LEAF",
+          "mid": 2
+         },
+         {
+          "actor": 23,
+          "gate": "LEAF",
+          "mid": 3
+         }
+        ],
+        "gate": "GROUP",
+        "k": 2,
+        "mid": 0
+       },
+       "id": 8
+      }
+     ],
+     "dealt": [],
+     "ecdsa_used": [],
+     "params": {
+      "N_h": 30,
+      "f": 2,
+      "mode": "TEE",
+      "n": 9
+     },
+     "pool_keys": [],
+     "records": [
+      {
+       "acked": false,
+       "charter": 8,
+       "cm_addr": 900,
+       "network_created": true,
+       "profile": "P1",
+       "sigs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+       ]
+      }
+     ],
+     "used": []
+    },
+    "op": {
+     "op": "acknowledge",
+     "cm_addr": 900,
+     "signers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ]
+    }
+   },
+   {
+    "state": {
+     "ack_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "birth_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "charters": [
+      {
+       "gamma": {
+        "children": [
+         {
+          "actor": 21,
+          "gate": "LEAF",
+          "mid": 1
+         },
+         {
+          "actor": 22,
+          "gate": "LEAF",
+          "mid": 2
+         },
+         {
+          "actor": 23,
+          "gate": "LEAF",
+          "mid": 3
+         }
+        ],
+        "gate": "GROUP",
+        "k": 2,
+        "mid": 0
+       },
+       "id": 8
+      }
+     ],
+     "dealt": [],
+     "ecdsa_used": [],
+     "params": {
+      "N_h": 30,
+      "f": 2,
+      "mode": "TEE",
+      "n": 9
+     },
+     "pool_keys": [],
+     "records": [
+      {
+       "acked": false,
+       "charter": 8,
+       "cm_addr": 900,
+       "network_created": true,
+       "profile": "P1",
+       "sigs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+       ]
+      }
+     ],
+     "used": []
+    },
+    "op": {
+     "op": "acknowledge",
+     "cm_addr": 900,
+     "signers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      8
+     ]
+    }
+   },
+   {
+    "state": {
+     "ack_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "birth_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "charters": [
+      {
+       "gamma": {
+        "children": [
+         {
+          "actor": 21,
+          "gate": "LEAF",
+          "mid": 1
+         },
+         {
+          "actor": 22,
+          "gate": "LEAF",
+          "mid": 2
+         },
+         {
+          "actor": 23,
+          "gate": "LEAF",
+          "mid": 3
+         }
+        ],
+        "gate": "GROUP",
+        "k": 2,
+        "mid": 0
+       },
+       "id": 8
+      }
+     ],
+     "dealt": [],
+     "ecdsa_used": [],
+     "params": {
+      "N_h": 30,
+      "f": 2,
+      "mode": "TEE",
+      "n": 9
+     },
+     "pool_keys": [],
+     "records": [
+      {
+       "acked": true,
+       "charter": 8,
+       "cm_addr": 900,
+       "network_created": true,
+       "profile": "P1",
+       "sigs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+       ]
+      }
+     ],
+     "used": []
+    },
+    "op": {
+     "op": "pay",
+     "cm_addr": 900
+    }
+   },
+   {
+    "state": {
+     "ack_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "birth_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "charters": [
+      {
+       "gamma": {
+        "children": [
+         {
+          "actor": 21,
+          "gate": "LEAF",
+          "mid": 1
+         },
+         {
+          "actor": 22,
+          "gate": "LEAF",
+          "mid": 2
+         },
+         {
+          "actor": 23,
+          "gate": "LEAF",
+          "mid": 3
+         }
+        ],
+        "gate": "GROUP",
+        "k": 2,
+        "mid": 0
+       },
+       "id": 8
+      }
+     ],
+     "dealt": [],
+     "ecdsa_used": [],
+     "params": {
+      "N_h": 30,
+      "f": 2,
+      "mode": "TEE",
+      "n": 9
+     },
+     "pool_keys": [],
+     "records": [
+      {
+       "acked": true,
+       "charter": 8,
+       "cm_addr": 900,
+       "network_created": true,
+       "profile": "P1",
+       "sigs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+       ]
+      }
+     ],
+     "used": []
+    },
+    "op": {
+     "op": "ack_check",
+     "node": 6,
+     "cm_addr": 900,
+     "ack": {
+      "x_recomputed": true,
+      "opening_ok": true,
+      "pop_u": true
+     }
+    }
+   },
+   {
+    "state": {
+     "ack_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "birth_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "charters": [
+      {
+       "gamma": {
+        "children": [
+         {
+          "actor": 21,
+          "gate": "LEAF",
+          "mid": 1
+         },
+         {
+          "actor": 22,
+          "gate": "LEAF",
+          "mid": 2
+         },
+         {
+          "actor": 23,
+          "gate": "LEAF",
+          "mid": 3
+         }
+        ],
+        "gate": "GROUP",
+        "k": 2,
+        "mid": 0
+       },
+       "id": 8
+      }
+     ],
+     "dealt": [],
+     "ecdsa_used": [],
+     "params": {
+      "N_h": 30,
+      "f": 2,
+      "mode": "TEE",
+      "n": 9
+     },
+     "pool_keys": [],
+     "records": [
+      {
+       "acked": true,
+       "charter": 8,
+       "cm_addr": 900,
+       "network_created": true,
+       "profile": "P1",
+       "sigs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+       ]
+      }
+     ],
+     "used": []
+    },
+    "op": {
+     "op": "holder_open",
+     "cm_addr": 900,
+     "x_match": false
+    }
+   }
+  ],
+  "expect": [
+   {
+    "refused": [
+     "SH-035"
+    ]
+   },
+   {
+    "obs": {
+     "ok": true
+    },
+    "state": {
+     "ack_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "birth_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "charters": [
+      {
+       "gamma": {
+        "children": [
+         {
+          "actor": 21,
+          "gate": "LEAF",
+          "mid": 1
+         },
+         {
+          "actor": 22,
+          "gate": "LEAF",
+          "mid": 2
+         },
+         {
+          "actor": 23,
+          "gate": "LEAF",
+          "mid": 3
+         }
+        ],
+        "gate": "GROUP",
+        "k": 2,
+        "mid": 0
+       },
+       "id": 8
+      }
+     ],
+     "dealt": [],
+     "ecdsa_used": [],
+     "params": {
+      "N_h": 30,
+      "f": 2,
+      "mode": "TEE",
+      "n": 9
+     },
+     "pool_keys": [],
+     "records": [
+      {
+       "acked": true,
+       "charter": 8,
+       "cm_addr": 900,
+       "network_created": true,
+       "profile": "P1",
+       "sigs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+       ]
+      }
+     ],
+     "used": []
+    }
+   },
+   {
+    "refused": [
+     "no_ack_certificate"
+    ]
+   },
+   {
+    "obs": {
+     "paid": true
+    },
+    "state": {
+     "ack_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "birth_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "charters": [
+      {
+       "gamma": {
+        "children": [
+         {
+          "actor": 21,
+          "gate": "LEAF",
+          "mid": 1
+         },
+         {
+          "actor": 22,
+          "gate": "LEAF",
+          "mid": 2
+         },
+         {
+          "actor": 23,
+          "gate": "LEAF",
+          "mid": 3
+         }
+        ],
+        "gate": "GROUP",
+        "k": 2,
+        "mid": 0
+       },
+       "id": 8
+      }
+     ],
+     "dealt": [],
+     "ecdsa_used": [],
+     "params": {
+      "N_h": 30,
+      "f": 2,
+      "mode": "TEE",
+      "n": 9
+     },
+     "pool_keys": [],
+     "records": [
+      {
+       "acked": true,
+       "charter": 8,
+       "cm_addr": 900,
+       "network_created": true,
+       "profile": "P1",
+       "sigs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+       ]
+      }
+     ],
+     "used": []
+    }
+   },
+   {
+    "obs": {
+     "ack_ok": true
+    },
+    "state": {
+     "ack_ok": [
+      [
+       6,
+       900
+      ],
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "birth_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "charters": [
+      {
+       "gamma": {
+        "children": [
+         {
+          "actor": 21,
+          "gate": "LEAF",
+          "mid": 1
+         },
+         {
+          "actor": 22,
+          "gate": "LEAF",
+          "mid": 2
+         },
+         {
+          "actor": 23,
+          "gate": "LEAF",
+          "mid": 3
+         }
+        ],
+        "gate": "GROUP",
+        "k": 2,
+        "mid": 0
+       },
+       "id": 8
+      }
+     ],
+     "dealt": [],
+     "ecdsa_used": [],
+     "params": {
+      "N_h": 30,
+      "f": 2,
+      "mode": "TEE",
+      "n": 9
+     },
+     "pool_keys": [],
+     "records": [
+      {
+       "acked": true,
+       "charter": 8,
+       "cm_addr": 900,
+       "network_created": true,
+       "profile": "P1",
+       "sigs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+       ]
+      }
+     ],
+     "used": []
+    }
+   },
+   {
+    "refused": [
+     "SH-036"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "ack missing pop_u",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"birth_check\", \"node\": 0, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 2, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 3, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 4, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 5, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"submit_record\", \"record\": {\"cm_addr\": 900, \"profile\": \"P1\", \"charter\": 8, \"signers\": [0, 1, 2, 3, 4, 5], \"owner_reg\": false, \"escrow_acks\": 0, \"escrow_quorum\": 0, \"guardian_acks\": 0, \"q_g\": 0, \"network_created\": true}}, {\"op\": \"pay\", \"cm_addr\": 900}, {\"op\": \"holder_open\", \"cm_addr\": 900, \"x_match\": false}, {\"op\": \"holder_open\", \"cm_addr\": 900, \"x_match\": true}, {\"op\": \"ack_check\", \"node\": 2, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": false}}, {\"op\": \"ack_check\", \"node\": 9, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true}}, {\"op\": \"ack_check\", \"node\": 0, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 1, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 2, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 3, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 4, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 5, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 0, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 1, 2, 3, 4]}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 0, 1, 2, 3, 4, 5]}, {\"op\": \"acknowledge\", \"cm_addr\": 901, \"signers\": [0, 1, 2, 3, 4, 5]}, {\"op\": \"holder_open\", \"cm_addr\": 901, \"x_match\": true}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 1, 2, 3, 4, 5]}, {\"op\": \"pay\", \"cm_addr\": 900}, {\"op\": \"pay\", \"cm_addr\": 901}]}}",
+  "rc": 2
+ },
+ {
+  "name": "ack extra key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"birth_check\", \"node\": 0, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 2, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 3, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 4, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 5, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"submit_record\", \"record\": {\"cm_addr\": 900, \"profile\": \"P1\", \"charter\": 8, \"signers\": [0, 1, 2, 3, 4, 5], \"owner_reg\": false, \"escrow_acks\": 0, \"escrow_quorum\": 0, \"guardian_acks\": 0, \"q_g\": 0, \"network_created\": true}}, {\"op\": \"pay\", \"cm_addr\": 900}, {\"op\": \"holder_open\", \"cm_addr\": 900, \"x_match\": false}, {\"op\": \"holder_open\", \"cm_addr\": 900, \"x_match\": true}, {\"op\": \"ack_check\", \"node\": 2, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": false}}, {\"op\": \"ack_check\", \"node\": 9, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 0, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 1, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true, \"dealer_ok\": true}}, {\"op\": \"ack_check\", \"node\": 2, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 3, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 4, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 5, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 0, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 1, 2, 3, 4]}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 0, 1, 2, 3, 4, 5]}, {\"op\": \"acknowledge\", \"cm_addr\": 901, \"signers\": [0, 1, 2, 3, 4, 5]}, {\"op\": \"holder_open\", \"cm_addr\": 901, \"x_match\": true}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 1, 2, 3, 4, 5]}, {\"op\": \"pay\", \"cm_addr\": 900}, {\"op\": \"pay\", \"cm_addr\": 901}]}}",
+  "rc": 2
+ },
+ {
+  "name": "ack record without network_created",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"birth_check\", \"node\": 0, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 2, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 3, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 4, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 5, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"submit_record\", \"record\": {\"cm_addr\": 900, \"profile\": \"P1\", \"charter\": 8, \"signers\": [0, 1, 2, 3, 4, 5], \"owner_reg\": false, \"escrow_acks\": 0, \"escrow_quorum\": 0, \"guardian_acks\": 0, \"q_g\": 0}}, {\"op\": \"pay\", \"cm_addr\": 900}, {\"op\": \"holder_open\", \"cm_addr\": 900, \"x_match\": false}, {\"op\": \"holder_open\", \"cm_addr\": 900, \"x_match\": true}, {\"op\": \"ack_check\", \"node\": 2, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": false}}, {\"op\": \"ack_check\", \"node\": 9, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 0, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 1, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 2, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 3, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 4, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 5, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 0, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 1, 2, 3, 4]}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 0, 1, 2, 3, 4, 5]}, {\"op\": \"acknowledge\", \"cm_addr\": 901, \"signers\": [0, 1, 2, 3, 4, 5]}, {\"op\": \"holder_open\", \"cm_addr\": 901, \"x_match\": true}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 1, 2, 3, 4, 5]}, {\"op\": \"pay\", \"cm_addr\": 900}, {\"op\": \"pay\", \"cm_addr\": 901}]}}",
+  "rc": 2
+ },
+ {
+  "name": "ack holder_open x_match number",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"birth_check\", \"node\": 0, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 2, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 3, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 4, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 5, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"submit_record\", \"record\": {\"cm_addr\": 900, \"profile\": \"P1\", \"charter\": 8, \"signers\": [0, 1, 2, 3, 4, 5], \"owner_reg\": false, \"escrow_acks\": 0, \"escrow_quorum\": 0, \"guardian_acks\": 0, \"q_g\": 0, \"network_created\": true}}, {\"op\": \"pay\", \"cm_addr\": 900}, {\"op\": \"holder_open\", \"cm_addr\": 900, \"x_match\": false}, {\"op\": \"holder_open\", \"cm_addr\": 900, \"x_match\": 1}, {\"op\": \"ack_check\", \"node\": 2, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": false}}, {\"op\": \"ack_check\", \"node\": 9, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 0, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 1, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 2, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 3, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 4, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 5, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 0, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 1, 2, 3, 4]}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 0, 1, 2, 3, 4, 5]}, {\"op\": \"acknowledge\", \"cm_addr\": 901, \"signers\": [0, 1, 2, 3, 4, 5]}, {\"op\": \"holder_open\", \"cm_addr\": 901, \"x_match\": true}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 1, 2, 3, 4, 5]}, {\"op\": \"pay\", \"cm_addr\": 900}, {\"op\": \"pay\", \"cm_addr\": 901}]}}",
+  "rc": 2
+ },
+ {
+  "name": "ack pay extra key",
+  "input": "{\"protocol\": \"kink-implementation/1\", \"program\": \"gate\", \"inputs\": {\"params\": {\"n\": 9, \"f\": 2, \"mode\": \"TEE\", \"N_h\": 30}, \"ops\": [{\"op\": \"fix_charter\", \"id\": 8, \"gamma\": {\"gate\": \"GROUP\", \"mid\": 0, \"k\": 2, \"children\": [{\"gate\": \"LEAF\", \"mid\": 1, \"actor\": 21}, {\"gate\": \"LEAF\", \"mid\": 2, \"actor\": 22}, {\"gate\": \"LEAF\", \"mid\": 3, \"actor\": 23}]}}, {\"op\": \"birth_check\", \"node\": 0, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 1, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 2, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 3, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 4, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"birth_check\", \"node\": 5, \"cm_addr\": 900, \"birth\": {\"x_f\": 5, \"charter_id\": 7, \"chain_id\": 1, \"actors\": [{\"slot\": 1, \"x_a\": 50, \"ctx\": [5, 50, 1, 7, 1], \"valid\": true, \"network_created\": false, \"pop_U\": false, \"delta\": false}, {\"slot\": 2, \"x_a\": 60, \"ctx\": [5, 60, 2, 7, 1], \"valid\": true, \"network_created\": true, \"pop_U\": true, \"delta\": true}], \"dealer_ok\": true, \"x_recomputed\": true, \"encoding_ok\": true, \"opening_ok\": true}}, {\"op\": \"submit_record\", \"record\": {\"cm_addr\": 900, \"profile\": \"P1\", \"charter\": 8, \"signers\": [0, 1, 2, 3, 4, 5], \"owner_reg\": false, \"escrow_acks\": 0, \"escrow_quorum\": 0, \"guardian_acks\": 0, \"q_g\": 0, \"network_created\": true}}, {\"op\": \"pay\", \"cm_addr\": 900, \"amount\": 5}, {\"op\": \"holder_open\", \"cm_addr\": 900, \"x_match\": false}, {\"op\": \"holder_open\", \"cm_addr\": 900, \"x_match\": true}, {\"op\": \"ack_check\", \"node\": 2, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": false}}, {\"op\": \"ack_check\", \"node\": 9, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 0, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 1, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 2, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 3, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 4, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 5, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"ack_check\", \"node\": 0, \"cm_addr\": 900, \"ack\": {\"x_recomputed\": true, \"opening_ok\": true, \"pop_u\": true}}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 1, 2, 3, 4]}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 0, 1, 2, 3, 4, 5]}, {\"op\": \"acknowledge\", \"cm_addr\": 901, \"signers\": [0, 1, 2, 3, 4, 5]}, {\"op\": \"holder_open\", \"cm_addr\": 901, \"x_match\": true}, {\"op\": \"acknowledge\", \"cm_addr\": 900, \"signers\": [0, 1, 2, 3, 4, 5]}, {\"op\": \"pay\", \"cm_addr\": 900}, {\"op\": \"pay\", \"cm_addr\": 901}]}}",
+  "rc": 2
+ },
+ {
+  "name": "ack step state record without acked",
+  "args": [
+   "--step"
+  ],
+  "match": "keys",
+  "input": [
+   {
+    "state": {
+     "ack_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "birth_ok": [
+      [
+       5,
+       900
+      ],
+      [
+       4,
+       900
+      ],
+      [
+       3,
+       900
+      ],
+      [
+       2,
+       900
+      ],
+      [
+       1,
+       900
+      ],
+      [
+       0,
+       900
+      ]
+     ],
+     "charters": [
+      {
+       "gamma": {
+        "children": [
+         {
+          "actor": 21,
+          "gate": "LEAF",
+          "mid": 1
+         },
+         {
+          "actor": 22,
+          "gate": "LEAF",
+          "mid": 2
+         },
+         {
+          "actor": 23,
+          "gate": "LEAF",
+          "mid": 3
+         }
+        ],
+        "gate": "GROUP",
+        "k": 2,
+        "mid": 0
+       },
+       "id": 8
+      }
+     ],
+     "dealt": [],
+     "ecdsa_used": [],
+     "params": {
+      "N_h": 30,
+      "f": 2,
+      "mode": "TEE",
+      "n": 9
+     },
+     "pool_keys": [],
+     "records": [
+      {
+       "charter": 8,
+       "cm_addr": 900,
+       "network_created": true,
+       "profile": "P1",
+       "sigs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+       ]
+      }
+     ],
+     "used": []
+    },
+    "op": {
+     "op": "pay",
+     "cm_addr": 900
+    }
+   }
+  ],
+  "expect": [
+   {
+    "error": 0
+   }
+  ]
+ }
+]

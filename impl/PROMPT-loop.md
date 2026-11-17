@@ -1,8 +1,8 @@
 # Lane: finish the line-dealing Rust prototype and benchmark suite
 
-You work in impl (a git worktree; do not touch any other folder; do not commit). The spec is ../design/SCHEME.md (read in full), with ../design/FINDINGS-LEDGER.md, ../design/PROOF-CHECK.md and ../LOOP.md items 3 and 4. The existing crate already has dealing, encryption, Step A, partials, combine, resharing and 26 passing tests; keep them passing.
+You work in /home/hoskinson/Projects/mpcexperiments-wt-rust/impl (a git worktree; do not touch any other folder; do not commit). The spec is ../design/SCHEME.md (read in full), with ../design/FINDINGS-LEDGER.md, ../design/PROOF-CHECK.md and ../LOOP.md items 3 and 4. The existing crate already has dealing, encryption, Step A, partials, combine, resharing and 26 passing tests; keep them passing.
 
-Build only with crates already in ~/.cargo/registry/cache (check with ls; curve25519-dalek 4.1.3, ed25519-dalek 2.2.0 and criterion 0.5.1 are there). Always build with --offline and CARGO_TARGET_DIR=impl/target. Run builds and tests through `heavy-run --mem 16G --name <name> -- <cmd>` if available in your sandbox, else directly with -j 4.
+Build only with crates already in ~/.cargo/registry/cache (check with ls; curve25519-dalek 4.1.3, ed25519-dalek 2.2.0 and criterion 0.5.1 are there). Always build with --offline and CARGO_TARGET_DIR=/home/hoskinson/Projects/mpcexperiments-wt-rust/impl/target. Run builds and tests through `heavy-run --mem 16G --name <name> -- <cmd>` if available in your sandbox, else directly with -j 4.
 
 Deliver:
 A. SCHEME section 4 builders: deterministic `Build(intent, S, g, prev)` for UTXO (pin always included, largest-first, ordering, dust, fee ceiling on inputs minus outputs, nLockTime, RBF increment against prev) and EIP-1559 (nonce pin, maxFeePerGas/tip rule with 10% bump), and sealed `Variant(intent, j)` / `Select(intent, S)`. Unit tests including the ledger checks D12 and D13.

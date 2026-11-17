@@ -1,0 +1,14 @@
+# Q-003, ledgers 4, 5, 9: ECDSA opens out of order, undealt, or naming a slot twice.
+[inputs]
+params = { Params = { mode = "Tee", w = 2 } }
+ops = [
+  { DealE = { pool = 1, leaf_set = 5, root = "Own", kcount = 2 } },
+  { OpenE = { eid = 1, pos = 10, names = [{ Ek = { pool = 1, idx = 1 } }] } },
+  { OpenE = { eid = 1, pos = 20, names = [{ Ek = { pool = 1, idx = 2 } }] } },
+  { OpenE = { eid = 2, pos = 10, names = [{ Ek = { pool = 1, idx = 2 } }] } },
+  { OpenE = { eid = 3, pos = 30, names = [{ Ek = { pool = 2, idx = 1 } }] } },
+  { OpenE = { eid = 4, pos = 40, names = [{ Ek = { pool = 1, idx = 9 } }] } },
+  { OpenE = { eid = 5, pos = 50, names = [{ Ek = { pool = 1, idx = 2 } }, { Ek = { pool = 1, idx = 2 } }] } },
+  { OpenE = { eid = 6, pos = 60, names = [{ Ek = { pool = 2, idx = 2 } }, { Ek = { pool = 2, idx = 2 } }] } },
+  { OpenE = { eid = 7, pos = 70, names = [{ Ek = { pool = 1, idx = 1 } }, { Ek = { pool = 1, idx = 9 } }] } },
+]

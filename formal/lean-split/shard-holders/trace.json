@@ -1,0 +1,36 @@
+{
+  "prefix": "SH",
+  "namespace": "SplitShardHolders",
+  "spec": "openspec/changes/add-split-line-dealing/specs/split-shard-holders/spec.md",
+  "count": 38,
+  "proved": {
+    "SH-002": ["C17_run_charters_valid", "apply_charters_valid"],
+    "SH-003": ["C17_admitted_satisfies", "C17_contribution_admitted"],
+    "SH-009": ["C2_birthOk_from_check"],
+    "SH-011": ["C1_run_records_certified", "apply_recInv"],
+    "SH-015": ["sh015_run_one_answer_per_pair", "apply_used_nodup"],
+    "SH-022": ["C17_contribution_admitted"],
+    "SH-031": ["sh031_ackOk_from_check"],
+    "SH-033": ["sh037_run_acked_certified", "apply_ackInv"],
+    "SH-034": ["sh034_registered_unacked"],
+    "SH-035": ["sh035_paid_only_acked"],
+    "SH-037": ["sh037_run_acked_certified", "apply_ackInv"],
+    "SH-038": ["sh038_cl_fixes_weight", "sh038_cl_fixes_members"]
+  },
+  "exceptions": {
+    "SH-005": "a fresh uniformly random shard is randomness outside the state",
+    "SH-006": "the tweak hash and the sealed seed are cryptography outside the state",
+    "SH-024": "the OS generator and the hedged nonce draw are randomness outside the state",
+    "SH-025": "the place of the tweak term is signature arithmetic outside the state",
+    "SH-027": "claim C17 with C3 and C4 is a property of the signature scheme; the oracle proves its structural part (`C17_admitted_satisfies`, `C17_contribution_admitted`, `C17_run_charters_valid`)",
+    "SH-028": "claim C5 is a property of the signature scheme (open item O6; ECDSA conditional on O1, O2, O19, O32)",
+    "SH-029": "claims C18 and C19 are properties of the signature scheme (C19 is open item O20)"
+  },
+  "ledger": {
+    "SH-001": "1, 4", "SH-002": "1, 11", "SH-004": "10", "SH-009": "13", "SH-011": "2, 3, 4",
+    "SH-012": "2, 6", "SH-013": "1, 4", "SH-014": "9", "SH-015": "1, 5", "SH-016": "4", "SH-017": "4",
+    "SH-018": "1, 12", "SH-019": "1, 7", "SH-021": "1", "SH-022": "2, 5", "SH-023": "2", "SH-026": "1, 8",
+    "SH-030": "14, 16", "SH-031": "17", "SH-033": "18", "SH-034": "14, 15", "SH-035": "14, 15, 19",
+    "SH-036": "14, 19", "SH-037": "15, 18"
+  }
+}

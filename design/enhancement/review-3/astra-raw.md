@@ -50,7 +50,7 @@ I read all five files in full and did not run the scripts. The honest-execution 
 **F3 — The supplied DLEQ verifier accepts false PRF partials**
 
 - **Severity:** major
-- **Location:** §4.6; [vectors/check.py:428](~/.cache/review3-bundle/blind/vectors/check.py:428); decisions 28, 41
+- **Location:** §4.6; [vectors/check.py:428](/home/hoskinson/.cache/review3-bundle/blind/vectors/check.py:428); decisions 28, 41
 - **Claim affected:** PRF fallback verification, fault attribution, C13, O18/O26
 - **Failure scenario:** The vector’s Fiat–Shamir challenge hashes `ctx`, `A1`, and `A2`, but omits the claimed partial `Yi`.
 
