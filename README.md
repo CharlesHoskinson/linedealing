@@ -26,7 +26,8 @@ The owner of an existing address sends one message and goes offline. A committee
 | `formal/krs-split` | k-rust reference suites of those capabilities, compared with the Lean oracles, with golden vectors |
 | `formal/quint-spec`, `formal/quint` | Quint models written from the specs, replayed through the Lean oracles |
 | `formal/drwatt` | Stage gates (`requirements.json`, `checks.json`); `dw verify` re-runs every gate |
-| `formal/passport-shard` | Lean and Quint models of the shard passport |
+| `research/passport-fit/` | The user shard in Midnight Passport: `REPORT.md` (how the first shard lives in a Passport account as a wrapped shard root, passkey ceremonies, guardian quorum) and `SHARD-SPEC.md` (the shard specification) |
+| `formal/passport-shard` | Lean oracle and Quint model of the Passport shard, with counterexamples |
 | `specs/refinement/` | Requirement traceability from spec to oracle, model and code |
 | `impl/src/split` | Rust prototype of split-line dealing |
 | `paper/` | The paper (`main.pdf`, 38 pages), its sources and the review record |
